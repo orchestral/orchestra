@@ -55,5 +55,6 @@ Route::controller(array('orchestra::admin.home'));
  */
 Route::filter('orchestra::auth', function ()
 {
+	// Redirect the user to login page if he/she is not logged in.
 	if (Auth::guest()) return Redirect::to('orchestra/login');
 });
