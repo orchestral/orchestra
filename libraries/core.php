@@ -57,11 +57,25 @@ class Core
 
 	/**
 	 * Get memory instance for Orchestra
-	 * 
+	 *
+	 * @static
+	 * @access public
 	 * @return Hybrid\Memory
 	 */
 	public static function memory()
 	{
 		return static::$cached['memory'];
+	}
+
+	/**
+	 * Get Acl instance for Orchestra
+	 *
+	 * @static
+	 * @access public
+	 * @return Hybrid\Acl
+	 */
+	public static function acl()
+	{
+		return static::$cached['acl'];
 	}
 }
