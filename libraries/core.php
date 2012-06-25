@@ -47,8 +47,8 @@ class Core
 		}
 		catch (Exception $e)
 		{
-			// In any event where Memory failed to load, we should set Installation status to 
-			// false so routing for installation is enabled.
+			// In any event where Memory failed to load, we should set Installation status 
+			// to false routing for installation is enabled.
 			Installer::$status = false;
 		}
 
