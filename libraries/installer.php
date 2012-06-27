@@ -22,4 +22,23 @@ class Installer
 	{
 		return static::$status;
 	}
+
+	public static function make() {}
+
+	public function __construct() {}
+
+	public function check($checklist)
+	{
+		switch ($checklist)
+		{
+			case 'database-connection' :
+				return DBUtil::database_exists();
+				break;
+		}
+	}
+
+	public function migrate()
+	{
+		
+	}
 }
