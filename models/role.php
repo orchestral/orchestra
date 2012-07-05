@@ -6,7 +6,7 @@ class Role extends Eloquent
 {
 	public function users()
 	{
-		return $this->belongs_to_and_has_many('Orchestra\Model\User');
+		return $this->has_many_and_belongs_to('Orchestra\Model\User', 'user_roles');
 	}
-}
+
 }

@@ -9,7 +9,7 @@ class Installer
 	 * @access public
 	 * @var    boolean
 	 */
-	public static $status = true;
+	public static $status = false;
 
 	/**
 	 * Return whether Orchestra is installed

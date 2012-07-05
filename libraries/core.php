@@ -40,16 +40,25 @@ class Core
 		try 
 		{
 			// Initiate Memory class
-			static::$cached['memory'] = Memory::make('fluent.orchestra');
+			static::$cached['memory'] = Memory::make('fluent.orchestra_options');
 
 			// Initiate ACL class with available memory.
 			static::$cached['acl']    = Acl::make('orchestra', static::$cached['memory']);
+
+			$users = Model\User::all();
+
+			if (empty($users))
+			{
+				throw new Exception('User table is empty');
+			}
+
+			// In any event where Memory failed to load, we should set Installation status 
+			// to false routing for installation is enabled.
+			Installer::$status = true;
 		}
 		catch (Exception $e)
 		{
-			// In any event where Memory failed to load, we should set Installation status 
-			// to false routing for installation is enabled.
-			Installer::$status = false;
+
 		}
 
 		static::$initiated = true;
@@ -64,7 +73,7 @@ class Core
 	 */
 	public static function memory()
 	{
-		return static::$cached['memory'];
+		return isset(static::$cached['memory']) ? static::$cached['memory'] : Memory::make('runtime');
 	}
 
 	/**

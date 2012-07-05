@@ -7,14 +7,14 @@
 |
 | Run installation route when Orchestra is not installed yet.
  */
-Route::any('(:bundle)/installer/?(:any)?', function ($action = 'index') 
+Route::any('(:bundle)/installer/?(:any)?/?(:num)?', function ($action = 'index', $steps = 0) 
 {
 	// we should disable this routing when the system 
 	// detect it's already running/installed.
-	if (Orchestra\Installer::installed()) return Response::error('404');
+	if (Orchestra\Installer::installed() and (!($action === 'steps' && intval($steps) === 2))) return Response::error('404');
 
 	// Otherwise, install it right away.
-	return Controller::call("orchestra::installer@{$action}");
+	return Controller::call("orchestra::installer@{$action}", array($steps));
 });
 
 /*
@@ -24,6 +24,10 @@ Route::any('(:bundle)/installer/?(:any)?', function ($action = 'index')
  */
 Route::any('(:bundle)', array('before' => 'orchestra::auth', function ()
 {
+	// we should run installer when the system 
+	// detect it's already running/installed.
+	if ( ! Orchestra\Installer::installed()) return Redirect::to_action("orchestra::installer@index");
+
 	// Display the dashboard
 	return Controller::call('orchestra::dashboard@index');
 }));
@@ -57,4 +61,11 @@ Route::filter('orchestra::auth', function ()
 {
 	// Redirect the user to login page if he/she is not logged in.
 	if (Auth::guest()) return Redirect::to('orchestra/login');
+});
+
+Route::filter('orchestra::installed', function ()
+{
+	// we should run installer when the system 
+	// detect it's already running/installed.
+	if ( ! Orchestra\Installer::installed()) return Redirect::to_action("orchestra::installer@index");
 });
