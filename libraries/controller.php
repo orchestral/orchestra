@@ -4,8 +4,20 @@ use \Controller as Base_Controller, \View;
 
 class Controller extends Base_Controller
 {
+	/**
+	 * Set Orchestra\Controller to default use Restful Controller
+	 *
+	 * @access public
+	 * @var    boolean
+	 */
 	public $restful = true;
 
+	/**
+	 * Construct with filter and global nested data for View
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function __construct()
 	{
 		parent::__construct();
