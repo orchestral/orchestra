@@ -1,6 +1,6 @@
 <?php
 
-use \Exception, Orchestra\Installer\Runner;
+use \Exception, Orchestra\Installer, Orchestra\Installer\Runner;
 
 class Orchestra_Installer_Controller extends Controller 
 {
@@ -12,7 +12,7 @@ class Orchestra_Installer_Controller extends Controller
 
 		$memory = Orchestra\Core::memory();
 		$memory->put('site_name', 'Orchestra Installer');
-		
+
 		View::share('memory', $memory);
 	}
 
@@ -29,7 +29,7 @@ class Orchestra_Installer_Controller extends Controller
 			$database['password'] = str_repeat('*', $password);
 		}
 
-		$database['status'] = Runner::check_database();
+		$database['status'] = Installer::check_database();
 
 		$data = array(
 			'database' => $database,

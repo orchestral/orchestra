@@ -9,8 +9,22 @@ use \Config, \DB, \Exception, \Hash, \Input, \Schema, \Session, \Str, \Validator
 
 class Runner
 {
+	/**
+	 * Orchestra\Messages instance
+	 *
+	 * @static
+	 * @access protected
+	 * @var    Orchestra\Message
+	 */
 	protected static $message = null;
 
+	/**
+	 * Initiate Session/Message for Runner
+	 *
+	 * @static
+	 * @access protected
+	 * @return void
+	 */
 	protected static function initiate()
 	{
 		if ( ! is_null(static::$message)) return;
@@ -21,6 +35,13 @@ class Runner
 
 	}
 
+	/**
+	 * Compile Message and save to Session
+	 *
+	 * @static
+	 * @access protected
+	 * @return void
+	 */
 	protected static function shutdown()
 	{
 		Session::flash('message', static::$message->serialize());
