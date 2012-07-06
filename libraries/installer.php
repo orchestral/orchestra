@@ -1,5 +1,7 @@
 <?php namespace Orchestra;
 
+use \Config, \DB, Exception;
+
 class Installer
 {
 	/**

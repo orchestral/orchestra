@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Installer;
 
 use \Config, \DB, \Exception, \Hash, \Input, \Schema, \Session, \Str, \Validator, 
+	Orchestra\Installer as Installer,
 	Orchestra\Messages,
 	Orchestra\Model\User,
 	Orchestra\Model\Role,
@@ -48,26 +49,6 @@ class Runner
 	}
 
 	/**
-	 * Check database connection
-	 *
-	 * @static
-	 * @access public
-	 * @return bool return true if database successfully connected
-	 */
-	public static function check_database()
-	{
-		try
-		{
-			$pdo = DB::connection(Config::get('database.default'))->pdo;
-			return true;
-		}
-		catch (Exception $e)
-		{
-			return false;
-		}
-	}
-
-	/**
 	 * Run all table installation
 	 *
 	 * @static
@@ -87,9 +68,16 @@ class Runner
 		return true;
 	}
 
+	/**
+	 * Create administrator account.
+	 *
+	 * @static
+	 * @access public
+	 * @return bool
+	 */
 	public static function create_user()
 	{
-		if ( ! $_POST) return true;
+		if ( ! $_POST or Installer::installed()) return true;
 
 		static::initiate();
 
