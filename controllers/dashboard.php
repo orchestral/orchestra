@@ -6,7 +6,7 @@ class Orchestra_Dashboard_Controller extends Controller
 
 	public function __construct()
 	{
-		parent::__constuct();
+		parent::__construct();
 
 		$this->filter('before', 'orchestra::installed');
 		View::share('memory', Orchestra\Core::memory());
