@@ -1,6 +1,9 @@
 <?php
 
-use \Exception, Orchestra\Installer, Orchestra\Installer\Runner;
+use Orchestra\Core, 
+	Orchestra\Installer, 
+	Orchestra\Installer\Runner,
+	Orchestra\Messages;
 
 class Orchestra_Installer_Controller extends Controller 
 {
@@ -10,7 +13,7 @@ class Orchestra_Installer_Controller extends Controller
 
 		Config::set('orchestra::navigation.show-user-box', false);
 
-		$memory = Orchestra\Core::memory();
+		$memory = Core::memory();
 		$memory->put('site_name', 'Orchestra Installer');
 
 		View::share('memory', $memory);
@@ -61,8 +64,9 @@ class Orchestra_Installer_Controller extends Controller
 				}
 				else
 				{
-					$message = new Orchestra\Messages;
+					$message = new Messages;
 					$message->add('error', 'Unable to create user');
+					
 					return Redirect::to_action('orchestra::installer.steps', array(1))
 							->with('message', serialize($message));
 				}
