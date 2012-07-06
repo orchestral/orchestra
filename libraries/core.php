@@ -103,7 +103,6 @@ class Core
 			// In any case where Exception is catched, we can be assure that Installation 
 			// is not done/completed, in this case we should use runtime/in-memory setup
 			static::$cached['memory'] = Memory::make('runtime.orchestra');
-			static::$cached['acl']    = Acl::make('orchestra');
 
 			static::$cached['orchestra_menu']->add('install')->title('Install')->link('orchestra/installer');
 		}
