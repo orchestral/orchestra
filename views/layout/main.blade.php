@@ -31,9 +31,9 @@
 
 		<section class="container">
 
-		@if (Session::has('message'))
+		<?php $message = Orchestra\Messages::retrieve(); ?>
 
-		<?php $message = unserialize(Session::get('message', '')); ?>
+		@if ($message instanceof Orchestra\Messages)
 
 		@foreach (array('error', 'info', 'success') as $key)
 		@if ($message->has($key))

@@ -1,6 +1,7 @@
 <?php namespace Orchestra;
 
-use Laravel\Messages as Laravel_Messages;
+use \Session, 
+	Laravel\Messages as Laravel_Messages;
 
 class Messages extends Laravel_Messages 
 {
@@ -26,6 +27,24 @@ class Messages extends Laravel_Messages
 		return $instance;
 	}
 
+	public static function retrieve()
+	{
+		$message = null;
+
+		if (Session::has('message'))
+		{
+			$message = unserialize(Session::get('message', ''));
+		}
+
+		return $message;
+	}
+
+	/**
+	 * Compile the instance into serialize
+	 *
+	 * @access public
+	 * @return string serialize of this instance
+	 */
 	public function serialize()
 	{
 		return serialize($this);
