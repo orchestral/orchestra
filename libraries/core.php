@@ -73,7 +73,7 @@ class Core
 	 */
 	public static function memory()
 	{
-		return isset(static::$cached['memory']) ? static::$cached['memory'] : Memory::make('runtime');
+		return isset(static::$cached['memory']) ? static::$cached['memory'] : Memory::make('runtime.orchestra');
 	}
 
 	/**
@@ -85,6 +85,6 @@ class Core
 	 */
 	public static function acl()
 	{
-		return static::$cached['acl'];
+		return isset(static::$cached['acl']) ? static::$cached['acl'] : Acl::make('orchestra');
 	}
 }
