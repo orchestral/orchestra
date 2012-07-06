@@ -1,4 +1,4 @@
-@layout('orchestra::layout.main-fluent')
+@layout('orchestra::layout.main')
 
 @section('content')
 
@@ -26,10 +26,7 @@
 						{{ $errors->first('fullname', '<p class="help-block">:message</p>') }}
 					</div>
 				</div>
-
 				
-
-
 			</fieldset>
 
 			<div class="form-actions clean">

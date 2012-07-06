@@ -1,17 +1,12 @@
 <?php
 
-class Orchestra_Account_Controller extends Controller
+class Orchestra_Account_Controller extends Orchestra\Controller
 {
-	public $restful = true;
-
 	public function __construct()
 	{
 		parent::__construct();
 
-		$this->filter('before', 'orchestra::installed');
 		$this->filter('before', 'orchestra::auth');
-		
-		View::share('memory', Orchestra\Core::memory());
 	}
 
 	public function get_index()
@@ -23,5 +18,16 @@ class Orchestra_Account_Controller extends Controller
 		);
 
 		return View::make('orchestra::account.profile', $data);
+	}
+
+	public function get_password()
+	{
+		$auth = Auth::user();
+
+		$data = array(
+			'user' => Orchestra\Model\User::find($auth->id),
+		);
+
+		return View::make('orchestra::account.password', $data);
 	}
 }

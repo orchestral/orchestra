@@ -24,10 +24,6 @@ Route::any('(:bundle)/installer/?(:any)?/?(:num)?', function ($action = 'index',
  */
 Route::any('(:bundle)', array('before' => 'orchestra::installed|orchestra::auth', function ()
 {
-	// we should run installer when the system 
-	// detect it's already running/installed.
-	if ( ! Orchestra\Installer::installed()) return Redirect::to_action("orchestra::installer@index");
-
 	// Display the dashboard
 	return Controller::call('orchestra::dashboard@index');
 }));
@@ -49,7 +45,12 @@ Route::any('(:bundle)/(login|register|logout)', function ($action)
 |
 | Detects all controller under Orchestra bundle and register it to routing
  */
-Route::controller(array('orchestra::account', 'orchestra::dashboard', 'orchestra::credential', 'orchestra::users'));
+Route::controller(array(
+	'orchestra::account', 
+	'orchestra::credential', 
+	'orchestra::dashboard', 
+	'orchestra::users',
+));
 
 /*
 |--------------------------------------------------------------------------

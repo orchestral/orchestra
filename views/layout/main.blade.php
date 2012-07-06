@@ -22,14 +22,13 @@
 		Asset::script('jquery', 'bundles/orchestra/js/jquery-1.7.2.min.js');
 		Asset::script('bootstrap', 'bundles/orchestra/js/bootstrap.min.js', array('jquery'));
 
-		echo Asset::styles();
-		echo Asset::scripts(); ?>
+		echo Asset::styles(); ?>
 	</head>
 
 	<body>
 		@include('orchestra::layout.widgets.navigation')
 
-		<section class="container">
+		<section class="container{{ isset($fluent_layout) ? '-fluid' : '' }}">
 
 		<?php $message = Orchestra\Messages::retrieve(); ?>
 
@@ -51,12 +50,13 @@
 		</section>
 
 		<footer>
-			<div class="container">
+			<div class="container{{ isset($fluent_layout) ? '-fluid' : '' }}">
 				<hr>
 				<p>&copy; 2012 Company Name</p>
 			</div>
 		</footer>
 
+	<?php echo Asset::scripts(); ?>
 	<script>
 	jQuery(function($) {
 		$('div.btn-group[data-toggle-name=*]').each(function() {

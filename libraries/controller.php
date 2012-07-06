@@ -1,6 +1,6 @@
 <?php namespace Orchestra;
 
-use \Controller as Base_Controller;
+use \Controller as Base_Controller, \View;
 
 class Controller extends Base_Controller
 {
@@ -11,8 +11,8 @@ class Controller extends Base_Controller
 		parent::__construct();
 
 		$this->filter('before', 'orchestra::installed');
-		$this->filter('before', 'orchestra::manage-users');
 
-		View::share('memory', Orchestra\Core::memory());
+		View::share('fluent_layout', true);
+		View::share('memory', Core::memory());
 	}
 }

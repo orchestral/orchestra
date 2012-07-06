@@ -1,17 +1,12 @@
 <?php
 
-class Orchestra_Users_Controller extends Controller
+class Orchestra_Users_Controller extends Orchestra\Controller
 {
-	public $restful = true;
-
 	public function __construct()
 	{
 		parent::__construct();
-
-		$this->filter('before', 'orchestra::installed');
+		
 		$this->filter('before', 'orchestra::manage-users');
-
-		View::share('memory', Orchestra\Core::memory());
 	}
 
 	public function get_index()
