@@ -33,12 +33,22 @@ class Core
 	 */
 	public static function start()
 	{
-		static::$cached['menu'] = Widget::make('menu.orchestra');
+		// avoid current method from being called more than once.
+		if (true === static::$initiated) return ;
 
-		// rebuild hybrid auth configuration
+		// Make Menu instance
+		static::$cached['orchestra_menu'] = Widget::make('menu.orchestra');
+		
+		// Make Menu instance for frontend application
+		static::$cached['app_menu'] = Widget::make('menu.application');
+
+		// Make ACL instance
+		static::$cached['acl'] = Acl::make('orchestra');
+
+		// First, we need to ensure that Hybrid\Acl is compliance with 
+		// our Eloquent Model, This would overwrite the default configuration
 		Config::set('hybrid::auth.roles', function ($user_id, $roles)
 		{
-			// in situation config is not a closure, we will use a basic convention structure.
 			$user = Model\User::with('roles')->find($user_id);
 
 			foreach ($user->roles as $role)
@@ -49,16 +59,10 @@ class Core
 			return $roles;
 		});
 
-		// avoid current method from being called more than once.
-		if (true === static::$initiated) return ;
-
 		try 
 		{
 			// Initiate Memory class
 			static::$cached['memory'] = Memory::make('fluent.orchestra_options');
-
-			// Initiate ACL class with available memory.
-			static::$cached['acl']    = Acl::make('orchestra');
 
 			$users = Model\User::all();
 
@@ -67,22 +71,27 @@ class Core
 				throw new Exception('User table is empty');
 			}
 
+			// In event where we reach this point, we can consider no exception has
+			// occur, we should be able to compile acl and menu configuration
 			static::$cached['acl']->attach(static::$cached['memory']);
 			
-			static::$cached['menu']->add('home')->title('Home')->link('orchestra');
+			// Add basic menu.
+			static::$cached['orchestra_menu']->add('home')->title('Home')->link('orchestra');
 
+			// Add menu when user can manage users
 			if (static::$cached['acl']->can('manage-users'))
 			{
-				static::$cached['menu']->add('users')->title('Users')->link('orchestra/users');
-				static::$cached['menu']->add('add-users', 'childof:users')->title('Add Users')->link('orchestra/users/add');
+				static::$cached['orchestra_menu']->add('users')->title('Users')->link('orchestra/users');
+				static::$cached['orchestra_menu']->add('add-users', 'childof:users')->title('Add Users')->link('orchestra/users/add');
 			}
 
+			// Add menu when user can manage orchestra
 			if (static::$cached['acl']->can('manage-orchestra'))
 			{
-				static::$cached['menu']->add('themes', 'after:home')->title('Themes')->link('orchestra/themes');
-				static::$cached['menu']->add('menus', 'childof:themes')->title('Menus')->link('orchestra/menus');
-				static::$cached['menu']->add('widgets', 'childof:themes')->title('Widgets')->link('orchestra/widgets');
-				static::$cached['menu']->add('settings')->title('Settings')->link('orchestra/settings');
+				static::$cached['orchestra_menu']->add('themes', 'after:home')->title('Themes')->link('orchestra/themes');
+				static::$cached['orchestra_menu']->add('menus', 'childof:themes')->title('Menus')->link('orchestra/menus');
+				static::$cached['orchestra_menu']->add('widgets', 'childof:themes')->title('Widgets')->link('orchestra/widgets');
+				static::$cached['orchestra_menu']->add('settings')->title('Settings')->link('orchestra/settings');
 			}
 
 			// In any event where Memory failed to load, we should set Installation status 
@@ -91,10 +100,12 @@ class Core
 		}
 		catch (Exception $e) 
 		{
+			// In any case where Exception is catched, we can be assure that Installation 
+			// is not done/completed, in this case we should use runtime/in-memory setup
 			static::$cached['memory'] = Memory::make('runtime.orchestra');
 			static::$cached['acl']    = Acl::make('orchestra');
 
-			static::$cached['menu']->add('install')->title('Install')->link('orchestra/installer');
+			static::$cached['orchestra_menu']->add('install')->title('Install')->link('orchestra/installer');
 		}
 
 		static::$initiated = true;
@@ -131,8 +142,8 @@ class Core
 	 * @access public
 	 * @return Hybrid\Acl
 	 */
-	public static function menu()
+	public static function menu($type = 'orchestra')
 	{
-		return static::$cached['menu'];
+		return static::$cached["{$type}_menu"] ?: null;
 	}
 }
