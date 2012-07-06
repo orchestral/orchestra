@@ -62,10 +62,18 @@ abstract class Driver
 		return $this->render();
 	}
 
+	/**
+	 * Add item before reference $before
+	 *
+	 * @access protected
+	 * @param  string   $id
+	 * @param  string   $before
+	 * @return Fluent
+	 */
 	protected function add_before($id, $before)
 	{
-		$items    = array();
-		$item     = new Fluent(array(
+		$items = array();
+		$item  = new Fluent(array(
 			'id'     => $id,
 			'childs' => array()
 		));
@@ -92,10 +100,18 @@ abstract class Driver
 		return $item;
 	}
 
+	/**
+	 * Add item after reference $after
+	 *
+	 * @access protected
+	 * @param  string   $id
+	 * @param  string   $after
+	 * @return Fluent
+	 */
 	protected function add_after($id, $after)
 	{
-		$items    = array();
-		$item     = new Fluent(array(
+		$items = array();
+		$item  = new Fluent(array(
 			'id'     => $id,
 			'childs' => array()
 		));
@@ -122,8 +138,19 @@ abstract class Driver
 		return $item;
 	}
 
+	/**
+	 * Add item as child of $parent
+	 *
+	 * @access protected
+	 * @param  string   $id
+	 * @param  string   $parent
+	 * @return Fluent
+	 */
 	protected function add_child($id, $parent)
 	{
+		// it might be possible parent is not defined due to ACL, 
+		// in this case we should simply ignore this request as child 
+		// should inherit parent ACL access
 		if ( ! isset($this->items[$parent])) return null;
 
 		$item = $this->items[$parent]->childs;
@@ -141,7 +168,8 @@ abstract class Driver
 	 * Add item as parent
 	 *
 	 * @access protected
-	 * @param  Fluent
+	 * @param  string   $id
+	 * @return Fluent
 	 */
 	protected function add_parent($id)
 	{
