@@ -107,7 +107,7 @@ class Runner
 			// memory module
 			$memory = Memory::make('fluent.orchestra_options');
 
-			$memory->put('site_name', 'Orchestra');
+			$memory->put('site_name', Input::get('site_name', 'Orchestra'));
 
 			// build basic acl
 			$acl = Acl::make('orchestra', $memory);

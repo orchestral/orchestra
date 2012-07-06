@@ -43,7 +43,8 @@ class Orchestra_Installer_Controller extends Controller
 	public function action_steps($step)
 	{
 		$data = array(
-			'memory'   => $this->memory,
+			'memory'    => $this->memory,
+			'site_name' => 'Orchestra Website',
 		);
 
 		switch (intval($step))
