@@ -59,6 +59,12 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 
 	}
 
+	/**
+	 * Logout the user
+	 *
+	 * @access public
+	 * @return Response
+	 */
 	public function get_logout()
 	{
 		Auth::logout();

@@ -7,6 +7,12 @@ use Orchestra\Core,
 
 class Orchestra_Installer_Controller extends Controller 
 {
+	/**
+	 * Construct Installer Controller with some pre-define configuration 
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function __construct()
 	{
 		parent::__construct();
@@ -19,6 +25,12 @@ class Orchestra_Installer_Controller extends Controller
 		View::share('memory', $memory);
 	}
 
+	/**
+	 * Initiate Installer and show database and environment setting
+	 *
+	 * @access public
+	 * @return Response
+	 */
 	public function action_index() 
 	{
 		Session::flush();
@@ -32,6 +44,8 @@ class Orchestra_Installer_Controller extends Controller
 			$database['password'] = str_repeat('*', $password);
 		}
 
+		// check database connection, we should be able to indicate the user
+		// whether the connection is working or not.
 		$database['status'] = Installer::check_database();
 
 		$data = array(
@@ -42,6 +56,14 @@ class Orchestra_Installer_Controller extends Controller
 		return View::make('orchestra::installer.index', $data);
 	}
 
+	/**
+	 * Installation steps, migrate database as well as create first administration user
+	 * for current application
+	 *
+	 * @access public
+	 * @param  integer $step step number
+	 * @return Response
+	 */
 	public function action_steps($step)
 	{
 		$data = array(
@@ -51,13 +73,19 @@ class Orchestra_Installer_Controller extends Controller
 		switch (intval($step))
 		{
 			case 1 :
+				// step 1 involve running basic database migrations so we can
+				// run Orchestra properly. Extension migration will not be done 
+				// at this point.
 				Runner::install();
+
 				return View::make('orchestra::installer.step1', $data);
 				break;
 
 			case 2 :
 				Session::flush();
 
+				// Step 2 involve creating administation user account for 
+				// current application.
 				if (Runner::create_user())
 				{
 					return View::make('orchestra::installer.step2', $data);
