@@ -27,6 +27,14 @@ class Messages extends Laravel_Messages
 		return $instance;
 	}
 
+	/**
+	 * Retrieve Message instance from Session, the data should be in serialize, so
+	 * we need to unserialize it first.
+	 *
+	 * @static
+	 * @access public
+	 * @return Messages
+	 */
 	public static function retrieve()
 	{
 		$message = null;
