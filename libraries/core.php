@@ -82,7 +82,7 @@ class Core
 			if (static::$cached['acl']->can('manage-users'))
 			{
 				static::$cached['orchestra_menu']->add('users')->title('Users')->link('orchestra/users');
-				static::$cached['orchestra_menu']->add('add-users', 'childof:users')->title('Add Users')->link('orchestra/users/add');
+				static::$cached['orchestra_menu']->add('add-users', 'childof:users')->title('Add Users')->link('orchestra/users/view');
 			}
 
 			// Add menu when user can manage orchestra
