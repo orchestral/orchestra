@@ -49,7 +49,7 @@ Route::any('(:bundle)/(login|register|logout)', function ($action)
 |
 | Detects all controller under Orchestra bundle and register it to routing
  */
-Route::controller(array('orchestra::admin.home'));
+Route::controller(array('orchestra::account', 'orchestra::dashboard', 'orchestra::credential'));
 
 /*
 |--------------------------------------------------------------------------

@@ -34,5 +34,5 @@ if ( ! Bundle::exists('hybrid'))
  */ 
 Event::listen('laravel.started: orchestra', function () 
 {
-	Orchestra\Core::start(); 
+	Orchestra\Core::start();
 });

@@ -52,6 +52,19 @@
 
 		</fieldset>
 
+		<fieldset>
+			<legend>Application Information</legend>
+
+			<div class="control-group {{ $errors->has('site_name') ? 'error' : '' }}">
+				{{ Form::label('site_name', __('orchestra::label.site_name'), array('class' => 'control-label')) }}
+				<div class="controls">
+					{{ Form::input('text', 'site_name', $site_name, array('required' => true, 'class' => 'span4')) }}
+					{{ $errors->first('site_name', '<p class="help-block">:message</p>') }}
+				</div>
+			</div>
+
+		</fieldset>
+
 
 		<div class="form-actions clean">
 			<button type="submit" class="btn btn-primary">Submit</button>
