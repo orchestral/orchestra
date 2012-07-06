@@ -23,10 +23,6 @@ class Installer
 		return static::$status;
 	}
 
-	public static function make() {}
-
-	public function __construct() {}
-
 	public function check($checklist)
 	{
 		switch ($checklist)
@@ -35,10 +31,5 @@ class Installer
 				return DBUtil::database_exists();
 				break;
 		}
-	}
-
-	public function migrate()
-	{
-		
 	}
 }
