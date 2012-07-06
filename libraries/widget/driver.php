@@ -64,24 +64,68 @@ abstract class Driver
 
 	protected function add_before($id, $before)
 	{
+		$items    = array();
+		$item     = new Fluent(array(
+			'id'     => $id,
+			'childs' => array()
+		));
+
 		$keys     = array_keys($this->items);
-		$position = array_search($after, $keys);
+		$position = array_search($before, $keys);
 
 		if (is_null($position)) return $this->add_parent($id);
 
 		if ($position > 0) $position--;
+
+		foreach ($keys as $key => $fluent)
+		{
+			if ($key === $position)
+			{
+				$items[$id] = $item;
+			}
+
+			$items[$fluent] = $this->items[$fluent];
+		}
+
+		$this->items = $items;
+
+		return $item;
 	}
 
 	protected function add_after($id, $after)
 	{
+		$items    = array();
+		$item     = new Fluent(array(
+			'id'     => $id,
+			'childs' => array()
+		));
+
 		$keys     = array_keys($this->items);
 		$position = array_search($after, $keys);
 
 		if (is_null($position)) return $this->add_parent($id);
+
+		$position++;
+
+		foreach ($keys as $key => $fluent)
+		{
+			if ($key === $position)
+			{
+				$items[$id] = $item;
+			}
+
+			$items[$fluent] = $this->items[$fluent];
+		}
+
+		$this->items = $items;
+
+		return $item;
 	}
 
 	protected function add_child($id, $parent)
 	{
+		if ( ! isset($this->items[$parent])) return null;
+
 		$item = $this->items[$parent]->childs;
 
 		$item[$id] = new Fluent(array(
@@ -126,7 +170,7 @@ abstract class Driver
 				break;
 			
 			case count($matches) >= 3 and $matches[1] === 'after' :
-				return $this->add_before($id, $matches[2]);
+				return $this->add_after($id, $matches[2]);
 				break;
 
 			case count($matches) >= 3 and in_array($matches[1], array('childof', 'child_of')) :

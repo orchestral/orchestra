@@ -71,10 +71,18 @@ class Core
 			
 			static::$cached['menu']->add('home')->title('Home')->link('orchestra');
 
+			if (static::$cached['acl']->can('manage-users'))
+			{
+				static::$cached['menu']->add('users')->title('Users')->link('orchestra/users');
+				static::$cached['menu']->add('add-users', 'childof:users')->title('Add Users')->link('orchestra/users/add');
+			}
+
 			if (static::$cached['acl']->can('manage-orchestra'))
 			{
-				static::$cached['menu']->add('update', 'childof:home')->title('Updates')->link('orchestra');
-				static::$cached['menu']->add('users')->title('Users')->link('orchestra/users');
+				static::$cached['menu']->add('themes', 'after:home')->title('Themes')->link('orchestra/themes');
+				static::$cached['menu']->add('menus', 'childof:themes')->title('Menus')->link('orchestra/menus');
+				static::$cached['menu']->add('widgets', 'childof:themes')->title('Widgets')->link('orchestra/widgets');
+				static::$cached['menu']->add('settings')->title('Settings')->link('orchestra/settings');
 			}
 
 			// In any event where Memory failed to load, we should set Installation status 

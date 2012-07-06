@@ -4,15 +4,15 @@ use \Exception, Orchestra\Installer\Runner;
 
 class Orchestra_Installer_Controller extends Controller 
 {
-	protected $memory = null;
-
 	public function __construct()
 	{
 		parent::__construct();
 
-		$this->memory = Orchestra\Core::memory();
-		$this->memory->put('site_name', 'Orchestra Installer');
+		$memory = Orchestra\Core::memory();
+		$memory->put('site_name', 'Orchestra Installer');
 		Config::set('orchestra::navigation.show-user-box', false);
+
+		View::share('memory', $memory);
 	}
 
 	public function action_index() 
@@ -31,7 +31,6 @@ class Orchestra_Installer_Controller extends Controller
 		$database['status'] = Runner::check_database();
 
 		$data = array(
-			'memory'   => $this->memory,
 			'database' => $database,
 			'auth'     => $auth,
 		);
@@ -42,7 +41,6 @@ class Orchestra_Installer_Controller extends Controller
 	public function action_steps($step)
 	{
 		$data = array(
-			'memory'    => $this->memory,
 			'site_name' => 'Orchestra Website',
 		);
 

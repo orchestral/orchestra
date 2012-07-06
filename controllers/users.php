@@ -9,6 +9,7 @@ class Orchestra_Users_Controller extends Controller
 		parent::__construct();
 
 		$this->filter('before', 'orchestra::installed');
+		$this->filter('before', 'orchestra::manage-users');
 
 		View::share('memory', Orchestra\Core::memory());
 	}
@@ -24,6 +25,7 @@ class Orchestra_Users_Controller extends Controller
 			$table->with($users, true);
 
 			$table->column('id');
+			$table->column('Fullname', 'fullname');
 			$table->column('email', function ($column) {
 				$column->heading = 'E-mail Address';
 				$column->value   = function ($row) {
@@ -40,8 +42,9 @@ class Orchestra_Users_Controller extends Controller
 		});
 
 		$data = array(
-			'model' => $users,
-			'table' => $table,
+			'model'         => $users,
+			'table'         => $table,
+			'resource_name' => 'Users',
 		);
 
 		return View::make('orchestra::dashboard.resources', $data);

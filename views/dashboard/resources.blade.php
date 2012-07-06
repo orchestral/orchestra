@@ -1,5 +1,14 @@
 @layout('orchestra::layout.main-fluent')
 
 @section('content')
-{{ $table }}
+
+<div class="rows">
+
+	<div class="page-header">
+		<h2>{{ $resource_name }}</h2>
+	</div>
+
+	{{ $table }}
+</div>
+
 @endsection

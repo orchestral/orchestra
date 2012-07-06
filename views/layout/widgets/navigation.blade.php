@@ -1,6 +1,6 @@
 <div class="navbar navbar-fixed-top">
 	<div class="navbar-inner">
-		<div class="container">
+		<div class="container{{ isset($fluent_layout) ? '-fluid' : '' }}">
 			<section class="nav-collapse">
 				
 				{{ HTML::link('orchestra', $memory->get('site_name'), array('class' => 'brand')) }}

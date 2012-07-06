@@ -27,6 +27,7 @@
 	</head>
 
 	<body>
+		<?php $fluent_layout = true; ?>
 		@include('orchestra::layout.widgets.navigation')
 
 		<section class="container-fluid">

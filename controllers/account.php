@@ -9,7 +9,8 @@ class Orchestra_Account_Controller extends Controller
 		parent::__construct();
 
 		$this->filter('before', 'orchestra::installed');
-
+		$this->filter('before', 'orchestra::auth');
+		
 		View::share('memory', Orchestra\Core::memory());
 	}
 

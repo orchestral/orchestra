@@ -1,4 +1,4 @@
-@layout('orchestra::layout.main')
+@layout('orchestra::layout.main-fluent')
 
 @section('content')
 

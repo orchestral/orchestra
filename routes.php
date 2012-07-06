@@ -63,6 +63,18 @@ Route::filter('orchestra::auth', function ()
 	if (Auth::guest()) return Redirect::to('orchestra/login');
 });
 
+Route::filter('orchestra::manage-users', function ()
+{
+	// Redirect the user to login page if he/she is not logged in.
+	if ( ! Orchestra\Core::acl()->can('manage-users')) return Redirect::to('orchestra/login');
+});
+
+Route::filter('orchestra::manage', function ()
+{
+	// Redirect the user to login page if he/she is not logged in.
+	if ( ! Orchestra\Core::acl()->can('manage-orchestra')) return Redirect::to('orchestra/login');
+});
+
 Route::filter('orchestra::installed', function ()
 {
 	// we should run installer when the system 
