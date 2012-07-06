@@ -212,7 +212,7 @@ class Runner
 				$table->increments('id');
 
 				$table->string('name', 255);
-				$table->text('value');
+				$table->blob('value');
 
 				// add timestamp created_at and updated_at
 				$table->timestamps();
