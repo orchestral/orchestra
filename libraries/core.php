@@ -1,8 +1,7 @@
 <?php namespace Orchestra;
 
-use \Exception, 
-	Hybrid\Acl,
-	Hybrid\Memory;
+use \Config, \Exception, 
+	Hybrid\Acl, Hybrid\Memory;
 
 class Core
 {
@@ -34,6 +33,22 @@ class Core
 	 */
 	public static function start()
 	{
+		static::$cached['menu'] = Widget::make('menu.orchestra');
+
+		// rebuild hybrid auth configuration
+		Config::set('hybrid::auth.roles', function ($user_id, $roles)
+		{
+			// in situation config is not a closure, we will use a basic convention structure.
+			$user = Model\User::with('roles')->find($user_id);
+
+			foreach ($user->roles as $role)
+			{
+				array_push($roles, $role->name);
+			}
+
+			return $roles;
+		});
+
 		// avoid current method from being called more than once.
 		if (true === static::$initiated) return ;
 
@@ -43,7 +58,7 @@ class Core
 			static::$cached['memory'] = Memory::make('fluent.orchestra_options');
 
 			// Initiate ACL class with available memory.
-			static::$cached['acl']    = Acl::make('orchestra', static::$cached['memory']);
+			static::$cached['acl']    = Acl::make('orchestra');
 
 			$users = Model\User::all();
 
@@ -52,13 +67,26 @@ class Core
 				throw new Exception('User table is empty');
 			}
 
+			static::$cached['acl']->attach(static::$cached['memory']);
+			
+			static::$cached['menu']->add('home')->title('Home')->link('orchestra');
+
+			if (static::$cached['acl']->can('manage-orchestra'))
+			{
+				static::$cached['menu']->add('update', 'childof:home')->title('Updates')->link('orchestra');
+				static::$cached['menu']->add('users')->title('Users')->link('orchestra/users');
+			}
+
 			// In any event where Memory failed to load, we should set Installation status 
 			// to false routing for installation is enabled.
 			Installer::$status = true;
 		}
-		catch (Exception $e)
+		catch (Exception $e) 
 		{
+			static::$cached['memory'] = Memory::make('runtime.orchestra');
+			static::$cached['acl']    = Acl::make('orchestra');
 
+			static::$cached['menu']->add('install')->title('Install')->link('orchestra/installer');
 		}
 
 		static::$initiated = true;
@@ -73,7 +101,7 @@ class Core
 	 */
 	public static function memory()
 	{
-		return isset(static::$cached['memory']) ? static::$cached['memory'] : Memory::make('runtime.orchestra');
+		return isset(static::$cached['memory']) ? static::$cached['memory'] : null;
 	}
 
 	/**
@@ -85,6 +113,18 @@ class Core
 	 */
 	public static function acl()
 	{
-		return isset(static::$cached['acl']) ? static::$cached['acl'] : Acl::make('orchestra');
+		return isset(static::$cached['acl']) ? static::$cached['acl'] : null;
+	}
+
+	/**
+	 * Get Menu instance for Orchestra
+	 *
+	 * @static
+	 * @access public
+	 * @return Hybrid\Acl
+	 */
+	public static function menu()
+	{
+		return static::$cached['menu'];
 	}
 }

@@ -52,6 +52,7 @@ class Orchestra_Credential_Controller extends Controller
 	{
 		Auth::logout();
 		
-		return $this->get_login();
+		return Redirect::to('orchestra/login')
+				->with('message', Orchestra\Messages::make('success', 'You have been logged out')->serialize());
 	}
 }

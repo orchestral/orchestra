@@ -4,7 +4,6 @@ use \Exception, Orchestra\Installer\Runner;
 
 class Orchestra_Installer_Controller extends Controller 
 {
-
 	protected $memory = null;
 
 	public function __construct()

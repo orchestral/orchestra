@@ -29,7 +29,7 @@
 	<body>
 		@include('orchestra::layout.widgets.navigation')
 
-		<section class="container">
+		<section class="container-fluid">
 
 		<?php $message = Orchestra\Messages::retrieve(); ?>
 

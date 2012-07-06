@@ -110,12 +110,19 @@ class Runner
 			$memory->put('site_name', Input::get('site_name', 'Orchestra'));
 
 			// build basic acl
-			$acl = Acl::make('orchestra', $memory);
+			$acl = Acl::make('orchestra');
+			$acl->attach($memory);
+
+			$actions = array(
+				'manage orchestra',
+				'manage users',
+			);
 
 			$acl->add_role('Administrator');
-			$acl->add_action('manage-orchestra');
+			$acl->add_actions($actions);
 
-			$acl->allow('Administrator', 'manage-orchestra');
+			$acl->allow('Administrator', $actions);
+			
 
 			static::$message->add('success', "User created, you can now login to the administation page");
 		} 
@@ -196,7 +203,7 @@ class Runner
 				$table->increments('id');
 
 				$table->string('name', 255);
-				$table->blob('value');
+				$table->text('value');
 
 				// add timestamp created_at and updated_at
 				$table->timestamps();

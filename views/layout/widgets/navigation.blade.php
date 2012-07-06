@@ -5,7 +5,7 @@
 				
 				{{ HTML::link('orchestra', $memory->get('site_name'), array('class' => 'brand')) }}
 
-				@yield('navigation')
+				{{ render('orchestra::layout.widgets.menu', array('menu' => Orchestra\Core::menu())) }}
 				
 				@if (Config::get('orchestra::navigation.show-user-box', true))
 				<ul class="nav pull-right">

@@ -22,7 +22,7 @@ Route::any('(:bundle)/installer/?(:any)?/?(:num)?', function ($action = 'index',
 | Default Routing
 |--------------------------------------------------------------------------
  */
-Route::any('(:bundle)', array('before' => 'orchestra::auth', function ()
+Route::any('(:bundle)', array('before' => 'orchestra::installed|orchestra::auth', function ()
 {
 	// we should run installer when the system 
 	// detect it's already running/installed.
@@ -49,7 +49,7 @@ Route::any('(:bundle)/(login|register|logout)', function ($action)
 |
 | Detects all controller under Orchestra bundle and register it to routing
  */
-Route::controller(array('orchestra::account', 'orchestra::dashboard', 'orchestra::credential'));
+Route::controller(array('orchestra::account', 'orchestra::dashboard', 'orchestra::credential', 'orchestra::users'));
 
 /*
 |--------------------------------------------------------------------------
