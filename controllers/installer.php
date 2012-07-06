@@ -8,10 +8,11 @@ class Orchestra_Installer_Controller extends Controller
 	{
 		parent::__construct();
 
-		$memory = Orchestra\Core::memory();
-		$memory->put('site_name', 'Orchestra Installer');
 		Config::set('orchestra::navigation.show-user-box', false);
 
+		$memory = Orchestra\Core::memory();
+		$memory->put('site_name', 'Orchestra Installer');
+		
 		View::share('memory', $memory);
 	}
 
