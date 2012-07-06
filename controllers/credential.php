@@ -1,14 +1,26 @@
 <?php
 
+use Orchestra\Messages;
+
 class Orchestra_Credential_Controller extends Orchestra\Controller
 {
-	public $restful = true;
-
+	/**
+	 * Login Page
+	 *
+	 * @access public
+	 * @return Response
+	 */
 	public function get_login()
 	{
 		return View::make('orchestra::credential.login');
 	}
 
+	/**
+	 * POST Login
+	 *
+	 * @access public
+	 * @return Response
+	 */
 	public function post_login()
 	{
 		$input = Input::all();
@@ -19,6 +31,8 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 
 		$v = Validator::make($input, $rules);
 
+		// Validate user login, if any errors is found redirect 
+		// it back to login page with the errors
 		if ($v->fails())
 		{
 			return Redirect::to('orchestra/login')
@@ -26,15 +40,21 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 					->with_errors($v);
 		}
 
-		if (Auth::attempt(array('username' => $input['email'], 'password' => $input['password'])))
+		$attempt = array(
+			'username' => $input['email'], 
+			'password' => $input['password']
+		);
+
+		// We should now attempt to login the user using Auth class, 
+		if (Auth::attempt($attempt))
 		{
 			return Redirect::to('orchestra')
-					->with('message', Orchestra\Messages::make('success', 'User has been logged in')->serialize());
+					->with('message', Messages::make('success', 'User has been logged in')->serialize());
 		}
 		else 
 		{
 			return Redirect::to('orchestra/login')
-					->with('message', Orchestra\Messages::make('error', 'Invalid e-mail address and password combination')->serialize());
+					->with('message', Messages::make('error', 'Invalid e-mail address and password combination')->serialize());
 		}
 
 	}
@@ -44,6 +64,6 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 		Auth::logout();
 		
 		return Redirect::to('orchestra/login')
-				->with('message', Orchestra\Messages::make('success', 'You have been logged out')->serialize());
+				->with('message', Messages::make('success', 'You have been logged out')->serialize());
 	}
 }

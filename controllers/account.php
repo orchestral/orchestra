@@ -1,5 +1,7 @@
 <?php
 
+use Orchestra\Model\User;
+
 class Orchestra_Account_Controller extends Orchestra\Controller
 {
 	/**
@@ -28,14 +30,14 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 		$auth = Auth::user();
 
 		$data = array(
-			'user' => Orchestra\Model\User::find($auth->id),
+			'user' => User::find($auth->id),
 		);
 
 		return View::make('orchestra::account.profile', $data);
 	}
 
 	/**
-	 * Edit User Profile
+	 * POST Edit User Profile
 	 *
 	 * @access public
 	 * @return Response
@@ -56,14 +58,14 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 		$auth = Auth::user();
 
 		$data = array(
-			'user' => Orchestra\Model\User::find($auth->id),
+			'user' => User::find($auth->id),
 		);
 
 		return View::make('orchestra::account.password', $data);
 	}
 
 	/**
-	 * Edit User Password
+	 * POST Edit User Password
 	 *
 	 * @access public
 	 * @return Response
