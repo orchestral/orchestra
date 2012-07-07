@@ -9,9 +9,12 @@
  */
 Route::any('(:bundle)/installer/?(:any)?/?(:num)?', function ($action = 'index', $steps = 0) 
 {
-	// we should disable this routing when the system 
-	// detect it's already running/installed.
-	if (Orchestra\Installer::installed() and (!($action === 'steps' && intval($steps) === 2))) return Response::error('404');
+	// we should disable this routing when the system detect it's already 
+	// running/installed.
+	if (Orchestra\Installer::installed() and (!($action === 'steps' && intval($steps) === 2)))
+	{
+		return Response::error('404');
+	}
 
 	// Otherwise, install it right away.
 	return Controller::call("orchestra::installer@{$action}", array($steps));
@@ -60,25 +63,34 @@ Route::controller(array(
  */
 Route::filter('orchestra::auth', function ()
 {
-	// Redirect the user to login page if he/she is not logged in.
+	// Redirect the user to login page if user is not logged in.
 	if (Auth::guest()) return Redirect::to('orchestra/login');
 });
 
 Route::filter('orchestra::manage-users', function ()
 {
-	// Redirect the user to login page if he/she is not logged in.
-	if ( ! Orchestra\Core::acl()->can('manage-users')) return Redirect::to('orchestra/login');
+	// Redirect the user to login page if user is not logged in.
+	if ( ! Orchestra\Core::acl()->can('manage-users')) 
+	{
+		return Redirect::to('orchestra/login');
+	}
 });
 
 Route::filter('orchestra::manage', function ()
 {
-	// Redirect the user to login page if he/she is not logged in.
-	if ( ! Orchestra\Core::acl()->can('manage-orchestra')) return Redirect::to('orchestra/login');
+	// Redirect the user to login page if user is not logged in.
+	if ( ! Orchestra\Core::acl()->can('manage-orchestra')) 
+	{
+		return Redirect::to('orchestra/login');
+	}
 });
 
 Route::filter('orchestra::installed', function ()
 {
-	// we should run installer when the system 
-	// detect it's already running/installed.
-	if ( ! Orchestra\Installer::installed()) return Redirect::to_action("orchestra::installer@index");
+	// we should run installer when the system detect it's already 
+	// running/installed.
+	if ( ! Orchestra\Installer::installed()) 
+	{
+		return Redirect::to_action("orchestra::installer@index");
+	}
 });

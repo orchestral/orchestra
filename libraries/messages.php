@@ -28,8 +28,8 @@ class Messages extends Laravel_Messages
 	}
 
 	/**
-	 * Retrieve Message instance from Session, the data should be in serialize, so
-	 * we need to unserialize it first.
+	 * Retrieve Message instance from Session, the data should be in 
+	 * serialize, so we need to unserialize it first.
 	 *
 	 * @static
 	 * @access public

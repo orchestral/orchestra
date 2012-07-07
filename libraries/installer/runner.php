@@ -101,8 +101,8 @@ class Runner
 			}
 
 
-			// Before we create administrator, we should ensure that users table is empty
-			// to avoid any possible hijack or invalid request.
+			// Before we create administrator, we should ensure that users 
+			// table is empty to avoid any possible hijack or invalid request.
 			$all = User::all();
 
 			if ( ! empty($all))
@@ -118,7 +118,8 @@ class Runner
 				'status'   => 0,
 			));
 
-			// Attach Administrator role to the newly created administrator account.
+			// Attach Administrator role to the newly created administrator 
+			// account.
 			$user->roles()->insert(new Role(array('name' => 'Administrator')));
 
 			// Make a new instance of Memory using `orchestra_options` table.
@@ -130,7 +131,8 @@ class Runner
 			// We should also create a basic ACL for Orchestra.
 			$acl = Acl::make('orchestra')
 
-			// attach memory instance, this allow the acl to be saved to database
+			// attach memory instance, this allow the acl to be saved to 
+			// database
 			$acl->attach($memory);
 
 			$actions = array(
@@ -143,8 +145,9 @@ class Runner
 
 			$acl->allow('Administrator', $actions);
 
-			// Installation is successful, we should be able to generate success message 
-			// to notify the user. Installer route will be disabled after this point.
+			// Installation is successful, we should be able to generate 
+			// success message to notify the user. Installer route will be 
+			// disabled after this point.
 			static::$message->add('success', "User created, you can now login to the administation page");
 		} 
 		catch (Exception $e) 

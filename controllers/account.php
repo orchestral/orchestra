@@ -5,9 +5,8 @@ use Orchestra\Model\User;
 class Orchestra_Account_Controller extends Orchestra\Controller
 {
 	/**
-	 * Construct Account Controller to allow user 
-	 * to update own profile. Only authenticated user 
-	 * should be able to access this controller.
+	 * Construct Account Controller to allow user to update own profile. Only 
+	 * authenticated user should be able to access this controller.
 	 *
 	 * @access public
 	 * @return void
@@ -44,7 +43,11 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 	 */
 	public function post_index()
 	{
-
+		$input = Input::all();
+		$rules = array(
+			'email'    => array('required', 'email'),
+			'fullname' => array('required'),
+		);
 	}
 
 	/**

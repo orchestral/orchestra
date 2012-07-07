@@ -23,9 +23,8 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 	 */
 	public function get_index()
 	{
-		// Get Users (with roles) and limit it to only 30 results
-		// for pagination. Don't you just love it when pagination 
-		// simply works.
+		// Get Users (with roles) and limit it to only 30 results for 
+		// pagination. Don't you just love it when pagination simply works.
 		$users = Orchestra\Model\User::with('roles')->paginate(30);
 
 		// Build users table HTML using a schema liked code structure.

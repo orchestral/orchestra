@@ -31,8 +31,8 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 
 		$v = Validator::make($input, $rules);
 
-		// Validate user login, if any errors is found redirect 
-		// it back to login page with the errors
+		// Validate user login, if any errors is found redirect it back to 
+		// login page with the errors
 		if ($v->fails())
 		{
 			return Redirect::to('orchestra/login')
@@ -45,16 +45,22 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 			'password' => $input['password']
 		);
 
+		$m = new Message;
+
 		// We should now attempt to login the user using Auth class, 
 		if (Auth::attempt($attempt))
 		{
+			$m->add('success', 'User has been logged in');
+
 			return Redirect::to('orchestra')
-					->with('message', Messages::make('success', 'User has been logged in')->serialize());
+					->with('message', $m->serialize());
 		}
 		else 
 		{
+			$m->add('error', 'Invalid e-mail address and password combination');
+
 			return Redirect::to('orchestra/login')
-					->with('message', Messages::make('error', 'Invalid e-mail address and password combination')->serialize());
+					->with('message', $m->serialize());
 		}
 
 	}
@@ -68,8 +74,11 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 	public function get_logout()
 	{
 		Auth::logout();
+
+		$m = new Messages;
+		$m->add('success', 'You have been logged out');
 		
 		return Redirect::to('orchestra/login')
-				->with('message', Messages::make('success', 'You have been logged out')->serialize());
+				->with('message', $m->serialize());
 	}
 }

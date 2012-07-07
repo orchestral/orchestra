@@ -17,7 +17,8 @@ Autoloader::namespaces(array(
 | Load dependencies
 |--------------------------------------------------------------------------
 |
-| Register and start Hybrid bundle if it's not registered in application/bundles.php
+| Register and start Hybrid bundle if it's not registered in 
+| application/bundles.php
  */
 if ( ! Bundle::exists('hybrid'))
 {

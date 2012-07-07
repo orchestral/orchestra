@@ -35,16 +35,18 @@ class Orchestra_Installer_Controller extends Controller
 	{
 		Session::flush();
 
-		$database = Config::get('database.connections.'.Config::get('database.default', 'mysql'), array());
+		$driver   = Config::get('database.default', 'mysql');
+		$database = Config::get('database.connections.'.$driver, array());
 		$auth     = Config::get('auth');
 
 		// for security, we shouldn't expose database connection to anyone.
-		if (isset($database['password']) and ($password = strlen($database['password'])))
+		if (isset($database['password']) 
+			and ($password = strlen($database['password'])))
 		{
 			$database['password'] = str_repeat('*', $password);
 		}
 
-		// check database connection, we should be able to indicate the user
+		// check database connection, we should be able to indicate the user 
 		// whether the connection is working or not.
 		$database['status'] = Installer::check_database();
 
@@ -57,8 +59,8 @@ class Orchestra_Installer_Controller extends Controller
 	}
 
 	/**
-	 * Installation steps, migrate database as well as create first administration user
-	 * for current application
+	 * Installation steps, migrate database as well as create first 
+	 * administration user for current application
 	 *
 	 * @access public
 	 * @param  integer $step step number
@@ -73,9 +75,9 @@ class Orchestra_Installer_Controller extends Controller
 		switch (intval($step))
 		{
 			case 1 :
-				// step 1 involve running basic database migrations so we can
-				// run Orchestra properly. Extension migration will not be done 
-				// at this point.
+				// step 1 involve running basic database migrations so we can 
+				// run Orchestra properly. Extension migration will not be 
+				// done at this point.
 				Runner::install();
 
 				return View::make('orchestra::installer.step1', $data);

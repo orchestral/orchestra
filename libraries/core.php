@@ -67,7 +67,7 @@ class Core
 			$users = Model\User::all();
 
 			// Administator account will be added at the last step during 
-			// installation, so it's possible no Exception has occur till 
+			// installation, so it's possible no Exception has occur until  
 			// this point. We should manually throw an exception when 
 			// users table is empty.
 			if (empty($users))
@@ -75,8 +75,9 @@ class Core
 				throw new Exception('User table is empty');
 			}
 
-			// In event where we reach this point, we can consider no exception has
-			// occur, we should be able to compile acl and menu configuration
+			// In event where we reach this point, we can consider no 
+			// exception has occur, we should be able to compile acl and menu 
+			// configuration
 			static::$cached['acl']->attach(static::$cached['memory']);
 			
 			// Add basic menu.
@@ -98,14 +99,16 @@ class Core
 				static::$cached['orchestra_menu']->add('settings')->title('Settings')->link('orchestra/settings');
 			}
 
-			// In any event where Memory failed to load, we should set Installation status 
-			// to false routing for installation is enabled.
+			// In any event where Memory failed to load, we should set 
+			// Installation status to false routing for installation is 
+			// enabled.
 			Installer::$status = true;
 		}
 		catch (Exception $e) 
 		{
-			// In any case where Exception is catched, we can be assure that Installation 
-			// is not done/completed, in this case we should use runtime/in-memory setup
+			// In any case where Exception is catched, we can be assure that
+			// Installation is not done/completed, in this case we should use 
+			// runtime/in-memory setup
 			static::$cached['memory'] = Memory::make('runtime.orchestra');
 
 			static::$cached['orchestra_menu']->add('install')->title('Install')->link('orchestra/installer');
