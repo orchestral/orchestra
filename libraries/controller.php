@@ -22,6 +22,7 @@ class Controller extends Base_Controller
 	{
 		parent::__construct();
 
+		// All controller should be accessible only after Orchestra is installed.
 		$this->filter('before', 'orchestra::installed');
 
 		View::share('fluent_layout', true);

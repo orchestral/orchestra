@@ -36,7 +36,7 @@ class Installer
 	{
 		try
 		{
-			$pdo = DB::connection(Config::get('database.default'))->pdo;
+			DB::connection(Config::get('database.default'))->pdo;
 			return true;
 		}
 		catch (Exception $e)

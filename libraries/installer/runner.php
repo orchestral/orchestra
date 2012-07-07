@@ -33,7 +33,6 @@ class Runner
 		static::$message = Session::has('message') ? unserialize(Session::get('message', "")) : null;
 
 		if ( ! (static::$message instanceof Messages)) static::$message = new Messages;
-
 	}
 
 	/**
@@ -59,9 +58,9 @@ class Runner
 	{
 		static::initiate();
 
-		static::install_migrations();
-		static::install_options();
-		static::install_users();
+		static::install_migrations_schema();
+		static::install_options_schema();
+		static::install_users_schema();
 
 		static::shutdown();
 
@@ -81,14 +80,9 @@ class Runner
 
 		static::initiate();
 
-		try {
-			$all = User::all();
-
-			if ( ! empty($all))
-			{
-				throw new Exception('Unable to install when there already user registered');
-			}
-
+		try 
+		{
+			// Grab input fields and define the rules for user validations.
 			$input = Input::all();
 			$rules = array(
 				'email'    => array('required', 'email'),
@@ -98,12 +92,25 @@ class Runner
 
 			$v = Validator::make($input, $rules);
 
+			// Validate user registration, we should stop this process
+			// if the user not properly formatted.
 			if ($v->fails())
 			{
 				Session::flash('errors', $v->errors);
 				return false;
 			}
 
+
+			// Before we create administrator, we should ensure that users table is empty
+			// to avoid any possible hijack or invalid request.
+			$all = User::all();
+
+			if ( ! empty($all))
+			{
+				throw new Exception('Unable to install when there already user registered');
+			}
+
+			// Create administator user
 			$user = User::create(array(
 				'email'    => $input['email'],
 				'password' => Hash::make($input['password']),
@@ -111,15 +118,19 @@ class Runner
 				'status'   => 0,
 			));
 
+			// Attach Administrator role to the newly created administrator account.
 			$user->roles()->insert(new Role(array('name' => 'Administrator')));
 
-			// memory module
+			// Make a new instance of Memory using `orchestra_options` table.
 			$memory = Memory::make('fluent.orchestra_options');
 
+			// Save the default application site_name.
 			$memory->put('site_name', Input::get('site_name', 'Orchestra'));
 
-			// build basic acl
-			$acl = Acl::make('orchestra');
+			// We should also create a basic ACL for Orchestra.
+			$acl = Acl::make('orchestra')
+
+			// attach memory instance, this allow the acl to be saved to database
 			$acl->attach($memory);
 
 			$actions = array(
@@ -131,8 +142,9 @@ class Runner
 			$acl->add_actions($actions);
 
 			$acl->allow('Administrator', $actions);
-			
 
+			// Installation is successful, we should be able to generate success message 
+			// to notify the user. Installer route will be disabled after this point.
 			static::$message->add('success', "User created, you can now login to the administation page");
 		} 
 		catch (Exception $e) 
@@ -153,7 +165,7 @@ class Runner
 	 * @access protected
 	 * @return void
 	 */
-	protected static function install_migrations()
+	protected static function install_migrations_schema()
 	{
 		try 
 		{
@@ -195,7 +207,7 @@ class Runner
 	 * @access protected
 	 * @return void
 	 */
-	protected static function install_options()
+	protected static function install_options_schema()
 	{
 		try
 		{
@@ -231,7 +243,7 @@ class Runner
 	 * @access protected
 	 * @return void
 	 */
-	protected static function install_users()
+	protected static function install_users_schema()
 	{
 		try
 		{

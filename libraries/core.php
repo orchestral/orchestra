@@ -66,6 +66,10 @@ class Core
 
 			$users = Model\User::all();
 
+			// Administator account will be added at the last step during 
+			// installation, so it's possible no Exception has occur till 
+			// this point. We should manually throw an exception when 
+			// users table is empty.
 			if (empty($users))
 			{
 				throw new Exception('User table is empty');
