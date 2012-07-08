@@ -176,8 +176,8 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 
 		$m = Orchestra\Messages::make('success', __("response.users.{$type}"));
 
-		return Redirect::to('orchestra/users')->with('message', $m->serialize());
-
+		return Redirect::to('orchestra/users')
+				->with('message', $m->serialize());
 	}
 
 	/**
