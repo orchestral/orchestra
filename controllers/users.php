@@ -28,7 +28,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		$users = Orchestra\Model\User::with('roles')->paginate(30);
 
 		// Build users table HTML using a schema liked code structure.
-		$table = Hybrid\Table::make(function ($table) use ($users)
+		$table = Hybrid\Table::of('orchestra.user', function ($table) use ($users)
 		{
 			// Add HTML attributes option for the table.
 			$table->attr('class', 'table table-bordered table-striped');
@@ -55,12 +55,12 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		});
 
 		$data = array(
-			'model'         => $users,
+			'eloquent'      => $users,
 			'table'         => $table,
 			'resource_name' => 'Users',
 		);
 
-		return View::make('orchestra::dashboard.resources', $data);
+		return View::make('orchestra::resources.index', $data);
 	}
 
 	/**
@@ -70,7 +70,37 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 	 * @param  integer $id
 	 * @return Response
 	 */
-	public function get_view($id = null) {}
+	public function get_view($id = null) 
+	{
+		$user = Orchestra\Model\User::find($id);
+
+		if (is_null($user))
+		{
+			$user = new Orchestra\Model\User;
+		}
+
+		$form = Hybrid\Form::of('orchestra.user', function ($form) use ($user)
+		{
+			$form->row($user);
+			$form->attr(array(
+				'action' => URL::to('orchestra/users/view/'.$user->id),
+				'method' => 'POST',
+			));
+
+			$form->fieldset('Information', function ($fieldset)
+			{
+				$fieldset->control('input:text', 'E-mail Address', 'email');
+			});
+		});
+
+		$data = array(
+			'eloquent'      => $user,
+			'form'          => $form,
+			'resource_name' => 'User',
+		);
+
+		return View::make('orchestra::resources.edit', $data);
+	}
 
 	/**
 	 * POST A User (either create or update)
