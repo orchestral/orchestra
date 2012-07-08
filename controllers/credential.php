@@ -45,7 +45,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 			'password' => $input['password']
 		);
 
-		$m = new Message;
+		$m = new Messages;
 
 		// We should now attempt to login the user using Auth class, 
 		if (Auth::attempt($attempt))
