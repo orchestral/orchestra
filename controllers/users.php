@@ -28,8 +28,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		$users = Orchestra\Model\User::with('roles')->paginate(30);
 
 		// Build users table HTML using a schema liked code structure.
-		$table = Hybrid\Table::of('orchestra.user', function ($table) use ($users)
-		{
+		$table = Hybrid\Table::of('orchestra.user', function ($table) use ($users) {
 			// Add HTML attributes option for the table.
 			$table->attr('class', 'table table-bordered table-striped');
 
@@ -49,7 +48,11 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 			$table->column('action', function ($column) {
 				$column->heading = '';
 				$column->value   = function ($row) {
-					return HTML::link('orchestra/users/view/'.$row->id, 'Edit');
+					return '
+					<div class="btn-group">
+						<a class="btn btn-mini" href="'.URL::to('orchestra/users/view/'.$row->id).'">Edit</a>
+						<a class="btn btn-mini btn-danger" href="'.URL::to('orchestra/users/delete/'.$row->id).'">Delete</a>
+					</div>';
 				};
 			});
 		});
@@ -74,22 +77,43 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 	{
 		$user = Orchestra\Model\User::find($id);
 
-		if (is_null($user))
-		{
-			$user = new Orchestra\Model\User;
-		}
+		if (is_null($user)) $user = new Orchestra\Model\User;
 
-		$form = Hybrid\Form::of('orchestra.user', function ($form) use ($user)
-		{
+		$form = Hybrid\Form::of('orchestra.user', function ($form) use ($user) {
 			$form->row($user);
 			$form->attr(array(
 				'action' => URL::to('orchestra/users/view/'.$user->id),
 				'method' => 'POST',
 			));
 
-			$form->fieldset('Information', function ($fieldset)
-			{
+			$form->fieldset(function ($fieldset) {
 				$fieldset->control('input:text', 'E-mail Address', 'email');
+				$fieldset->control('input:text', 'fullname');
+
+				$fieldset->control('input:password', 'password', function ($control) {
+					$control->field = function ($row, $control) {
+						return Form::password($control->name);
+					};
+				});
+
+				$fieldset->control('select', 'roles', function ($control) {
+					$options = array();
+
+					foreach (Orchestra\Model\Role::all() as $role) {
+						$options[$role->id] = $role->name;
+					}
+
+					$control->field = function ($row, $self) use ($options) {
+						// get all the user roles from objects
+						$roles = array();
+
+						foreach ($row->{$self->name} as $row) {
+							$roles[] = $row->id;
+						}
+
+						return Form::select('roles[]', $options, $roles, array('multiple' => true));
+					};
+				});
 			});
 		});
 
@@ -109,7 +133,52 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 	 * @param  integer $id
 	 * @return Response
 	 */
-	public function post_view($id = null) {}
+	public function post_view($id = null) 
+	{
+		$input = Input::all();
+		$rules = array(
+			'email'    => array('required', 'email'),
+			'fullname' => array('required'),
+			'roles'    => array('required'),
+		);
+
+		$v = Validator::make($input, $rules);
+
+		if ($v->fails())
+		{
+			return Redirect::to('orchestra/users/view/'.$id)
+					->with_input()
+					->with_errors($v);
+		}
+
+		$type  = 'updated';
+		$user  = Orchestra\Model\User::find($id);
+
+		if (is_null($user)) 
+		{
+			$type = 'created';
+			$user = new Orchestra\Model\User(array(
+				'password' => Hash::make($input['password'] ?: ''),
+			));
+		}
+
+		$user->fullname = $input['fullname'];
+		$user->email    = $input['email'];
+		
+		if ( ! empty($input['password'])) 
+		{
+			$user->password = Hash::make($input['password']);
+		}
+		
+		$user->save();
+
+		$user->roles()->sync($input['roles']);
+
+		$m = Orchestra\Messages::make('success', __("response.users.{$type}"));
+
+		return Redirect::to('orchestra/users')->with('message', $m->serialize());
+
+	}
 
 	/**
 	 * POST A User (either create or update)

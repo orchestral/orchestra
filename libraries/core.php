@@ -47,11 +47,9 @@ class Core
 
 		// First, we need to ensure that Hybrid\Acl is compliance with 
 		// our Eloquent Model, This would overwrite the default configuration
-		Config::set('hybrid::auth.roles', function ($user_id, $roles)
+		Config::set('hybrid::auth.roles', function ($user, $roles)
 		{
-			$user = Model\User::with('roles')->find($user_id);
-
-			foreach ($user->roles as $role)
+			foreach ($user->roles()->get() as $role)
 			{
 				array_push($roles, $role->name);
 			}
@@ -64,15 +62,9 @@ class Core
 			// Initiate Memory class
 			static::$cached['memory'] = Memory::make('fluent.orchestra_options');
 
-			$users = Model\User::all();
-
-			// Administator account will be added at the last step during 
-			// installation, so it's possible no Exception has occur until  
-			// this point. We should manually throw an exception when 
-			// users table is empty.
-			if (empty($users))
+			if (is_null(static::$cached['memory']->get('site_name')))
 			{
-				throw new Exception('User table is empty');
+				throw new Exception('Installation is not completed');
 			}
 
 			// In event where we reach this point, we can consider no 

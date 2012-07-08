@@ -129,7 +129,7 @@ class Runner
 			$memory->put('site_name', Input::get('site_name', 'Orchestra'));
 
 			// We should also create a basic ACL for Orchestra.
-			$acl = Acl::make('orchestra')
+			$acl = Acl::make('orchestra');
 
 			// attach memory instance, this allow the acl to be saved to 
 			// database
@@ -144,6 +144,10 @@ class Runner
 			$acl->add_actions($actions);
 
 			$acl->allow('Administrator', $actions);
+
+			Role::create(array(
+				'name' => 'Member'
+			));
 
 			// Installation is successful, we should be able to generate 
 			// success message to notify the user. Installer route will be 
