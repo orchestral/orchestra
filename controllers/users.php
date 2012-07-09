@@ -48,11 +48,14 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 			$table->column('action', function ($column) {
 				$column->heading = '';
 				$column->value   = function ($row) {
-					return '
-					<div class="btn-group">
-						<a class="btn btn-mini" href="'.URL::to('orchestra/users/view/'.$row->id).'">Edit</a>
-						<a class="btn btn-mini btn-danger" href="'.URL::to('orchestra/users/delete/'.$row->id).'">Delete</a>
-					</div>';
+					$btn = array(
+						'<div class="btn-group">',
+						'<a class="btn btn-mini" href="'.URL::to('orchestra/users/view/'.$row->id).'">Edit</a>',
+						Auth::user()->id !== $row->id ? '<a class="btn btn-mini btn-danger" href="'.URL::to('orchestra/users/delete/'.$row->id).'">Delete</a>' : '',
+						'</div>',
+					);
+
+					return implode('', $btn);
 				};
 			});
 		});
@@ -174,18 +177,38 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 
 		$user->roles()->sync($input['roles']);
 
-		$m = Orchestra\Messages::make('success', __("response.users.{$type}"));
+		$m = Orchestra\Messages::make('success', __("orchestra::response.users.{$type}"));
 
 		return Redirect::to('orchestra/users')
 				->with('message', $m->serialize());
 	}
 
 	/**
-	 * POST A User (either create or update)
+	 * GET Delete a User
 	 *
 	 * @access public
 	 * @param  integer $id
 	 * @return Response
 	 */
-	public function delete_view() {}
+	public function get_delete($id = null)
+	{
+		$user = Orchestra\Model\User::find($id);
+
+		if (is_null($id)) 
+		{
+			return Event::fire('404');
+		}
+
+		if ($user->id === Auth::user()->id)
+		{
+			return Event::fire('404');
+		}
+
+		$user->delete();
+
+		$m = Orchestra\Messages::make('success', __('orchestra::response.users.deleted'));
+
+		return Redirect::to('orchestra/user')
+				->with('message', $m->serialize());
+	}
 }

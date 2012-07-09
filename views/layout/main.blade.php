@@ -18,11 +18,14 @@
 		
 		Asset::style('bootstrap', 'bundles/orchestra/css/bootstrap.min.css');
 		Asset::style('style', 'bundles/orchestra/css/style.css', array('bootstrap'));
+		Asset::style('select2', 'bundles/orchestra/js/select2/select2.css');
 
 		Asset::script('jquery', 'bundles/orchestra/js/jquery-1.7.2.min.js');
 		Asset::script('bootstrap', 'bundles/orchestra/js/bootstrap.min.js', array('jquery'));
+		Asset::script('select2', 'bundles/orchestra/js/select2/select2.min.js', array('jquery'));
 
-		echo Asset::styles(); ?>
+		echo Asset::styles();
+		echo Asset::scripts(); ?>
 	</head>
 
 	<body>
@@ -55,8 +58,6 @@
 				<p>&copy; 2012 Company Name</p>
 			</div>
 		</footer>
-
-	<?php echo Asset::scripts(); ?>
 	<script>
 	jQuery(function($) {
 		$('div.btn-group[data-toggle-name=*]').each(function() {
