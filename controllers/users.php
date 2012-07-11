@@ -1,4 +1,10 @@
-<?php
+<?php 
+
+use Orchestra\Form, 
+	Orchestra\Messages, 
+	Orchestra\Table,
+	Orchestra\Model\Role, 
+	Orchestra\Model\User;
 
 class Orchestra_Users_Controller extends Orchestra\Controller
 {
@@ -25,10 +31,11 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 	{
 		// Get Users (with roles) and limit it to only 30 results for 
 		// pagination. Don't you just love it when pagination simply works.
-		$users = Orchestra\Model\User::with('roles')->paginate(30);
+		$users = User::with('roles')->paginate(30);
 
 		// Build users table HTML using a schema liked code structure.
-		$table = Hybrid\Table::of('orchestra.user', function ($table) use ($users) {
+		Table::of('orchestra.users', function ($table) use ($users) 
+		{
 			// Add HTML attributes option for the table.
 			$table->attr('class', 'table table-bordered table-striped');
 
@@ -38,16 +45,20 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 			// Add columns
 			$table->column('id');
 			$table->column('Fullname', 'fullname');
-			$table->column('email', function ($column) {
+			$table->column('email', function ($column) 
+			{
 				$column->heading = 'E-mail Address';
-				$column->value   = function ($row) {
+				$column->value   = function ($row) 
+				{
 					return $row->email;
 				};
 			});
 
-			$table->column('action', function ($column) {
+			$table->column('action', function ($column) 
+			{
 				$column->heading = '';
-				$column->value   = function ($row) {
+				$column->value   = function ($row) 
+				{
 					$btn = array(
 						'<div class="btn-group">',
 						'<a class="btn btn-mini" href="'.URL::to('orchestra/users/view/'.$row->id).'">Edit</a>',
@@ -60,9 +71,11 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 			});
 		});
 
+		Event::fire('orchestra.list: users', array($users));
+
 		$data = array(
 			'eloquent'      => $users,
-			'table'         => $table,
+			'table'         => Table::of('orchestra.users'),
 			'resource_name' => 'Users',
 		);
 
@@ -78,51 +91,61 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 	 */
 	public function get_view($id = null) 
 	{
-		$user = Orchestra\Model\User::find($id);
+		$user = User::find($id);
 
-		if (is_null($user)) $user = new Orchestra\Model\User;
+		if (is_null($user)) $user = new User;
 
-		$form = Hybrid\Form::of('orchestra.user', function ($form) use ($user) {
+		Form::of('orchestra.users', function ($form) use ($user)
+		{
 			$form->row($user);
 			$form->attr(array(
 				'action' => URL::to('orchestra/users/view/'.$user->id),
 				'method' => 'POST',
 			));
 
-			$form->fieldset(function ($fieldset) {
+			$form->fieldset(function ($fieldset) 
+			{
 				$fieldset->control('input:text', 'E-mail Address', 'email');
 				$fieldset->control('input:text', 'fullname');
 
-				$fieldset->control('input:password', 'password', function ($control) {
-					$control->field = function ($row, $control) {
-						return Form::password($control->name);
+				$fieldset->control('input:password', 'password', function ($control) 
+				{
+					$control->field = function ($row, $control) 
+					{
+						return \Form::password($control->name);
 					};
 				});
 
-				$fieldset->control('select', 'roles', function ($control) {
+				$fieldset->control('select', 'roles', function ($control) 
+				{
 					$options = array();
 
-					foreach (Orchestra\Model\Role::all() as $role) {
+					foreach (Role::all() as $role) 
+					{
 						$options[$role->id] = $role->name;
 					}
 
-					$control->field = function ($row, $self) use ($options) {
+					$control->field = function ($row, $self) use ($options) 
+					{
 						// get all the user roles from objects
 						$roles = array();
 
-						foreach ($row->{$self->name} as $row) {
+						foreach ($row->{$self->name} as $row) 
+						{
 							$roles[] = $row->id;
 						}
 
-						return Form::select('roles[]', $options, $roles, array('multiple' => true));
+						return \Form::select('roles[]', $options, $roles, array('multiple' => true));
 					};
 				});
 			});
 		});
 
+		Event::fire('orchestra.form: users', array($user));
+
 		$data = array(
 			'eloquent'      => $user,
-			'form'          => $form,
+			'form'          => Form::of('orchestra.users'),
 			'resource_name' => 'User',
 		);
 
@@ -155,12 +178,12 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		}
 
 		$type  = 'updated';
-		$user  = Orchestra\Model\User::find($id);
+		$user  = User::find($id);
 
 		if (is_null($user)) 
 		{
 			$type = 'created';
-			$user = new Orchestra\Model\User(array(
+			$user = new User(array(
 				'password' => Hash::make($input['password'] ?: ''),
 			));
 		}
@@ -172,12 +195,23 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		{
 			$user->password = Hash::make($input['password']);
 		}
-		
-		$user->save();
 
-		$user->roles()->sync($input['roles']);
+		$m = new Messages;
 
-		$m = Orchestra\Messages::make('success', __("orchestra::response.users.{$type}"));
+		try
+		{
+			DB::transaction(function () use ($user, $input)
+			{
+				$user->save();
+				$user->roles()->sync($input['roles']);
+			});
+
+			$m->add('success', __("orchestra::response.users.{$type}"));
+		}
+		catch (Exception $e)
+		{
+			$m->add('error', __('orchestra::response.db-failed', array('error' => $e->getMessage())));
+		}
 
 		return Redirect::to('orchestra/users')
 				->with('message', $m->serialize());
@@ -192,21 +226,15 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 	 */
 	public function get_delete($id = null)
 	{
-		$user = Orchestra\Model\User::find($id);
+		$user = User::find($id);
 
-		if (is_null($id)) 
-		{
-			return Event::fire('404');
-		}
+		if (is_null($id)) return Event::fire('404');
 
-		if ($user->id === Auth::user()->id)
-		{
-			return Event::fire('404');
-		}
+		if ($user->id === Auth::user()->id) return Event::fire('404');
 
 		$user->delete();
 
-		$m = Orchestra\Messages::make('success', __('orchestra::response.users.deleted'));
+		$m = Messages::make('success', __('orchestra::response.users.deleted'));
 
 		return Redirect::to('orchestra/user')
 				->with('message', $m->serialize());

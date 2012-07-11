@@ -41,8 +41,10 @@ class Messages extends Laravel_Messages
 
 		if (Session::has('message'))
 		{
-			$message = unserialize(Session::get('message', ''));
+			$message = @unserialize(Session::get('message', ''));
 		}
+
+		Session::forget('message');
 
 		return $message;
 	}

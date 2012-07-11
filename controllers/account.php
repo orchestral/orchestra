@@ -1,6 +1,7 @@
 <?php
 
-use Orchestra\Model\User;
+use Orchestra\Messages, 
+	Orchestra\Model\User;
 
 class Orchestra_Account_Controller extends Orchestra\Controller
 {
@@ -48,6 +49,27 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 			'email'    => array('required', 'email'),
 			'fullname' => array('required'),
 		);
+
+		$v = Validator::make($input, $rules);
+
+		if ($v->fails())
+		{
+			return Redirect::to('orchestra/account')
+					->with_input()
+					->with_errors($v);
+		}
+
+		$user           = Auth::user();
+		$user->email    = $input['email'];
+		$user->fullname = $input['fullname'];
+
+		$user->save();
+
+		$m = new Messages;
+		$m->add('success', __('orchestra::response.account.profile.updated'));
+
+		return Redirect::to('orchestra/account')
+				->with('message', $m->serialize());
 	}
 
 	/**
@@ -75,6 +97,40 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 	 */
 	public function post_password()
 	{
-		
+		$input = Input::all();
+		$rules = array(
+			'current_password' => array('required'),
+			'new_password'     => array(
+				'required', 'different:current_password'
+			),
+			'confirm_password' => array('same:new_password'),
+		);
+
+		$v = Validator::make($input, $rules);
+
+		if ($v->fails())
+		{
+			return Redirect::to('orchestra/account/password')
+					->with_input()
+					->with_errors($v);
+		}
+
+		$m    = new Messages;
+		$user = Auth::user();
+
+		if (Hash::check($input['current_password'], $user->password))
+		{
+			$user->password = Hash::make($input['new_password']);
+			$user->save();
+			$m->add('success', __('orchestra::response.account.password.updated'));
+		}
+		else
+		{
+			$m->add('error', __('orchestra::response.account.password.invalid'));
+		}
+
+		return Redirect::to('orchestra/account/password')
+				->with('message', $m->serialize());
+
 	}
 }

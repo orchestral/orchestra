@@ -50,14 +50,14 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 		// We should now attempt to login the user using Auth class, 
 		if (Auth::attempt($attempt))
 		{
-			$m->add('success', 'User has been logged in');
+			$m->add('success', __('orchestra::response.credential.logged-in'));
 
 			return Redirect::to('orchestra')
 					->with('message', $m->serialize());
 		}
 		else 
 		{
-			$m->add('error', 'Invalid e-mail address and password combination');
+			$m->add('error', __('orchestra::response.credential.invalid-combination'));
 
 			return Redirect::to('orchestra/login')
 					->with('message', $m->serialize());
@@ -76,7 +76,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 		Auth::logout();
 
 		$m = new Messages;
-		$m->add('success', 'You have been logged out');
+		$m->add('success', __('orchestra::response.credential.logged-out'));
 		
 		return Redirect::to('orchestra/login')
 				->with('message', $m->serialize());
