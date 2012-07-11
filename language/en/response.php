@@ -18,5 +18,9 @@ return array(
 		'logged-out'          => 'You have been logged out',
 	),
 
-	'db-failed' => 'Unabled to save to database: :error',
+	'db-failed' => 'Unabled to save to database',
+
+	'settings' => array(
+		'updated' => 'Application settings has been updated',
+	),
 );

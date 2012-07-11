@@ -53,6 +53,7 @@ Route::controller(array(
 	'orchestra::credential', 
 	'orchestra::dashboard', 
 	'orchestra::users',
+	'orchestra::settings',
 ));
 
 /*
