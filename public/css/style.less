@@ -13,7 +13,7 @@ body {
 .navbar {
 	.brand {
 		color: #333;
-		font: italic 24px/1 'Lobster Two', cursive;
+		font-weight: bold;
 	}
 
 	.nav > li > a {
@@ -30,8 +30,14 @@ section.container, section.container-fluid {
 }
 
 .table {
-	&.table-bordered thead tr {
+	thead tr {
 		background: transparent url('../img/top-bar-white.png') repeat-x top left;
+	}
+
+	tbody td {
+		.meta {
+			font-size: 11px;
+		}
 	}
 }
 
