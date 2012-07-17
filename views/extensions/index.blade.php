@@ -19,7 +19,7 @@
 			@forelse ($extensions as $name => $extension)
 			<tr>
 				<td>
-					<strong>{{ Str::title($extension->name) }}</strong>
+					<strong>{{ $extension->name }}</strong>
 					<span class="pull-right">
 						@if ( ! Orchestra\Extension::started($name))
 							{{ HTML::link('orchestra/extensions/activate/'.$name, 'Activate', array('class' => 'btn btn-primary btn-mini')) }}
