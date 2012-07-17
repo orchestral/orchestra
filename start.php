@@ -37,3 +37,10 @@ Event::listen('laravel.started: orchestra', function ()
 {
 	Orchestra\Core::start();
 });
+
+/*
+|--------------------------------------------------------------------------
+| Orchestra Helpers
+|--------------------------------------------------------------------------
+ */
+include_once Bundle::path('orchestra').'helpers.php';
