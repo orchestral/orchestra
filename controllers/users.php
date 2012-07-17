@@ -108,13 +108,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 				$fieldset->control('input:text', 'E-mail Address', 'email');
 				$fieldset->control('input:text', 'fullname');
 
-				$fieldset->control('input:password', 'password', function ($control) 
-				{
-					$control->field = function ($row, $control) 
-					{
-						return \Form::password($control->name);
-					};
-				});
+				$fieldset->control('input:password', 'password');
 
 				$fieldset->control('select', 'roles', function ($control) 
 				{
@@ -125,7 +119,9 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 						$options[$role->id] = $role->name;
 					}
 
-					$control->field = function ($row, $self) use ($options) 
+					$control->options = $options;
+					$control->attr    = array('multiple' => true);
+					$control->value   = function ($row, $self) use ($options) 
 					{
 						// get all the user roles from objects
 						$roles = array();
@@ -135,7 +131,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 							$roles[] = $row->id;
 						}
 
-						return \Form::select('roles[]', $options, $roles, array('multiple' => true));
+						return $roles;
 					};
 				});
 			});
