@@ -52,6 +52,7 @@ Route::controller(array(
 	'orchestra::account', 
 	'orchestra::credential', 
 	'orchestra::dashboard',
+	'orchestra::extensions', 
 	'orchestra::forgot', 
 	'orchestra::settings',
 	'orchestra::users',

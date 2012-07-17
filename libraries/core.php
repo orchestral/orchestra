@@ -77,7 +77,8 @@ class Core
 			// enabled.
 			Installer::$status = true;
 
-			static::load_menu();
+			static::load_menus();
+			static::load_extensions();
 		}
 		catch (Exception $e) 
 		{
@@ -135,7 +136,7 @@ class Core
 	 * @access public
 	 * @return void
 	 */
-	public static function load_menu()
+	public static function load_menus()
 	{
 		// Add basic menu.
 		static::$cached['orchestra_menu']->add('home')->title('Home')->link('orchestra');
@@ -150,15 +151,27 @@ class Core
 		// Add menu when user can manage orchestra
 		if (static::$cached['acl']->can('manage-orchestra'))
 		{
-			static::$cached['orchestra_menu']->add('extensions')->title('Extensions')->link('orchestra/extensions');
+			static::$cached['orchestra_menu']->add('extensions', 'after:home')->title('Extensions')->link('orchestra/extensions');
 			static::$cached['orchestra_menu']->add('settings')->title('Settings')->link('orchestra/settings');
 			static::$cached['orchestra_menu']->add('menus', 'childof:settings')->title('Menus')->link('orchestra/menus');
 			static::$cached['orchestra_menu']->add('widgets', 'childof:settings')->title('Widgets')->link('orchestra/widgets');
 		}
 	}
 
+	/**
+	 * Load Extensions for Orchestra
+	 *
+	 * @static
+	 * @access public
+	 * @return void
+	 */
 	public static function load_extensions()
 	{
-		
+		$memory = Core::memory();
+
+		foreach ($memory->get('extensions', array()) as $extension)
+		{
+			Extension::start($extension->name);
+		}
 	}
 }
