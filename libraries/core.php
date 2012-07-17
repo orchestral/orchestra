@@ -153,8 +153,10 @@ class Core
 		{
 			static::$cached['orchestra_menu']->add('extensions', 'after:home')->title('Extensions')->link('orchestra/extensions');
 			static::$cached['orchestra_menu']->add('settings')->title('Settings')->link('orchestra/settings');
+			/*
 			static::$cached['orchestra_menu']->add('menus', 'childof:settings')->title('Menus')->link('orchestra/menus');
 			static::$cached['orchestra_menu']->add('widgets', 'childof:settings')->title('Widgets')->link('orchestra/widgets');
+			 */
 		}
 	}
 
