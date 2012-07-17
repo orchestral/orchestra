@@ -1,9 +1,14 @@
 <?php namespace Orchestra;
 
-use FileSystemIterator as fIterator;
+use \Bundle, FileSystemIterator as fIterator;
 
 class Extension 
 {
+	/**
+	 * List of started extensions
+	 * 
+	 * @var array
+	 */
 	protected static $started = array();
 
 	/**
@@ -13,13 +18,14 @@ class Extension
 	 *
 	 * @static
 	 * @access public
-	 * @param  string  $extension
+	 * @param  string  $name
+	 * @param  array   $config
 	 * @return void
 	 */
-	public static function start($extension)
+	public static function start($name, $config = array())
 	{
-		$name   = $extension->name ?: null;
-		$config = $extension->config ?: array();
+		$name   = $name ?: null;
+		$config = (array) $config;
 
 		if ( ! is_string($name)) return;
 
@@ -46,11 +52,24 @@ class Extension
 		return (in_array($name, static::$started));
 	}
 
+	/**
+	 * Detect all of the extensions for orchestra
+	 *
+	 * @static
+	 * @access public
+	 * @return array
+	 */
 	public static function detect()
 	{
-		$directory = path('bundle');
-
 		$extensions = array();
+		$memory     = Core::memory();
+
+		if (is_file(path('app').'/orchestra.json'))
+		{
+			$extensions[DEFAULT_BUNDLE] = json_decode(file_get_contents(path('app').'/orchestra.json'));
+		}
+
+		$directory = path('bundle');
 
 		$items = new fIterator($directory, fIterator::SKIP_DOTS);
 
@@ -60,11 +79,72 @@ class Extension
 			{
 				if (is_file($item->getRealPath().'/orchestra.json'))
 				{
-					$extensions[] = json_decode(file_get_contents($item->getRealPath().'/orchestra.json'));
+					$extensions[$item->getFilename()] = json_decode(file_get_contents($item->getRealPath().'/orchestra.json'));
 				}
 			}
 		}
 
+		$cached = array();
+
+		// we should cache extension to be stored to Hybrid\Memory to avoid 
+		// over usage of database space
+		foreach ($extensions as $name => $extension)
+		{
+			$cached[$name] = array(
+				'name'   => $extension->name,
+				'config' => $extension->config
+			);
+		}
+
+		$memory->put('extensions.available', $cached);
+
 		return $extensions;
+	}
+
+	/**
+	 * Activate an extension
+	 *
+	 * @static
+	 * @access public
+	 * @param  string $name
+	 * @return void
+	 */
+	public static function activate($name)
+	{
+		$memory    = Core::memory();
+		$available = (array) $memory->get('extensions.available', array());
+		$active    = (array) $memory->get('extensions.active', array());
+
+		if (isset($available[$name]))
+		{
+			array_push($active, $name);
+		}
+
+		$memory->put('extensions.active', $active);
+	}
+
+	/**
+	 * Deactivate an extension
+	 *
+	 * @static
+	 * @access public
+	 * @param  string $name
+	 * @return void
+	 */
+	public static function deactivate($name)
+	{
+		$memory  = Core::memory();
+		$current = (array) $memory->get('extensions.active', array());
+		$active  = array();
+
+		foreach ($current as $extension)
+		{
+			if ($extension !== $name)
+			{
+				array_push($active, $extension);
+			}
+		}
+
+		$memory->put('extensions.active', $active);
 	}
 }

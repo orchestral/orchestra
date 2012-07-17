@@ -167,11 +167,13 @@ class Core
 	 */
 	public static function load_extensions()
 	{
-		$memory = Core::memory();
+		$memory     = Core::memory();
+		$availables = (array) $memory->get('extensions.available', array());
+		$actives    = (array) $memory->get('extensions.active', array());
 
-		foreach ($memory->get('extensions', array()) as $extension)
+		foreach ($memory->get('extensions.active', array()) as $name)
 		{
-			Extension::start($extension->name);
+			Extension::start($name, (array) $availables[$name]['config']);
 		}
 	}
 }
