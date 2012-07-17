@@ -51,9 +51,10 @@ Route::any('(:bundle)/(login|register|logout)', function ($action)
 Route::controller(array(
 	'orchestra::account', 
 	'orchestra::credential', 
-	'orchestra::dashboard', 
-	'orchestra::users',
+	'orchestra::dashboard',
+	'orchestra::forgot', 
 	'orchestra::settings',
+	'orchestra::users',
 ));
 
 /*
@@ -67,6 +68,13 @@ Route::filter('orchestra::auth', function ()
 	// Redirect the user to login page if user is not logged in.
 	if (Auth::guest()) return Redirect::to('orchestra/login');
 });
+
+Route::filter('orchestra::not-auth', function ()
+{
+	// Redirect the user to login page if user is not logged in.
+	if ( ! Auth::guest()) return Redirect::to('orchestra');
+});
+
 
 Route::filter('orchestra::manage-users', function ()
 {
@@ -82,7 +90,7 @@ Route::filter('orchestra::manage', function ()
 	// Redirect the user to login page if user is not logged in.
 	if ( ! Orchestra\Core::acl()->can('manage-orchestra')) 
 	{
-		return Redirect::to('orchestra/login');
+		return Redirect::to_route('orchestra/login');
 	}
 });
 
