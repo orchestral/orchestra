@@ -5,4 +5,5 @@ body{background:url('../img/bg.png');}
 section.container,section.container-fluid{padding-top:45px;}
 .table thead tr{background:transparent url('../img/top-bar-white.png') repeat-x top left;}
 .table tbody td .meta{font-size:11px;}
+.select2-container[class*="span"]{margin-left:0;}
 .form-actions.clean{background-color:transparent;border:0px;}
