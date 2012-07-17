@@ -55,7 +55,7 @@
 		<footer>
 			<div class="container{{ isset($fluent_layout) ? '-fluid' : '' }}">
 				<hr>
-				<p>&copy; 2012 Company Name</p>
+				<p>&copy; 2012 Orchestra</p>
 			</div>
 		</footer>
 	<script>
