@@ -150,11 +150,10 @@ class Core
 		// Add menu when user can manage orchestra
 		if (static::$cached['acl']->can('manage-orchestra'))
 		{
-			static::$cached['orchestra_menu']->add('resources', 'after:home')->title('Resources')->link('orchestra/resources');
-			static::$cached['orchestra_menu']->add('themes', 'after:resources')->title('Themes')->link('orchestra/themes');
-			static::$cached['orchestra_menu']->add('menus', 'childof:themes')->title('Menus')->link('orchestra/menus');
-			static::$cached['orchestra_menu']->add('widgets', 'childof:themes')->title('Widgets')->link('orchestra/widgets');
+			static::$cached['orchestra_menu']->add('extensions')->title('Extensions')->link('orchestra/extensions');
 			static::$cached['orchestra_menu']->add('settings')->title('Settings')->link('orchestra/settings');
+			static::$cached['orchestra_menu']->add('menus', 'childof:settings')->title('Menus')->link('orchestra/menus');
+			static::$cached['orchestra_menu']->add('widgets', 'childof:settings')->title('Widgets')->link('orchestra/widgets');
 		}
 	}
 
