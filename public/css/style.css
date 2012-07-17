@@ -3,4 +3,5 @@ body{background:url('../img/bg.png');}
 .navbar .brand{color:#333;font:italic 24px/1 'Lobster Two',cursive;}
 .navbar .nav>li>a{color:#666;}.navbar .nav>li>a:hover{color:#333;}
 section.container,section.container-fluid{padding-top:45px;}
+.table.table-bordered thead tr{background:transparent url('../img/top-bar-white.png') repeat-x top left;}
 .form-actions.clean{background-color:transparent;border:0px;}
