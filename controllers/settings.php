@@ -31,7 +31,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 				'method' => 'POST',
 			));
 
-			$form->fieldset('Application', function ($fieldset)
+			$form->fieldset(function ($fieldset)
 			{
 				$fieldset->control('input:text', 'Site Name', 'site_name');
 				$fieldset->control('textarea', 'Site Description', 'site_description');
