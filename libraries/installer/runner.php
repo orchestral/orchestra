@@ -133,6 +133,7 @@ class Runner
 
 			// Save the default application site_name.
 			$memory->put('site_name', Input::get('site_name', 'Orchestra'));
+			$memory->put('email', Config::get('orchestra::email'));
 
 			// We should also create a basic ACL for Orchestra.
 			$acl = Acl::make('orchestra');

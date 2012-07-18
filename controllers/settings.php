@@ -54,6 +54,11 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 					$control->attr = array('rows' => 3);
 				});
 			});
+
+			$form->fieldset('E-mail and Messaging', function ($fieldset)
+			{
+				$fieldset->control('select', 'Transport', 'transport');
+			});
 		});
 
 		Event::fire('orchestra.form: settings', array($settings));
