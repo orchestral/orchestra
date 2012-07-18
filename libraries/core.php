@@ -79,6 +79,7 @@ class Core
 
 			static::load_menus();
 			static::load_extensions();
+			static::load_panes();
 		}
 		catch (Exception $e) 
 		{
@@ -177,5 +178,24 @@ class Core
 		{
 			Extension::start($name, (array) $availables[$name]['config']);
 		}
+	}
+
+	/**
+	 * Load Panes for Orchestra
+	 *
+	 * @static
+	 * @access public
+	 * @return void
+	 */
+	public static function load_panes()
+	{
+		Extension\Pane::make('orchestra.welcome', function ($pane)
+		{
+			$pane->attr = array('class' => 'hero-unit');
+			$pane->html = '<h2>Welcome to your new Orchestra site!</h2>
+			<p>If you need help getting started, check out our documentation on First Steps with Orchestra. If you’d rather dive right in, here are a few things most people do first when they set up a new Orchestra site. 
+			<!-- If you need help, use the Help tabs in the upper right corner to get information on how to use your current screen and where to go for more assistance.--></p>';
+
+		});
 	}
 }

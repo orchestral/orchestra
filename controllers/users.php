@@ -44,11 +44,15 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 
 			// Add columns
 			$table->column('id');
-			$table->column(__('orchestra::label.users.fullname')->get(), 'fullname');
+			$table->column('fullname', function ($column)
+			{
+				$column->label = __('orchestra::label.users.fullname')->get();
+
+			});
 			$table->column('email', function ($column) 
 			{
-				$column->heading = __('orchestra::label.users.email')->get();
-				$column->value   = function ($row) 
+				$column->label = __('orchestra::label.users.email')->get();
+				$column->value = function ($row) 
 				{
 					return $row->email;
 				};
@@ -56,8 +60,8 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 
 			$table->column('action', function ($column) 
 			{
-				$column->heading = '';
-				$column->value   = function ($row) 
+				$column->label = '';
+				$column->value = function ($row) 
 				{
 					$btn = array(
 						'<div class="btn-group">',
