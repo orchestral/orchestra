@@ -3,6 +3,21 @@
 class Orchestra_Extensions_Controller extends Orchestra\Controller 
 {
 	/**
+	 * Construct Extensions Controller, only authenticated user should 
+	 * be able to access this controller.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+
+		$this->filter('before', 'orchestra::auth');
+		$this->filter('before', 'orchestra::manage');
+	}
+
+	/**
 	 * List all available extensions
 	 *
 	 * @access public

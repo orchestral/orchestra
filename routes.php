@@ -82,7 +82,9 @@ Route::filter('orchestra::manage-users', function ()
 	// Redirect the user to login page if user is not logged in.
 	if ( ! Orchestra\Core::acl()->can('manage-users')) 
 	{
-		return Redirect::to('orchestra/login');
+		if (Auth::guest()) return Redirect::to('orchestra/login');
+
+		return Redirect::to('orchestra');
 	}
 });
 
@@ -91,7 +93,9 @@ Route::filter('orchestra::manage', function ()
 	// Redirect the user to login page if user is not logged in.
 	if ( ! Orchestra\Core::acl()->can('manage-orchestra')) 
 	{
-		return Redirect::to_route('orchestra/login');
+		if (Auth::guest()) return Redirect::to('orchestra/login');
+
+		return Redirect::to('orchestra');
 	}
 });
 

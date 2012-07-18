@@ -8,6 +8,21 @@ use Laravel\Fluent,
 class Orchestra_Settings_Controller extends Orchestra\Controller 
 {
 	/**
+	 * Construct Settings Controller, only authenticated user should 
+	 * be able to access this controller.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+
+		$this->filter('before', 'orchestra::auth');
+		$this->filter('before', 'orchestra::manage');
+	}
+
+	/**
 	 * Orchestra Settings Page
 	 *
 	 * @access public

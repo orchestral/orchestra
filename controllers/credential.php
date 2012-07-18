@@ -5,6 +5,18 @@ use Orchestra\Messages;
 class Orchestra_Credential_Controller extends Orchestra\Controller
 {
 	/**
+	 * Construct Credential Controller.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+
+		$this->filter('before', 'orchestra::not-auth')->only(array('login', 'register'));
+	}
+	/**
 	 * Login Page
 	 *
 	 * @access public
