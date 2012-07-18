@@ -49,7 +49,10 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 			$form->fieldset(function ($fieldset)
 			{
 				$fieldset->control('input:text', 'Site Name', 'site_name');
-				$fieldset->control('textarea', 'Site Description', 'site_description');
+				$fieldset->control('textarea', 'Site Description', function ($control) {
+					$control->name = 'site_description';
+					$control->attr = array('rows' => 3);
+				});
 			});
 		});
 
