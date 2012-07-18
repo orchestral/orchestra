@@ -97,7 +97,7 @@ class Orchestra_Installer_Controller extends Controller
 					$message = new Messages;
 					$message->add('error', 'Unable to create user');
 					
-					return Redirect::to_action('orchestra::installer.steps', array(1))
+					return Redirect::to(handles('orchestra::installer/steps/1'))
 							->with('message', serialize($message));
 				}
 				break;

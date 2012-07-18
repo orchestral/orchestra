@@ -54,7 +54,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 
 		if ($v->fails())
 		{
-			return Redirect::to('orchestra/account')
+			return Redirect::to(handles('orchestra::account'))
 					->with_input()
 					->with_errors($v);
 		}
@@ -68,7 +68,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 		$m = new Messages;
 		$m->add('success', __('orchestra::response.account.profile.updated'));
 
-		return Redirect::to('orchestra/account')
+		return Redirect::to(handles('orchestra::account'))
 				->with('message', $m->serialize());
 	}
 
@@ -110,7 +110,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 
 		if ($v->fails())
 		{
-			return Redirect::to('orchestra/account/password')
+			return Redirect::to(handles('orchestra::account/password'))
 					->with_input()
 					->with_errors($v);
 		}
@@ -129,7 +129,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 			$m->add('error', __('orchestra::response.account.password.invalid'));
 		}
 
-		return Redirect::to('orchestra/account/password')
+		return Redirect::to(handles('orchestra::account/password'))
 				->with('message', $m->serialize());
 
 	}

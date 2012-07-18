@@ -22,9 +22,9 @@
 					<strong>{{ $extension->name }}</strong>
 					<span class="pull-right">
 						@if ( ! Orchestra\Extension::started($name))
-							{{ HTML::link('orchestra/extensions/activate/'.$name, 'Activate', array('class' => 'btn btn-primary btn-mini')) }}
+							{{ HTML::link(handles('orchestra::extensions/activate/'.$name), 'Activate', array('class' => 'btn btn-primary btn-mini')) }}
 						@else
-							{{ HTML::link('orchestra/extensions/deactivate/'.$name, 'Deactivate', array('class' => 'btn btn-warning btn-mini')) }}
+							{{ HTML::link(handles('orchestra::extensions/deactivate/'.$name), 'Deactivate', array('class' => 'btn btn-warning btn-mini')) }}
 
 						@endif
 					</span>

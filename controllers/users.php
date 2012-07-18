@@ -61,8 +61,8 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 				{
 					$btn = array(
 						'<div class="btn-group">',
-						'<a class="btn btn-mini" href="'.URL::to('orchestra/users/view/'.$row->id).'">Edit</a>',
-						Auth::user()->id !== $row->id ? '<a class="btn btn-mini btn-danger" href="'.URL::to('orchestra/users/delete/'.$row->id).'">Delete</a>' : '',
+						'<a class="btn btn-mini" href="'.handles('orchestra::users/view/'.$row->id).'">Edit</a>',
+						Auth::user()->id !== $row->id ? '<a class="btn btn-mini btn-danger" href="'.handles('orchestra::users/delete/'.$row->id).'">Delete</a>' : '',
 						'</div>',
 					);
 
@@ -99,7 +99,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		{
 			$form->row($user);
 			$form->attr(array(
-				'action' => URL::to('orchestra/users/view/'.$user->id),
+				'action' => handles('orchestra::users/view/'.$user->id),
 				'method' => 'POST',
 			));
 
@@ -168,7 +168,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 
 		if ($v->fails())
 		{
-			return Redirect::to('orchestra/users/view/'.$id)
+			return Redirect::to(handles('orchestra::users/view/'.$id))
 					->with_input()
 					->with_errors($v);
 		}
@@ -209,7 +209,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 			$m->add('error', __('orchestra::response.db-failed', array('error' => $e->getMessage())));
 		}
 
-		return Redirect::to('orchestra/users')
+		return Redirect::to(handles('orchestra::users'))
 				->with('message', $m->serialize());
 	}
 
@@ -232,7 +232,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 
 		$m = Messages::make('success', __('orchestra::response.users.deleted'));
 
-		return Redirect::to('orchestra/user')
+		return Redirect::to(handles('orchestra::users'))
 				->with('message', $m->serialize());
 	}
 }

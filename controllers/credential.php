@@ -47,7 +47,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 		// login page with the errors
 		if ($v->fails())
 		{
-			return Redirect::to('orchestra/login')
+			return Redirect::to(handles('orchestra::login'))
 					->with_input()
 					->with_errors($v);
 		}
@@ -64,14 +64,14 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 		{
 			$m->add('success', __('orchestra::response.credential.logged-in'));
 
-			return Redirect::to('orchestra')
+			return Redirect::to(handles('orchestra'))
 					->with('message', $m->serialize());
 		}
 		else 
 		{
 			$m->add('error', __('orchestra::response.credential.invalid-combination'));
 
-			return Redirect::to('orchestra/login')
+			return Redirect::to(handles('orchestra::login'))
 					->with('message', $m->serialize());
 		}
 
@@ -90,7 +90,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 		$m = new Messages;
 		$m->add('success', __('orchestra::response.credential.logged-out'));
 		
-		return Redirect::to('orchestra/login')
+		return Redirect::to(handles('orchestra::login'))
 				->with('message', $m->serialize());
 	}
 }

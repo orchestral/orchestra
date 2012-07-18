@@ -45,7 +45,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 
 		Orchestra\Extension::activate($name);
 
-		return Redirect::to('orchestra/extensions');
+		return Redirect::to(handles('orchestra::extensions'));
 	}
 
 	/**
@@ -61,6 +61,6 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 
 		Orchestra\Extension::deactivate($name);
 
-		return Redirect::to('orchestra/extensions');
+		return Redirect::to(handles('orchestra::extensions'));
 	}
 }

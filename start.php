@@ -52,13 +52,17 @@ if( ! IoC::registered('task: orchestra.migrate'))
 
 		if (method_exists($migrate, $method))
 		{
-			// We need to resolve to output buffering Task Migrator will echo some 
-			// output to terminal.
-			ob_start();
+			try
+			{
+				// We need to resolve to output buffering Task Migrator will echo some 
+				// output to terminal.
+				ob_start();
 
-			$migrate->{$method}($bundle);
+				$migrate->{$method}($bundle);
 
-			ob_end_clean();
+				ob_end_clean();
+			}
+			catch (Exception $e) {}
 		}
 		else 
 		{

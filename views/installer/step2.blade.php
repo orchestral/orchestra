@@ -15,7 +15,7 @@
 					{{ HTML::link('#', '2. Create Administrator Account') }}
 				</li>
 				<li class="active">
-					{{ HTML::link('orchestra/installer/steps/2', '2. Done') }}
+					{{ HTML::link(handles('orchestra::installer/steps/2'), '2. Done') }}
 				</li>
 			</ul>
 		</div>

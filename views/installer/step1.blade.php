@@ -9,10 +9,10 @@
 			<ul class="nav nav-list">
 				<li class="nav-header">Installation Process</li>
 				<li>
-					{{ HTML::link('orchestra/installer', '1. Verify Database Configuration') }}
+					{{ HTML::link(handles('orchestra::installer'), '1. Verify Database Configuration') }}
 				</li>
 				<li class="active">
-					{{ HTML::link('orchestra/installer/steps/1', '2. Create Administrator Account') }}
+					{{ HTML::link(handles('orchestra::installer/steps/1'), '2. Create Administrator Account') }}
 				</li>
 			</ul>
 		</div>
@@ -21,7 +21,7 @@
 
 	<div class="span8 form-horizontal">
 		
-		{{ Form::open(URL::to_action('orchestra::installer@steps', array(2)), 'POST', array('class' => 'form-horizontal')) }}
+		{{ Form::open(handles('orchestra::installer/steps/2'), 'POST', array('class' => 'form-horizontal')) }}
 
 		<fieldset>
 			<legend>Create Administrator User Account</legend>

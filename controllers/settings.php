@@ -42,7 +42,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 		{
 			$form->row($settings);	
 			$form->attr(array(
-				'action' => URL::to('orchestra/settings'),
+				'action' => handles('orchestra::settings'),
 				'method' => 'POST',
 			));
 
@@ -75,7 +75,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 
 		if ($v->fails())
 		{
-			return Redirect::to('orchestra/settings')
+			return Redirect::to(handles('orchestra::settings'))
 					->with_input()
 					->with_errors($v);
 		}
@@ -87,7 +87,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 
 		$m = Messages::make('success', __('orchestra::response.settings.updated'));
 
-		return Redirect::to('orchestra/settings')
+		return Redirect::to(handles('orchestra::settings'))
 				->with('message', $m->serialize());
 	}
 }

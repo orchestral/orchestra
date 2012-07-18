@@ -9,7 +9,7 @@
 			<ul class="nav nav-list">
 				<li class="nav-header">Installation Process</li>
 				<li class="active">
-					{{ HTML::link('orchestra/installer', '1. Verify Database Configuration') }}
+					{{ HTML::link(handles('orchestra::installer'), '1. Verify Database Configuration') }}
 				</li>
 			</ul>
 		</div>
@@ -123,7 +123,7 @@
 		@if (true === $database['status'] and true === $auth_fluent_status && true === $auth_eloquent_status)
 
 		<div class="form-actions clean">
-			{{ HTML::link('orchestra/installer/steps/1', 'Next', array('class' => 'btn btn-primary')) }}
+			{{ HTML::link(handles('orchestra::installer/steps/1'), 'Next', array('class' => 'btn btn-primary')) }}
 		</div>
 
 		@endif

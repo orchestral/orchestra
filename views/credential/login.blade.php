@@ -6,7 +6,7 @@
 
 	<div class="span12 form-horizontal">
 		
-		{{ Form::open(URL::to('orchestra/login'), 'POST', array('class' => 'form-horizontal')) }}
+		{{ Form::open(handles('orchestra::login'), 'POST', array('class' => 'form-horizontal')) }}
 
 			<fieldset>
 				<legend>Login</legend>

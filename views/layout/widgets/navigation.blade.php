@@ -3,7 +3,7 @@
 		<div class="container{{ isset($fluent_layout) ? '-fluid' : '' }}">
 			<section class="nav-collapse">
 				
-				{{ HTML::link('orchestra', $memory->get('site_name'), array('class' => 'brand')) }}
+				{{ HTML::link(handles('orchestra'), $memory->get('site_name'), array('class' => 'brand')) }}
 
 				{{ render('orchestra::layout.widgets.menu', array('menu' => Orchestra\Core::menu())) }}
 				
@@ -20,10 +20,10 @@
 
 						<ul class="dropdown-menu">
 							
-							<li>{{ HTML::link('orchestra/account', __('orchestra::title.account.profile')) }}</li>
-							<li>{{ HTML::link('orchestra/account/password', __('orchestra::title.account.password')) }}</li>
+							<li>{{ HTML::link(handles('orchestra::account'), __('orchestra::title.account.profile')) }}</li>
+							<li>{{ HTML::link(handles('orchestra::account/password'), __('orchestra::title.account.password')) }}</li>
 							<li class="divider"></li>
-							<li>{{ HTML::link('orchestra/logout', __('orchestra::title.logout')) }}</li>
+							<li>{{ HTML::link(handles('orchestra::logout'), __('orchestra::title.logout')) }}</li>
 						</ul>
 
 						@endunless
@@ -43,7 +43,7 @@ jQuery(function ($) {
 	$('a[rel="user-menu"]').on('click', function (e) {
 		e.preventDefault();
 		
-		window.location.href = "{{ URL::to('orchestra/login') }}";
+		window.location.href = "{{ URL::to(handles('orchestra::login')) }}";
 
 		return false;
 	});
