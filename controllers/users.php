@@ -47,6 +47,19 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 			$table->column('fullname', function ($column)
 			{
 				$column->label = __('orchestra::label.users.fullname')->get();
+				$column->value = function ($row)
+				{
+					$roles = $row->roles;
+					$value = array();
+					
+					foreach ($roles as $role)
+					{
+						$value[] = '<span class="badge">'.$role->name.'</span>';
+					}
+					
+					
+					return '<strong>'.$row->fullname.'</strong><br><span class="meta">'.implode(' ', $value).'</span>';
+				};
 
 			});
 			$table->column('email', function ($column) 
