@@ -119,6 +119,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 						$options[$role->id] = $role->name;
 					}
 
+					$control->name    = 'roles[]';
 					$control->options = $options;
 					$control->attr    = array('multiple' => true);
 					$control->value   = function ($row, $self) use ($options) 
@@ -126,7 +127,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 						// get all the user roles from objects
 						$roles = array();
 
-						foreach ($row->{$self->name} as $row) 
+						foreach ($row->roles as $row) 
 						{
 							$roles[] = $row->id;
 						}
