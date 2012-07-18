@@ -44,10 +44,10 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 
 			// Add columns
 			$table->column('id');
-			$table->column('Fullname', 'fullname');
+			$table->column(__('orchestra::label.users.fullname')->get(), 'fullname');
 			$table->column('email', function ($column) 
 			{
-				$column->heading = 'E-mail Address';
+				$column->heading = __('orchestra::label.users.email')->get();
 				$column->value   = function ($row) 
 				{
 					return $row->email;
@@ -91,9 +91,14 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 	 */
 	public function get_view($id = null) 
 	{
+		$type = 'update';
 		$user = User::find($id);
 
-		if (is_null($user)) $user = new User;
+		if (is_null($user)) 
+		{
+			$type = 'create';
+			$user = new User;
+		}
 
 		Form::of('orchestra.users', function ($form) use ($user)
 		{
@@ -105,12 +110,12 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 
 			$form->fieldset(function ($fieldset) 
 			{
-				$fieldset->control('input:text', 'E-mail Address', 'email');
-				$fieldset->control('input:text', 'fullname');
+				$fieldset->control('input:text', __('orchestra::label.users.email')->get(), 'email');
+				$fieldset->control('input:text', __('orchestra::label.users.fullname')->get(), 'fullname');
 
-				$fieldset->control('input:password', 'password');
+				$fieldset->control('input:password', __('orchestra::label.users.password')->get(), 'password');
 
-				$fieldset->control('select', 'roles', function ($control) 
+				$fieldset->control('select', __('orchestra::label.users.roles')->get(), function ($control) 
 				{
 					$options = array();
 
@@ -118,7 +123,6 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 					{
 						$options[$role->id] = $role->name;
 					}
-
 					$control->name    = 'roles[]';
 					$control->options = $options;
 					$control->attr    = array('multiple' => true);
@@ -143,7 +147,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		$data = array(
 			'eloquent'      => $user,
 			'form'          => Form::of('orchestra.users'),
-			'resource_name' => 'User',
+			'resource_name' => __("orchestra::title.users.{$type}")->get(),
 		);
 
 		return View::make('orchestra::resources.edit', $data);
@@ -192,6 +196,8 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		{
 			$user->password = Hash::make($input['password']);
 		}
+
+		Event::fire('orchestra.update: users', array($user));
 
 		$m = new Messages;
 

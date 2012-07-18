@@ -1,14 +1,31 @@
 <?php
 
 return array(
-	'extensions' => array(
-		'list' => 'Extensions',
-	),
 	'account' => array(
 		'profile' => 'Edit Profile',
 		'password' => 'Edit Password',
 	),
 
+	'extensions' => array(
+		'list' => 'Extensions',
+	),
+
+	'home' => array(
+		'list' => 'Home',
+	),
+
 	'login'   => 'Login',
 	'logout'  => 'Logout',
+
+	'settings' => array(
+		'list' => 'Settings',
+	),
+
+	'users' => array(
+		'list'   => 'Users',
+		'create' => 'Add User',
+		'update' => 'Edit User',
+	),
+
+
 );

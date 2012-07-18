@@ -127,7 +127,7 @@ class Extension
 			array_push($active, $name);
 
 			// we should also start the bundle
-			static::start($name);
+			static::start($name, $available[$name]['config']);
 
 			if (IoC::registered('task: orchestra.migrate'))
 			{
