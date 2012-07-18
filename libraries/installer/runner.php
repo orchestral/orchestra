@@ -206,8 +206,6 @@ class Runner
 				// us to grab all of the migrations that were run for the
 				// last command when performing rollbacks.
 				$table->integer('batch');
-
-				$table->primary(array('extension', 'name'));
 			});
 
 			static::$message->add('success', 'Migration table created');
