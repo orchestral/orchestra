@@ -239,9 +239,6 @@ class Runner
 				$table->string('name', 255);
 				$table->blob('value');
 
-				// add timestamp created_at and updated_at
-				$table->timestamps();
-
 				$table->unique('name');
 			});
 
