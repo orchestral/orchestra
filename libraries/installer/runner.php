@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Installer;
 
-use \Config, \DB, \Exception, \Hash, \Input, \Schema, \Session, \Str, \Validator, 
+use \Config, \DB, \Exception, \Hash, \Input, \IoC, 
+	\Schema, \Session, \Str, \Validator, 
 	Orchestra\Installer as Installer,
 	Orchestra\Messages,
 	Orchestra\Model\User,
@@ -57,6 +58,11 @@ class Runner
 	public static function install()
 	{
 		static::initiate();
+
+		if (IoC::registered('task: orchestra.migrate'))
+		{
+			IoC::resolve('task: orchestra.migrate', array('install'));
+		}
 
 		static::install_migrations_schema();
 		static::install_options_schema();

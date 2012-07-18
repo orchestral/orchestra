@@ -1,6 +1,6 @@
 <?php namespace Orchestra;
 
-use \Bundle, FileSystemIterator as fIterator;
+use \Bundle, \IoC, FileSystemIterator as fIterator;
 
 class Extension 
 {
@@ -34,6 +34,13 @@ class Extension
 		{
 			Bundle::register($name, $config);
 			Bundle::start($name);
+		}
+
+		// by now, extension should already exist as an extension. We should
+		// be able start orchestra.php starter file on each bundles.
+		if (is_file($file = Bundle::path($name).'orchestra.php'))
+		{
+			include_once $file;
 		}
 
 		static::$started[] = $name;
@@ -118,6 +125,14 @@ class Extension
 		if (isset($available[$name]))
 		{
 			array_push($active, $name);
+
+			// we should also start the bundle
+			static::start($name);
+
+			if (IoC::registered('task: orchestra.migrate'))
+			{
+				IoC::resolve('task: orchestra.migrate', array('migrate', $name));
+			}
 		}
 
 		$memory->put('extensions.active', $active);
