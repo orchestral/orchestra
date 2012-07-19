@@ -62,7 +62,7 @@ class Core
 			// Initiate Memory class
 			static::$cached['memory'] = Memory::make('fluent.orchestra_options');
 
-			if (is_null(static::$cached['memory']->get('site_name')))
+			if (is_null(static::$cached['memory']->get('site.name')))
 			{
 				throw new Exception('Installation is not completed');
 			}

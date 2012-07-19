@@ -3,7 +3,7 @@
 		<div class="container{{ isset($fluent_layout) ? '-fluid' : '' }}">
 			<section class="nav-collapse">
 				
-				{{ HTML::link(handles('orchestra'), $memory->get('site_name'), array('class' => 'brand')) }}
+				{{ HTML::link(handles('orchestra'), $memory->get('site.name', 'Orchestra'), array('class' => 'brand')) }}
 
 				{{ render('orchestra::layout.widgets.menu', array('menu' => Orchestra\Core::menu())) }}
 				

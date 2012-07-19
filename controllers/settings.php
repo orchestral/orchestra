@@ -34,8 +34,8 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 		// it and convert it to Fluent (to mimick Eloquent properties).
 		$memory   = Core::memory();
 		$settings = new Fluent(array(
-			'site_name'        => $memory->get('site_name'),
-			'site_description' => $memory->get('site_description'),
+			'site_name'        => $memory->get('site.name', ''),
+			'site_description' => $memory->get('site.description', ''),
 		));
 
 		Form::of('orchestra.settings', function ($form) use ($settings)
@@ -57,7 +57,15 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 
 			$form->fieldset('E-mail and Messaging', function ($fieldset)
 			{
-				$fieldset->control('select', 'Transport', 'transport');
+				$fieldset->control('select', 'Transport', function ($control)
+				{
+					$control->name = 'transport';
+					$control->options = array(
+						'mail'     => 'Mail',
+						'smtp'     => 'SMTP',
+						'sendmail' => 'Sendmail',
+					);
+				});
 			});
 		});
 
@@ -77,6 +85,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 		$input = Input::all();
 		$rules = array(
 			'site_name' => array('required'),
+			'transport' => array('required'),
 		);
 
 		$v = Validator::make($input, $rules);
@@ -90,8 +99,8 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 
 		$memory = Core::memory();
 
-		$memory->put('site_name', $input['site_name']);
-		$memory->put('site_description', $input['site_description']);
+		$memory->put('site.name', $input['site_name']);
+		$memory->put('site.description', $input['site_description']);
 
 		$m = Messages::make('success', __('orchestra::response.settings.updated'));
 

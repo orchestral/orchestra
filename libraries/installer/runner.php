@@ -132,7 +132,7 @@ class Runner
 			$memory = Memory::make('fluent.orchestra_options');
 
 			// Save the default application site_name.
-			$memory->put('site_name', Input::get('site_name', 'Orchestra'));
+			$memory->put('site.name', Input::get('site_name', 'Orchestra'));
 			$memory->put('email', Config::get('orchestra::email'));
 
 			// We should also create a basic ACL for Orchestra.

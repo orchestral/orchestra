@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>{{ $memory->get('site_name') }}</title>
+		<title>{{ $memory->get('site.name', 'Orchestra') }}</title>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 		<meta name="description" content="">
 		<meta name="author" content="">
