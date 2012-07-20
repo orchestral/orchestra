@@ -39,7 +39,11 @@ Event::listen('laravel.started: orchestra', function ()
 });
 
 /*
-
+|--------------------------------------------------------------------------
+| Orchestra IoC
+|--------------------------------------------------------------------------
+|
+| Lets Orchestra run Laravel\CLI migration actions
  */
 if( ! IoC::registered('task: orchestra.migrate'))
 {
