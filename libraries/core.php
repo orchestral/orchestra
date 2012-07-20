@@ -139,24 +139,40 @@ class Core
 	 */
 	public static function load_menus()
 	{
+		// localize the variable, and ensure it by references.
+		$menu =& static::$cached['orchestra_menu'];
+
 		// Add basic menu.
-		static::$cached['orchestra_menu']->add('home')->title(__('orchestra::title.home.list')->get())->link(handles('orchestra'));
+		$menu->add('home')
+			->title(__('orchestra::title.home.list')->get())
+			->link(handles('orchestra'));
 
 		// Add menu when user can manage users
 		if (static::$cached['acl']->can('manage-users'))
 		{
-			static::$cached['orchestra_menu']->add('users')->title(__('orchestra::title.users.list')->get())->link(handles('orchestra::users'));
-			static::$cached['orchestra_menu']->add('add-users', 'childof:users')->title(__('orchestra::title.users.create')->get())->link(handles('orchestra::users/view'));
+			$menu->add('users')
+				->title(__('orchestra::title.users.list')->get())
+				->link(handles('orchestra::users'));
+
+			$menu->add('add-users', 'childof:users')
+				->title(__('orchestra::title.users.create')->get())
+				->link(handles('orchestra::users/view'));
 		}
 
 		// Add menu when user can manage orchestra
 		if (static::$cached['acl']->can('manage-orchestra'))
 		{
-			static::$cached['orchestra_menu']->add('extensions', 'after:home')->title(__('orchestra::title.extensions.list')->get())->link(handles('orchestra::extensions'));
-			static::$cached['orchestra_menu']->add('settings')->title(__('orchestra::title.settings.list')->get())->link(handles('orchestra::settings'));
+			$menu->add('extensions', 'after:home')
+				->title(__('orchestra::title.extensions.list')->get())
+				->link(handles('orchestra::extensions'));
+
+			$menu->add('settings')
+				->title(__('orchestra::title.settings.list')->get())
+				->link(handles('orchestra::settings'));
+
 			/*
-			static::$cached['orchestra_menu']->add('menus', 'childof:settings')->title('Menus')->link(handles('orchestra::menus'));
-			static::$cached['orchestra_menu']->add('widgets', 'childof:settings')->title('Widgets')->link(handles('orchestra::widgets'));
+			$menu->add('menus', 'childof:settings')->title('Menus')->link(handles('orchestra::menus'));
+			$menu->add('widgets', 'childof:settings')->title('Widgets')->link(handles('orchestra::widgets'));
 			 */
 		}
 	}
