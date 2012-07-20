@@ -29,10 +29,14 @@ class Runner
 	 */
 	protected static function initiate()
 	{
+		// avoid this method to from being called more than once.
 		if ( ! is_null(static::$message)) return;
 
+		// Fetch message from session, the message should be in serialize, or else should return empty string.
 		static::$message = Session::has('message') ? unserialize(Session::get('message', "")) : null;
 
+		// check whether message actually an instanceof Messages, if for any reason it's not we should
+		// assume the object is invalid and therefore we need to construct a new object.
 		if ( ! (static::$message instanceof Messages)) static::$message = new Messages;
 	}
 
@@ -45,6 +49,7 @@ class Runner
 	 */
 	protected static function shutdown()
 	{
+		// Serialize and flash it to session.
 		Session::flash('message', static::$message->serialize());
 	}
 

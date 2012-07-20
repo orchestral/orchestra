@@ -5,7 +5,7 @@ use \Closure, Laravel\Fluent;
 class Pane 
 {
 	protected static $panes = array();
-
+	
 	public static function make($id, $callback)
 	{
 		if ( ! isset(static::$panes[$id]))
