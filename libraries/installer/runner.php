@@ -64,11 +64,14 @@ class Runner
 	{
 		static::initiate();
 
+		// Run migration script to install `laravel_migrations` table
+		// to this installation.
 		if (IoC::registered('task: orchestra.migrate'))
 		{
 			IoC::resolve('task: orchestra.migrate', array('install'));
 		}
 
+		// We now need to run schema migration for Orchestra. 
 		static::install_migrations_schema();
 		static::install_options_schema();
 		static::install_users_schema();
