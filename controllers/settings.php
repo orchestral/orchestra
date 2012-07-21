@@ -123,7 +123,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 		$memory->put('email.transports.smtp.password', $input['email_smtp_password']);
 		$memory->put('email.transports.sendmail.command', $input['email_sendmail_command']);
 
-		$m = Messages::make('success', __('orchestra::response.settings.updated'));
+		$m = Messages::make('success', __('orchestra::response.settings.update'));
 
 		return Redirect::to(handles('orchestra::settings'))
 				->with('message', $m->serialize());

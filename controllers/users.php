@@ -198,12 +198,12 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 					->with_errors($v);
 		}
 
-		$type  = 'updated';
+		$type  = 'update';
 		$user  = User::find($id);
 
 		if (is_null($user)) 
 		{
-			$type = 'created';
+			$type = 'create';
 			$user = new User(array(
 				'password' => Hash::make($input['password'] ?: ''),
 			));
@@ -217,7 +217,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 			$user->password = Hash::make($input['password']);
 		}
 
-		Event::fire('orchestra.update: users', array($user));
+		Event::fire("orchestra.{$type}: users", array($user));
 
 		$m = new Messages;
 
@@ -257,7 +257,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 
 		$user->delete();
 
-		$m = Messages::make('success', __('orchestra::response.users.deleted'));
+		$m = Messages::make('success', __('orchestra::response.users.delete'));
 
 		return Redirect::to(handles('orchestra::users'))
 				->with('message', $m->serialize());

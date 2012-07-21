@@ -66,7 +66,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 		$user->save();
 
 		$m = new Messages;
-		$m->add('success', __('orchestra::response.account.profile.updated'));
+		$m->add('success', __('orchestra::response.account.profile.update'));
 
 		return Redirect::to(handles('orchestra::account'))
 				->with('message', $m->serialize());
@@ -122,7 +122,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 		{
 			$user->password = Hash::make($input['new_password']);
 			$user->save();
-			$m->add('success', __('orchestra::response.account.password.updated'));
+			$m->add('success', __('orchestra::response.account.password.update'));
 		}
 		else
 		{

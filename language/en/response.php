@@ -4,10 +4,10 @@ return array(
 	'account' => array(
 		'password' => array(
 			'invalid' => 'Current password does not match our record, please try again',
-			'updated' => 'Your password has been updated',
+			'update'  => 'Your password has been updated',
 		),
 		'profile' => array(
-			'updated' => 'Your profile has been updated',
+			'update' => 'Your profile has been updated',
 		),
 
 	),
@@ -21,6 +21,12 @@ return array(
 	'db-failed' => 'Unabled to save to database',
 
 	'settings' => array(
-		'updated' => 'Application settings has been updated',
+		'update' => 'Application settings has been updated',
+	),
+
+	'users' => array(
+		'create' => 'User has been created',
+		'update' => 'User has been updated',
+		'delete' => 'User has been deleted',
 	),
 );
