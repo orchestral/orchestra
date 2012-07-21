@@ -15,17 +15,19 @@
 
 		<!-- Le styles -->
 		<?php 
-		
-		Asset::style('bootstrap', 'bundles/orchestra/css/bootstrap.min.css');
-		Asset::style('style', 'bundles/orchestra/css/style.css', array('bootstrap'));
-		Asset::style('select2', 'bundles/orchestra/js/select2/select2.css');
 
-		Asset::script('jquery', 'bundles/orchestra/js/jquery-1.7.2.min.js');
-		Asset::script('bootstrap', 'bundles/orchestra/js/bootstrap.min.js', array('jquery'));
-		Asset::script('select2', 'bundles/orchestra/js/select2/select2.min.js', array('jquery'));
+		$asset = Asset::container('orchestra.backend');
 
-		echo Asset::styles();
-		echo Asset::scripts(); ?>
+		$asset->style('bootstrap', 'bundles/orchestra/css/bootstrap.min.css');
+		$asset->style('style', 'bundles/orchestra/css/style.css', array('bootstrap'));
+		$asset->style('select2', 'bundles/orchestra/js/select2/select2.css');
+
+		$asset->script('jquery', 'bundles/orchestra/js/jquery-1.7.2.min.js');
+		$asset->script('bootstrap', 'bundles/orchestra/js/bootstrap.min.js', array('jquery'));
+		$asset->script('select2', 'bundles/orchestra/js/select2/select2.min.js', array('jquery'));
+
+		echo $asset->styles();
+		echo $asset->scripts(); ?>
 	</head>
 
 	<body>
