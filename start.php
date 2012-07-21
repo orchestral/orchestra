@@ -45,9 +45,9 @@ Event::listen('laravel.started: orchestra', function ()
 |
 | Lets Orchestra run Laravel\CLI migration actions
  */
-if( ! IoC::registered('task: orchestra.migrate'))
+if( ! IoC::registered('task: orchestra.migrator'))
 {
-	IoC::register('task: orchestra.migrate', function($method, $bundle = null)
+	IoC::register('task: orchestra.migrator', function($method, $bundle = null)
 	{
 		// Initiate the dependencies to Laravel\CLI migrate.
 		$database = new Laravel\CLI\Tasks\Migrate\Database;
@@ -73,6 +73,27 @@ if( ! IoC::registered('task: orchestra.migrate'))
 			throw new Exception('Unable to find migration action');
 		}
 		
+	});
+}
+
+if( ! IoC::registered('task: orchestra.publisher'))
+{
+	IoC::register('task: orchestra.publisher', function($bundle = null)
+	{
+		// Initiate the dependencies to Laravel\CLI bundle publisher.
+		$publisher = new Laravel\CLI\Tasks\Bundle\Publisher;
+
+		try
+		{
+			// We need to resolve to output buffering Task Migrator will echo some 
+			// output to terminal.
+			ob_start();
+
+			$publisher->publish($bundle);
+
+			ob_end_clean();
+		}
+		catch (Exception $e) {}
 	});	
 }
 
