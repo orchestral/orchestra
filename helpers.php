@@ -20,7 +20,13 @@ if ( ! function_exists('handles'))
 			$to     = '';
 		}
 
-		if ( ! Bundle::exists($bundle)) return null;
+		// In situation where bundle is not registered, it best to assume 
+		// that we are handle "application" routing
+		if ( ! Bundle::exists($bundle))
+		{
+			$bundle = DEFAULT_BUNDLE;
+			$to     = $bundle;
+		}
 
 		$handles = Bundle::option($bundle, 'handles');
 		$handles = rtrim($handles, '/');
