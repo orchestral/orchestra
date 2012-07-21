@@ -20,7 +20,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		
 		$this->filter('before', 'orchestra::manage-users');
 
-		Event::fire('orchestra.started: manage');
+		Event::fire('orchestra.started: backend');
 	}
 
 	/**

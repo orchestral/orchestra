@@ -78,7 +78,7 @@ class Core
 			Installer::$status = true;
 
 			static::extensions();
-			static::listeners();
+			static::loader();
 		}
 		catch (Exception $e) 
 		{
@@ -149,15 +149,16 @@ class Core
 	}
 
 	/**
-	 * Listeners for Orchestra
+	 * Loader for Orchestra
 	 *
 	 * @static
 	 * @access protected
 	 * @return void
 	 */
-	protected static function listeners()
+	protected static function loader()
 	{
-		Event::listen('orchestra.started: manage', function ()
+		// Multiple event listener for Backend (administrator panel)
+		Event::listen('orchestra.started: backend', function ()
 		{
 			Extension\Pane::make('orchestra.welcome', function ($pane)
 			{
@@ -199,11 +200,6 @@ class Core
 				$menu->add('settings')
 					->title(__('orchestra::title.settings.list')->get())
 					->link(handles('orchestra::settings'));
-
-				/*
-				$menu->add('menus', 'childof:settings')->title('Menus')->link(handles('orchestra::menus'));
-				$menu->add('widgets', 'childof:settings')->title('Widgets')->link(handles('orchestra::widgets'));
-				 */
 			}
 		});
 	}

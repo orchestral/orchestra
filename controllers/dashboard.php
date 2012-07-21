@@ -15,7 +15,7 @@ class Orchestra_Dashboard_Controller extends Orchestra\Controller
 
 		$this->filter('before', 'orchestra::auth');
 
-		Event::fire('orchestra.started: manage');
+		Event::fire('orchestra.started: backend');
 	}
 
 	/**
