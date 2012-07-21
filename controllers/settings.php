@@ -38,6 +38,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 		$settings = new Fluent(array(
 			'site_name'        => $memory->get('site.name', ''),
 			'site_description' => $memory->get('site.description', ''),
+			'email_default'  => $memory->get('email.default', ''),
 		));
 
 		Form::of('orchestra.settings', function ($form) use ($settings)
@@ -61,7 +62,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 			{
 				$fieldset->control('select', 'Transport', function ($control)
 				{
-					$control->name = 'transport';
+					$control->name    = 'email_default';
 					$control->options = array(
 						'mail'     => 'Mail',
 						'smtp'     => 'SMTP',
@@ -86,8 +87,8 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 	{
 		$input = Input::all();
 		$rules = array(
-			'site_name' => array('required'),
-			'transport' => array('required'),
+			'site_name'     => array('required'),
+			'email_default' => array('required'),
 		);
 
 		$v = Validator::make($input, $rules);
@@ -103,6 +104,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 
 		$memory->put('site.name', $input['site_name']);
 		$memory->put('site.description', $input['site_description']);
+		$memory->put('email.default', $input['email_default']);
 
 		$m = Messages::make('success', __('orchestra::response.settings.updated'));
 
