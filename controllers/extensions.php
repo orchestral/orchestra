@@ -48,7 +48,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 		Orchestra\Extension::activate($name);
 
 		$m = new Orchestra\Messages;
-		$m->add('success', __('orchestra::response.extensions.activated', array('name' => $name)));
+		$m->add('success', __('orchestra::response.extensions.activate', array('name' => $name)));
 
 		return Redirect::to(handles('orchestra::extensions'))
 				->with('message', $m->serialize());
@@ -68,7 +68,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 		Orchestra\Extension::deactivate($name);
 
 		$m = new Orchestra\Messages;
-		$m->add('success', __('orchestra::response.extensions.deactivated', array('name' => $name)));
+		$m->add('success', __('orchestra::response.extensions.deactivate', array('name' => $name)));
 
 		return Redirect::to(handles('orchestra::extensions'))
 				->with('message', $m->serialize());

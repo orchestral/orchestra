@@ -20,6 +20,11 @@ return array(
 
 	'db-failed' => 'Unabled to save to database',
 
+	'extensions' => array(
+		'activate'   => 'Extension :name activated',
+		'deactivate' => 'Extension :name deactivate',
+	),
+
 	'settings' => array(
 		'update' => 'Application settings has been updated',
 	),
