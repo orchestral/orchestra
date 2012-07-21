@@ -19,6 +19,8 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		parent::__construct();
 		
 		$this->filter('before', 'orchestra::manage-users');
+
+		Event::fire('orchestra.started: manage');
 	}
 
 	/**

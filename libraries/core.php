@@ -1,6 +1,6 @@
 <?php namespace Orchestra;
 
-use \Config, \Exception, 
+use \Config, \Exception, \Event, 
 	Hybrid\Acl, Hybrid\Memory;
 
 class Core
@@ -77,9 +77,8 @@ class Core
 			// enabled.
 			Installer::$status = true;
 
-			static::load_menus();
-			static::load_extensions();
-			static::load_panes();
+			static::extensions();
+			static::listeners();
 		}
 		catch (Exception $e) 
 		{
@@ -131,60 +130,13 @@ class Core
 	}
 
 	/**
-	 * Load Menu for Orchestra
-	 *
-	 * @static
-	 * @access public
-	 * @return void
-	 */
-	public static function load_menus()
-	{
-		// localize the variable, and ensure it by references.
-		$menu =& static::$cached['orchestra_menu'];
-
-		// Add basic menu.
-		$menu->add('home')
-			->title(__('orchestra::title.home.list')->get())
-			->link(handles('orchestra'));
-
-		// Add menu when user can manage users
-		if (static::$cached['acl']->can('manage-users'))
-		{
-			$menu->add('users')
-				->title(__('orchestra::title.users.list')->get())
-				->link(handles('orchestra::users'));
-
-			$menu->add('add-users', 'childof:users')
-				->title(__('orchestra::title.users.create')->get())
-				->link(handles('orchestra::users/view'));
-		}
-
-		// Add menu when user can manage orchestra
-		if (static::$cached['acl']->can('manage-orchestra'))
-		{
-			$menu->add('extensions', 'after:home')
-				->title(__('orchestra::title.extensions.list')->get())
-				->link(handles('orchestra::extensions'));
-
-			$menu->add('settings')
-				->title(__('orchestra::title.settings.list')->get())
-				->link(handles('orchestra::settings'));
-
-			/*
-			$menu->add('menus', 'childof:settings')->title('Menus')->link(handles('orchestra::menus'));
-			$menu->add('widgets', 'childof:settings')->title('Widgets')->link(handles('orchestra::widgets'));
-			 */
-		}
-	}
-
-	/**
 	 * Load Extensions for Orchestra
 	 *
 	 * @static
-	 * @access public
+	 * @access protected
 	 * @return void
 	 */
-	public static function load_extensions()
+	protected static function extensions()
 	{
 		$memory     = Core::memory();
 		$availables = (array) $memory->get('extensions.available', array());
@@ -197,21 +149,62 @@ class Core
 	}
 
 	/**
-	 * Load Panes for Orchestra
+	 * Listeners for Orchestra
 	 *
 	 * @static
-	 * @access public
+	 * @access protected
 	 * @return void
 	 */
-	public static function load_panes()
+	protected static function listeners()
 	{
-		Extension\Pane::make('orchestra.welcome', function ($pane)
+		Event::listen('orchestra.started: manage', function ()
 		{
-			$pane->attr = array('class' => 'hero-unit');
-			$pane->html = '<h2>Welcome to your new Orchestra site!</h2>
-			<p>If you need help getting started, check out our documentation on First Steps with Orchestra. If you’d rather dive right in, here are a few things most people do first when they set up a new Orchestra site. 
-			<!-- If you need help, use the Help tabs in the upper right corner to get information on how to use your current screen and where to go for more assistance.--></p>';
+			Extension\Pane::make('orchestra.welcome', function ($pane)
+			{
+				$pane->attr = array('class' => 'hero-unit');
+				$pane->html = '<h2>Welcome to your new Orchestra site!</h2>
+				<p>If you need help getting started, check out our documentation on First Steps with Orchestra. If you’d rather dive right in, here are a few things most people do first when they set up a new Orchestra site. 
+				<!-- If you need help, use the Help tabs in the upper right corner to get information on how to use your current screen and where to go for more assistance.--></p>';
 
+			});
+
+			// localize the variable, and ensure it by references.
+			$menu = Core::menu('orchestra');
+			$acl  = Core::acl();
+
+			// Add basic menu.
+			$menu->add('home')
+				->title(__('orchestra::title.home.list')->get())
+				->link(handles('orchestra'));
+
+			// Add menu when user can manage users
+			if ($acl->can('manage-users'))
+			{
+				$menu->add('users')
+					->title(__('orchestra::title.users.list')->get())
+					->link(handles('orchestra::users'));
+
+				$menu->add('add-users', 'childof:users')
+					->title(__('orchestra::title.users.create')->get())
+					->link(handles('orchestra::users/view'));
+			}
+
+			// Add menu when user can manage orchestra
+			if ($acl->can('manage-orchestra'))
+			{
+				$menu->add('extensions', 'after:home')
+					->title(__('orchestra::title.extensions.list')->get())
+					->link(handles('orchestra::extensions'));
+
+				$menu->add('settings')
+					->title(__('orchestra::title.settings.list')->get())
+					->link(handles('orchestra::settings'));
+
+				/*
+				$menu->add('menus', 'childof:settings')->title('Menus')->link(handles('orchestra::menus'));
+				$menu->add('widgets', 'childof:settings')->title('Widgets')->link(handles('orchestra::widgets'));
+				 */
+			}
 		});
 	}
 }
