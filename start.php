@@ -76,6 +76,18 @@ if( ! IoC::registered('task: orchestra.migrate'))
 	});	
 }
 
+if( ! IoC::registered('orchestra.mailer'))
+{
+	IoC::register('orchestra.mailer', function()
+	{
+		$memory = Orchestra\Core::memory();
+		$config = $memory->get('email');
+		$driver = $config['default'];
+
+		return Messages::factory($driver, $config["transports.{$driver}"]);
+	});
+}
+
 /*
 |--------------------------------------------------------------------------
 | Orchestra Helpers
