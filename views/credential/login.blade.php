@@ -9,7 +9,7 @@
 		{{ Form::open(handles('orchestra::login'), 'POST', array('class' => 'form-horizontal')) }}
 
 			<fieldset>
-				<legend>Login</legend>
+				<legend>{{ __('orchestra::title.login') }}</legend>
 				
 				<div class="control-group {{ $errors->has('email') ? 'error' : '' }}">
 					{{ Form::label('email', __('orchestra::label.users.email'), array('class' => 'control-label')) }}
@@ -31,7 +31,8 @@
 			</fieldset>
 
 			<div class="form-actions clean">
-				<button type="submit" class="btn btn-primary">Submit</button>
+				<button type="submit" class="btn btn-primary">Submit</button> 
+				{{ HTML::link(handles('orchestra::forgot'), __('orchestra::title.forgot-password')) }}
 			</div>
 
 		{{ Form::close() }}

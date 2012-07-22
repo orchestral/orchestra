@@ -7,6 +7,7 @@
 |
 | Map Orchestra Library using PSR-0 standard namespace. 
  */
+
 Autoloader::namespaces(array(
 	'Orchestra\Model' => Bundle::path('orchestra').'models'.DS,
 	'Orchestra'       => Bundle::path('orchestra').'libraries'.DS,
@@ -20,6 +21,7 @@ Autoloader::namespaces(array(
 | Register and start Hybrid bundle if it's not registered in 
 | application/bundles.php
  */
+
 if ( ! Bundle::exists('hybrid'))
 {
 	Bundle::register('hybrid');
@@ -33,6 +35,7 @@ if ( ! Bundle::exists('hybrid'))
 |
 | Lets listen to when Orchestra bundle is started.
  */ 
+
 Event::listen('laravel.started: orchestra', function () 
 {
 	Orchestra\Core::start();
@@ -40,11 +43,12 @@ Event::listen('laravel.started: orchestra', function ()
 
 /*
 |--------------------------------------------------------------------------
-| Orchestra IoC
+| Orchestra IoC (Migration)
 |--------------------------------------------------------------------------
 |
 | Lets Orchestra run Laravel\CLI migration actions
  */
+
 if( ! IoC::registered('task: orchestra.migrator'))
 {
 	IoC::register('task: orchestra.migrator', function($method, $bundle = null)
@@ -76,6 +80,15 @@ if( ! IoC::registered('task: orchestra.migrator'))
 	});
 }
 
+/*
+|--------------------------------------------------------------------------
+| Orchestra IoC (Publisher)
+|--------------------------------------------------------------------------
+|
+| Lets Orchestra run Laravel\CLI bundle asset publish actions. This is an
+| alias to `php artisan bundle:publish`
+ */
+
 if( ! IoC::registered('task: orchestra.publisher'))
 {
 	IoC::register('task: orchestra.publisher', function($bundle = null)
@@ -97,15 +110,41 @@ if( ! IoC::registered('task: orchestra.publisher'))
 	});	
 }
 
+/*
+|--------------------------------------------------------------------------
+| Orchestra IoC (Mailer)
+|--------------------------------------------------------------------------
+|
+| Lets Orchestra handle mailer (integration with Message bundle) using IoC
+ */
+
 if( ! IoC::registered('orchestra.mailer'))
 {
-	IoC::register('orchestra.mailer', function()
+	IoC::register('orchestra.mailer', function($from = true)
 	{
-		$memory = Orchestra\Core::memory();
-		$config = $memory->get('email');
-		$driver = $config['default'];
+		// Ensure Messages bundle is registered
+		if ( ! Bundle::exists('messages')) Bundle::register('messages');
 
-		return Messages::factory($driver, $config["transports.{$driver}"]);
+		// Ensure it's started as well
+		if ( ! Bundle::started('messages')) Bundle::start('messages');
+
+		$memory     = Orchestra\Core::memory();
+		
+		$config     = $memory->get('email');
+		$driver     = $config['default'];
+		$transports = $config['transports'];
+		$email      = $config['from'];
+
+		Config::set('messages::config.transports', $transports);
+
+		$mailer = Message::instance($driver);
+
+		if ($from === true) 
+		{
+			$mailer->from($email, $memory->get('site.name', 'Orchestra'));
+		}
+
+		return $mailer;
 	});
 }
 
@@ -114,4 +153,5 @@ if( ! IoC::registered('orchestra.mailer'))
 | Orchestra Helpers
 |--------------------------------------------------------------------------
  */
+
 include_once Bundle::path('orchestra').'helpers.php';

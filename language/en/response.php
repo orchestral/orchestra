@@ -18,11 +18,17 @@ return array(
 		'logged-out'          => 'You have been logged out',
 	),
 
-	'db-failed' => 'Unabled to save to database',
+	'db-failed' => 'Unable to save to database',
+	'db-404'    => 'Requested data is not available on the database',
 
 	'extensions' => array(
 		'activate'   => 'Extension :name activated',
 		'deactivate' => 'Extension :name deactivate',
+	),
+
+	'forgot' => array(
+		'fail' => 'Unable to send reset password email',
+		'send' => 'Reset password email has been sent, please check your inbox',
 	),
 
 	'settings' => array(

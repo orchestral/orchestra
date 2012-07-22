@@ -10,6 +10,8 @@ return array(
 		'list' => 'Extensions',
 	),
 
+	'forgot-password' => 'Forgot Password',
+
 	'home' => array(
 		'list' => 'Home',
 	),

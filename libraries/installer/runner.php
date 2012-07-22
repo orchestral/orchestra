@@ -142,6 +142,7 @@ class Runner
 			// Save the default application site_name.
 			$memory->put('site.name', Input::get('site_name', 'Orchestra'));
 			$memory->put('email', Config::get('orchestra::email'));
+			$memory->put('email.from', $input['email']);
 
 			// We should also create a basic ACL for Orchestra.
 			$acl = Acl::make('orchestra');
@@ -294,7 +295,7 @@ class Runner
 
 				$table->increments('id');
 				$table->integer('user_id');
-				$table->string('key', 255)->nullable();
+				$table->string('name', 255)->nullable();
 				$table->text('value')->nullable();
 
 				// add timestamp created_at and updated_at
