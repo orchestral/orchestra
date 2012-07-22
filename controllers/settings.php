@@ -43,6 +43,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 			'email_smtp_port'        => $memory->get('email.transports.smtp.port', ''),
 			'email_smtp_username'    => $memory->get('email.transports.smtp.username', ''),
 			'email_smtp_password'    => $memory->get('email.transports.smtp.password', ''),
+			'email_smtp_encryption'  => $memory->get('email.transports.smtp.encryption', ''),
 			'email_sendmail_command' => $memory->get('email.transports.sendmail.command', ''),
 		));
 
@@ -79,6 +80,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 				$fieldset->control('input:text', 'SMTP Port', 'email_smtp_port');
 				$fieldset->control('input:text', 'SMTP Username', 'email_smtp_username');
 				$fieldset->control('input:password', 'SMTP Password', 'email_smtp_password');
+				$fieldset->control('input:text', 'STMP Encryption', 'email_smtp_encryption');
 				$fieldset->control('input:text', 'Sendmail Command', 'email_sendmail_command');
 			});
 		});
@@ -121,6 +123,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 		$memory->put('email.transports.smtp.port', $input['email_smtp_port']);
 		$memory->put('email.transports.smtp.username', $input['email_smtp_username']);
 		$memory->put('email.transports.smtp.password', $input['email_smtp_password']);
+		$memory->put('email.transports.smtp.encryption', $input['email_smtp_encryption']);
 		$memory->put('email.transports.sendmail.command', $input['email_sendmail_command']);
 
 		$m = Messages::make('success', __('orchestra::response.settings.update'));
