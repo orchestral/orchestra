@@ -10,6 +10,8 @@ if ( ! function_exists('handles'))
 	 */
 	function handles($name)
 	{
+		$handles = '';
+
 		if (strpos($name, '::') !== false)
 		{
 			list($bundle, $to) = Bundle::parse($name);
@@ -26,11 +28,17 @@ if ( ! function_exists('handles'))
 		{
 			$bundle = DEFAULT_BUNDLE;
 			$to     = $bundle;
-		}
 
-		$handles = Bundle::option($bundle, 'handles');
-		$handles = rtrim($handles, '/');
-		$to      = ltrim($to, '/');
+			// DEFAULT_BUNDLE should handle root path
+			$handles = '';
+		}
+		else
+		{
+			$handles = Bundle::option($bundle, 'handles');
+			$handles = rtrim($handles, '/');
+		}
+		
+		$to = ltrim($to, '/');
 
 		return url($handles.'/'.$to);
 	}
