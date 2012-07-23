@@ -7,7 +7,7 @@
 	<div class="span12 form-horizontal">
 		
 		{{ Form::open(handles('orchestra::login'), 'POST', array('class' => 'form-horizontal')) }}
-
+			{{ Form::hidden('redirect', $redirect) }}
 			<fieldset>
 				<legend>{{ __('orchestra::title.login') }}</legend>
 				

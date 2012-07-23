@@ -66,12 +66,18 @@ Route::controller(array(
  */
 Route::filter('orchestra::auth', function ()
 {
+	$redirect = Input::get('redirect');
+	Session::flash('orchestra.redirect', $redirect);
+
 	// Redirect the user to login page if user is not logged in.
 	if (Auth::guest()) return Redirect::to(handles('orchestra::login'));
 });
 
 Route::filter('orchestra::not-auth', function ()
 {
+	$redirect = Input::get('redirect');
+	Session::flash('orchestra.redirect', $redirect);
+	
 	// Redirect the user to login page if user is not logged in.
 	if ( ! Auth::guest()) return Redirect::to(handles('orchestra'));
 });
@@ -82,7 +88,13 @@ Route::filter('orchestra::manage-users', function ()
 	// Redirect the user to login page if user is not logged in.
 	if ( ! Orchestra\Core::acl()->can('manage-users')) 
 	{
-		if (Auth::guest()) return Redirect::to(handles('orchestra::login'));
+		if (Auth::guest()) 
+		{
+			$redirect = Input::get('redirect');
+			Session::flash('orchestra.redirect', $redirect);
+	
+			return Redirect::to(handles('orchestra::login'));
+		}
 
 		return Redirect::to(handles('orchestra'));
 	}
@@ -93,7 +105,13 @@ Route::filter('orchestra::manage', function ()
 	// Redirect the user to login page if user is not logged in.
 	if ( ! Orchestra\Core::acl()->can('manage-orchestra')) 
 	{
-		if (Auth::guest()) return Redirect::to(handles('orchestra::login'));
+		if (Auth::guest()) 
+		{
+			$redirect = Input::get('redirect');
+			Session::flash('orchestra.redirect', $redirect);
+		
+			return Redirect::to(handles('orchestra::login'));
+		}
 
 		return Redirect::to(handles('orchestra'));
 	}

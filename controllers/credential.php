@@ -24,7 +24,11 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 	 */
 	public function get_login()
 	{
-		return View::make('orchestra::credential.login');
+		$data = array(
+			'redirect' => Session::get('orchestra.redirect', handles('orchestra')),
+		);
+
+		return View::make('orchestra::credential.login', $data);
 	}
 
 	/**
@@ -66,7 +70,9 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 			
 			$m->add('success', __('orchestra::response.credential.logged-in'));
 
-			return Redirect::to(handles('orchestra'))
+			$redirect = Input::get('redirect', handles('orchestra'));
+
+			return Redirect::to($redirect)
 					->with('message', $m->serialize());
 		}
 		else 
