@@ -6,7 +6,6 @@
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 		<meta name="description" content="">
 		<meta name="author" content="">
-		<link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lobster+Two">
 
 		<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
 		<!--[if lt IE 9]>
