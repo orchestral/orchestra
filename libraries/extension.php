@@ -144,6 +144,22 @@ class Extension
 	}
 
 	/**
+	 * Determine whether the requested extension is active
+	 *
+	 * @static
+	 * @access public
+	 * @param  string $name
+	 * @return bool
+	 */
+	public static function activated($name)
+	{
+		$memory    = Core::memory();
+		$active    = (array) $memory->get('extensions.active', array());
+
+		return (in_array($name, $active));
+	}
+
+	/**
 	 * Deactivate an extension
 	 *
 	 * @static
