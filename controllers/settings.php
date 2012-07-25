@@ -47,7 +47,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 			'email_sendmail_command' => $memory->get('email.transports.sendmail.command', ''),
 		));
 
-		Form::of('orchestra.settings', function ($form) use ($settings)
+		$form = Form::of('orchestra.settings', function ($form) use ($settings)
 		{
 			$form->row($settings);	
 			$form->attr(array(
@@ -85,7 +85,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 			});
 		});
 
-		Event::fire('orchestra.form: settings', array($settings));
+		Event::fire('orchestra.form: settings', array($settings, $form));
 
 		$data = array(
 			'eloquent'      => $settings,
@@ -127,6 +127,8 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 		$memory->put('email.transports.sendmail.command', $input['email_sendmail_command']);
 
 		$m = Messages::make('success', __('orchestra::response.settings.update'));
+
+		Event::fire('orchestra.save: settings', array($memory));
 
 		return Redirect::to(handles('orchestra::settings'))
 				->with('message', $m->serialize());
