@@ -77,8 +77,8 @@ class Core
 			// enabled.
 			Installer::$status = true;
 
-			static::extensions();
 			static::loader();
+			static::extensions();
 		}
 		catch (Exception $e) 
 		{
