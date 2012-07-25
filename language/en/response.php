@@ -24,6 +24,7 @@ return array(
 	'extensions' => array(
 		'activate'   => 'Extension :name activated',
 		'deactivate' => 'Extension :name deactivate',
+		'configure'  => 'Configuration for Extension :name has been updated',
 	),
 
 	'forgot' => array(

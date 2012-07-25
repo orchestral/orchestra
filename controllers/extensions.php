@@ -77,13 +77,22 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 				->with('message', $m->serialize());
 	}
 
+	/**
+	 * Configure an extension
+	 * 
+	 * @access public
+	 * @param  string   $name name of the extension
+	 * @return Response
+	 */
 	public function get_configure($name = null)
 	{
 		if (is_null($name) or ! Extension::started($name)) return Event::first('404');
 
+		// Load configuration from memory.
 		$memory = Core::memory();
 		$config = new Fluent((array) $memory->get("extension_{$name}", array()));
 
+		// Add basic form, allow extension to add custom configuration field to this
 		$form = Form::of("orchestra.extension: {$name}", function ($form) use ($name, $config)
 		{
 			$form->row($config);
@@ -95,6 +104,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 
 			$handles = Extension::option($name, 'handles');
 
+			// We should only cater for custom URL handles for a route.
 			if ( ! is_null($handles))
 			{
 				$form->fieldset(function ($fieldset) use ($handles)
@@ -108,6 +118,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 			}
 		});
 
+		// Now lets the extension do their magic.
 		Event::fire("orchestra.form: extension.{$name}", array($config, $form));
 
 		$data = array(
@@ -119,6 +130,13 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 		return View::make('orchestra::resources.edit', $data);
 	}
 
+	/**
+	 * Update extension configuration
+	 * 
+	 * @access public
+	 * @param  string   $name name of the extension
+	 * @return Response
+	 */
 	public function post_configure($name = null)
 	{
 		if (is_null($name) or ! Extension::started($name)) return Event::first('404');
@@ -138,12 +156,13 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 			$memory->put("extensions.active.{$name}", $loader);
 		}
 
+		// In any event where extension need to do some custom handling.
 		Event::fire("orchestra.save: extension.{$name}", array($config));
 
 		$memory->put("extension_{$name}", $input);
 
 		$m = new Messages;
-		$m->add('success', __("orchestra::response.extension.configure", array('name' => $name)));
+		$m->add('success', __("orchestra::response.extensions.configure", array('name' => $name)));
 
 		return Redirect::to(handles('orchestra::extensions'))
 			->with('message', $m->serialize());
