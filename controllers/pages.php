@@ -1,5 +1,7 @@
 <?php
 
+use Orchestra\Extension;
+
 class Orchestra_Pages_Controller extends Orchestra\Controller
 {
 	public $restful = true;
