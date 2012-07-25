@@ -7,7 +7,8 @@ return array(
 	),
 
 	'extensions' => array(
-		'list' => 'Extensions',
+		'list'      => 'Extensions',
+		'configure' => 'Configure Extension: :name',
 	),
 
 	'forgot-password' => 'Forgot Password',

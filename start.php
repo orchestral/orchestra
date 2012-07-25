@@ -41,6 +41,11 @@ Event::listen('laravel.started: orchestra', function ()
 	Orchestra\Core::start();
 });
 
+Event::listen('laravel.done', function () 
+{
+	Orchestra\Core::done();
+});
+
 /*
 |--------------------------------------------------------------------------
 | Orchestra IoC (Migration)

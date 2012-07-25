@@ -94,6 +94,19 @@ class Core
 	}
 
 	/**
+	 * Stop Orchestra\Core
+	 *
+	 * @static
+	 * @access public
+	 * @return void
+	 */
+	public static function done()
+	{	
+		// Only do this on installed application
+		if (false === Installer::$status) return;
+	}
+
+	/**
 	 * Get memory instance for Orchestra
 	 *
 	 * @static
@@ -142,13 +155,28 @@ class Core
 		$availables = (array) $memory->get('extensions.available', array());
 		$actives    = (array) $memory->get('extensions.active', array());
 
-		foreach ($memory->get('extensions.active', array()) as $name)
+		foreach ($actives as $extension => $config)
 		{
-			if (isset($availables[$name]))
+			if (is_numeric($extension))
 			{
-				Extension::start($name, (array) $availables[$name]['config']);
+				$extension = $config;
+				$config    = array();
+
+				if (isset($availables[$extension]))
+				{
+					$config = (array) $availables[$extension]['config'];
+				}
+			}
+
+			if (isset($availables[$extension]))
+			{
+				Extension::start($extension, $config);
 			}
 		}
+
+		// Resynchronize all active extension, this to ensure all configuration
+		// is standard.
+		$memory->put('extensions.active', Extension::all());
 	}
 
 	/**

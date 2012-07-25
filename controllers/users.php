@@ -36,7 +36,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		$users = User::with('roles')->paginate(30);
 
 		// Build users table HTML using a schema liked code structure.
-		Table::of('orchestra.users', function ($table) use ($users) 
+		$table = Table::of('orchestra.users', function ($table) use ($users) 
 		{
 			// Add HTML attributes option for the table.
 			$table->attr('class', 'table table-bordered table-striped');
@@ -119,7 +119,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 			$user = new User;
 		}
 
-		Form::of('orchestra.users', function ($form) use ($user)
+		$form = Form::of('orchestra.users', function ($form) use ($user)
 		{
 			$form->row($user);
 			$form->attr(array(

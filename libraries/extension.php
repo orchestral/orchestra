@@ -5,11 +5,11 @@ use \Bundle, \IoC, FileSystemIterator as fIterator;
 class Extension 
 {
 	/**
-	 * List of started extensions
+	 * List of extensions
 	 * 
 	 * @var array
 	 */
-	protected static $started = array();
+	protected static $extensions = array();
 
 	/**
 	 * Load an extension by running it's start-up script.
@@ -24,8 +24,9 @@ class Extension
 	 */
 	public static function start($name, $config = array())
 	{
-		$name   = $name ?: null;
-		$config = (array) $config;
+		$default = array('handles' => null, 'auto' => false);
+		$name    = $name ?: null;
+		$config  = (array) $config;
 
 		if ( ! is_string($name)) return;
 
@@ -43,7 +44,7 @@ class Extension
 			include_once $file;
 		}
 
-		static::$started[] = $name;
+		static::$extensions[$name] = array_merge($default, $config);
 	}
 
 	/**
@@ -56,8 +57,29 @@ class Extension
 	 */
 	public static function started($name)
 	{
-		return (in_array($name, static::$started));
+		return (array_key_exists($name, static::$extensions));
 	}
+
+	/**
+	 * Get an option for a given extension.
+	 *
+	 * @param  string  $name
+	 * @param  string  $option
+	 * @param  mixed   $default
+	 * @return mixed
+	 */
+	public static function option($name, $option, $default = null)
+	{
+		$extension = static::$extensions[$name];
+
+		if (is_null($extension))
+		{
+			return value($default);
+		}
+
+		return array_get($extension, $option, $default);
+	}
+
 
 	/**
 	 * Detect all of the extensions for orchestra
@@ -99,7 +121,7 @@ class Extension
 		{
 			$cached[$name] = array(
 				'name'   => $extension->name,
-				'config' => $extension->config
+				'config' => (array) $extension->config
 			);
 		}
 
@@ -124,10 +146,10 @@ class Extension
 
 		if (isset($available[$name]))
 		{
-			array_push($active, $name);
+			$active[$name] = (array) $available[$name]['config'];
 
 			// we should also start the bundle
-			static::start($name, $available[$name]['config']);
+			static::start($name, $active[$name]);
 
 			if (IoC::registered('task: orchestra.migrator'))
 			{
@@ -173,14 +195,30 @@ class Extension
 		$current = (array) $memory->get('extensions.active', array());
 		$active  = array();
 
-		foreach ($current as $extension)
+		foreach ($current as $extension => $config)
 		{
+			if (is_numeric($extension)) 
+			{
+				$extension = $config;
+				$config    = array();
+			}
+
 			if ($extension !== $name)
 			{
-				array_push($active, $extension);
+				$active[$extension] = $config;
 			}
 		}
 
 		$memory->put('extensions.active', $active);
+	}
+
+	/**
+	 * Get all of the installed extensions for the application.
+	 *
+	 * @return array
+	 */
+	public static function all()
+	{
+		return static::$extensions;
 	}
 }

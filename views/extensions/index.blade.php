@@ -19,13 +19,18 @@
 			@forelse ($extensions as $name => $extension)
 			<tr>
 				<td>
-					<strong>{{ $extension->name }}</strong>
+					<strong>
+						@if ( ! Orchestra\Extension::started($name))
+							{{ $extension->name }}
+						@else
+							{{ HTML::link(handles('orchestra::extensions/configure/'.$name), $extension->name) }}
+						@endif
+					</strong>
 					<span class="pull-right">
 						@if ( ! Orchestra\Extension::started($name))
 							{{ HTML::link(handles('orchestra::extensions/activate/'.$name), 'Activate', array('class' => 'btn btn-primary btn-mini')) }}
 						@else
 							{{ HTML::link(handles('orchestra::extensions/deactivate/'.$name), 'Deactivate', array('class' => 'btn btn-warning btn-mini')) }}
-
 						@endif
 					</span>
 				</td>

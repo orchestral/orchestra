@@ -1,5 +1,8 @@
 <?php 
 
+use Laravel\Fluent, Orchestra\Core, Orchestra\Extension, 
+	Orchestra\Form, Orchestra\Messages;
+
 class Orchestra_Extensions_Controller extends Orchestra\Controller 
 {
 	/**
@@ -28,7 +31,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 	public function get_index()
 	{
 		$data = array(
-			'extensions' => Orchestra\Extension::detect(),
+			'extensions' => Extension::detect(),
 		);
 
 		return View::make('orchestra::extensions.index', $data);
@@ -43,11 +46,11 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 	 */
 	public function get_activate($name = null)
 	{
-		if (is_null($name)) return Event::first('404');
+		if (is_null($name) or Extension::started($name)) return Event::first('404');
 
-		Orchestra\Extension::activate($name);
+		Extension::activate($name);
 
-		$m = new Orchestra\Messages;
+		$m = new Messages;
 		$m->add('success', __('orchestra::response.extensions.activate', array('name' => $name)));
 
 		return Redirect::to(handles('orchestra::extensions'))
@@ -63,14 +66,86 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 	 */
 	public function get_deactivate($name = null)
 	{
-		if (is_null($name)) return Event::first('404');
+		if (is_null($name) or ! Extension::started($name)) return Event::first('404');
 
-		Orchestra\Extension::deactivate($name);
+		Extension::deactivate($name);
 
-		$m = new Orchestra\Messages;
+		$m = new Messages;
 		$m->add('success', __('orchestra::response.extensions.deactivate', array('name' => $name)));
 
 		return Redirect::to(handles('orchestra::extensions'))
 				->with('message', $m->serialize());
+	}
+
+	public function get_configure($name = null)
+	{
+		if (is_null($name) or ! Extension::started($name)) return Event::first('404');
+
+		$memory = Core::memory();
+		$config = new Fluent((array) $memory->get("extension_{$name}", array()));
+
+		$form = Form::of("orchestra.extension: {$name}", function ($form) use ($name, $config)
+		{
+			$form->row($config);
+
+			$form->attr(array(
+				'action' => handles("orchestra::extensions/configure/{$name}"),
+				'method' => "POST",
+			));
+
+			$handles = Extension::option($name, 'handles');
+
+			if ( ! is_null($handles))
+			{
+				$form->fieldset(function ($fieldset) use ($handles)
+				{
+					$fieldset->control('input:text', 'handles', function ($control) use ($handles)
+					{
+						$control->label = 'Handle URL';
+						$control->value = $handles;
+					});
+				});
+			}
+		});
+
+		Event::fire("orchestra.form: extension.{$name}", array($config, $form));
+
+		$data = array(
+			'eloquent'      => $config,
+			'form'          => Form::of("orchestra.extension: {$name}"),
+			'resource_name' => __("orchestra::title.extensions.configure", array('name' => $name))->get(),
+		);
+
+		return View::make('orchestra::resources.edit', $data);
+	}
+
+	public function post_configure($name = null)
+	{
+		if (is_null($name) or ! Extension::started($name)) return Event::first('404');
+
+		$input  = Input::all();
+		$memory = Core::memory();
+		$config = new Fluent((array) $memory->get("extension_{$name}", array()));
+		$loader  = (array) $memory->get("extensions.active.{$name}", array());
+		
+		// This part should be part of extension loader configuration. What saved here
+		// wouldn't be part of extension configuration.
+		if ( isset($input['handles']) and ! empty($input['handles']))
+		{
+			$loader['handles'] = $input['handles'];
+			unset($input['handles']);
+
+			$memory->put("extensions.active.{$name}", $loader);
+		}
+
+		Event::fire("orchestra.save: extension.{$name}", array($config));
+
+		$memory->put("extension_{$name}", $input);
+
+		$m = new Messages;
+		$m->add('success', __("orchestra::response.extension.configure", array('name' => $name)));
+
+		return Redirect::to(handles('orchestra::extensions'))
+			->with('message', $m->serialize());
 	}
 }
