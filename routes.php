@@ -54,6 +54,7 @@ Route::controller(array(
 	'orchestra::dashboard',
 	'orchestra::extensions', 
 	'orchestra::forgot', 
+	'orchestra::manages', 
 	'orchestra::pages', 
 	'orchestra::settings',
 	'orchestra::users',

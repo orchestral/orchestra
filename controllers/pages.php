@@ -33,7 +33,7 @@ class Orchestra_Pages_Controller extends Orchestra\Controller
 		list($method, $name) = explode('_', $request, 2);
 		$action              = array_shift($arguments);
 
-		if ( ! isset($name) or Extension::started($name) or is_null($action))
+		if ( ! Extension::started($name) or is_null($action))
 		{
 			return Response::error('404');
 		}
