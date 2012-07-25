@@ -90,7 +90,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 			});
 		});
 
-		Event::fire('orchestra.list: users', array($users));
+		Event::fire('orchestra.list: users', array($users, $table));
 
 		$data = array(
 			'eloquent'      => $users,
@@ -162,7 +162,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 			});
 		});
 
-		Event::fire('orchestra.form: users', array($user));
+		Event::fire('orchestra.form: users', array($user, $form));
 
 		$data = array(
 			'eloquent'      => $user,
@@ -218,6 +218,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		}
 
 		Event::fire("orchestra.{$type}: users", array($user));
+		Event::fire("orchestra.save: users", array($user));
 
 		$m = new Messages;
 
