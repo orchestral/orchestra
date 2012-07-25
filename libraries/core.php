@@ -144,7 +144,10 @@ class Core
 
 		foreach ($memory->get('extensions.active', array()) as $name)
 		{
-			Extension::start($name, (array) $availables[$name]['config']);
+			if (isset($availables[$name]))
+			{
+				Extension::start($name, (array) $availables[$name]['config']);
+			}
 		}
 	}
 
