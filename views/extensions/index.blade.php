@@ -39,7 +39,7 @@
 			</tr>
 			@empty
 			<tr>
-				<td colspan="2">No data</td>
+				<td colspan="2">No extension available at the moment</td>
 			</tr>
 			@endforelse
 		</tbody>
