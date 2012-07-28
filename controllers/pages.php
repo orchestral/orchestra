@@ -40,10 +40,10 @@ class Orchestra_Pages_Controller extends Orchestra\Controller
 			return Response::error('404');
 		}
 
-		$response = Event::first("orchestra.pages: {$name}.{$action}", $arguments);
+		$content = Event::first("orchestra.pages: {$name}.{$action}", $arguments);
 
-		if (false === $response) return Response::error('404');
+		if (false === $content) return Response::error('404');
 
-		return $response;
+		return View::make('resources.pages', array('content' => $content));
 	}
 }
