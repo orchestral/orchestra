@@ -105,6 +105,8 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 			'email_smtp_port' => array('numeric'),
 		);
 
+		Event::fire('orchestra.validate: settings', array(& $rules));
+
 		$v = Validator::make($input, $rules);
 
 		if ($v->fails())
@@ -126,9 +128,9 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 		$memory->put('email.transports.smtp.encryption', $input['email_smtp_encryption']);
 		$memory->put('email.transports.sendmail.command', $input['email_sendmail_command']);
 
-		$m = Messages::make('success', __('orchestra::response.settings.update'));
-
 		Event::fire('orchestra.save: settings', array($memory));
+
+		$m = Messages::make('success', __('orchestra::response.settings.update'));
 
 		return Redirect::to(handles('orchestra::settings'))
 				->with('message', $m->serialize());

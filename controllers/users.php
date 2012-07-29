@@ -46,6 +46,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 
 			// Add columns
 			$table->column('id');
+			
 			$table->column('fullname', function ($column)
 			{
 				$column->label = __('orchestra::label.users.fullname')->get();
@@ -64,6 +65,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 				};
 
 			});
+
 			$table->column('email', function ($column) 
 			{
 				$column->label = __('orchestra::label.users.email')->get();
@@ -188,6 +190,8 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 			'fullname' => array('required'),
 			'roles'    => array('required'),
 		);
+
+		Event::fire('orchestra.validate: users', array(& $rules));
 
 		$v = Validator::make($input, $rules);
 
