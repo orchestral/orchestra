@@ -1,5 +1,18 @@
+@import "bootstrap/variables.less"; // Modify this for custom colors, font-sizes, etc
+
 body {
 	background: url('../img/bg.png');
+}
+
+section.container, section.container-fluid {
+	padding-top: 45px;
+}
+
+.form-actions {
+	&.clean {
+		background-color: transparent;
+		border: 0px;
+	}
 }
 
 .navbar-fixed-top {
@@ -25,8 +38,18 @@ body {
 	}
 }
 
-section.container, section.container-fluid {
-	padding-top: 45px;
+.pagination {
+	a.previous_page,span.previous_page {
+		border-left: 1px solid #ddd;
+	}
+	span {
+		float: left;
+		padding: 0 14px;
+		line-height: (@baseLineHeight * 2) - 2;
+		text-decoration: none;
+		border: 1px solid #ddd;
+		border-left-width: 0;
+	}
 }
 
 .table {
@@ -44,12 +67,5 @@ section.container, section.container-fluid {
 .select2-container {
 	&[class*="span"] {
 		margin-left: 0;
-	}
-}
-
-.form-actions {
-	&.clean {
-		background-color: transparent;
-		border: 0px;
 	}
 }
