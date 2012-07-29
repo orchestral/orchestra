@@ -34,7 +34,18 @@ class Orchestra_Manages_Controller extends Orchestra\Controller
 	public function __call($request, $arguments)
 	{
 		list($method, $name) = explode('_', $request, 2);
-		$action              = array_shift($arguments);
+
+		// we first check if $name actually an extension, if not we should 
+		// consider it's pointing to 'application'
+		if ( ! Extension::started($name) and Extension::started(DEFAULT_BUNDLE))
+		{
+			$action = $name;
+			$name   = DEFAULT_BUNDLE;
+		}
+		else
+		{
+			$action = array_shift($arguments);
+		}
 
 		if ( ! Extension::started($name) or is_null($action))
 		{
