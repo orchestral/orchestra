@@ -88,6 +88,8 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 	{
 		if (is_null($name) or ! Extension::started($name)) return Event::first('404');
 
+		if (Extension::option($name, 'configurable') === false) return Event::first('404');
+
 		// Load configuration from memory.
 		$memory = Core::memory();
 		$config = new Fluent((array) $memory->get("extension_{$name}", array()));

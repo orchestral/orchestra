@@ -20,7 +20,7 @@
 			<tr>
 				<td>
 					<strong>
-						@if ( ! Orchestra\Extension::started($name))
+						@if ( ! Orchestra\Extension::started($name) or false === Orchestra\Extension::option($name, 'configurable'))
 							{{ $extension->name }}
 						@else
 							{{ HTML::link(handles('orchestra::extensions/configure/'.$name), $extension->name) }}
