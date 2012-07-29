@@ -10,7 +10,7 @@
 				@if (Config::get('orchestra::navigation.show-user-box', true))
 				<ul class="nav pull-right">
 					<li class="dropdown" id="user-menu">
-						<p class="navbar-text">
+						<p>
 							<a href="#user-menu" rel="user-menu" class="btn dropdown-toggle" data-toggle="dropdown">
 								<i class="icon-user"></i> {{ ( ! Auth::guest() ? Auth::user()->fullname : __('orchestra::title.login')) }}
 							</a> 
