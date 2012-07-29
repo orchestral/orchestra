@@ -117,7 +117,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller
 	 */
 	public function get_reset($id, $hash)
 	{
-		if ( ! (is_numeric($id) and is_string($hash)))
+		if ( ! (is_numeric($id) and is_string($hash)) or empty($hash))
 		{
 			return Response::error('404');
 		}
