@@ -119,9 +119,11 @@ class Extension
 		// over usage of database space
 		foreach ($extensions as $name => $extension)
 		{
+			$config = isset($extension->config) ? $extension->config : array();
+
 			$cached[$name] = array(
 				'name'   => $extension->name,
-				'config' => (array) $extension->config
+				'config' => (array) $config,
 			);
 		}
 
