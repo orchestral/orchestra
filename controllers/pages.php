@@ -44,6 +44,6 @@ class Orchestra_Pages_Controller extends Orchestra\Controller
 
 		if (false === $content) return Response::error('404');
 
-		return View::make('resources.pages', array('content' => $content));
+		return View::make('orchestra::resources.pages', array('content' => $content));
 	}
 }
