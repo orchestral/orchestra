@@ -1,9 +1,11 @@
 body{background:url('../img/bg.png');}
 section.container,section.container-fluid{padding-top:45px;}
 .form-actions.clean{background-color:transparent;border:0px;}
-.navbar-fixed-top .navbar-inner{background:transparent url('../img/top-bar-white.png') repeat-x bottom left;box-shadow:none;height:45px;}
+.nav>.dropdown.active>a:hover{color:#333;}
 .navbar .brand{color:#333;font-weight:bold;}
 .navbar .nav>li>a{color:#666;}.navbar .nav>li>a:hover{color:#333;}
+.navbar .nav>.dropdown.open a,.navbar .nav>.dropdown.open>a:hover{color:#333;}
+.navbar.navbar-fixed-top .navbar-inner{background:transparent url('../img/top-bar-white.png') repeat-x bottom left;box-shadow:none;height:45px;}
 .pagination a.previous_page,.pagination span.previous_page{border-left:1px solid #ddd;}
 .pagination span{float:left;padding:0 14px;line-height:34px;text-decoration:none;border:1px solid #ddd;border-left-width:0;}
 .table thead tr{background:transparent url('../img/top-bar-white.png') repeat-x top left;}

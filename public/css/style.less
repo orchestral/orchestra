@@ -15,12 +15,8 @@ section.container, section.container-fluid {
 	}
 }
 
-.navbar-fixed-top {
-	.navbar-inner {
-		background: transparent url('../img/top-bar-white.png') repeat-x bottom left;
-		box-shadow: none;
-		height: 45px;
-	}
+.nav > .dropdown.active > a:hover {
+	color:#333;
 }
 
 .navbar {
@@ -29,11 +25,26 @@ section.container, section.container-fluid {
 		font-weight: bold;
 	}
 
-	.nav > li > a {
-		color: #666;
+	.nav {
+		> li > a {
+			color: #666;
 
-		&:hover {
-			color: #333;
+			&:hover {
+				color: #333;
+			}
+		}
+
+		> .dropdown.open a, > .dropdown.open > a:hover {
+			color:#333;
+		}
+
+	}
+
+	&.navbar-fixed-top {
+		.navbar-inner {
+			background: transparent url('../img/top-bar-white.png') repeat-x bottom left;
+			box-shadow: none;
+			height: 45px;
 		}
 	}
 }

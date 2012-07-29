@@ -56,7 +56,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 					
 					foreach ($roles as $role)
 					{
-						$value[] = '<span class="badge">'.$role->name.'</span>';
+						$value[] = '<span class="label label-info">'.$role->name.'</span>';
 					}
 					
 					
