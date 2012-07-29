@@ -119,11 +119,14 @@ class Extension
 		// over usage of database space
 		foreach ($extensions as $name => $extension)
 		{
-			$config = isset($extension->config) ? $extension->config : array();
+			$ext_name   = isset($extension->name) ? $extension->name : null;
+			$ext_config = isset($extension->config) ? $extension->config : array();
+
+			if (is_null($ext_name)) continue;
 
 			$cached[$name] = array(
-				'name'   => $extension->name,
-				'config' => (array) $config,
+				'name'   => $ext_name,
+				'config' => (array) $ext_config,
 			);
 		}
 
