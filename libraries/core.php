@@ -49,6 +49,11 @@ class Core
 		// our Eloquent Model, This would overwrite the default configuration
 		Config::set('hybrid::auth.roles', function ($user, $roles)
 		{
+			// Check if user is null, there roles shouldn't be available, returning 
+			// null would allow any other Event listening to the same id to overwrite
+			// this.
+			if (is_null($user)) return ;
+
 			foreach ($user->roles()->get() as $role)
 			{
 				array_push($roles, $role->name);
