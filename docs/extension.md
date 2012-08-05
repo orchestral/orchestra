@@ -61,3 +61,5 @@ Extension developer can disable configuration option by adding `"configure" : fa
 			"configure" : false
 		}
 	}
+
+By doing so, Orchestra will take extension as it is and will not try to modify any of the configuration.
