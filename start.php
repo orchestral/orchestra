@@ -13,6 +13,10 @@ Autoloader::namespaces(array(
 	'Orchestra'       => Bundle::path('orchestra').'libraries'.DS,
 ));
 
+Autoloader::map(array(
+	'Orchestra' => Bundle::patch('orchestra').'orchestra'.EXT,
+));
+
 /*
 |--------------------------------------------------------------------------
 | Load dependencies
