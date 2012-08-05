@@ -14,7 +14,7 @@ Autoloader::namespaces(array(
 ));
 
 Autoloader::map(array(
-	'Orchestra' => Bundle::patch('orchestra').'orchestra'.EXT,
+	'Orchestra' => Bundle::path('orchestra').'orchestra'.EXT,
 ));
 
 /*
