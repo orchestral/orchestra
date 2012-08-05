@@ -30,6 +30,7 @@
 	</head>
 
 	<body>
+		
 		@include('orchestra::layout.widgets.navigation')
 
 		<section class="container{{ isset($fluent_layout) ? '-fluid' : '' }}">

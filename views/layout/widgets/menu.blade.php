@@ -1,6 +1,7 @@
 <ul class="nav">
 	@foreach ($menu->items as $item) 
-		@if (count($item->childs) < 1) 
+
+		@if (1 > count($item->childs)) 
 			<li>{{ HTML::link($item->link, $item->title) }}</li>
 		@else
 			<li class="dropdown" id="{{ $item->id }}-menu">
@@ -17,5 +18,6 @@
 			</li>
 
 		@endif
+		
 	@endforeach
 </ul>

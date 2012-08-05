@@ -16,7 +16,7 @@
 							</a> 
 						</p>
 
-						@unless(!Auth::check())
+						@if (Auth::check())
 
 						<ul class="dropdown-menu">
 							
@@ -26,7 +26,7 @@
 							<li>{{ HTML::link(handles('orchestra::logout'), __('orchestra::title.logout')) }}</li>
 						</ul>
 
-						@endunless
+						@endif
 
 					</li>
 				</ul>
@@ -36,7 +36,7 @@
 		</div>
 	</div>
 </div>
-@unless (Auth::check())
+@if ( ! Auth::check())
 
 <script>
 jQuery(function ($) {
@@ -50,6 +50,6 @@ jQuery(function ($) {
 });
 </script>
 
-@endunless
+@endif
 
 <br>
