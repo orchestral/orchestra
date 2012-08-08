@@ -15,7 +15,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 		parent::__construct();
 
 		$this->filter('before', 'orchestra::not-auth')->only(array('login', 'register'));
-		$this->filter('before', 'csrf')->only(array('login', 'register'))->on(array('post'));
+		$this->filter('before', 'orchestra::csrf')->only(array('login', 'register'))->on(array('post'));
 	}
 	/**
 	 * Login Page

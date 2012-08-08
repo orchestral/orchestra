@@ -128,3 +128,8 @@ Route::filter('orchestra::installed', function ()
 		return Redirect::to_action("orchestra::installer@index");
 	}
 });
+
+Route::filter('orchestra::csrf', function()
+{
+	if (Request::forged()) return Response::error('500');
+});

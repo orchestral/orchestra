@@ -13,6 +13,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller
 		parent::__construct();
 
 		$this->filter('before', 'orchestra::not-auth');
+		$this->filter('before', 'orchestra::csrf')->only(array('index'))->on(array('post'));
 	}
 
 	/**

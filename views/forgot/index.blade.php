@@ -7,7 +7,7 @@
 	<div class="span12 form-horizontal">
 		
 		{{ Form::open(handles('orchestra::forgot'), 'POST', array('class' => 'form-horizontal')) }}
-
+			{{ Form::token() }}
 			<fieldset>
 				<legend>{{ __('orchestra::title.forgot-password') }}</legend>
 				
