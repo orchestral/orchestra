@@ -44,7 +44,7 @@
 			</tr>
 			@empty
 			<tr>
-				<td colspan="2">No extension available at the moment</td>
+				<td colspan="2">{{ __('orchestra::label.no-extensions') }}</td>
 			</tr>
 			@endforelse
 		</tbody>

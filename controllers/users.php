@@ -31,13 +31,37 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 	 */
 	public function get_index()
 	{
+		$keyword = Input::get('q', '');
+		$roles   = Input::get('roles', array());
+
 		// Get Users (with roles) and limit it to only 30 results for 
 		// pagination. Don't you just love it when pagination simply works.
-		$users = User::with('roles')->paginate(30);
+		$users = User::with('roles')->where_not_null('users.id');
+
+		if ( ! empty($roles))
+		{
+			$users->join('user_roles', function ($join) use ($roles)
+			{
+				$join->on('users.id', '=', 'user_roles.user_id');
+
+			})->where_in('user_roles.role_id', $roles);
+		}
+
+		if ( ! empty($keyword))
+		{
+			$users->where(function ($query) use ($keyword)
+			{
+				$query->where('email', 'LIKE', $keyword)
+					->or_where('fullname', 'LIKE', $keyword);
+			});
+		}
+
+		$users = $users->paginate(30);
 
 		// Build users table HTML using a schema liked code structure.
 		$table = Table::of('orchestra.users', function ($table) use ($users) 
 		{
+			$table->empty_message = __('orchestra::label.no-data')->get();
 			// Add HTML attributes option for the table.
 			$table->attr('class', 'table table-bordered table-striped');
 
@@ -101,10 +125,11 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		$data = array(
 			'eloquent'      => $users,
 			'table'         => $table,
+			'roles'         => Role::pair(),
 			'resource_name' => 'Users',
 		);
 
-		return View::make('orchestra::resources.index', $data);
+		return View::make('orchestra::resources.users.index', $data);
 	}
 
 	/**
@@ -142,12 +167,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 
 				$fieldset->control('select', __('orchestra::label.users.roles')->get(), function ($control) 
 				{
-					$options = array();
-
-					foreach (Role::all() as $role) 
-					{
-						$options[$role->id] = $role->name;
-					}
+					$options = Role::pair();
 					
 					$control->name    = 'roles[]';
 					$control->options = $options;

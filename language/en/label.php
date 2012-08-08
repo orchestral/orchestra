@@ -7,6 +7,13 @@ return array(
 		'confirm_password' => 'Confirm Password',
 	),
 
+	'no-data'      => 'No data at the moment',
+	'no-extension' => 'No extension available at the moment',
+	
+	'search'    => array(
+		'button' => 'Search',
+		'keyword' => 'Search keyword...',
+	),
 	'site_name' => 'Application Name',
 	
 	'users' => array(
