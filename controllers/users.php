@@ -73,7 +73,14 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 					return $row->email;
 				};
 			});
+		});
 
+		Event::fire('orchestra.list: users', array($users, $table));
+
+		// Once all event listening to `orchestra.list: users` is executed, we can add
+		// we can now add the final column, edit and delete action for users
+		$table->extend(function ($table) 
+		{
 			$table->column('action', function ($column) 
 			{
 				$column->label = '';
@@ -91,11 +98,9 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 			});
 		});
 
-		Event::fire('orchestra.list: users', array($users, $table));
-
 		$data = array(
 			'eloquent'      => $users,
-			'table'         => Table::of('orchestra.users'),
+			'table'         => $table,
 			'resource_name' => 'Users',
 		);
 
@@ -167,7 +172,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 
 		$data = array(
 			'eloquent'      => $user,
-			'form'          => Form::of('orchestra.users'),
+			'form'          => $form,
 			'resource_name' => __("orchestra::title.users.{$type}")->get(),
 		);
 

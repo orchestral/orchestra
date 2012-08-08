@@ -14,7 +14,7 @@
 
 <script>
 jQuery(function($) {
-	$('select').chosen();
+	$('select').select2();
 });
 </script>
 
