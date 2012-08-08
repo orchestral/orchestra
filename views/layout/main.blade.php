@@ -17,13 +17,16 @@
 
 		$asset = Asset::container('orchestra.backend');
 
-		$asset->style('bootstrap', 'bundles/orchestra/css/bootstrap.min.css');
-		$asset->style('style', 'bundles/orchestra/css/style.css', array('bootstrap'));
-		$asset->style('select2', 'bundles/orchestra/js/select2/select2.css');
-
 		$asset->script('jquery', 'bundles/orchestra/js/jquery.min.js');
-		$asset->script('bootstrap', 'bundles/orchestra/js/bootstrap.min.js', array('jquery'));
-		$asset->script('select2', 'bundles/orchestra/js/select2/select2.min.js', array('jquery'));
+
+		$asset->script('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.js', array('jquery'));
+		$asset->style('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.css');
+
+		$asset->style('chosen', 'bundles/orchestra/vendor/chosen/chosen.css');
+		$asset->script('chosen', 'bundles/orchestra/vendor/chosen/chosen.jquery.min.js', array('jquery'));
+
+		$asset->style('orchestra', 'bundles/orchestra/css/style.css', array('bootstrap'));
+		$asset->script('orchestra', 'bundles/orchestra/js/script.js', array('jquery', 'bootstrap'));
 
 		echo $asset->styles();
 		echo $asset->scripts(); ?>
@@ -60,41 +63,6 @@
 				<p>&copy; 2012 Orchestra</p>
 			</div>
 		</footer>
-	<script>
-	jQuery(function($) {
-		$('div.btn-group[data-toggle-name=*]').each(function() {
-			var group, form, name, hidden, buttons;
-
-			group   = $(this);
-			form    = group.parents('form').eq(0);
-			name    = group.attr('data-toggle-name');
-			hidden  = $('input[name="' + name + '"]', form);
-			buttons = $('button', group);
-
-			buttons.each(function(){
-				var button, setActive;
-
-				button = $(this);
-
-				setActive = function setActive() {
-					if(button.val() == hidden.val()) {
-						button.addClass('active');
-					}
-				};
-				
-				button.live('click', function() {
-					buttons.removeClass('active');
-
-					hidden.val($(this).val());
-
-					setActive();
-				});
-
-				setActive();
-			});
-		});
-	});
-	</script>
 
 	</body>
 </html>
