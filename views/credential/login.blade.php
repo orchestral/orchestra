@@ -8,6 +8,7 @@
 		
 		{{ Form::open(handles('orchestra::login'), 'POST', array('class' => 'form-horizontal')) }}
 			{{ Form::hidden('redirect', $redirect) }}
+			{{ Form::token() }}
 			<fieldset>
 				<legend>{{ __('orchestra::title.login') }}</legend>
 				
