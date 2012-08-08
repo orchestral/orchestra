@@ -60,7 +60,6 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 						$value[] = '<span class="label label-info">'.$role->name.'</span>';
 					}
 					
-					
 					return '<strong>'.$row->fullname.'</strong><br><span class="meta">'.implode(' ', $value).'</span>';
 				};
 
