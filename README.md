@@ -8,11 +8,14 @@ Provide a solid base off of which to build your new web applications. It's not a
 Installation with Laravel Artisan
 
 	php artisan bundle:install orchestra
-	php artisan bundle:publish
 
 ### Bundle Registration
 
 	'orchestra' => array('auto' => true, 'handles' => 'orchestra'),
+
+### Publish Bundle Asset
+
+	php artisan bundle:publish
 
 ## Orchestra Documentation
 

@@ -6,11 +6,14 @@ Orchestra Platform is best installed in a clean Laravel environment, due to the 
 ## Installation with Laravel Artisan
 
 	php artisan bundle:install orchestra
-	php artisan bundle:publish
 
 ### Bundle Registration
 
 	'orchestra' => array('auto' => true, 'handles' => 'orchestra'),
+
+### Publish Bundle Asset
+
+	php artisan bundle:publish
 
 You can change handles value to anything unique, such as `admin` for example.
 
