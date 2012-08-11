@@ -29,35 +29,35 @@
 			<div class="control-group">
 				<label class="control-label">Database Type</label>
 				<div class="controls">
-					<span class="uneditable-input">{{ $database['driver'] }}</span>
+					<span class="uneditable-input span4">{{ $database['driver'] }}</span>
 				</div>
 			</div>
 
 			<div class="control-group">
 				<label class="control-label">Host</label>
 				<div class="controls">
-					<span class="uneditable-input">{{ $database['host'] }}</span>
+					<span class="uneditable-input span4">{{ $database['host'] }}</span>
 				</div>
 			</div>
 
 			<div class="control-group">
 				<label class="control-label">Database</label>
 				<div class="controls">
-					<span class="uneditable-input">{{ $database['database'] }}</span>
+					<span class="uneditable-input span4">{{ $database['database'] }}</span>
 				</div>
 			</div>
 
 			<div class="control-group">
 				<label class="control-label">User</label>
 				<div class="controls">
-					<span class="uneditable-input">{{ $database['username'] }}</span>
+					<span class="uneditable-input span4">{{ $database['username'] }}</span>
 				</div>
 			</div>
 
 			<div class="control-group">
 				<label class="control-label">Password</label>
 				<div class="controls">
-					<span class="uneditable-input">{{ $database['password'] }}</span>
+					<span class="uneditable-input span4">{{ $database['password'] }}</span>
 					<p class="help-block">Password is hidden</p>
 				</div>
 			</div>
@@ -94,14 +94,14 @@
 			<div class="control-group">
 				<label class="control-label">Driver</label>
 				<div class="controls">
-					<span class="uneditable-input">{{ $auth['driver'] }}</span>
+					<span class="uneditable-input span4">{{ $auth['driver'] }}</span>
 				</div>
 			</div>
 
 			<div class="control-group {{ false === $auth_fluent_status ? 'error' : '' }} ">
 				<label class="control-label">Table</label>
 				<div class="controls">
-					<span class="uneditable-input">{{ $auth['table'] }}</span>
+					<span class="uneditable-input span4">{{ $auth['table'] }}</span>
 					@if (false === $auth_fluent_status)
 					<p class="help-block">Table name should be `users`</p>
 					@endif
@@ -111,7 +111,7 @@
 			<div class="control-group {{ false === $auth_eloquent_status ? 'error' : '' }} ">
 				<label class="control-label">Table</label>
 				<div class="controls">
-					<span class="uneditable-input">{{ $auth['model'] }}</span>
+					<span class="uneditable-input span4">{{ $auth['model'] }}</span>
 					@if (false === $auth_eloquent_status)
 					<p class="help-block">Model name should be `Orchestra\Model\User`</p>
 					@endif
