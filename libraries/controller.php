@@ -26,6 +26,6 @@ class Controller extends Base_Controller
 		$this->filter('before', 'orchestra::installed');
 
 		View::share('fluent_layout', true);
-		View::share('memory', Core::memory());
+		View::share('orchestra_memory', Core::memory());
 	}
 }

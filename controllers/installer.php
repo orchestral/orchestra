@@ -22,7 +22,7 @@ class Orchestra_Installer_Controller extends Controller
 		$memory = Core::memory();
 		$memory->put('site_name', 'Orchestra Installer');
 
-		View::share('memory', $memory);
+		View::share('orchestra_memory', $memory);
 	}
 
 	/**
