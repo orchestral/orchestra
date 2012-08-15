@@ -29,8 +29,9 @@ Autoloader::map(array(
 if ( ! Bundle::exists('hybrid'))
 {
 	Bundle::register('hybrid');
-	Bundle::start('hybrid');
 }
+
+Bundle::start('hybrid');
 
 /*
 |--------------------------------------------------------------------------
