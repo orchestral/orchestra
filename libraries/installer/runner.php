@@ -165,6 +165,8 @@ class Runner
 				'name' => 'Member'
 			));
 
+			$acl->add_role('Member');
+
 			// Installation is successful, we should be able to generate 
 			// success message to notify the user. Installer route will be 
 			// disabled after this point.
