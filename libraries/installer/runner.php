@@ -296,7 +296,7 @@ class Runner
 				$table->create();
 
 				$table->increments('id');
-				$table->integer('user_id');
+				$table->integer('user_id')->unsigned();
 				$table->string('name', 255)->nullable();
 				$table->text('value')->nullable();
 
@@ -323,8 +323,8 @@ class Runner
 				$table->create();
 
 				$table->increments('id');
-				$table->integer('user_id');
-				$table->integer('role_id');
+				$table->integer('user_id')->unsigned();
+				$table->integer('role_id')->unsigned();
 
 				// add timestamp created_at and updated_at
 				$table->timestamps();
