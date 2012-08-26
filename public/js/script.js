@@ -1,5 +1,5 @@
 jQuery(function($) {
-	$('div.btn-group[data-toggle-name=*]').each(function() {
+	$('div.btn-group[data-toggle-name]').each(function() {
 		var group, form, name, hidden, buttons;
 
 		group   = $(this);
