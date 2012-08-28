@@ -48,7 +48,7 @@ To configure an extension, the extension need to be activated. Once this is done
 
 ### Disable configuration
 
-Extension developer can disable configuration option by adding `"configure" : false`, To do this edit your definition file.
+Extension developer can disable configuration option by adding `"configurable" : false`, To do this edit your definition file.
 
 	{
 		"name"        : "OneAuth",
@@ -57,8 +57,8 @@ Extension developer can disable configuration option by adding `"configure" : fa
 		"url"         : "http://bundles.laravel.com/bundle/oneauth",
 		"version"     : "0.1.0",
 		"config"      : {
-			"handles"   : "oneauth",
-			"configure" : false
+			"handles"      : "oneauth",
+			"configurable" : false
 		}
 	}
 
