@@ -1,5 +1,7 @@
 <?php
 
+use Orchestra\Extension\Pane;
+
 class Orchestra_Dashboard_Controller extends Orchestra\Controller
 {
 	/**
@@ -27,7 +29,7 @@ class Orchestra_Dashboard_Controller extends Orchestra\Controller
 	public function get_index()
 	{
 		$data = array(
-			'panes' => Orchestra\Extension\Pane::all(),
+			'panes' => Pane::all(),
 		);
 
 		return View::make('orchestra::resources.dashboard', $data);
