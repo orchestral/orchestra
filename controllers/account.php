@@ -101,11 +101,16 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 	{
 		$input = Input::all();
 		$rules = array(
-			'current_password' => array('required'),
-			'new_password'     => array(
-				'required', 'different:current_password'
+			'current_password' => array(
+				'required',
 			),
-			'confirm_password' => array('same:new_password'),
+			'new_password'     => array(
+				'required', 
+				'different:current_password',
+			),
+			'confirm_password' => array(
+				'same:new_password',
+			),
 		);
 
 		$v = Validator::make($input, $rules);
