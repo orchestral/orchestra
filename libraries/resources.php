@@ -1,6 +1,7 @@
 <?php namespace Orchestra;
 
-use Exception;
+use Exception, 
+	Laravel\Str;
 
 class Resources
 {
@@ -17,11 +18,19 @@ class Resources
 	 * @static
 	 * @access public
 	 * @param  string $name
-	 * @param  string $controller Controller name
+	 * @param  mixed  $controller
 	 * @return void
 	 */
 	public static function register($name, $controller)
 	{
+		if ( ! is_array($controller))
+		{
+			$controller = array(
+				'name' => Str::title($name),
+				'uses' => $controller,
+			);
+		}
+
 		static::$registrar[$name] = $controller;
 	}
 
@@ -39,7 +48,7 @@ class Resources
 	{
 		if ( ! isset(static::$registrar[$name])) return false;
 		
-		$controller = static::$registrar[$name];
+		$controller = static::$registrar[$name]['uses'];
 
 		return Controller::call("{$controller}@{$action}", $arguments);
 	}
