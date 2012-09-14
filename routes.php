@@ -56,6 +56,7 @@ Route::controller(array(
 	'orchestra::forgot', 
 	'orchestra::manages', 
 	'orchestra::pages', 
+	'orchestra::resources',
 	'orchestra::settings',
 	'orchestra::users',
 ));
