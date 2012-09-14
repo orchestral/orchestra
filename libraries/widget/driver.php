@@ -73,6 +73,7 @@ abstract class Driver
 	protected function add_before($id, $before)
 	{
 		$items = array();
+		$found = false;
 		$item  = new Fluent(array(
 			'id'     => $id,
 			'childs' => array()
@@ -89,11 +90,14 @@ abstract class Driver
 		{
 			if ($key === $position)
 			{
+				$found      = true;
 				$items[$id] = $item;
 			}
 
 			$items[$fluent] = $this->items[$fluent];
 		}
+
+		if ( ! $found) $items[$id] = $item;
 
 		$this->items = $items;
 
@@ -110,6 +114,7 @@ abstract class Driver
 	 */
 	protected function add_after($id, $after)
 	{
+		$found = false;
 		$items = array();
 		$item  = new Fluent(array(
 			'id'     => $id,
@@ -127,11 +132,14 @@ abstract class Driver
 		{
 			if ($key === $position)
 			{
+				$found      = true;
 				$items[$id] = $item;
 			}
 
 			$items[$fluent] = $this->items[$fluent];
 		}
+
+		if ( ! $found) $items[$id] = $item;
 
 		$this->items = $items;
 
