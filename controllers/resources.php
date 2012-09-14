@@ -47,7 +47,7 @@ class Orchestra_Resources_Controller extends Orchestra\Controller
 				break;
 		}
 
-		$resources = Orchestra\Resources::all();
+		$resources = Resources::all();
 
 		if (false === $content) return Response::error('404');
 

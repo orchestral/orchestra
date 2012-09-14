@@ -218,6 +218,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		Event::fire('orchestra.validate: users', array(& $rules));
 
 		$v = Validator::make($input, $rules);
+		$m = new Messages;
 
 		if ($v->fails())
 		{
@@ -248,8 +249,6 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		Event::fire("orchestra.{$type}: users", array($user));
 		Event::fire("orchestra.save: users", array($user));
 
-		$m = new Messages;
-
 		try
 		{
 			DB::transaction(function () use ($user, $input)
@@ -278,15 +277,16 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 	 */
 	public function get_delete($id = null)
 	{
-		$user = User::find($id);
-
 		if (is_null($id)) return Event::fire('404');
+
+		$user = User::find($id);
+		$m    = new Messages;
 
 		if ($user->id === Auth::user()->id) return Event::fire('404');
 
 		$user->delete();
 
-		$m = Messages::make('success', __('orchestra::response.users.delete'));
+		$m->add('success', __('orchestra::response.users.delete'));
 
 		return Redirect::to(handles('orchestra::users'))
 				->with('message', $m->serialize());

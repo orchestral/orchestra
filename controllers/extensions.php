@@ -146,11 +146,12 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 		$input  = Input::all();
 		$memory = Core::memory();
 		$config = new Fluent((array) $memory->get("extension_{$name}", array()));
-		$loader  = (array) $memory->get("extensions.active.{$name}", array());
+		$loader = (array) $memory->get("extensions.active.{$name}", array());
+		$m      = new Messages;
 		
 		// This part should be part of extension loader configuration. What saved here
 		// wouldn't be part of extension configuration.
-		if ( isset($input['handles']) and ! empty($input['handles']))
+		if (isset($input['handles']) and ! empty($input['handles']))
 		{
 			$loader['handles'] = $input['handles'];
 			unset($input['handles']);
@@ -163,7 +164,6 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 
 		$memory->put("extension_{$name}", $input);
 
-		$m = new Messages;
 		$m->add('success', __("orchestra::response.extensions.configure", array('name' => $name)));
 
 		return Redirect::to(handles('orchestra::extensions'))

@@ -1,5 +1,10 @@
 <?php 
 
+use Orchestra\Core, 
+	Orchestra\Messages,
+	Orchestra\Model\User,
+	Orchestra\Model\User\Meta as User_Meta;
+
 class Orchestra_Forgot_Controller extends Orchestra\Controller 
 {
 	/**
@@ -42,7 +47,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller
 			'email' => array('required', 'email'),
 		);
 
-		$m = new Orchestra\Messages;
+		$m = new Messages;
 		$v = Validator::make($input, $rules);
 
 		if ($v->fails())
@@ -55,7 +60,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller
 					->with_errors($v);
 		}
 
-		$user = Orchestra\Model\User::where_email($input['email'])->first();
+		$user = User::where_email($input['email'])->first();
 
 		if (is_null($user))
 		{
@@ -66,19 +71,19 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller
 					->with('message', $m->serialize());
 		}
 
-		$meta   = Orchestra\Model\User\Meta::where('user_id', '=', $user->id)
+		$meta   = User_Meta::where('user_id', '=', $user->id)
 					->where('name', '=', 'reset_password_hash')
 					->first();
 
 		if (is_null($meta))
 		{
-			$meta = new Orchestra\Model\User\Meta(array(
+			$meta = new User_Meta(array(
 				'user_id' => $user->id,
 				'name'    => 'reset_password_hash',
 			));
 		}
 
-		$memory  = Orchestra\Core::memory();
+		$memory  = Core::memory();
 		$hash    = sha1($user->email.Str::random(10));
 		$url     = handles('orchestra::forgot/reset/'.$user->id.'/'.$hash);
 		$site    = $memory->get('site.name', 'Orchestra');
@@ -123,17 +128,17 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller
 			return Response::error('404');
 		}
 
-		$meta = Orchestra\Model\User\Meta::where('user_id', '=', $id)
+		$meta = User_Meta::where('user_id', '=', $id)
 					->where('name', '=', 'reset_password_hash')
 					->where('value', '=', $hash)
 					->first();
 
 		if (is_null($meta)) return Response::error('404');
 		
-		$m        = new Orchestra\Messages;
+		$m        = new Messages;
 		$user     = $meta->users()->first();
 
-		$memory   = Orchestra\Core::memory();
+		$memory   = Core::memory();
 		$hash     = sha1($user->email.Str::random(10));
 		$password = Str::random(5);
 		$site     = $memory->get('site.name', 'Orchestra');
