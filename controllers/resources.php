@@ -7,7 +7,7 @@ class Orchestra_Resources_Controller extends Orchestra\Controller
 	public $restful = true;
 
 	/**
-	 * Construct Pages Controller, only authenticated user should 
+	 * Construct Resources Controller, only authenticated user should 
 	 * be able to access this controller.
 	 *
 	 * @access public
@@ -24,7 +24,7 @@ class Orchestra_Resources_Controller extends Orchestra\Controller
 	}
 
 	/**
-	 * Add a drop-in page anywhere on Orchestra
+	 * Add a drop-in resource anywhere on Orchestra
 	 *
 	 * @access public
 	 * @param  string $request
