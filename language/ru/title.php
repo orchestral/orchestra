@@ -21,7 +21,7 @@ return array(
 	'logout'  => 'Выход',
 
 	'resources' => array(
-		'list'      => 'Resources',
+		'list'      => 'Pесурсы',
 	),
 
 	'settings' => array(
