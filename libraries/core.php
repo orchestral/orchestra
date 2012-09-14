@@ -193,8 +193,17 @@ class Core
 	 */
 	protected static function loader()
 	{
+		// localize the variable, and ensure it by references.
+		$menu = Core::menu('orchestra');
+		$acl  = Core::acl();
+
+		// Add basic menu.
+		$menu->add('home')
+			->title(__('orchestra::title.home.list')->get())
+			->link(handles('orchestra'));
+
 		// Multiple event listener for Backend (administrator panel)
-		Event::listen('orchestra.started: backend', function ()
+		Event::listen('orchestra.started: backend', function () use ($menu, $acl)
 		{
 			Extension\Pane::make('orchestra.welcome', function ($pane)
 			{
@@ -204,15 +213,6 @@ class Core
 				<!-- If you need help, use the Help tabs in the upper right corner to get information on how to use your current screen and where to go for more assistance.--></p>';
 
 			});
-
-			// localize the variable, and ensure it by references.
-			$menu = Core::menu('orchestra');
-			$acl  = Core::acl();
-
-			// Add basic menu.
-			$menu->add('home')
-				->title(__('orchestra::title.home.list')->get())
-				->link(handles('orchestra'));
 
 			// Add menu when user can manage users
 			if ($acl->can('manage-users'))

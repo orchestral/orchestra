@@ -22,7 +22,7 @@ You can change handles value to anything unique, such as `admin` for example.
 
 Now navigate to your [Orchestra](/admin) in a web browser, you should see an installation page. Do remember to change the URL if you use a different handles value.
 
-Please ensure that your configuration is correct, Orchestra will utilize configuration from `application/config/` folder to make the process streamless with your other application (or bundles).
+Please ensure that your configuration is correct, Orchestra will utilize configuration from `application/config` folder to make the process streamless with your other application (or bundles).
 
 - Update `application/config/database.php`.
 - Update `application/config/auth.php`.
