@@ -20,6 +20,10 @@ return array(
 	'login'   => 'Вход',
 	'logout'  => 'Выход',
 
+	'resources' => array(
+		'list'      => 'Resources',
+	),
+
 	'settings' => array(
 		'list' => 'Настройки',
 	),

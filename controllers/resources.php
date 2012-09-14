@@ -36,10 +36,24 @@ class Orchestra_Resources_Controller extends Orchestra\Controller
 		list($method, $name) = explode('_', $request, 2);
 
 		$action  = array_shift($arguments) ?: 'index';
-		$content = Resources::call($name, $action, $arguments);
+
+		switch (true) 
+		{
+			case ($name === 'index' and $name === $action) :	
+				$content = "";
+				break;
+			default :
+				$content = Resources::call($name, $action, $arguments);
+				break;
+		}
+
+		$resources = Orchestra\Resources::all();
 
 		if (false === $content) return Response::error('404');
 
-		return View::make('orchestra::resources.pages', array('content' => $content));
+		return View::make('orchestra::resources.resources', array(
+			'content'   => $content,
+			'resources' => $resources,
+		));
 	}	
 }

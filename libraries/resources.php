@@ -25,9 +25,10 @@ class Resources
 	{
 		if ( ! is_array($controller))
 		{
+			$uses       = $controller;
 			$controller = array(
 				'name' => Str::title($name),
-				'uses' => $controller,
+				'uses' => $uses,
 			);
 		}
 
@@ -51,5 +52,15 @@ class Resources
 		$controller = static::$registrar[$name]['uses'];
 
 		return Controller::call("{$controller}@{$action}", $arguments);
+	}
+
+	/**
+	 * Get all registered resource
+	 * 
+	 * @return array
+	 */
+	public static function all()
+	{
+		return static::$registrar;
 	}
 }

@@ -233,6 +233,10 @@ class Core
 					->title(__('orchestra::title.extensions.list')->get())
 					->link(handles('orchestra::extensions'));
 
+				$menu->add('resources', 'after:extensions')
+					->title(__('orchestra::title.resources.list')->get())
+					->link(handles('orchestra::resources'));
+
 				$menu->add('settings')
 					->title(__('orchestra::title.settings.list')->get())
 					->link(handles('orchestra::settings'));
