@@ -4,6 +4,15 @@ use Laravel\Config as Laravel_Config, Orchestra\Core;
 
 class Config
 { 
+	/**
+	 * Map configuration to allow orchestra to store it in database
+	 *
+	 * @static
+	 * @access public
+	 * @param  string   $name
+	 * @param  array    $maps
+	 * @return void
+	 */
 	public static function map($name, $maps) 
 	{
 		$memory = Core::memory();

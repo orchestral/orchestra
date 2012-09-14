@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row-fluid">
-	@foreach (Orchestra\Extension\Pane::get() as $id => $pane) 
+	@foreach ($panes as $id => $pane) 
 		<div{{ HTML::attributes($pane->attr) }}>
 		@if ( ! empty($pane->html))
 			{{ $pane->html }}

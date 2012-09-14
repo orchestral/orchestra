@@ -4,9 +4,23 @@ use \Closure, Laravel\Fluent;
 
 class Pane 
 {
+	/**
+	 * List of registered pane
+	 * 
+	 * @var array
+	 */
 	protected static $panes = array();
 	
-	public static function make($id, $callback)
+	/**
+	 * Register a new pane.
+	 *
+	 * @static
+	 * @access public
+	 * @param  string   $id
+	 * @param  function $callback
+	 * @return void
+	 */
+	public static function register($id, $callback)
 	{
 		if ( ! isset(static::$panes[$id]))
 		{
@@ -28,7 +42,14 @@ class Pane
 		}
 	}
 
-	public static function get()
+	/**
+	 * Get all registered pane
+	 *
+	 * @static
+	 * @access public
+	 * @return array
+	 */
+	public static function all()
 	{
 		return static::$panes;
 	}

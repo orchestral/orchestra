@@ -26,6 +26,10 @@ class Orchestra_Dashboard_Controller extends Orchestra\Controller
 	 */
 	public function get_index()
 	{
-		return View::make('orchestra::resources.dashboard');
+		$data = array(
+			'panes' => Orchestra\Extension\Pane::all(),
+		);
+
+		return View::make('orchestra::resources.dashboard', $data);
 	}
 }

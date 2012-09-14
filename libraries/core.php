@@ -205,7 +205,7 @@ class Core
 		// Multiple event listener for Backend (administrator panel)
 		Event::listen('orchestra.started: backend', function () use ($menu, $acl)
 		{
-			Extension\Pane::make('orchestra.welcome', function ($pane)
+			Extension\Pane::register('orchestra.welcome', function ($pane)
 			{
 				$pane->attr = array('class' => 'hero-unit');
 				$pane->html = '<h2>Welcome to your new Orchestra site!</h2>
