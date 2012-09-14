@@ -50,9 +50,26 @@ class Orchestra_Installer_Controller extends Controller
 		// whether the connection is working or not.
 		$database['status'] = Installer::check_database();
 
+		$fluent_status = true;
+		$eloquent_status = true;
+
+		if ($auth['driver'] === 'fluent' and $auth['table'] !== 'users') 
+		{
+			$fluent_status = false;
+		}
+
+		if ($auth['driver'] === 'eloquent')
+		{
+			$driver = new $auth['model'];
+
+			if ( ! ($driver instanceof Orchestra\Model\User)) $eloquent_status = false;
+		}
+
 		$data = array(
-			'database' => $database,
-			'auth'     => $auth,
+			'database'        => $database,
+			'auth'            => $auth,
+			'fluent_status'   => $fluent_status,
+			'eloquent_status' => $eloquent_status,
 		);
 
 		return View::make('orchestra::installer.index', $data);
