@@ -19,7 +19,7 @@ jQuery(function($) {
 				}
 			};
 			
-			button.live('click', function() {
+			button.on('click', function() {
 				buttons.removeClass('active');
 
 				hidden.val($(this).val());
