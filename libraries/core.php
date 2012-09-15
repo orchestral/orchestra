@@ -95,6 +95,8 @@ class Core
 			static::$cached['orchestra_menu']->add('install')->title('Install')->link(handles('orchestra::installer'));
 		}
 
+		Event::fire('orchestra.started');
+
 		static::$initiated = true;
 	}
 
