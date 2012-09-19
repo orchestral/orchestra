@@ -44,12 +44,21 @@ class Orchestra_Resources_Controller extends Orchestra\Controller
 				break;
 			default :
 				$content = Resources::call($name, $action, $arguments);
+
 				break;
 		}
 
 		$resources = Resources::all();
 
-		if (false === $content) return Response::error('404');
+		if ($content instanceof Response)
+		{
+			$status_code = $content->foundation->getStatusCode();
+
+			if ( ! $content->foundation->isSuccessful())
+			{
+				return Response::error($status_code);
+			}
+		}
 
 		return View::make('orchestra::resources.resources', array(
 			'content'   => $content,

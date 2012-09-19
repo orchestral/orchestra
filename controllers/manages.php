@@ -33,18 +33,15 @@ class Orchestra_Manages_Controller extends Orchestra\Controller
 	 */
 	public function __call($request, $arguments)
 	{
-		list($method, $name) = explode('_', $request, 2);
-
+		list($method, $fragment) = explode('_', $request, 2);
+		list($name, $action)     = explode('.', $fragment, 2);
+		
 		// we first check if $name actually an extension, if not we should 
 		// consider it's pointing to 'application'
 		if ( ! Extension::started($name) and Extension::started(DEFAULT_BUNDLE))
 		{
 			$action = $name;
 			$name   = DEFAULT_BUNDLE;
-		}
-		else
-		{
-			$action = array_shift($arguments);
 		}
 
 		if ( ! Extension::started($name) or is_null($action))
@@ -54,7 +51,15 @@ class Orchestra_Manages_Controller extends Orchestra\Controller
 
 		$content = Event::first("orchestra.manages: {$name}.{$action}", $arguments);
 
-		if (false === $content) return Response::error('404');
+		if ($content instanceof Response)
+		{
+			$status_code = $content->foundation->getStatusCode();
+
+			if ( ! $content->foundation->isSuccessful())
+			{
+				return Response::error($status_code);
+			}
+		}
 
 		return View::make('orchestra::resources.pages', array('content' => $content));
 	}
