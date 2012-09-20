@@ -88,9 +88,9 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 		Event::fire('orchestra.form: settings', array($settings, $form));
 
 		$data = array(
-			'eloquent'      => $settings,
-			'form'          => Form::of('orchestra.settings'),
-			'resource_name' => __('orchestra::title.settings.list')->get(),
+			'eloquent'  => $settings,
+			'form'      => Form::of('orchestra.settings'),
+			'page_name' => __('orchestra::title.settings.list')->get(),
 		);
 
 		return View::make('orchestra::resources.edit', $data);

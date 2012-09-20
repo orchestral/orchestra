@@ -123,10 +123,10 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		});
 
 		$data = array(
-			'eloquent'      => $users,
-			'table'         => $table,
-			'roles'         => Role::pair(),
-			'resource_name' => 'Users',
+			'eloquent'  => $users,
+			'table'     => $table,
+			'roles'     => Role::pair(),
+			'page_name' => 'Users',
 		);
 
 		return View::make('orchestra::resources.users.index', $data);
@@ -191,9 +191,9 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		Event::fire('orchestra.form: users', array($user, $form));
 
 		$data = array(
-			'eloquent'      => $user,
-			'form'          => $form,
-			'resource_name' => __("orchestra::title.users.{$type}")->get(),
+			'eloquent'  => $user,
+			'form'      => $form,
+			'page_name' => __("orchestra::title.users.{$type}")->get(),
 		);
 
 		return View::make('orchestra::resources.edit', $data);

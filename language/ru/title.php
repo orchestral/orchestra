@@ -8,7 +8,7 @@ return array(
 
 	'extensions' => array(
 		'list'      => 'Расширения',
-		'configure' => 'Настройки расширения: :name',
+		'configure' => 'Настройки расширения',
 	),
 
 	'forgot-password' => 'Забыли пароль',

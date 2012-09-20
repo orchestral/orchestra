@@ -126,7 +126,8 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 		$data = array(
 			'eloquent'      => $config,
 			'form'          => Form::of("orchestra.extension: {$name}"),
-			'resource_name' => __("orchestra::title.extensions.configure", array('name' => $name))->get(),
+			'page_name' => $name,
+			'page_desc' => __("orchestra::title.extensions.configure")->get()
 		);
 
 		return View::make('orchestra::resources.edit', $data);

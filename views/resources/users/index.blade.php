@@ -5,7 +5,7 @@
 <div class="row-fluid">
 	
 	<div class="page-header">
-		<h2>{{ $resource_name }}</h2>
+		<h2>{{ $page_name }}</h2>
 	</div>
 
 	{{ Form::open(handles('orchestra::users'), 'GET', array('class' => 'well form-inline')) }}
