@@ -1,4 +1,5 @@
 @import "bootstrap/variables.less"; // Modify this for custom colors, font-sizes, etc
+@import "bootstrap/mixins.less";
 
 body {
 	background: url('../img/bg.png');
@@ -49,17 +50,24 @@ section.container, section.container-fluid {
 	}
 }
 
+.pagination a, .current, .previous_page, .next_page
+{
+	float: left;
+	padding: 0 14px;
+	line-height: (@baseLineHeight * 2) - 2;
+	text-decoration: none;
+	border: 1px solid #ddd;
+	border-left-width: 0;
+}
+
 .pagination {
-	a.previous_page,span.previous_page {
-		border-left: 1px solid #ddd;
+	*:first-child {
+		border-left-width: 1px;
+		.border-radius(3px 0 0 3px);
 	}
-	span {
-		float: left;
-		padding: 0 14px;
-		line-height: (@baseLineHeight * 2) - 2;
-		text-decoration: none;
-		border: 1px solid #ddd;
-		border-left-width: 0;
+	
+	*:last-child {
+		.border-radius(0 3px 3px 0);
 	}
 }
 
