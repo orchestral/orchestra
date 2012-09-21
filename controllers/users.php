@@ -62,6 +62,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		$table = Table::of('orchestra.users', function ($table) use ($users) 
 		{
 			$table->empty_message = __('orchestra::label.no-data')->get();
+			
 			// Add HTML attributes option for the table.
 			$table->attr('class', 'table table-bordered table-striped');
 
