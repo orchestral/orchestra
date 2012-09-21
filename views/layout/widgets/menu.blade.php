@@ -11,6 +11,7 @@
 				</a>
 				<ul class="dropdown-menu">
 					<li>{{ HTML::link($item->link, $item->title) }}</li>
+					<li class="divider"></li>
 
 					@foreach ($item->childs as $child) 
 						<?php $grands = $child->childs; ?>
