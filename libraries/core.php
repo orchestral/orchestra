@@ -72,6 +72,11 @@ class Core
 				throw new Exception('Installation is not completed');
 			}
 
+			if (is_null(static::$cached['memory']->get('site.theme')))
+			{
+				static::$cached['memory']->put('site.theme', 'default');
+			}
+
 			// In event where we reach this point, we can consider no 
 			// exception has occur, we should be able to compile acl and menu 
 			// configuration
@@ -84,6 +89,8 @@ class Core
 
 			static::loader();
 			static::extensions();
+
+			Theme::start(static::$cached['memory']->get('site.theme'));
 		}
 		catch (Exception $e) 
 		{
@@ -223,7 +230,7 @@ class Core
 					->title(__('orchestra::title.users.list')->get())
 					->link(handles('orchestra::users'));
 
-				$menu->add('add-users', 'childof:users')
+				$menu->add('add-users', 'child_of:users')
 					->title(__('orchestra::title.users.create')->get())
 					->link(handles('orchestra::users/view'));
 			}
@@ -235,9 +242,16 @@ class Core
 					->title(__('orchestra::title.extensions.list')->get())
 					->link(handles('orchestra::extensions'));
 
-				$menu->add('resources', 'after:extensions')
+				$menu->add('resources', 'child_of:extensions')
 					->title(__('orchestra::title.resources.list')->get())
 					->link(handles('orchestra::resources'));
+
+				foreach (Resources::all() as $name => $resource)
+				{
+					$menu->add($name, 'child_of:extensions.resources')
+						->title($resource->name)
+						->link(handles("orchestra::resources/{$name}"));
+				}
 
 				$menu->add('settings')
 					->title(__('orchestra::title.settings.list')->get())

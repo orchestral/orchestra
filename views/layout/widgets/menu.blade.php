@@ -1,18 +1,33 @@
-<ul class="nav">
+<ul class="nav" role="menu">
+	
 	@foreach ($menu->items as $item) 
 
 		@if (1 > count($item->childs)) 
 			<li>{{ HTML::link($item->link, $item->title) }}</li>
 		@else
-			<li class="dropdown" id="{{ $item->id }}-menu">
-				<a href="#{{ $item->id }}-menu" rel="{{ $item->id }}-menu" class="dropdown-toggle" data-toggle="dropdown">
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 					{{ $item->title }}
 				</a>
 				<ul class="dropdown-menu">
 					<li>{{ HTML::link($item->link, $item->title) }}</li>
 
 					@foreach ($item->childs as $child) 
-						<li>{{ HTML::link($child->link, $child->title) }}</li>
+						<?php $grands = $child->childs; ?>
+
+						<li class="{{ ( ! empty($grands) ? "dropdown-submenu" : "normal" ) }}">
+							{{ HTML::link($child->link, $child->title) }}
+							
+							@if ( ! empty($child->childs))
+							<ul class="dropdown-menu">
+								@foreach ($child->childs as $grand) 
+								<li>
+									{{ HTML::link($grand->link, $grand->title) }}
+								</li>
+								@endforeach
+							</ul>
+							@endif
+						</li>
 					@endforeach
 				</ul>
 			</li>

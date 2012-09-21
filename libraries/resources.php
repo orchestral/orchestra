@@ -33,6 +33,8 @@ class Resources
 			);
 		}
 
+		$controller['id'] = $name;
+
 		return static::$registrar[$name] = new static($controller);
 	}
 
