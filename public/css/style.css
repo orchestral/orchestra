@@ -18,4 +18,5 @@ section.container,section.container-fluid{padding-top:45px;}
 .table thead tr{background:transparent url('../img/top-bar-white.png') repeat-x top left;}
 .table tbody td .meta{font-size:11px;}
 .well-resources{padding:8px 0;}
+.navbar-form .select2-container{margin-top:5px;}
 .select2-container[class*="span"]{margin-left:0;}
