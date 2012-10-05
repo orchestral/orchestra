@@ -242,15 +242,22 @@ class Core
 					->title(__('orchestra::title.extensions.list')->get())
 					->link(handles('orchestra::extensions'));
 
-				$menu->add('resources', 'after:extensions')
-					->title(__('orchestra::title.resources.list')->get())
-					->link(handles('orchestra::resources'));
+				
 
-				foreach (Resources::all() as $name => $resource)
+				$resources = Resources::all();
+
+				if ( ! empty($resources))
 				{
-					$menu->add($name, 'child_of:resources')
-						->title($resource->name)
-						->link(handles("orchestra::resources/{$name}"));
+					$menu->add('resources', 'after:extensions')
+						->title(__('orchestra::title.resources.list')->get())
+						->link(handles('orchestra::resources'));
+
+					foreach (Resources::all() as $name => $resource)
+					{
+						$menu->add($name, 'child_of:resources')
+							->title($resource->name)
+							->link(handles("orchestra::resources/{$name}"));
+					}
 				}
 
 				$menu->add('settings')
