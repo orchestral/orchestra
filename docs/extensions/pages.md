@@ -25,7 +25,7 @@ Use `"orchestra.manages: ..."` event listener to add a custom page only accessib
 
 		$menu->add('hello', 'after:home')
 			->title('Hello World')
-			->link(handles('orchestra::manages/oneauth/hello'));
+			->link(handles('orchestra::manages/oneauth.hello'));
 	});
 
 	Event::listen('orchestra.manages: oneauth.hello', function ()
@@ -47,7 +47,7 @@ Use `"orchestra.pages: ..."` event listener to add a custom page viewable by all
 
 		$menu->add('hello', 'after:home')
 			->title('Hello World')
-			->link(handles('orchestra::pages/oneauth/hello'));
+			->link(handles('orchestra::pages/oneauth.hello'));
 	});
 
 	Event::listen('orchestra.pages: oneauth.hello', function ()
