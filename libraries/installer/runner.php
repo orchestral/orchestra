@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Installer;
 
-use \Config, \DB, \Exception, \Hash, \Input, \IoC, 
+use \Bundle, \Config, \DB, \Event, \Exception, \Hash, \Input, \IoC, 
 	\Schema, \Session, \Str, \Validator, 
 	Orchestra\Installer as Installer,
 	Orchestra\Messages,
@@ -38,6 +38,12 @@ class Runner
 		// check whether message actually an instanceof Messages, if for any reason it's not we should
 		// assume the object is invalid and therefore we need to construct a new object.
 		if ( ! (static::$message instanceof Messages)) static::$message = new Messages;
+
+		// Check if DEFAULT_BUNDLE has an instruction for Orchestra installation, if so include it.
+		if (is_file($file = Bundle::path(DEFAULT_BUNDLE).'orchestra/installer.php'))
+		{
+			include_once $file;
+		}
 	}
 
 	/**
@@ -75,6 +81,8 @@ class Runner
 		static::install_migrations_schema();
 		static::install_options_schema();
 		static::install_users_schema();
+
+		Event::fire('orchestra.install.schema');
 
 		static::shutdown();
 
@@ -125,12 +133,16 @@ class Runner
 			}
 
 			// Create administator user
-			$user = User::create(array(
+			$user = new User(array(
 				'email'    => $input['email'],
 				'password' => Hash::make($input['password']),
 				'fullname' => $input['fullname'],
 				'status'   => 0,
 			));
+
+			Event::fire('orchestra.install: user', array($user, $input));
+
+			$user->save();
 
 			// Attach Administrator role to the newly created administrator 
 			// account.
@@ -167,6 +179,8 @@ class Runner
 			));
 
 			$acl->add_role('Member');
+
+			Event::fire('orchestra.install: acl', array($acl));
 
 			// Installation is successful, we should be able to generate 
 			// success message to notify the user. Installer route will be 
@@ -279,10 +293,13 @@ class Runner
 				$table->create();
 
 				$table->increments('id');
+
 				$table->string('email', 100);
-				$table->string('fullname', 100)->nullable();
-				
 				$table->string('password', 60);
+
+				Event::fire('orchestra.install.schema: users', array($table));
+
+				$table->string('fullname', 100)->nullable();
 				$table->integer('status');
 
 				// add timestamp created_at and updated_at
