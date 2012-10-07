@@ -11,7 +11,7 @@ return array(
 	'no-extension' => 'Нет доступных расширений',
 	
 	'search'    => array(
-		'button' => 'Поиск',
+		'button'  => 'Поиск',
 		'keyword' => 'Поиск...',
 	),
 	'site_name' => 'Название приложения',

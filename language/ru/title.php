@@ -21,7 +21,8 @@ return array(
 	'logout'  => 'Выход',
 
 	'resources' => array(
-		'list'      => 'Pесурсы',
+		'list'        => 'Pесурсы',
+		'list-detail' => 'List of available resources',
 	),
 
 	'settings' => array(

@@ -11,7 +11,7 @@ return array(
 	'no-extension' => 'No extension available at the moment',
 	
 	'search'    => array(
-		'button' => 'Search',
+		'button'  => 'Search',
 		'keyword' => 'Search keyword...',
 	),
 	'site_name' => 'Application Name',

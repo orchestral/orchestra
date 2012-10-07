@@ -21,7 +21,8 @@ return array(
 	'logout'  => 'Logout',
 
 	'resources' => array(
-		'list'      => 'Resources',
+		'list'        => 'Resources',
+		'list-detail' => 'List of available resources',
 	),
 
 	'settings' => array(
