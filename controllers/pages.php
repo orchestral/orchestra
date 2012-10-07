@@ -61,7 +61,11 @@ class Orchestra_Pages_Controller extends Orchestra\Controller
 
 		$content = Event::first("orchestra.pages: {$name}.{$action}", $arguments);
 
-		if ($content instanceof Response)
+		if ($content instanceof Redirect)
+		{
+			return $content;
+		}
+		elseif ($content instanceof Response)
 		{
 			$status_code = $content->foundation->getStatusCode();
 
@@ -69,6 +73,7 @@ class Orchestra_Pages_Controller extends Orchestra\Controller
 			{
 				return Response::error($status_code);
 			}
+
 		}
 
 		return View::make('orchestra::resources.pages', array('content' => $content));

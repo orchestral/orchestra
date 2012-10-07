@@ -52,7 +52,11 @@ class Orchestra_Resources_Controller extends Orchestra\Controller
 
 		$resources = Resources::all();
 
-		if ($content instanceof Response)
+		if ($content instanceof Redirect)
+		{
+			return $content;
+		}
+		elseif ($content instanceof Response)
 		{
 			$status_code = $content->foundation->getStatusCode();
 

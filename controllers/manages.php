@@ -62,7 +62,11 @@ class Orchestra_Manages_Controller extends Orchestra\Controller
 
 		$content = Event::first("orchestra.manages: {$name}.{$action}", $arguments);
 
-		if ($content instanceof Response)
+		if ($content instanceof Redirect)
+		{
+			return $content;
+		}
+		elseif ($content instanceof Response)
 		{
 			$status_code = $content->foundation->getStatusCode();
 
