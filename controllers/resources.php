@@ -1,6 +1,7 @@
 <?php
 
-use Orchestra\Resources;
+use Orchestra\Resources,
+	Orchestra\Table;
 
 class Orchestra_Resources_Controller extends Orchestra\Controller
 {
@@ -23,6 +24,34 @@ class Orchestra_Resources_Controller extends Orchestra\Controller
 		Event::fire('orchestra.started: backend');
 	}
 
+	private function _index($resources)
+	{
+		$table = Table::of('orchestra.resources: list', function ($table) use ($resources)
+		{
+			$table->empty_message = __('orchestra::label.no-data')->get();
+
+			// Add HTML attributes option for the table.
+			$table->attr('class', 'table table-bordered table-striped');
+
+			// attach the list
+			$table->rows($resources);
+
+			$table->column('name', function ($column)
+			{
+				$column->value = function ($row)
+				{
+					return '<strong>'.HTML::link(handles("orchestra::resources/{$row->id}"), $row->name).'</strong>';
+				};
+			});
+		});
+
+		return View::make('orchestra::resources.index', array(
+			'table'     => $table,
+			'page_name' => 'Resources',
+			'page_desc' => 'List of available resources',
+		));
+	}
+
 	/**
 	 * Add a drop-in resource anywhere on Orchestra
 	 *
@@ -40,17 +69,17 @@ class Orchestra_Resources_Controller extends Orchestra\Controller
 		$page_desc = '';
 		$content   = "";
 
+		$resources = Resources::all();
+
 		switch (true) 
 		{
 			case ($name === 'index' and $name === $action) :
-				$page_name = __("orchestra::title.resources.list")->get();
+				return $this->_index($resources);
 				break;
 			default :
 				$content = Resources::call($name, $action, $arguments);
 				break;
 		}
-
-		$resources = Resources::all();
 
 		if ($content instanceof Redirect)
 		{
