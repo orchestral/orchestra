@@ -24,6 +24,13 @@ class Orchestra_Resources_Controller extends Orchestra\Controller
 		Event::fire('orchestra.started: backend');
 	}
 
+	/**
+	 * Route to Resources List
+	 *
+	 * @access private
+	 * @param  array    $resources
+	 * @return Response
+	 */
 	private function _index($resources)
 	{
 		$table = Table::of('orchestra.resources: list', function ($table) use ($resources)
@@ -47,8 +54,8 @@ class Orchestra_Resources_Controller extends Orchestra\Controller
 
 		return View::make('orchestra::resources.index', array(
 			'table'     => $table,
-			'page_name' => 'Resources',
-			'page_desc' => 'List of available resources',
+			'page_name' => __('orchestra::title.resources.list')->get(),
+			'page_desc' => __('orchestra::title.resources.list-detail')->get(),
 		));
 	}
 
