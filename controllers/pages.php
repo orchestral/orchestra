@@ -37,10 +37,18 @@ class Orchestra_Pages_Controller extends Orchestra\Controller
 		
 		// we first check if $name actually an extension, if not we should 
 		// consider it's pointing to 'application'
-		if ( ! Extension::started($name) and Extension::started(DEFAULT_BUNDLE))
+		if ( ! Extension::started($name))
 		{
-			$action = $name;
-			$name   = DEFAULT_BUNDLE;
+			if (Extension::started($fragment))
+			{
+				$action = array_shift($arguments);
+				$name   = $fragment;
+			}
+			elseif(Extension::started(DEFAULT_BUNDLE))
+			{
+				$action = $name;
+				$name   = DEFAULT_BUNDLE;
+			}
 		}
 
 		if ( ! Extension::started($name) or is_null($action))
