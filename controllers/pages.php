@@ -32,21 +32,24 @@ class Orchestra_Pages_Controller extends Orchestra\Controller
 	 */
 	public function __call($request, $arguments)
 	{
+		$name = $action = null;
+
 		list($method, $fragment) = explode('_', $request, 2);
-		list($name, $action)     = explode('.', $fragment, 2);
+
+		str_contains($fragment, '.') and list($name, $action) = explode('.', $fragment, 2);
 		
 		// we first check if $name actually an extension, if not we should 
 		// consider it's pointing to 'application'
 		if ( ! Extension::started($name))
 		{
-			if (Extension::started($fragment))
+			if ( ! Extension::started($fragment))
 			{
-				$action = array_shift($arguments);
-				$name   = $fragment;
+				$action = $fragment;
+				$name   = DEFAULT_BUNDLE;
 			}
 			elseif(Extension::started(DEFAULT_BUNDLE))
 			{
-				$action = $name;
+				$action = array_shift($arguments);
 				$name   = DEFAULT_BUNDLE;
 			}
 		}
