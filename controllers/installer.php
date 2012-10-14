@@ -60,7 +60,7 @@ class Orchestra_Installer_Controller extends Controller
 
 		if ($auth['driver'] === 'eloquent')
 		{
-			if (class_exists($auth['model'], false)) $driver = new $auth['model'];
+			if (class_exists($auth['model'])) $driver = new $auth['model'];
 
 			if ( ! (isset($driver) and $driver instanceof Orchestra\Model\User)) $eloquent_status = false;
 		}
