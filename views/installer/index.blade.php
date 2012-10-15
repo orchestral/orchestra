@@ -33,12 +33,14 @@
 				</div>
 			</div>
 
+			@if (isset($database['host']))
 			<div class="control-group">
 				<label class="control-label">Host</label>
 				<div class="controls">
 					<span class="uneditable-input span4">{{ $database['host'] }}</span>
 				</div>
 			</div>
+			@endif
 
 			<div class="control-group">
 				<label class="control-label">Database</label>
@@ -47,13 +49,16 @@
 				</div>
 			</div>
 
+			@if (isset($database['username']))
 			<div class="control-group">
 				<label class="control-label">User</label>
 				<div class="controls">
 					<span class="uneditable-input span4">{{ $database['username'] }}</span>
 				</div>
 			</div>
+			@endif
 
+			@if (isset($database['password']))
 			<div class="control-group">
 				<label class="control-label">Password</label>
 				<div class="controls">
@@ -61,6 +66,7 @@
 					<p class="help-block">Password is hidden</p>
 				</div>
 			</div>
+			@endif
 
 			<div class="control-group">
 				<label class="control-label">Connection Status</label>
