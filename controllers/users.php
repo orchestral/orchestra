@@ -247,8 +247,8 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 			$user->password = Hash::make($input['password']);
 		}
 
-		Event::fire("orchestra.{$type}: users", array($user));
-		Event::fire("orchestra.save: users", array($user));
+		Event::fire(($type === 'create' ? 'creating' : 'updating'), $user);
+		Event::fire('saving', $user);
 
 		try
 		{
@@ -257,6 +257,9 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 				$user->save();
 				$user->roles()->sync($input['roles']);
 			});
+
+			Event::fire(($type === 'create' ? 'created' : 'updated'), $user);
+			Event::fire('saved', $user);
 
 			$m->add('success', __("orchestra::response.users.{$type}"));
 		}
@@ -285,11 +288,29 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 
 		if ($user->id === Auth::user()->id) return Event::fire('404');
 
+		$this->fire_event('deleting', $user);
+
 		$user->delete();
+
+		$this->fire_event('deleted', $user);
 
 		$m->add('success', __('orchestra::response.users.delete'));
 
 		return Redirect::to(handles('orchestra::users'))
 				->with('message', $m->serialize());
 	}
+
+	/**
+	 * Fire Event related to eloquent process
+	 * 
+	 * @access private
+	 * @param  string   $type  
+	 * @param  Eloquent $user
+	 * @return void
+	 */
+	private function fire_event($type, $user)
+	{
+		Event::fire("orchestra.{$type}: users", array($user));
+	}
+
 }
