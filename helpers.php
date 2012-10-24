@@ -1,12 +1,27 @@
 <?php 
 
+if ( ! function_exists('theme_path'))
+{
+	/**
+	 * Return theme path
+	 *
+	 * @see    Orchestra\Theme::path()
+	 * @param  string $view
+	 * @return string
+	 */
+	function theme_path($view)
+	{
+		return Orchestra\Theme::path($view);
+	}
+}
+
 if ( ! function_exists('handles'))
 {
 	/**
 	 * Return handles configuration for a bundle
 	 * 
-	 * @param  string $bundle Bundle name
-	 * @return string       URL path
+	 * @param  string   $bundle Bundle name
+	 * @return string           URL path
 	 */
 	function handles($name)
 	{
