@@ -90,27 +90,20 @@
 			</p>
 
 			<div class="control-group">
-				<label class="control-label">Driver</label>
+				<label class="control-label {{ 'fluent' === $auth['driver'] ? 'error' : '' }}">Driver</label>
 				<div class="controls">
 					<span class="uneditable-input span4">{{ $auth['driver'] }}</span>
-				</div>
-			</div>
-
-			<div class="control-group {{ false === $fluent_status ? 'error' : '' }} {{ 'fluent' !== $auth['driver'] ? 'hide' : '' }}">
-				<label class="control-label">Table</label>
-				<div class="controls">
-					<span class="uneditable-input span4">{{ $auth['table'] }}</span>
-					@if (false === $fluent_status)
-					<p class="help-block">Table name should be `users`</p>
+					@if ('fluent' === $auth['driver'])
+					<p class="help-block">Orchestra only work with Eloquent Driver for Auth</p>
 					@endif
 				</div>
 			</div>
 
-			<div class="control-group {{ false === $eloquent_status ? 'error' : '' }} {{ 'eloquent' !== $auth['driver'] ? 'hide' : '' }}">
+			<div class="control-group {{ false === $auth_status ? 'error' : '' }} {{ 'eloquent' !== $auth['driver'] ? 'hide' : '' }}">
 				<label class="control-label">Model</label>
 				<div class="controls">
 					<span class="uneditable-input span4">{{ $auth['model'] }}</span>
-					@if (false === $eloquent_status)
+					@if (false === $auth_status)
 					<p class="help-block">Model name should be an instance of `Orchestra\Model\User`</p>
 					@endif
 				</div>
@@ -118,7 +111,7 @@
 
 		</fieldset>
 
-		@if (true === $database['status'] and true === $fluent_status && true === $eloquent_status)
+		@if (true === $database['status'] and 'eloquent' === $auth['driver'] and true === $auth_status)
 
 		<div class="form-actions clean">
 			{{ HTML::link(handles('orchestra::installer/steps/1'), 'Next', array('class' => 'btn btn-primary')) }}
