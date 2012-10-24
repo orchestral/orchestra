@@ -39,7 +39,7 @@ return array(
 		),
 
 		'sendmail' => array(
-			'command' => '/user/sbin/sendmail -bs',
+			'command' => '/usr/sbin/sendmail -bs',
 		),
 
 		'mail',
