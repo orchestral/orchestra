@@ -76,14 +76,11 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 			return Redirect::to($redirect)
 					->with('message', $m->serialize());
 		}
-		else 
-		{
-			$m->add('error', __('orchestra::response.credential.invalid-combination'));
 
-			return Redirect::to(handles('orchestra::login'))
-					->with('message', $m->serialize());
-		}
+		$m->add('error', __('orchestra::response.credential.invalid-combination'));
 
+		return Redirect::to(handles('orchestra::login'))
+				->with('message', $m->serialize());
 	}
 
 	/**
