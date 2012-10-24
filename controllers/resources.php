@@ -88,10 +88,8 @@ class Orchestra_Resources_Controller extends Orchestra\Controller
 				break;
 		}
 
-		if ($content instanceof Redirect)
-		{
-			return $content;
-		}
+		if ( ! $content) return Response::error('404');
+		elseif ($content instanceof Redirect) return $content;
 		elseif ($content instanceof Response)
 		{
 			$status_code = $content->foundation->getStatusCode();
