@@ -17,6 +17,6 @@ section.container,section.container-fluid{padding-top:45px;}
 .pagination li:last-child{-webkit-border-radius:0 3px 3px 0;-moz-border-radius:0 3px 3px 0;border-radius:0 3px 3px 0;}
 .table thead tr{background:transparent url('../img/top-bar-white.png') repeat-x top left;}
 .table tbody td .meta{font-size:11px;}
-.well-resources{padding:8px 0;}
+.well-resources{padding:8px 0;}.well-resources .nav-stacked a{background:#fff;}.well-resources .nav-stacked a .icon-chevron-right{float:right;margin-top:2px;margin-right:-6px;opacity:.25;}
 .navbar-form .select2-container{margin-top:5px;}
 .select2-container[class*="span"]{margin-left:0;}

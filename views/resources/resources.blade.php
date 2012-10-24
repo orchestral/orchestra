@@ -3,12 +3,15 @@
 @section('content')
 
 <div class="row-fluid">
-	<div class="span2 well well-resources">
-		<ul class="nav nav-list">
-			<li class="nav-header">Resources</li>
-
+	<div class="span2 well-resources">
+		<ul class="nav nav-tabs nav-stacked">
 			@foreach ($resources_list as $name => $resource)
-			<li>{{ HTML::link(handles("orchestra::resources/{$name}"), $resource->name) }}</li>
+			<li class="{{ URI::is("*/resources/{$name}*") ? 'active' : '' }}">
+				<a href="{{ handles("orchestra::resources/{$name}") }}">
+					<i class="icon-chevron-right"></i>
+					{{ $resource->name }}
+				</a>
+			</li>
 			@endforeach
 		</ul>
 	</div>
