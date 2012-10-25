@@ -17,7 +17,7 @@ class Theme
 	 *
 	 * @var array 
 	 */
-	protected static $aliases = null;
+	protected static $aliases = array();
 
 	/**
 	 * Filesystem path of Theme
