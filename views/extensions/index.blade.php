@@ -44,7 +44,7 @@
 			</tr>
 			@empty
 			<tr>
-				<td colspan="2">{{ __('orchestra::label.no-extensions') }}</td>
+				<td colspan="2">{{ __('orchestra::label.no-extension') }}</td>
 			</tr>
 			@endforelse
 		</tbody>
