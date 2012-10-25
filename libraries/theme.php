@@ -12,6 +12,14 @@ class Theme
 	protected static $name = null;
 
 	/**
+	 * Themes aliases, allowing similar view to be mapped without having to duplicate the 
+	 * physical file.
+	 *
+	 * @var array 
+	 */
+	protected static $aliases = null;
+
+	/**
 	 * Filesystem path of Theme
 	 *  
 	 * @var string
@@ -74,6 +82,17 @@ class Theme
 		return static::$url.'/'.static::$name.'/'.$url;
 	}
 
+	public static function map($aliases)
+	{
+		foreach ((array) $aliases as $alias => $file)
+		{
+			if ( ! is_numeric($alias))
+			{
+				static::$aliases[$alias] = static::parse($file);
+			}
+		}
+	}
+
 	/**
 	 * Parse normal View to use Theme
 	 *
@@ -84,6 +103,13 @@ class Theme
 	 */
 	public static function parse($file, $use_bundle = true)
 	{
+		// Return the file if it's already using full path to 
+		// avoid recursive request.
+		if (starts_with('path: ', $file)) return $file;
+
+		// Check theme aliases if we already have registered aliases
+		if (isset(static::$aliases[$file])) return static::$aliases[$file];
+
 		if ( ! is_null(static::$name)) 
 		{
 			if (strpos($file, '::') !== false)
