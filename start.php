@@ -6,7 +6,7 @@
 |--------------------------------------------------------------------------
 |
 | Map Orchestra Library using PSR-0 standard namespace. 
- */
+*/
 
 Autoloader::namespaces(array(
 	'Orchestra\Model' => Bundle::path('orchestra').'models'.DS,
@@ -24,7 +24,7 @@ Autoloader::map(array(
 |
 | Register and start Hybrid bundle if it's not registered in 
 | application/bundles.php
- */
+*/
 
 if ( ! Bundle::exists('hybrid'))
 {
@@ -39,7 +39,7 @@ Bundle::start('hybrid');
 |--------------------------------------------------------------------------
 |
 | Lets listen to when Orchestra bundle is started.
- */ 
+*/ 
 
 Event::listen('laravel.started: orchestra', function () 
 {
@@ -57,7 +57,7 @@ Event::listen('laravel.done', function ()
 |--------------------------------------------------------------------------
 |
 | Lets Orchestra run Laravel\CLI migration actions
- */
+*/
 
 if( ! IoC::registered('task: orchestra.migrator'))
 {
@@ -97,7 +97,7 @@ if( ! IoC::registered('task: orchestra.migrator'))
 |
 | Lets Orchestra run Laravel\CLI bundle asset publish actions. This is an
 | alias to `php artisan bundle:publish`
- */
+*/
 
 if( ! IoC::registered('task: orchestra.publisher'))
 {
@@ -126,7 +126,7 @@ if( ! IoC::registered('task: orchestra.publisher'))
 |--------------------------------------------------------------------------
 |
 | Lets Orchestra handle mailer (integration with Message bundle) using IoC
- */
+*/
 
 if( ! IoC::registered('orchestra.mailer'))
 {
@@ -162,6 +162,6 @@ if( ! IoC::registered('orchestra.mailer'))
 |--------------------------------------------------------------------------
 | Orchestra Helpers
 |--------------------------------------------------------------------------
- */
+*/
 
 include_once Bundle::path('orchestra').'helpers.php';
