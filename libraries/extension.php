@@ -109,6 +109,10 @@ class Extension
 				if (is_file($item->getRealPath().'/orchestra.json'))
 				{
 					$extensions[$item->getFilename()] = json_decode(file_get_contents($item->getRealPath().'/orchestra.json'));
+                    if ($extensions[$item->getFilename()] === NULL) {
+                        //json_decode couldn't parse, throw an exception
+                        throw new Exception('Cannot decode orchestra.json file in extension '.$item->getFilename());
+                    }
 				}
 			}
 		}
