@@ -29,6 +29,7 @@ class Pane
 				'attr'    => array(),
 				'title'   => '',
 				'content' => '',
+				'html'    => '',
 			));
 
 			if ( ! $callback instanceof Closure)

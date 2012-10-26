@@ -28,9 +28,29 @@ class Orchestra_Dashboard_Controller extends Orchestra\Controller
 	 */
 	public function get_index()
 	{
-		$data = array(
-			'panes' => Pane::all(),
-		);
+		$panes = Pane::all();
+
+		if (empty($panes))
+		{
+			$pane = new Fluent(array(
+				'id'      => 'orchestra.welcome',
+				'attr'    => array(),
+				'title'   => '',
+				'content' => '',
+			));
+
+			$pane->attr = array('class' => 'hero-unit');
+			$pane->html = '<h2>Welcome to your new Orchestra site!</h2>
+				<p>If you need help getting started, check out our documentation on First Steps with Orchestra. If you’d rather dive right in, here are a few things most people do first when they set up a new Orchestra site. 
+				<!-- If you need help, use the Help tabs in the upper right corner to get information on how to use your current screen and where to go for more assistance.--></p>';
+
+			$panes['orchestra.welcome'] = $pane;
+		}
+
+		$data = compact('panes');
+		/*array(
+			'panes' => $panes,
+		);*/
 
 		return View::make('orchestra::resources.dashboard', $data);
 	}

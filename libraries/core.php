@@ -214,15 +214,6 @@ class Core
 		// Multiple event listener for Backend (administrator panel)
 		Event::listen('orchestra.started: backend', function () use ($menu, $acl)
 		{
-			Extension\Pane::register('orchestra.welcome', function ($pane)
-			{
-				$pane->attr = array('class' => 'hero-unit');
-				$pane->html = '<h2>Welcome to your new Orchestra site!</h2>
-				<p>If you need help getting started, check out our documentation on First Steps with Orchestra. If you’d rather dive right in, here are a few things most people do first when they set up a new Orchestra site. 
-				<!-- If you need help, use the Help tabs in the upper right corner to get information on how to use your current screen and where to go for more assistance.--></p>';
-
-			});
-
 			// Add menu when user can manage users
 			if ($acl->can('manage-users'))
 			{
