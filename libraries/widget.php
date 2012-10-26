@@ -22,15 +22,17 @@ class Widget
 	{
 		if (false === strpos($name, '.')) $name = $name.'.default';
 
-		list($type, $_name) = explode('.', $name, 2);
+		list($type, $driver) = explode('.', $name, 2);
 
 		if ( ! isset(static::$instances[$name]))
 		{
 			switch ($type)
 			{
 				case 'menu' :
-					static::$instances[$name] = new Widget\Menu($_name, $config);
+					static::$instances[$name] = new Widget\Menu($driver, $config);
 					break;
+				case 'pane' :
+					static::$instances[$name] = new Widget\Pane($driver, $config);
 				default :
 					throw new Exception("Requested Orchestra\Widget Driver [{$type}] does not exist.");
 			}
