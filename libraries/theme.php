@@ -82,6 +82,22 @@ class Theme
 		return static::$url.'/'.static::$name.'/'.$url;
 	}
 
+	/**
+	 * Map theme aliases, to allow a similar views to be map together
+	 * without make multiple file.
+	 *
+	 * <code>
+	 *     Orchestra\Theme::map(array(
+	 *         'bundle::view.page'   => 'bundle2::view.page',
+	 *         'bundle::view.header' => 'path: /path/to/view.blade.php',
+	 *     ));
+	 * </code>
+	 *
+	 * @static
+	 * @access public	
+	 * @param  array    $aliases
+	 * @return void         
+	 */
 	public static function map($aliases)
 	{
 		foreach ((array) $aliases as $alias => $file)
