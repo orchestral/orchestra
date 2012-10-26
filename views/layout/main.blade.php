@@ -21,6 +21,7 @@
 
 		$asset->script('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.js', array('jquery'));
 		$asset->style('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.css');
+		$asset->style('bootstrap-responsive', 'bundles/orchestra/vendor/bootstrap/bootstrap-responsive.min.css', array('bootstrap'));
 
 		$asset->style('select2', 'bundles/orchestra/vendor/select2/select2.css');
 		$asset->script('select2', 'bundles/orchestra/vendor/select2/select2.min.js', array('jquery'));

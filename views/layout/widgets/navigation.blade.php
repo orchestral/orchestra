@@ -1,10 +1,17 @@
 <div class="navbar navbar-fixed-top">
 	<div class="navbar-inner">
 		<div class="container{{ isset($fluent_layout) ? '-fluid' : '' }}">
-			<section class="nav-collapse">
-				
-				{{ HTML::link(handles('orchestra'), $orchestra_memory->get('site.name', 'Orchestra'), array('class' => 'brand')) }}
 
+			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#mainnav">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+
+			{{ HTML::link(handles('orchestra'), $orchestra_memory->get('site.name', 'Orchestra'), array('class' => 'brand')) }}
+
+			<div id="mainnav" class="collapse nav-collapse">
+					
 				{{ render('orchestra::layout.widgets.menu', array('menu' => Orchestra\Core::menu())) }}
 				
 				@if (Config::get('orchestra::navigation.show-user-box', true))
@@ -31,8 +38,7 @@
 					</li>
 				</ul>
 				@endif
-			</section>
-
+			</div>
 		</div>
 	</div>
 </div>

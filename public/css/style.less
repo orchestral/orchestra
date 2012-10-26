@@ -40,12 +40,21 @@ section.container, section.container-fluid {
 		}
 
 	}
+}
 
+@media (min-width: 979px) {
 	&.navbar-fixed-top {
 		.navbar-inner {
 			background: transparent url('../img/top-bar-white.png') repeat-x bottom left;
 			box-shadow: none;
-			height: 45px;
+		}
+	}
+
+	.table {
+		thead {
+			tr {
+				background: transparent url('../img/top-bar-white.png') repeat-x bottom left;
+			}
 		}
 	}
 }
@@ -82,9 +91,6 @@ section.container, section.container-fluid {
 }
 
 .table {
-	thead tr {
-		background: transparent url('../img/top-bar-white.png') repeat-x top left;
-	}
 
 	tbody td {
 		.meta {
