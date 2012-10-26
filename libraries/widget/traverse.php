@@ -13,6 +13,25 @@ class Traverse
 	protected $items = array();
 
 	/**
+	 * Configuration
+	 *
+	 * @access  protected
+	 * @var     array
+	 */
+	protected $config = array();
+
+	/**
+	 * Construct a new instance
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function __construct($config)
+	{
+		$this->config = $config;
+	}
+
+	/**
 	 * Add item before reference $before
 	 *
 	 * @static

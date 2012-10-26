@@ -1,6 +1,8 @@
 <?php namespace Orchestra\Widget;
 
-class Menu extends Driver
+use \Closure;
+
+class Pane extends Driver
 {
 	/**
 	 * Type
@@ -8,7 +10,7 @@ class Menu extends Driver
 	 * @access  protected
 	 * @var     string
 	 */
-	protected $type = 'menu';
+	protected $type = 'pane';
 
 	/**
 	 * Configuration
@@ -18,8 +20,10 @@ class Menu extends Driver
 	 */
 	protected $config = array(
 		'defaults' => array(
+			'attr'    => array(),
 			'title'   => '',
-			'link'    => '#',
+			'content' => '',
+			'html'    => '',
 		),
 	);
 
@@ -42,6 +46,13 @@ class Menu extends Driver
 	 */
 	public function add($id, $location = 'parent')
 	{
-		return $this->traverse->add($id, $location);
+		$item = $this->traverse->add($id, 'parent');
+
+		if ($location instanceof Closure)
+		{
+			call_user_func($callback, $item);
+		}
+
+		return $item;
 	}
 }

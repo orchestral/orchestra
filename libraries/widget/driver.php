@@ -49,7 +49,7 @@ abstract class Driver
 		$_config        = Config::get('orchestra::widget.'.$this->type, array());
 		$this->name     = $name;
 		$this->config   = array_merge($config, $_config);
-		$this->traverse = new Traverse;
+		$this->traverse = new Traverse($this->config);
 	}
 
 	/**
@@ -63,10 +63,15 @@ abstract class Driver
 		return $this->render();
 	}
 
-	public function add($id, $location = 'parent')
-	{
-		return $this->traverse->add($id, $location);
-	}
+	/**
+	 * Add an item to current widget.
+	 *
+	 * @access public
+	 * @param  string   $id
+	 * @param  string   $location
+	 * @return mixed
+	 */
+	public abstract function add($id, $location = 'parent');
 
 	/**
 	 * Render widget as a view
@@ -92,6 +97,6 @@ abstract class Driver
 	 */
 	public function __get($key)
 	{
-		if ($key === 'items') return $this->traverse->get();
+		if ($key === 'items') return $this->get();
 	}
 }

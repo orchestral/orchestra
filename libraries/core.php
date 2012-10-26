@@ -233,8 +233,6 @@ class Core
 					->title(__('orchestra::title.extensions.list')->get())
 					->link(handles('orchestra::extensions'));
 
-				
-
 				$resources = Resources::all();
 
 				if ( ! empty($resources))

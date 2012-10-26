@@ -1,5 +1,7 @@
 <?php namespace Orchestra;
 
+use \Exception;
+
 class Widget 
 {
 	/**
@@ -33,6 +35,7 @@ class Widget
 					break;
 				case 'pane' :
 					static::$instances[$name] = new Widget\Pane($driver, $config);
+					break;
 				default :
 					throw new Exception("Requested Orchestra\Widget Driver [{$type}] does not exist.");
 			}
