@@ -50,7 +50,7 @@ class Pane extends Driver
 
 		if ($location instanceof Closure)
 		{
-			call_user_func($callback, $item);
+			call_user_func($location, $item);
 		}
 
 		return $item;
