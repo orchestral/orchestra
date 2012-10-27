@@ -4,6 +4,9 @@
 
 - [Introduction](#introduction)
 - [Register A Resource](#register)
+- [Register Child Resources](#register-child)
+- [Returning Response from Resources](#returning-response)
+
 <a href="#introduction"></a>
 ## Introduction
 
