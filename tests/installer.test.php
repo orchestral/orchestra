@@ -20,5 +20,9 @@ class TestInstaller extends PHPUnit_Framework_TestCase
 	public function testStatus()
 	{
 		$this->assertFalse(Orchestra\Installer::installed());
+
+		Orchestra\Installer::$status = true;
+
+		$this->assertTrue(Orchestra\Installer::installed());
 	}
 }
