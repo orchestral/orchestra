@@ -5,4 +5,5 @@
 	- [Setup](/bundocs/orchestra/install#setup)
 - [Extensions](/bundocs/orchestra/extensions)
 	- [Pages](/bundocs/orchestra/extensions/pages)
+	- [Resources](/bundocs/orchestra/extensions/resources)
 
