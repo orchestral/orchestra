@@ -30,7 +30,7 @@ class Orchestra_Dashboard_Controller extends Orchestra\Controller
 
 		if (empty($panes))
 		{
-			$pane = new Fluent(array(
+			$pane = new Laravel\Fluent(array(
 				'id'      => 'orchestra.welcome',
 				'attr'    => array(),
 				'title'   => '',
