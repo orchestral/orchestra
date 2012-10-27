@@ -149,7 +149,7 @@ class Theme
 
 			if ($use_bundle)
 			{
-				$directory .= $bundle.DS;
+				$directory .= 'bundles'.DS.$bundle.DS;
 			}
 
 			$view = str_replace('.', '/', $view);
