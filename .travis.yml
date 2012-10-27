@@ -1,0 +1,16 @@
+language: php
+
+php:
+  - "5.4"
+  - "5.3"
+
+before_install:
+  - cd ~/builds
+  - git clone git://github.com/laravel/laravel.git
+  - mv ./orchestral/orchestra ./laravel/bundles/orchestra
+  - echo "<?php return array('orchestra' => array('auto' => true, 'handles' => 'orchestra'));" > ./laravel/application/bundles.php
+  - cd ./laravel
+  - php artisan bundle:install hybrid
+  - php artisan bundle:install Messages
+
+script: "php artisan test orchestra"
