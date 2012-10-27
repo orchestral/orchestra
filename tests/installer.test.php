@@ -10,6 +10,18 @@ class TestInstaller extends PHPUnit_Framework_TestCase
 		Bundle::start('orchestra');
 
 		Orchestra\Installer::$status = false;
+
+		Config::set('database', array(
+			'default' => 'memory',
+			'connections' => array(
+				'memory' => array(
+					'driver'   => 'sqlite',
+					'database' => ':memory:',
+					'prefix'   => '',
+				),
+			),
+		));
+
 	}
 
 	/**
@@ -24,5 +36,15 @@ class TestInstaller extends PHPUnit_Framework_TestCase
 		Orchestra\Installer::$status = true;
 
 		$this->assertTrue(Orchestra\Installer::installed());
+	}
+
+	/**
+	 * Test Orchestra\Installer::check_database()
+	 *
+	 * @test
+	 */
+	public function testCheckDatabase()
+	{
+		$this->assertTrue(Orchestra\Installer::check_database());
 	}
 }
