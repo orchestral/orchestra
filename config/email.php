@@ -1,5 +1,15 @@
 <?php
 
+/*
+|--------------------------------------------------------------------------
+| IMPORTANT NOTE!
+|--------------------------------------------------------------------------
+|
+| Edit this configuration before installing Orchestra, otherwise use the 
+| Orchestra > Settings configuration page to change any of following options.
+|
+ */
+
 return array(
 
 	/*
