@@ -59,7 +59,7 @@ Event::listen('laravel.done', function ()
 | Lets Orchestra run Laravel\CLI migration actions
 */
 
-if( ! IoC::registered('task: orchestra.migrator'))
+if ( ! IoC::registered('task: orchestra.migrator'))
 {
 	IoC::register('task: orchestra.migrator', function($method, $bundle = null)
 	{
@@ -99,7 +99,7 @@ if( ! IoC::registered('task: orchestra.migrator'))
 | alias to `php artisan bundle:publish`
 */
 
-if( ! IoC::registered('task: orchestra.publisher'))
+if ( ! IoC::registered('task: orchestra.publisher'))
 {
 	IoC::register('task: orchestra.publisher', function($bundle = null)
 	{
@@ -122,13 +122,13 @@ if( ! IoC::registered('task: orchestra.publisher'))
 
 /*
 |--------------------------------------------------------------------------
-| Orchestra IoC (Mailer)
+| Orchestra Mailer IoC
 |--------------------------------------------------------------------------
 |
 | Lets Orchestra handle mailer (integration with Message bundle) using IoC
 */
 
-if( ! IoC::registered('orchestra.mailer'))
+if ( ! IoC::registered('orchestra.mailer'))
 {
 	IoC::register('orchestra.mailer', function($from = true)
 	{
@@ -155,6 +155,22 @@ if( ! IoC::registered('orchestra.mailer'))
 		}
 
 		return $mailer;
+	});
+}
+
+/*
+|--------------------------------------------------------------------------
+| Orchestra Memory IoC
+|--------------------------------------------------------------------------
+|
+| Lets Orchestra handle Hybrid\Memory instance using IoC
+*/
+
+if ( ! IoC::registered('orchestra.memory'))
+{
+	IoC::register('orchestra.memory', function ()
+	{
+		return Hybrid\Memory::make('fluent.orchestra_options');
 	});
 }
 

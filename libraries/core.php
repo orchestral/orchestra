@@ -1,6 +1,6 @@
 <?php namespace Orchestra;
 
-use \Config, \Exception, \Event, 
+use \Config, \Exception, \Event, \IoC,
 	Hybrid\Acl, Hybrid\Memory;
 
 class Core
@@ -65,7 +65,7 @@ class Core
 		try 
 		{
 			// Initiate Memory class
-			static::$cached['memory'] = Memory::make(Config::get('orchestra::api.memory_driver').'.orchestra_options');
+			static::$cached['memory'] = IoC::resolve('orchestra.memory');
 
 			if (is_null(static::$cached['memory']->get('site.name')))
 			{
