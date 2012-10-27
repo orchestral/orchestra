@@ -149,7 +149,7 @@ class Runner
 			$user->roles()->insert(new Role(array('name' => 'Administrator')));
 
 			// Make a new instance of Memory using `orchestra_options` table.
-			$memory = Memory::make('fluent.orchestra_options');
+			$memory = Memory::make(Config::get('orchestra::api.memory_driver').'.orchestra_options');
 
 			// Save the default application site_name.
 			$memory->put('site.name', Input::get('site_name', 'Orchestra'));

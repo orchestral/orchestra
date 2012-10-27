@@ -65,7 +65,7 @@ class Core
 		try 
 		{
 			// Initiate Memory class
-			static::$cached['memory'] = Memory::make('fluent.orchestra_options');
+			static::$cached['memory'] = Memory::make(Config::get('orchestra::api.memory_driver').'.orchestra_options');
 
 			if (is_null(static::$cached['memory']->get('site.name')))
 			{
