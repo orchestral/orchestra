@@ -25,11 +25,9 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 	 */
 	public function get_login()
 	{
-		$data = array(
-			'redirect' => Session::get('orchestra.redirect', handles('orchestra')),
-		);
+		$redirect = Session::get('orchestra.redirect', handles('orchestra'));
 
-		return View::make('orchestra::credential.login', $data);
+		return View::make('orchestra::credential.login', compact('redirect'));
 	}
 
 	/**
@@ -46,6 +44,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 			'password' => array('required'),
 		);
 
+		$m = new Messages;
 		$v = Validator::make($input, $rules);
 
 		// Validate user login, if any errors is found redirect it back to 
@@ -61,8 +60,6 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 			'username' => $input['email'], 
 			'password' => $input['password']
 		);
-
-		$m = new Messages;
 
 		// We should now attempt to login the user using Auth class, 
 		if (Auth::attempt($attempt))

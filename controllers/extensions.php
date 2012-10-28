@@ -30,11 +30,9 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 	 */
 	public function get_index()
 	{
-		$data = array(
-			'extensions' => Extension::detect(),
-		);
+		$extensions = Extension::detect();
 
-		return View::make('orchestra::extensions.index', $data);
+		return View::make('orchestra::extensions.index', compact('extensions'));
 	}
 
 	/**
@@ -124,8 +122,8 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 		Event::fire("orchestra.form: extension.{$name}", array($config, $form));
 
 		$data = array(
-			'eloquent'      => $config,
-			'form'          => Form::of("orchestra.extension: {$name}"),
+			'eloquent'  => $config,
+			'form'      => Form::of("orchestra.extension: {$name}"),
 			'page_name' => $name,
 			'page_desc' => __("orchestra::title.extensions.configure")->get()
 		);

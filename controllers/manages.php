@@ -76,6 +76,6 @@ class Orchestra_Manages_Controller extends Orchestra\Controller
 			}
 		}
 
-		return View::make('orchestra::resources.pages', array('content' => $content));
+		return View::make('orchestra::resources.pages', compact('content'));
 	}
 }

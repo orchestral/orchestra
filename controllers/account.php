@@ -1,7 +1,6 @@
 <?php
 
-use Orchestra\Messages, 
-	Orchestra\Model\User;
+use Orchestra\Messages;
 
 class Orchestra_Account_Controller extends Orchestra\Controller
 {
@@ -29,13 +28,9 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 	 */
 	public function get_index()
 	{
-		$auth = Auth::user();
+		$user = Auth::user();
 
-		$data = array(
-			'user' => User::find($auth->id),
-		);
-
-		return View::make('orchestra::account.profile', $data);
+		return View::make('orchestra::account.profile', compact('user'));
 	}
 
 	/**
@@ -52,6 +47,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 			'fullname' => array('required'),
 		);
 
+		$m = new Messages;
 		$v = Validator::make($input, $rules);
 
 		if ($v->fails())
@@ -67,7 +63,6 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 
 		$user->save();
 
-		$m = new Messages;
 		$m->add('success', __('orchestra::response.account.profile.update'));
 
 		return Redirect::to(handles('orchestra::account'))
@@ -129,6 +124,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 		{
 			$user->password = Hash::make($input['new_password']);
 			$user->save();
+			
 			$m->add('success', __('orchestra::response.account.password.update'));
 		}
 		else

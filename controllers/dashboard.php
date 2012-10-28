@@ -45,11 +45,6 @@ class Orchestra_Dashboard_Controller extends Orchestra\Controller
 			$panes['orchestra.welcome'] = $pane;
 		}
 
-		$data = compact('panes');
-		/*array(
-			'panes' => $panes,
-		);*/
-
-		return View::make('orchestra::resources.dashboard', $data);
+		return View::make('orchestra::resources.dashboard', compact('panes'));
 	}
 }
