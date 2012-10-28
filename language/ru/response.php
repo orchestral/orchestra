@@ -25,6 +25,7 @@ return array(
 		'activate'   => 'Расширение :name активировано',
 		'deactivate' => 'Расширение :name деактивировано',
 		'configure'  => 'Настройки для расширения :name обновлены',
+		'upgrade'    => 'Extension :name has been upgraded',
 	),
 
 	'forgot' => array(
@@ -34,6 +35,7 @@ return array(
 
 	'settings' => array(
 		'update' => 'Настройки приложения были обновлены',
+		'upgrade' => 'Application has been upgraded',
 	),
 
 	'users' => array(

@@ -25,6 +25,7 @@ return array(
 		'activate'   => 'Extension :name activated',
 		'deactivate' => 'Extension :name deactivate',
 		'configure'  => 'Configuration for Extension :name has been updated',
+		'upgrade'    => 'Extension :name has been upgraded',
 	),
 
 	'forgot' => array(
@@ -33,7 +34,8 @@ return array(
 	),
 
 	'settings' => array(
-		'update' => 'Application settings has been updated',
+		'update'  => 'Application settings has been updated',
+		'upgrade' => 'Application has been upgraded',
 	),
 
 	'users' => array(

@@ -2,6 +2,7 @@
 
 use Laravel\Fluent, 
 	Orchestra\Core,
+	Orchestra\Extension,
 	Orchestra\Form,
 	Orchestra\Messages;
 

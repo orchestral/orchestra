@@ -31,7 +31,7 @@
 							{{ HTML::link(handles('orchestra::extensions/activate/'.$name), 'Activate', array('class' => 'btn btn-primary btn-mini')) }}
 						@else
 							{{ HTML::link(handles('orchestra::extensions/deactivate/'.$name), 'Deactivate', array('class' => 'btn btn-warning btn-mini')) }}
-							{{ HTML::link(handles('orchestra::extensions/upgrade/'.$name), 'Upgrade', array('class' => 'btn btn-primary btn-mini')) }}
+							{{ HTML::link(handles('orchestra::extensions/upgrade/'.$name), 'Upgrade', array('class' => 'btn btn-mini')) }}
 						@endif
 
 					</div>
@@ -40,7 +40,8 @@
 					<p>{{ $extension->description }}</p>
 
 					<span class="meta">
-						Version {{ $extension->version }} | By {{ HTML::link($extension->url ?: '#', $extension->author) }}
+						{{ __('orchestra::label.extension.version', array('version' => $extension->version )) }} | 
+						{{ __('orchestra::label.extension.author', array('author' => HTML::link($extension->url ?: '#', $extension->author))) }}
 					</span>
 				</td>
 			</tr>

@@ -152,7 +152,7 @@ if ( ! IoC::registered('task: orchestra.upgrader'))
 
 		try
 		{
-			// We need to resolve to output buffering Task Migrator will echo some 
+			// We need to resolve to output buffering Task Upgrader will echo some 
 			// output to terminal.
 			ob_start();
 

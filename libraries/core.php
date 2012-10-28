@@ -268,6 +268,10 @@ class Core
 				$menu->add('settings')
 					->title(__('orchestra::title.settings.list')->get())
 					->link(handles('orchestra::settings'));
+
+				$menu->add('settings', 'child_of:settings')
+					->title(__('orchestra::title.settings.upgrade')->get())
+					->link(handles('orchestra::settings/upgrade'));
 			}
 		});
 	}

@@ -163,7 +163,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 
 		$memory->put("extension_{$name}", $input);
 
-		$m->add('success', __("orchestra::response.extensions.configure", array('name' => $name)));
+		$m->add('success', __("orchestra::response.extensions.configure", compact('name')));
 
 		return Redirect::to(handles('orchestra::extensions'))
 			->with('message', $m->serialize());
@@ -182,7 +182,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 
 		Extension::publish($name);
 
-		$m = Messages::make('success', __('orchestra::response.extensions.upgrade'));
+		$m = Messages::make('success', __('orchestra::response.extensions.upgrade', compact('name')));
 
 		return Redirect::to(handles('orchestra::extensions'))
 				->with('message', $m->serialize());	
