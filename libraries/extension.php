@@ -159,16 +159,7 @@ class Extension
 
 			// we should also start the bundle
 			static::start($name, $active[$name]);
-
-			if (IoC::registered('task: orchestra.migrator'))
-			{
-				IoC::resolve('task: orchestra.migrator', array('migrate', $name));
-			}
-
-			if (IoC::registered('task: orchestra.publisher'))
-			{
-				IoC::resolve('task: orchestra.publisher', array($name));
-			}
+			static::publish($name);
 		}
 
 		$memory->put('extensions.active', $active);
@@ -219,6 +210,27 @@ class Extension
 		}
 
 		$memory->put('extensions.active', $active);
+	}
+	
+	/**
+	 * Publish migration and asset for an extension 
+	 * 
+	 * @static
+	 * @access public
+	 * @param  string $name
+	 * @return void
+	 */
+	public static function publish($name)
+	{
+		if (IoC::registered('task: orchestra.migrator'))
+		{
+			IoC::resolve('task: orchestra.migrator', array('migrate', $name));
+		}
+
+		if (IoC::registered('task: orchestra.publisher'))
+		{
+			IoC::resolve('task: orchestra.publisher', array($name));
+		}
 	}
 
 	/**
