@@ -77,13 +77,9 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 	 */
 	public function get_password()
 	{
-		$auth = Auth::user();
+		$user = Auth::user();
 
-		$data = array(
-			'user' => User::find($auth->id),
-		);
-
-		return View::make('orchestra::account.password', $data);
+		return View::make('orchestra::account.password', compact('user'));
 	}
 
 	/**
