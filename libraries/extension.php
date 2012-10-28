@@ -1,6 +1,6 @@
 <?php namespace Orchestra;
 
-use \Bundle, \IoC, FileSystemIterator as fIterator;
+use \Bundle, \Exception, \IoC, FileSystemIterator as fIterator;
 
 class Extension 
 {
