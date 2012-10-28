@@ -105,7 +105,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 			$handles = Extension::option($name, 'handles');
 
 			// We should only cater for custom URL handles for a route.
-			if ( ! is_null($handles))
+			if ( ! is_null($handles) and Extension::option($name, 'configurable') !== false)
 			{
 				$form->fieldset(function ($fieldset) use ($handles)
 				{
@@ -167,5 +167,24 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 
 		return Redirect::to(handles('orchestra::extensions'))
 			->with('message', $m->serialize());
+	}
+
+	/**
+	 * Upgrade an extension
+	 * 
+	 * @access public
+	 * @param  string   $name name of the extension
+	 * @return Response
+	 */
+	public function get_upgrade($name)
+	{
+		IoC::resolve('task: orchestra.upgrader', array(array($name)));
+
+		Extension::publish($name);
+
+		$m = Messages::make('success', __('orchestra::response.extensions.upgrade'));
+
+		return Redirect::to(handles('orchestra::extensions'))
+				->with('message', $m->serialize());	
 	}
 }

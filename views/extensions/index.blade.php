@@ -20,19 +20,21 @@
 			<tr>
 				<td>
 					<strong>
-						@if ( ! Orchestra\Extension::started($name))
+						@if ( ! ($started = Orchestra\Extension::started($name)))
 							{{ $extension->name }}
 						@else
 							{{ HTML::link(handles('orchestra::extensions/configure/'.$name), $extension->name) }}
 						@endif
 					</strong>
-					<span class="pull-right">
-						@if ( ! Orchestra\Extension::started($name))
+					<div class="pull-right btn-group">
+						@if ( ! $started)
 							{{ HTML::link(handles('orchestra::extensions/activate/'.$name), 'Activate', array('class' => 'btn btn-primary btn-mini')) }}
 						@else
 							{{ HTML::link(handles('orchestra::extensions/deactivate/'.$name), 'Deactivate', array('class' => 'btn btn-warning btn-mini')) }}
+							{{ HTML::link(handles('orchestra::extensions/upgrade/'.$name), 'Upgrade', array('class' => 'btn btn-primary btn-mini')) }}
 						@endif
-					</span>
+
+					</div>
 				</td>
 				<td>
 					<p>{{ $extension->description }}</p>
