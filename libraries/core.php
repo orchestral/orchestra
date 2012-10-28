@@ -72,16 +72,6 @@ class Core
 				throw new Exception('Installation is not completed');
 			}
 
-			if (is_null(static::$cached['memory']->get('site.theme.backend')))
-			{
-				static::$cached['memory']->put('site.theme.backend', 'default');
-			}
-
-			if (is_null(static::$cached['memory']->get('site.theme.frontend')))
-			{
-				static::$cached['memory']->put('site.theme.frontend', 'default');
-			}
-
 			// In event where we reach this point, we can consider no 
 			// exception has occur, we should be able to compile acl and menu 
 			// configuration
@@ -104,6 +94,29 @@ class Core
 
 			static::$cached['orchestra_menu']->add('install')->title('Install')->link(handles('orchestra::installer'));
 		}
+
+		// localize memory variable
+		$memory = static::$cached['memory'];
+
+		if (is_null($memory->get('site.theme.backend')))
+		{
+			$memory->put('site.theme.backend', 'default');
+		}
+
+		if (is_null($memory->get('site.theme.frontend')))
+		{
+			$memory->put('site.theme.frontend', 'default');
+		}
+
+		IoC::singleton('orchestra.theme: backend', function() use ($memory)
+		{
+			return new Theme($memory->get('site.theme.backend'));
+		});
+
+		IoC::singleton('orchestra.theme: frontend', function() use ($memory)
+		{
+			return new Theme($memory->get('site.theme.frontend'));
+		});
 
 		Event::fire('orchestra.started');
 
@@ -208,17 +221,6 @@ class Core
 		// localize the variable, and ensure it by references.
 		$menu   = Core::menu('orchestra');
 		$acl    = Core::acl();
-		$memory = Core::memory();
-
-		IoC::singleton('orchestra.theme: backend', function() use ($memory)
-		{
-			return new Theme($memory->get('site.theme.backend'));
-		});
-
-		IoC::singleton('orchestra.theme: frontend', function() use ($memory)
-		{
-			return new Theme($memory->get('site.theme.frontend'));
-		});
 
 		// Add basic menu.
 		$menu->add('home')

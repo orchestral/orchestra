@@ -46,8 +46,8 @@ class Theme
 	{
 		if (is_null($this->path))
 		{
-			$this->path = path('public').'bundles';
-			$this->url  = rtrim(URL::base(), '/').'/bundles';
+			$this->path = path('public').'themes';
+			$this->url  = rtrim(URL::base(), '/').'/themes';
 		} 
 
 		if (is_dir($this->path.DS.$name))
@@ -66,7 +66,7 @@ class Theme
 	 */
 	public function path($file = '')
 	{
-		return $this->parse($file, false);
+		return $this->parse($file);
 	}
 
 	/**
@@ -147,7 +147,7 @@ class Theme
 
 			$directory = $this->path.DS.$this->name.DS;
 
-			if ($use_bundle)
+			if ($use_bundle and $bundle !== DEFAULT_BUNDLE)
 			{
 				$directory .= 'bundles'.DS.$bundle.DS;
 			}

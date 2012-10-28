@@ -1,14 +1,17 @@
 <?php
 
+use Laravel\Request,
+    Laravel\Routing\Controller;
+
 abstract class Controller_TestCase extends PHPUnit_Framework_TestCase
 {
     public function call($destination, $parameters = array(), $method = 'GET')
     {
-        \Laravel\Request::foundation()->server->add(array(
+        Request::foundation()->server->add(array(
             'REQUEST_METHOD' => $method,
         ));
 
-        return \Laravel\Routing\Controller::call($destination, $parameters);
+        return Controller::call($destination, $parameters);
     }
 
     public function get($destination, $parameters = array())
@@ -20,14 +23,14 @@ abstract class Controller_TestCase extends PHPUnit_Framework_TestCase
     {
         $this->flush();
 
-        \Laravel\Request::foundation()->request->add($post_data);
+        Request::foundation()->request->add($post_data);
 
         return $this->call($destination, $parameters, 'POST');
     }
 
     private function flush()
     {
-        $request = \Laravel\Request::foundation()->request;
+        $request = Request::foundation()->request;
 
         foreach ($request->keys() as $key)
         {
