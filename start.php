@@ -127,6 +127,36 @@ if ( ! IoC::registered('task: orchestra.publisher'))
 
 /*
 |--------------------------------------------------------------------------
+| Orchestra IoC (Upgrader)
+|--------------------------------------------------------------------------
+|
+| Lets Orchestra run Laravel\CLI bundle upgrade actions. This is an
+| alias to `php artisan bundle:upgrade`
+ */
+if ( ! IoC::registered('task: orchestra.upgrader'))
+{
+	IoC::singleton('task: orchestra.upgrader', function($bundle)
+	{
+		$repository = IoC::resolve('bundle.repository');
+
+		$upgrader = new Laravel\CLI\Tasks\Bundle\Bundler($repository);
+
+		try
+		{
+			// We need to resolve to output buffering Task Migrator will echo some 
+			// output to terminal.
+			ob_start();
+
+			$publisher->upgrde($bundle);
+
+			ob_end_clean();
+		}
+		catch (Exception $e) {}
+	});
+}
+
+/*
+|--------------------------------------------------------------------------
 | Orchestra Mailer IoC
 |--------------------------------------------------------------------------
 |
