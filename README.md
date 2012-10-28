@@ -12,6 +12,7 @@ Installation with Laravel Artisan
 ### Bundle Registration
 
 	'orchestra' => array('auto' => true, 'handles' => 'orchestra'),
+	'hybrid',
 
 ### Publish Bundle Asset
 
