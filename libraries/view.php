@@ -1,11 +1,13 @@
 <?php namespace Orchestra;
 
 use \Session, 
+	\IoC,
 	Laravel\View as V;
 
 class View extends V
 {
-	public static $theme_target = 'defualt';
+	public static $theme = 'frontend';
+
 	/**
 	 * Create a new view instance.
 	 *
@@ -26,7 +28,7 @@ class View extends V
 	 */
 	public function __construct($view, $data = array())
 	{
-		$view       = IoC::resolve('theme.'.static::$theme_target)->parse($view);
+		$view       = IoC::resolve('orchestra.theme: '.static::$theme)->parse($view);
 		$this->view = $view;
 		$this->data = $data;
 

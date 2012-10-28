@@ -95,14 +95,12 @@ class Core
 			static::loader();
 			static::extensions();
 
-			IoC::singleton('theme.backend', function() {
-				return new Theme(static::$cached['memory']->get('site.theme.backend'));
-			});
-			IoC::singleton('theme.frontend', function() {
-				return new Theme(static::$cached['memory']->get('site.theme.frontend'));
-			});
+			
+			
+			/*
+			
 			//set view to backend by default
-			View::$theme_target = static::$cached['memory']->get('site.theme.backend');
+			View::$theme_target = static::$cached['memory']->get('site.theme.backend'); */
 		}
 		catch (Exception $e) 
 		{
@@ -215,8 +213,19 @@ class Core
 	protected static function loader()
 	{
 		// localize the variable, and ensure it by references.
-		$menu = Core::menu('orchestra');
-		$acl  = Core::acl();
+		$menu   = Core::menu('orchestra');
+		$acl    = Core::acl();
+		$memory = Core::memory();
+
+		IoC::singleton('orchestra.theme: backend', function() use ($memory)
+		{
+			return new Theme($memory->get('site.theme.backend'));
+		});
+
+		IoC::singleton('orchestra.theme: frontend', function() use ($memory)
+		{
+			return new Theme($memory->get('site.theme.frontend'));
+		});
 
 		// Add basic menu.
 		$menu->add('home')

@@ -51,6 +51,11 @@ Event::listen('laravel.done', function ()
 	Orchestra\Core::done();
 });
 
+Event::listen('orchestra.started: backend', function ()
+{
+	Orchestra\View::$theme = 'backend';
+});
+
 /*
 |--------------------------------------------------------------------------
 | Orchestra IoC (Migration)
