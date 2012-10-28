@@ -11,8 +11,8 @@
 	<table class="table table-bordered table-stripped">
 		<thead>
 			<tr>
-				<th>Extension</th>
-				<th>Description</th>
+				<th>{{ __('orchestra::label.extensions.name') }}</th>
+				<th>{{ __('orchestra::label.description') }}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -28,10 +28,10 @@
 					</strong>
 					<div class="pull-right btn-group">
 						@if ( ! $started)
-							{{ HTML::link(handles('orchestra::extensions/activate/'.$name), 'Activate', array('class' => 'btn btn-primary btn-mini')) }}
+							{{ HTML::link(handles('orchestra::extensions/activate/'.$name), __('orchestra::label.extensions.actions.activate'), array('class' => 'btn btn-primary btn-mini')) }}
 						@else
-							{{ HTML::link(handles('orchestra::extensions/deactivate/'.$name), 'Deactivate', array('class' => 'btn btn-warning btn-mini')) }}
-							{{ HTML::link(handles('orchestra::extensions/upgrade/'.$name), 'Upgrade', array('class' => 'btn btn-mini')) }}
+							{{ HTML::link(handles('orchestra::extensions/deactivate/'.$name), __('orchestra::label.extensions.actions.deactivate'), array('class' => 'btn btn-warning btn-mini')) }}
+							{{ HTML::link(handles('orchestra::extensions/upgrade/'.$name), __('orchestra::label.extensions.actions.upgrade'), array('class' => 'btn btn-mini')) }}
 						@endif
 
 					</div>
@@ -40,8 +40,8 @@
 					<p>{{ $extension->description }}</p>
 
 					<span class="meta">
-						{{ __('orchestra::label.extension.version', array('version' => $extension->version )) }} | 
-						{{ __('orchestra::label.extension.author', array('author' => HTML::link($extension->url ?: '#', $extension->author))) }}
+						{{ __('orchestra::label.extensions.version', array('version' => $extension->version )) }} | 
+						{{ __('orchestra::label.extensions.author', array('author' => HTML::link($extension->url ?: '#', $extension->author))) }}
 					</span>
 				</td>
 			</tr>

@@ -7,6 +7,20 @@ return array(
 		'confirm_password' => 'Confirm Password',
 	),
 
+	'description' => 'Description',
+
+	'extensions' => array(
+		'name'    => 'Extension',
+		'author'  => 'By :author',
+		'version' => 'Version :version',
+
+		'actions' => array(
+			'activate'   => 'Activate',
+			'deactivate' => 'Deactivate',
+			'upgrade'    => 'Upgrade',
+		),
+	),
+
 	'no-data'      => 'No data at the moment',
 	'no-extension' => 'No extension available at the moment',
 	
@@ -14,6 +28,7 @@ return array(
 		'button'  => 'Search',
 		'keyword' => 'Search keyword...',
 	),
+
 	'site_name' => 'Application Name',
 	
 	'users' => array(

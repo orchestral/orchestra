@@ -7,6 +7,20 @@ return array(
 		'confirm_password' => 'Подтвердите ввод',
 	),
 
+	'description' => 'Description',
+
+	'extensions' => array(
+		'name'    => 'Extension',
+		'author'  => 'By :author',
+		'version' => 'Version :version',
+
+		'actions' => array(
+			'activate'   => 'Activate',
+			'deactivate' => 'Deactivate',
+			'upgrade'    => 'Upgrade',
+		),
+	),
+
 	'no-data'      => 'Нет данных на текущий момент',
 	'no-extension' => 'Нет доступных расширений',
 	
