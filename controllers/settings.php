@@ -143,7 +143,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 		
 		Extension::publish('orchestra');
 
-		$m = Messages::make('success', __('orchestra::response.setting.upgrade'));
+		$m = Messages::make('success', __('orchestra::response.settings.upgrade'));
 
 		return Redirect::to(handles('orchestra::settings'))
 				->with('message', $m->serialize());	
