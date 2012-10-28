@@ -94,13 +94,6 @@ class Core
 
 			static::loader();
 			static::extensions();
-
-			
-			
-			/*
-			
-			//set view to backend by default
-			View::$theme_target = static::$cached['memory']->get('site.theme.backend'); */
 		}
 		catch (Exception $e) 
 		{
