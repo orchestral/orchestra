@@ -72,9 +72,14 @@ class Core
 				throw new Exception('Installation is not completed');
 			}
 
-			if (is_null(static::$cached['memory']->get('site.theme')))
+			if (is_null(static::$cached['memory']->get('site.theme.backend')))
 			{
-				static::$cached['memory']->put('site.theme', 'default');
+				static::$cached['memory']->put('site.theme.backend', 'default');
+			}
+
+			if (is_null(static::$cached['memory']->get('site.theme.frontend')))
+			{
+				static::$cached['memory']->put('site.theme.frontend', 'default');
 			}
 
 			// In event where we reach this point, we can consider no 
@@ -90,7 +95,14 @@ class Core
 			static::loader();
 			static::extensions();
 
-			Theme::start(static::$cached['memory']->get('site.theme'));
+			IoC::singleton('theme.backend', function() {
+				return new Theme(static::$cached['memory']->get('site.theme.backend'));
+			});
+			IoC::singleton('theme.frontend', function() {
+				return new Theme(static::$cached['memory']->get('site.theme.frontend'));
+			});
+			//set view to backend by default
+			View::$theme_target = static::$cached['memory']->get('site.theme.backend');
 		}
 		catch (Exception $e) 
 		{

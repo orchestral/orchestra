@@ -9,7 +9,7 @@ class Theme
 	 * 
 	 * @var string
 	 */
-	protected static $name = null;
+	protected $name = null;
 
 	/**
 	 * Themes aliases, allowing similar view to be mapped without having to duplicate the 
@@ -17,21 +17,21 @@ class Theme
 	 *
 	 * @var array 
 	 */
-	protected static $aliases = array();
+	protected $aliases = array();
 
 	/**
 	 * Filesystem path of Theme
 	 *  
 	 * @var string
 	 */
-	protected static $path = null;
+	protected $path = null;
 
 	/**
 	 * URL path of Theme
 	 * 
 	 * @var string
 	 */
-	protected static $url  = null;
+	protected $url  = null;
 
 	/**
 	 * Start Theme Engine, this should be called from Orchestra\Core::start() or whenever we need to 
@@ -42,17 +42,17 @@ class Theme
 	 * @param  string   $name
 	 * @return void
 	 */
-	public static function start($name = 'default')
+	public function __construct($name = 'default')
 	{
-		if (is_null(static::$path))
+		if (is_null($this->path))
 		{
-			static::$path = path('public').'themes';
-			static::$url  = rtrim(URL::base(), '/').'/themes';
+			$this->path = path('public').'bundles';
+			$this->url  = rtrim(URL::base(), '/').'/bundles';
 		} 
 
-		if (is_dir(static::$path.DS.$name))
+		if (is_dir($this->path.DS.$name))
 		{
-			static::$name = $name;
+			$this->name = $name;
 		}
 	}
 
@@ -64,9 +64,9 @@ class Theme
 	 * @param  string   $file
 	 * @return string
 	 */
-	public static function path($file = '')
+	public function path($file = '')
 	{
-		return static::parse($file, false);
+		return $this->parse($file, false);
 	}
 
 	/**
@@ -77,9 +77,9 @@ class Theme
 	 * @param  string   $url
 	 * @return string
 	 */
-	public static function to($url = '')
+	public function to($url = '')
 	{
-		return static::$url.'/'.static::$name.'/'.$url;
+		return $this->url.'/'.$this->name.'/'.$url;
 	}
 
 	/**
@@ -87,7 +87,7 @@ class Theme
 	 * without make multiple file.
 	 *
 	 * <code>
-	 *     Orchestra\Theme::map(array(
+	 *     $theme->map(array(
 	 *         'bundle::view.page'   => 'bundle2::view.page',
 	 *         'bundle::view.header' => 'path: /path/to/view.blade.php',
 	 *     ));
@@ -98,13 +98,13 @@ class Theme
 	 * @param  array    $aliases
 	 * @return void         
 	 */
-	public static function map($aliases)
+	public function map($aliases)
 	{
 		foreach ((array) $aliases as $alias => $file)
 		{
 			if ( ! is_numeric($alias))
 			{
-				static::$aliases[$alias] = static::parse($file);
+				$this->aliases[$alias] = $this->parse($file);
 			}
 		}
 	}
@@ -117,16 +117,16 @@ class Theme
 	 * @param  string   $file
 	 * @return string
 	 */
-	public static function parse($file, $use_bundle = true)
+	public function parse($file, $use_bundle = true)
 	{
 		// Return the file if it's already using full path to 
 		// avoid recursive request.
 		if (starts_with('path: ', $file)) return $file;
 
 		// Check theme aliases if we already have registered aliases
-		if (isset(static::$aliases[$file])) return static::$aliases[$file];
+		if (isset($this->aliases[$file])) return static::$aliases[$file];
 
-		if ( ! is_null(static::$name)) 
+		if ( ! is_null($this->name)) 
 		{
 			if (strpos($file, '::') !== false)
 			{
@@ -145,7 +145,7 @@ class Theme
 				$bundle = DEFAULT_BUNDLE;
 			}
 
-			$directory = static::$path.DS.static::$name.DS;
+			$directory = $this->path.DS.$this->name.DS;
 
 			if ($use_bundle)
 			{

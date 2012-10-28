@@ -5,6 +5,7 @@ use \Session,
 
 class View extends V
 {
+	public static $theme_target = 'defualt';
 	/**
 	 * Create a new view instance.
 	 *
@@ -25,7 +26,7 @@ class View extends V
 	 */
 	public function __construct($view, $data = array())
 	{
-		$view       = Theme::parse($view);
+		$view       = IoC::resolve('theme.'.static::$theme_target)->parse($view);
 		$this->view = $view;
 		$this->data = $data;
 

@@ -152,7 +152,8 @@ class Runner
 
 			// Save the default application site_name.
 			$memory->put('site.name', Input::get('site_name', 'Orchestra'));
-			$memory->put('site.theme', 'default');
+			$memory->put('site.theme.backend', 'default');
+			$memory->put('site.theme.frontend', 'default');
 			$memory->put('email', Config::get('orchestra::email'));
 			$memory->put('email.from', $input['email']);
 

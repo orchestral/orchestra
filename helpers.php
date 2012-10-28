@@ -6,12 +6,13 @@ if ( ! function_exists('theme_path'))
 	 * Return theme path
 	 *
 	 * @see    Orchestra\Theme::path()
+	 * @param  string $target Frontend or Backend
 	 * @param  string $view
 	 * @return string
 	 */
-	function theme_path($view)
+	function theme_path($target, $view)
 	{
-		return Orchestra\Theme::path($view);
+		return IoC::resolve('theme.'.$target)->path($view);
 	}
 }
 
