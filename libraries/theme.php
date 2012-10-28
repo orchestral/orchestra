@@ -1,6 +1,6 @@
 <?php namespace Orchestra;
 
-use \Bundle, \URL;
+use \Bundle, \IoC, \URL;
 
 class Theme
 {
@@ -32,6 +32,18 @@ class Theme
 	 * @var string
 	 */
 	protected $url  = null;
+
+	/**
+	 * Shorthand to resolve current active Theme.
+	 *
+	 * @static
+	 * @access public
+	 * @return self
+	 */
+	public static function resolve()
+	{
+		return IoC::resolve('orchestra.theme: '.View::$theme);
+	}
 
 	/**
 	 * Start Theme Engine, this should be called from Orchestra\Core::start() or whenever we need to 
