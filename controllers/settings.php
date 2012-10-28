@@ -141,7 +141,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 		IoC::resolve('task: orchestra.upgrader', array(array()));
 		
 		$m = Messages::make('success', __('orchestra::response.setting.upgrade'));
-		
+
 		return Redirect::to(handles('orchestra::settings'))
 				->with('message', $m->serialize());	
 	}
