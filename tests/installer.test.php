@@ -47,4 +47,14 @@ class TestInstaller extends PHPUnit_Framework_TestCase
 	{
 		$this->assertTrue(Orchestra\Installer::check_database());
 	}
+
+	/**
+	 * Test Installation
+	 *
+	 * @test
+	 */
+	public function testInstallation()
+	{
+		require_once "utils/setup.php";
+	}
 }
