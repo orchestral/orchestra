@@ -79,7 +79,7 @@ class Orchestra_Installer_Controller extends Controller
 	public function action_steps($step)
 	{
 		$data = array(
-			'site_name' => 'Orchestra Website',
+			'site_name' => 'Orchestra',
 		);
 
 		switch (intval($step))

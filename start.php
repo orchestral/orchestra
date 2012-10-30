@@ -19,19 +19,14 @@ Autoloader::map(array(
 
 /*
 |--------------------------------------------------------------------------
-| Load dependencies
+| Orchestra Dependencies
 |--------------------------------------------------------------------------
 |
-| Register and start Hybrid bundle if it's not registered in 
-| application/bundles.php
+| Add Orchestra helpers function and dependencies
 */
 
-if ( ! Bundle::exists('hybrid'))
-{
-	Bundle::register('hybrid');
-}
-
-Bundle::start('hybrid');
+include_once Bundle::path('orchestra').'helpers'.EXT;
+include_once Bundle::path('orchestra').'includes'.DS.'dependencies'.EXT;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,21 +43,10 @@ Event::listen('laravel.started: orchestra', function ()
 
 Event::listen('laravel.done', function () 
 {
-	Orchestra\Core::done();
+	Orchestra\Core::shutdown();
 });
 
 Event::listen('orchestra.started: backend', function ()
 {
 	Orchestra\View::$theme = 'backend';
 });
-
-/*
-|--------------------------------------------------------------------------
-| Orchestra Dependencies
-|--------------------------------------------------------------------------
-|
-| Add Orchestra helpers function and dependencies
-*/
-
-include_once Bundle::path('orchestra').'helpers'.EXT;
-include_once Bundle::path('orchestra').'includes'.DS.'dependencies'.EXT;

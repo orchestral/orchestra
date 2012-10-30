@@ -24,7 +24,7 @@ class Core
 	protected static $cached = array();
 
 	/**
-	 * Start Orchestra\Core
+	 * Start Orchestra
 	 *
 	 * @static
 	 * @access public
@@ -120,16 +120,16 @@ class Core
 	}
 
 	/**
-	 * Stop Orchestra\Core
+	 * Shutdown Orchestra
 	 *
 	 * @static
 	 * @access public
 	 * @return void
 	 */
-	public static function done()
+	public static function shutdown()
 	{	
 		static::$initiated = false;
-		static::$cached = array();
+		static::$cached    = array();
 
 		// Only do this on installed application
 		if (false === Installer::$status) return;

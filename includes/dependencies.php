@@ -2,6 +2,22 @@
 
 /*
 |--------------------------------------------------------------------------
+| Load dependencies
+|--------------------------------------------------------------------------
+|
+| Register and start Hybrid bundle if it's not registered in 
+| application/bundles.php
+*/
+
+if ( ! Bundle::exists('hybrid'))
+{
+	Bundle::register('hybrid');
+}
+
+Bundle::start('hybrid');
+
+/*
+|--------------------------------------------------------------------------
 | Orchestra IoC (Migration)
 |--------------------------------------------------------------------------
 |
@@ -156,7 +172,7 @@ if ( ! IoC::registered('orchestra.mailer'))
 
 if ( ! IoC::registered('orchestra.memory'))
 {
-	IoC::register('orchestra.memory', function ()
+	IoC::singleton('orchestra.memory', function ()
 	{
 		return Hybrid\Memory::make('fluent.orchestra_options');
 	});

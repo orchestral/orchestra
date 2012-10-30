@@ -105,9 +105,10 @@ class Runner
 		{
 			// Grab input fields and define the rules for user validations.
 			$rules = array(
-				'email'    => array('required', 'email'),
-				'password' => array('required'),
-				'fullname' => array('required'),
+				'email'     => array('required', 'email'),
+				'password'  => array('required'),
+				'fullname'  => array('required'),
+				'site_name' => array('required'),
 			);
 
 			$v = Validator::make($input, $rules);
@@ -150,7 +151,7 @@ class Runner
 			$memory = IoC::resolve('orchestra.memory');
 
 			// Save the default application site_name.
-			$memory->put('site.name', Input::get('site_name', 'Orchestra'));
+			$memory->put('site.name', $input['site_name']);
 			$memory->put('site.theme.backend', 'default');
 			$memory->put('site.theme.frontend', 'default');
 			$memory->put('email', Config::get('orchestra::email'));
