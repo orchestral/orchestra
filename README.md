@@ -1,7 +1,11 @@
 Orchestra Platform Bundle for Laravel
 ==============
 
-Provide a solid base off of which to build your new web applications. It's not a CMS. Instead, it's a springboard to build off of with many of the tools you wish you had on projects but never took the time to build. Orchestra is what Bonfire is for CodeIgniter.
+Provide a solid base off of which to build your new web applications. It's not a CMS. 
+Instead, it's a springboard to build off of with many of the tools you wish you had on 
+projects but never took the time to build. Orchestra is what Bonfire is for CodeIgniter.
+
+[![Build Status](https://secure.travis-ci.org/orchestral/orchestra.png)](http://travis-ci.org/orchestral/orchestra)
 
 ## Installation
 
