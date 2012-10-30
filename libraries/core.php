@@ -97,25 +97,21 @@ class Core
 
 		// localize memory variable
 		$memory = static::$cached['memory'];
-
-		if (is_null($memory->get('site.theme.backend')))
-		{
-			$memory->put('site.theme.backend', 'default');
-		}
-
-		if (is_null($memory->get('site.theme.frontend')))
-		{
-			$memory->put('site.theme.frontend', 'default');
-		}
-
+		
 		IoC::singleton('orchestra.theme: backend', function() use ($memory)
 		{
-			return new Theme($memory->get('site.theme.backend'));
+			return new Theme($memory->get('site.theme.backend', function () use ($memory)
+			{
+				return $memory->put('site.theme.backend', 'default');
+			}));
 		});
 
 		IoC::singleton('orchestra.theme: frontend', function() use ($memory)
 		{
-			return new Theme($memory->get('site.theme.frontend'));
+			return new Theme($memory->get('site.theme.frontend', function () use ($memory)
+			{
+				return $memory->put('site.theme.frontend', 'default');
+			}));
 		});
 
 		Event::fire('orchestra.started');
