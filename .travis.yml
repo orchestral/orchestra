@@ -1,5 +1,7 @@
 language: php
 
+services: sqlite3
+
 php:
   - "5.4"
   - "5.3"
