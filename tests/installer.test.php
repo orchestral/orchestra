@@ -33,9 +33,19 @@ class TestInstaller extends PHPUnit_Framework_TestCase
 	 */
 	public function testCheckDatabase()
 	{
+		Config::set('database.default', 'sqlite');
+		Config::set('database.connections.sqlite', array(
+			'driver'   => 'sqlite',
+			'database' => 'application',
+			'prefix'   => '',
+		));
+		
 		$this->assertTrue(Orchestra\Installer::check_database());
 	}
 
+	/**
+	 * Teardown
+	 */
 	public function tearDown()
 	{
 		Orchestra\Installer::$status = false;

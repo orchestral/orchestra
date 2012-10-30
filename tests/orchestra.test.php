@@ -44,6 +44,9 @@ class TestOrchestra extends PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('Hybrid\Acl', $acl);
 	}
 
+	/**
+	 * Teardown
+	 */
 	public function tearDown()
 	{
 		File::delete(path('storage').'database'.DS.'application.sqlite');
