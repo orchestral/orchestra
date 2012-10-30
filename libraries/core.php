@@ -132,6 +132,9 @@ class Core
 	 */
 	public static function done()
 	{	
+		static::$initiated = false;
+		static::$cached = array();
+
 		// Only do this on installed application
 		if (false === Installer::$status) return;
 	}

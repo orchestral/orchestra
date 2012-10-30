@@ -5,23 +5,31 @@ class TestInstaller extends PHPUnit_Framework_TestCase
 	/**
 	 * Setup the test
 	 */
-	public function setup()
+	public function setUp()
 	{
-		Bundle::start('orchestra');
+		\Laravel\Session::load();
 
-		Orchestra\Installer::$status = false;
-
-		Config::set('database', array(
-			'default' => 'memory',
-			'connections' => array(
-				'memory' => array(
-					'driver'   => 'sqlite',
-					'database' => ':memory:',
-					'prefix'   => '',
-				),
-			),
+		Config::set('database.default', 'memory');
+		Config::set('database.connections.memory', array(
+			'driver'   => 'sqlite',
+			'database' => ':memory:',
+			'prefix'   => '',
 		));
 
+		Laravel\Database::$connections = array();
+		Laravel\Database::connection(null);
+		
+		Bundle::start('orchestra');
+	}
+
+	/**
+	 * Test Installation
+	 *
+	 * @test
+	 */
+	public function testInstallation()
+	{
+		/* require_once "utils/setup.php"; */
 	}
 
 	/**
@@ -31,6 +39,8 @@ class TestInstaller extends PHPUnit_Framework_TestCase
 	 */
 	public function testStatus()
 	{
+		Orchestra\Installer::$status = false;
+
 		$this->assertFalse(Orchestra\Installer::installed());
 
 		Orchestra\Installer::$status = true;
@@ -46,15 +56,5 @@ class TestInstaller extends PHPUnit_Framework_TestCase
 	public function testCheckDatabase()
 	{
 		$this->assertTrue(Orchestra\Installer::check_database());
-	}
-
-	/**
-	 * Test Installation
-	 *
-	 * @test
-	 */
-	public function testInstallation()
-	{
-		require_once "utils/setup.php";
 	}
 }

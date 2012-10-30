@@ -28,7 +28,7 @@ abstract class Controller_Runner
 		return static::call($destination, $parameters, 'POST');
 	}
 
-	private static function flush()
+	public static function flush()
 	{
 		$request = Request::foundation()->request;
 

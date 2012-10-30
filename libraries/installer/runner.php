@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Installer;
 
 use \Bundle, \Config, \DB, \Event, \Exception, \Hash, \Input, \IoC, 
-	\Schema, \Session, \Str, \Validator, 
+	\Request, \Schema, \Session, \Str, \Validator, 
 	Orchestra\Installer as Installer,
 	Orchestra\Messages,
 	Orchestra\Model\User,
@@ -95,16 +95,15 @@ class Runner
 	 * @access public
 	 * @return bool
 	 */
-	public static function create_user()
+	public static function create_user($input)
 	{
-		if ( ! $_POST or Installer::installed()) return true;
+		if ('POST' !== Request::method() or Installer::installed()) return true;
 
 		static::initiate();
 
 		try 
 		{
 			// Grab input fields and define the rules for user validations.
-			$input = Input::all();
 			$rules = array(
 				'email'    => array('required', 'email'),
 				'password' => array('required'),

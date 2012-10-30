@@ -98,7 +98,7 @@ class Orchestra_Installer_Controller extends Controller
 
 				// Step 2 involve creating administation user account for 
 				// current application.
-				if (Runner::create_user())
+				if (Runner::create_user(Input::all()))
 				{
 					return View::make('orchestra::installer.step2', $data);
 				}
