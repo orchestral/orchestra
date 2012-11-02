@@ -5,33 +5,11 @@ use \Bundle, \IoC, \URL;
 class Theme
 {
 	/**
-	 * Active theme folder name
-	 * 
-	 * @var string
-	 */
-	protected $name = null;
-
-	/**
-	 * Themes aliases, allowing similar view to be mapped without having to duplicate the 
-	 * physical file.
+	 * All of the instantiated theme containers.
 	 *
-	 * @var array 
+	 * @var array
 	 */
-	protected $aliases = array();
-
-	/**
-	 * Filesystem path of Theme
-	 *  
-	 * @var string
-	 */
-	protected $path = null;
-
-	/**
-	 * URL path of Theme
-	 * 
-	 * @var string
-	 */
-	protected $url  = null;
+	public static $containers = array();
 
 	/**
 	 * Shorthand to resolve current active Theme.
@@ -46,139 +24,41 @@ class Theme
 	}
 
 	/**
-	 * Start Theme Engine, this should be called from Orchestra\Core::start() or whenever we need to 
-	 * overwrite current active theme per request.
-	 *
-	 * @static
-	 * @access public
-	 * @param  string   $name
-	 * @return void
-	 */
-	public function __construct($name = 'default')
-	{
-		if (is_null($this->path))
-		{
-			$this->path = path('public').'themes';
-			$this->url  = rtrim(URL::base(), '/').'/themes';
-		} 
-
-		if (is_dir($this->path.DS.$name))
-		{
-			$this->name = $name;
-		}
-	}
-
-	/**
-	 * Path helper for Theme
-	 *
-	 * @static
-	 * @access public
-	 * @param  string   $file
-	 * @return string
-	 */
-	public function path($file = '')
-	{
-		return $this->parse($file);
-	}
-
-	/**
-	 * URL helper for Theme
-	 *
-	 * @static
-	 * @access public
-	 * @param  string   $url
-	 * @return string
-	 */
-	public function to($url = '')
-	{
-		return $this->url.'/'.$this->name.'/'.$url;
-	}
-
-	/**
-	 * Map theme aliases, to allow a similar views to be map together
-	 * without make multiple file.
+	 * Get an theme container instance.
 	 *
 	 * <code>
-	 *     $theme->map(array(
-	 *         'bundle::view.page'   => 'bundle2::view.page',
-	 *         'bundle::view.header' => 'path: /path/to/view.blade.php',
-	 *     ));
+	 *		// Get the default asset container
+	 *		$container = Orchestra\Theme::container();
+	 *
+	 *		// Get a named asset container
+	 *		$container = Orchestra\Theme::container('footer');
 	 * </code>
 	 *
-	 * @static
-	 * @access public	
-	 * @param  array    $aliases
-	 * @return void         
+	 * @param  string            $container
+	 * @return Theme\Container
 	 */
-	public function map($aliases)
+	public static function container($container = 'frontend', $name = 'default')
 	{
-		foreach ((array) $aliases as $alias => $file)
+		if ( ! isset(static::$containers[$container]))
 		{
-			if ( ! is_numeric($alias))
-			{
-				$this->aliases[$alias] = $this->parse($file);
-			}
+			static::$containers[$container] = new Theme\Container($name);
 		}
+
+		return static::$containers[$container];
 	}
-
+	
 	/**
-	 * Parse normal View to use Theme
+	 * Magic Method for calling methods on the default container.
 	 *
-	 * @static
-	 * @access public
-	 * @param  string   $file
-	 * @return string
+	 * <code>
+	 *		// Call the "path" method on the default container
+	 *		echo Theme::map(array(
+	 *			'orchestra::layout.main' => 'backend::layout.main',
+	 *		));
+	 * </code>
 	 */
-	public function parse($file, $use_bundle = true)
+	public static function __callStatic($method, $parameters)
 	{
-		// Return the file if it's already using full path to 
-		// avoid recursive request.
-		if (starts_with('path: ', $file)) return $file;
-
-		// Check theme aliases if we already have registered aliases
-		if (isset($this->aliases[$file])) return static::$aliases[$file];
-
-		if ( ! is_null($this->name)) 
-		{
-			if (strpos($file, '::') !== false)
-			{
-				list($bundle, $view) = Bundle::parse($file);
-			}
-			else 
-			{
-				$bundle = null;
-				$view   = $file;
-			}
-
-			// In situation where bundle is not registered, it best to assume 
-			// that we are handle "application" routing
-			if ( ! Bundle::exists($bundle))
-			{
-				$bundle = DEFAULT_BUNDLE;
-			}
-
-			$directory = $this->path.DS.$this->name.DS;
-
-			if ($use_bundle and $bundle !== DEFAULT_BUNDLE)
-			{
-				$directory .= 'bundles'.DS.$bundle.DS;
-			}
-
-			$view = str_replace('.', '/', $view);
-
-			// Views may have either the default PHP file extension or the "Blade"
-			// extension, so we will need to check for both in the view path
-			// and return the first one we find for the given view.
-			if (file_exists($path = $directory.$view.EXT))
-			{
-				return 'path: '.$path;
-			}
-			elseif (file_exists($path = $directory.$view.BLADE_EXT))
-			{
-				return 'path: '.$path;
-			}
-		}
-
-		return $file;
+		return call_user_func_array(array(static::container(), $method), $parameters);
 	}
 }

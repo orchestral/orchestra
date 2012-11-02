@@ -100,7 +100,7 @@ class Core
 		
 		IoC::singleton('orchestra.theme: backend', function() use ($memory)
 		{
-			return new Theme($memory->get('site.theme.backend', function () use ($memory)
+			return Theme::container('backend', $memory->get('site.theme.backend', function () use ($memory)
 			{
 				return $memory->put('site.theme.backend', 'default');
 			}));
@@ -108,7 +108,7 @@ class Core
 
 		IoC::singleton('orchestra.theme: frontend', function() use ($memory)
 		{
-			return new Theme($memory->get('site.theme.frontend', function () use ($memory)
+			return Theme::container('frontend', $memory->get('site.theme.frontend', function () use ($memory)
 			{
 				return $memory->put('site.theme.frontend', 'default');
 			}));
