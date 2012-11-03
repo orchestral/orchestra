@@ -31,11 +31,8 @@ class Extension
 		if ( ! is_string($name)) return;
 
 		// Register extension and auto start it only if it's not registered
-		if ( ! Bundle::exists($name))
-		{
-			Bundle::register($name, $config);
-			Bundle::start($name);
-		}
+		Bundle::register($name, $config);
+		Bundle::start($name);
 
 		// by now, extension should already exist as an extension. We should
 		// be able start orchestra.php starter file on each bundles.
