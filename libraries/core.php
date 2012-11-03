@@ -270,7 +270,7 @@ class Core
 					->link(handles('orchestra::settings'));
 
 
-				if ($memory->get('site.auto_upgrade', false))
+				if ($memory->get('site.web_upgrade', false))
 				{
 					$menu->add('settings', 'child_of:settings')
 						->title(__('orchestra::title.settings.upgrade')->get())

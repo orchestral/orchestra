@@ -39,7 +39,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 		$settings = new Fluent(array(
 			'site_name'              => $memory->get('site.name', ''),
 			'site_description'       => $memory->get('site.description', ''),
-			'site_auto_upgrade'      => ( ! $memory->get('site.auto_upgrade', false) ? 'no' : 'yes'),
+			'site_web_upgrade'      => ( ! $memory->get('site.web_upgrade', false) ? 'no' : 'yes'),
 			
 			'email_default'          => $memory->get('email.default', ''),
 			'email_smtp_host'        => $memory->get('email.transports.smtp.host', ''),
@@ -66,9 +66,9 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 					$control->name = 'site_description';
 					$control->attr = array('rows' => 3);
 				});
-				$fieldset->control('select', 'Auto Upgrade', function ($control)
+				$fieldset->control('select', 'Web Upgrade', function ($control)
 				{
-					$control->name = 'site_auto_upgrade';
+					$control->name = 'site_web_upgrade';
 					$control->options = array(
 						'yes' => 'Yes',
 						'no'  => 'No',
@@ -132,7 +132,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 
 		$memory->put('site.name', $input['site_name']);
 		$memory->put('site.description', $input['site_description']);
-		$memory->put('site.auto_upgrade', ($input['site_auto_upgrade'] === 'yes' ? true : false));
+		$memory->put('site.web_upgrade', ($input['site_web_upgrade'] === 'yes' ? true : false));
 		$memory->put('email.default', $input['email_default']);
 		$memory->put('email.transports.smtp.host', $input['email_smtp_host']);
 		$memory->put('email.transports.smtp.port', $input['email_smtp_port']);
@@ -154,7 +154,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 		$memory = Core::memory();
 		$m      = new Messages;
 
-		if ( ! $memory->get('orchestra.auto_upgrade', false))
+		if ( ! $memory->get('orchestra.web_upgrade', false))
 		{
 			return Response::error('404');
 		}
