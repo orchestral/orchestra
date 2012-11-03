@@ -39,6 +39,8 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 		$settings = new Fluent(array(
 			'site_name'              => $memory->get('site.name', ''),
 			'site_description'       => $memory->get('site.description', ''),
+			'site_auto_upgrade'      => ( ! $memory->get('site.auto_upgrade', false) ? 'no' : 'yes'),
+			
 			'email_default'          => $memory->get('email.default', ''),
 			'email_smtp_host'        => $memory->get('email.transports.smtp.host', ''),
 			'email_smtp_port'        => $memory->get('email.transports.smtp.port', ''),
@@ -59,9 +61,18 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 			$form->fieldset(function ($fieldset)
 			{
 				$fieldset->control('input:text', 'Site Name', 'site_name');
-				$fieldset->control('textarea', 'Site Description', function ($control) {
+				$fieldset->control('textarea', 'Site Description', function ($control) 
+				{
 					$control->name = 'site_description';
 					$control->attr = array('rows' => 3);
+				});
+				$fieldset->control('select', 'Auto Upgrade', function ($control)
+				{
+					$control->name = 'site_auto_upgrade';
+					$control->options = array(
+						'yes' => 'Yes',
+						'no'  => 'No',
+					);
 				});
 			});
 
@@ -121,6 +132,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 
 		$memory->put('site.name', $input['site_name']);
 		$memory->put('site.description', $input['site_description']);
+		$memory->put('site.auto_upgrade', ($input['site_auto_upgrade'] === 'yes' ? true : false));
 		$memory->put('email.default', $input['email_default']);
 		$memory->put('email.transports.smtp.host', $input['email_smtp_host']);
 		$memory->put('email.transports.smtp.port', $input['email_smtp_port']);
@@ -139,11 +151,19 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 
 	public function get_upgrade()
 	{
-		IoC::resolve('task: orchestra.upgrader', array(array()));
+		$memory = Core::memory();
+		$m      = new Messages;
+
+		if ( ! $memory->get('orchestra.auto_upgrade', false))
+		{
+			return Response::error('404');
+		}
+
+		IoC::resolve('task: orchestra.upgrader', array(array('orchestra', 'hybrid', 'messages')));
 		
 		Extension::publish('orchestra');
 
-		$m = Messages::make('success', __('orchestra::response.settings.upgrade'));
+		$m->add('success', __('orchestra::response.settings.upgrade'));
 
 		return Redirect::to(handles('orchestra::settings'))
 				->with('message', $m->serialize());	

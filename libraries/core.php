@@ -218,8 +218,9 @@ class Core
 	protected static function loader()
 	{
 		// localize the variable, and ensure it by references.
-		$menu   = Core::menu('orchestra');
-		$acl    = Core::acl();
+		$menu   = static::menu('orchestra');
+		$acl    = static::acl();
+		$memory = static::memory();
 
 		// Add basic menu.
 		$menu->add('home')
@@ -227,7 +228,7 @@ class Core
 			->link(handles('orchestra'));
 
 		// Multiple event listener for Backend (administrator panel)
-		Event::listen('orchestra.started: backend', function () use ($menu, $acl)
+		Event::listen('orchestra.started: backend', function () use ($menu, $acl, $memory)
 		{
 			// Add menu when user can manage users
 			if ($acl->can('manage-users'))
@@ -268,9 +269,13 @@ class Core
 					->title(__('orchestra::title.settings.list')->get())
 					->link(handles('orchestra::settings'));
 
-				$menu->add('settings', 'child_of:settings')
-					->title(__('orchestra::title.settings.upgrade')->get())
-					->link(handles('orchestra::settings/upgrade'));
+
+				if ($memory->get('site.auto_upgrade', false))
+				{
+					$menu->add('settings', 'child_of:settings')
+						->title(__('orchestra::title.settings.upgrade')->get())
+						->link(handles('orchestra::settings/upgrade'));
+				}
 			}
 		});
 	}
