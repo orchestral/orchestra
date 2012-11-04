@@ -6,7 +6,7 @@ body{background:url('../img/bg.png');}
 section.container,section.container-fluid{padding-top:45px;}
 .form-actions.clean{background-color:transparent;border:0px;}
 .nav>.dropdown.active>a:hover{color:#333;}
-.navbar .brand{color:#333;font-weight:bold;}
+.navbar.navbar-fixed-top .brand{color:#333;font-weight:bold;}
 .navbar .nav>li>a{color:#666;}.navbar .nav>li>a:hover{color:#333;}
 .navbar .nav>.dropdown.open>a,.navbar .nav>.dropdown.open>a:hover{color:#333;}
 @media (min-width:979px){.navbar-fixed-top .navbar-inner{background:transparent url('../img/top-bar-white.png') repeat-x bottom left;box-shadow:none;} .table thead tr{background:transparent url('../img/top-bar-white.png') repeat-x top left;}}.pagination a,.current,.previous_page,.next_page{float:left;line-height:38px;text-decoration:none;border-left-width:0;}
