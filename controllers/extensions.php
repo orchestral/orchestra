@@ -178,6 +178,8 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 	 */
 	public function get_upgrade($name)
 	{
+		if ( ! Extension::started($name) or $name === DEFAULT_BUNDLE) return Response::error('404');
+		
 		IoC::resolve('task: orchestra.upgrader', array(array($name)));
 
 		Extension::publish($name);
