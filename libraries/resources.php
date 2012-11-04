@@ -43,9 +43,9 @@ class Resources
 	 *
 	 * @static
 	 * @access public
-	 * @param  string $name
-	 * @param  string $action
-	 * @param  array  $arguments
+	 * @param  string   $name
+	 * @param  string   $action
+	 * @param  array    $arguments
 	 * @return Response
 	 */
 	public static function call($name, $action, $arguments)
@@ -123,7 +123,8 @@ class Resources
 
 	/**
 	 * Map a child resource attributes
-	 * 
+	 *
+	 * @access public
 	 * @param  string $name
 	 * @param  string $uses
 	 * @return self

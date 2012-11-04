@@ -18,6 +18,8 @@ class Widget
 	 *
 	 * @static
 	 * @access public
+	 * @param  string   $name    a string identifying the widget
+	 * @param  arrat    $config  a configuration array
 	 * @return Widget\Driver
 	 */
 	public static function make($name, $config = array()) 

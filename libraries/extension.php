@@ -30,7 +30,7 @@ class Extension
 
 		if ( ! is_string($name)) return;
 
-		// Register extension and auto start it only if it's not registered
+		// Register extension and auto-start it
 		Bundle::register($name, $config);
 		Bundle::start($name);
 
@@ -60,6 +60,8 @@ class Extension
 	/**
 	 * Get an option for a given extension.
 	 *
+	 * @static
+	 * @access public
 	 * @param  string  $name
 	 * @param  string  $option
 	 * @param  mixed   $default
@@ -233,6 +235,8 @@ class Extension
 	/**
 	 * Get all of the installed extensions for the application.
 	 *
+	 * @static
+	 * @access oublic
 	 * @return array
 	 */
 	public static function all()

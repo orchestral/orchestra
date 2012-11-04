@@ -6,6 +6,11 @@ use \Session,
 
 class View extends V
 {
+	/**
+	 * Theme group name
+	 * 
+	 * @var string
+	 */
 	public static $theme = 'frontend';
 
 	/**
@@ -22,6 +27,7 @@ class View extends V
 	 *		$view = new View('home.index', array('name' => 'Taylor'));
 	 * </code>
 	 *
+	 * @access public
 	 * @param  string  $view
 	 * @param  array   $data
 	 * @return void

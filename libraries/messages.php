@@ -53,7 +53,7 @@ class Messages extends Laravel_Messages
 	 * Compile the instance into serialize
 	 *
 	 * @access public
-	 * @return string serialize of this instance
+	 * @return string   serialize of this instance
 	 */
 	public function serialize()
 	{

@@ -34,6 +34,8 @@ class Theme
 	 *		$container = Orchestra\Theme::container('footer');
 	 * </code>
 	 *
+	 * @static
+	 * @access public
 	 * @param  string            $container
 	 * @return Theme\Container
 	 */
