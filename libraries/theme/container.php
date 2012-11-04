@@ -125,7 +125,7 @@ class Container
 		if (starts_with('path: ', $file)) return $file;
 
 		// Check theme aliases if we already have registered aliases
-		if (isset($this->aliases[$file])) return static::$aliases[$file];
+		if (isset($this->aliases[$file])) return $this->aliases[$file];
 
 		if ( ! is_null($this->name)) 
 		{
