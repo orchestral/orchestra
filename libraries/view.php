@@ -34,8 +34,9 @@ class View extends V
 	 */
 	public function __construct($view, $data = array())
 	{
-		$theme      = IoC::resolve('orchestra.theme: '.static::$theme);
-		$view       = $theme->parse($view);
+		Event::fire('orchestra.started: view');
+
+		$view       = IoC::resolve('orchestra.theme: '.static::$theme)->parse($view);
 		$this->view = $view;
 		$this->data = $data;
 
