@@ -1,7 +1,6 @@
 <?php namespace Orchestra;
 
-use \Session, 
-	\IoC,
+use \Event, \IoC, \Session, 
 	Laravel\View as V;
 
 class View extends V
