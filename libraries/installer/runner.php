@@ -345,6 +345,9 @@ class Runner
 
 				// add timestamp created_at and updated_at
 				$table->timestamps();
+
+				$table->index('user_id');
+				$table->index('role_id');
 			});
 
 			static::$message->add('success', 'Users table created');
