@@ -120,8 +120,7 @@ class Runner
 				Session::flash('errors', $v->errors);
 				return false;
 			}
-
-
+			
 			// Before we create administrator, we should ensure that users 
 			// table is empty to avoid any possible hijack or invalid request.
 			$all = User::all();
