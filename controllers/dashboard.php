@@ -26,7 +26,7 @@ class Orchestra_Dashboard_Controller extends Orchestra\Controller
 	 */
 	public function get_index()
 	{
-		$panes = Orchestra\Widget::make('pane.dashboard')->get();
+		$panes = Orchestra\Widget::make('pane.orchestra')->get();
 
 		if (empty($panes))
 		{
