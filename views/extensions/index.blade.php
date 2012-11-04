@@ -30,10 +30,11 @@
 						@if ( ! $started)
 							{{ HTML::link(handles('orchestra::extensions/activate/'.$name), __('orchestra::label.extensions.actions.activate'), array('class' => 'btn btn-primary btn-mini')) }}
 						@else
-							{{ HTML::link(handles('orchestra::extensions/deactivate/'.$name), __('orchestra::label.extensions.actions.deactivate'), array('class' => 'btn btn-warning btn-mini')) }}
 							@unless($name === DEFAULT_BUNDLE)
 								{{ HTML::link(handles('orchestra::extensions/upgrade/'.$name), __('orchestra::label.extensions.actions.upgrade'), array('class' => 'btn btn-mini')) }}
 							@endunless
+							{{ HTML::link(handles('orchestra::extensions/deactivate/'.$name), __('orchestra::label.extensions.actions.deactivate'), array('class' => 'btn btn-warning btn-mini')) }}
+							
 						@endif
 
 					</div>
