@@ -13,7 +13,7 @@ return array(
 	),
 
 	'credential' => array(
-		'invalid-combination' => 'Invalid e-mail address and password combination',
+		'invalid-combination' => 'Invalid user and password combination',
 		'logged-in'           => 'You has been logged in',
 		'logged-out'          => 'You have been logged out',
 	),

@@ -12,11 +12,11 @@
 			<fieldset>
 				<legend>{{ __('orchestra::title.login') }}</legend>
 				
-				<div class="control-group {{ $errors->has('email') ? 'error' : '' }}">
-					{{ Form::label('email', __('orchestra::label.users.email'), array('class' => 'control-label')) }}
+				<div class="control-group {{ $errors->has('username') ? 'error' : '' }}">
+					{{ Form::label('username', __("orchestra::label.users.{$username}"), array('class' => 'control-label')) }}
 					<div class="controls">
-						{{ Form::input('email', 'email', '', array('required' => true, 'class' => 'span4')) }}
-						{{ $errors->first('email', '<p class="help-block">:message</p>') }}
+						{{ Form::input('text', 'username', '', array('required' => true, 'class' => 'span4')) }}
+						{{ $errors->first('username', '<p class="help-block">:message</p>') }}
 					</div>
 				</div>
 

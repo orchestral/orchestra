@@ -4,6 +4,8 @@ use Orchestra\Messages;
 
 class Orchestra_Credential_Controller extends Orchestra\Controller
 {
+	private $username = null;
+
 	/**
 	 * Construct Credential Controller.
 	 *
@@ -13,6 +15,8 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 	public function __construct()
 	{
 		parent::__construct();
+
+		$this->username = (array) Config::get('auth.username');
 
 		$this->filter('before', 'orchestra::not-auth')->only(array('login', 'register'));
 		$this->filter('before', 'orchestra::csrf')->only(array('login', 'register'))->on(array('post'));
@@ -26,8 +30,9 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 	public function get_login()
 	{
 		$redirect = Session::get('orchestra.redirect', handles('orchestra'));
+		$username = current($this->username);
 
-		return View::make('orchestra::credential.login', compact('redirect'));
+		return View::make('orchestra::credential.login', compact('redirect', 'username'));
 	}
 
 	/**
@@ -40,7 +45,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 	{
 		$input = Input::all();
 		$rules = array(
-			'email'    => array('required', 'email'),
+			'username' => array('required'),
 			'password' => array('required'),
 		);
 
@@ -57,7 +62,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 		}
 
 		$attempt = array(
-			'username' => $input['email'], 
+			'username' => $input['username'], 
 			'password' => $input['password']
 		);
 
