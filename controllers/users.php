@@ -247,8 +247,8 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 			$user->password = Hash::make($input['password']);
 		}
 
-		Event::fire(($type === 'create' ? 'creating' : 'updating'), $user);
-		Event::fire('saving', $user);
+		$this->fire_event(($type === 'create' ? 'creating' : 'updating'), $user);
+		$this->fire_event('saving', $user);
 
 		try
 		{
@@ -258,8 +258,8 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 				$user->roles()->sync($input['roles']);
 			});
 
-			Event::fire(($type === 'create' ? 'created' : 'updated'), $user);
-			Event::fire('saved', $user);
+			$this->fire_event(($type === 'create' ? 'created' : 'updated'), $user);
+			$this->fire_event('saved', $user);
 
 			$m->add('success', __("orchestra::response.users.{$type}"));
 		}
