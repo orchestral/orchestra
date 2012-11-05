@@ -1,6 +1,6 @@
 <?php
 
-use Orchestra\Messages;
+use Orchestra\Form, Orchestra\Messages;
 
 class Orchestra_Account_Controller extends Orchestra\Controller
 {
@@ -30,7 +30,30 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 	{
 		$user = Auth::user();
 
-		return View::make('orchestra::account.profile', compact('user'));
+		$form = Form::of('orchestra.account', function ($form) use ($user)
+		{
+			$form->row($user);
+			$form->attr(array(
+				'action' => handles('orchestra::account/index'),
+				'method' => 'POST',
+			));
+
+			$form->fieldset(function ($fieldset) 
+			{
+				$fieldset->control('input:text', __('orchestra::label.users.email')->get(), 'email');
+				$fieldset->control('input:text', __('orchestra::label.users.fullname')->get(), 'fullname');
+			});
+		});
+
+		Event::fire('orchestra.form: user.account', array($user, $form));
+
+		$data = array(
+			'eloquent'  => $user,
+			'form'      => $form,
+			'page_name' => __("orchestra::title.account.profile")->get(),
+		);
+
+		return View::make('orchestra::resources.edit', $data);
 	}
 
 	/**
@@ -47,6 +70,8 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 			'fullname' => array('required'),
 		);
 
+		Event::fire('orchestra.validate: user.account', array(& $rules));
+
 		$m = new Messages;
 		$v = Validator::make($input, $rules);
 
@@ -61,9 +86,25 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 		$user->email    = $input['email'];
 		$user->fullname = $input['fullname'];
 
-		$user->save();
+		$this->fire_event('updating', $user);
+		$this->fire_event('saving', $user);
 
-		$m->add('success', __('orchestra::response.account.profile.update'));
+		try
+		{
+			DB::transaction(function () use ($user)
+			{
+				$user->save();
+			});
+
+			$this->fire_event('updated', $user);
+			$this->fire_event('saved', $user);
+
+			$m->add('success', __('orchestra::response.account.profile.update'));
+		}
+		catch (Exception $e)
+		{
+			$m->add('error', __('orchestra::response.db-failed', array('error' => $e->getMessage())));
+		}
 
 		return Redirect::to(handles('orchestra::account'))
 				->with('message', $m->serialize());
@@ -130,6 +171,18 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 
 		return Redirect::to(handles('orchestra::account/password'))
 				->with('message', $m->serialize());
+	}
 
+	/**
+	 * Fire Event related to eloquent process
+	 * 
+	 * @access private
+	 * @param  string   $type  
+	 * @param  Eloquent $user
+	 * @return void
+	 */
+	private function fire_event($type, $user)
+	{
+		Event::fire("orchestra.{$type}: user.account", array($user));
 	}
 }

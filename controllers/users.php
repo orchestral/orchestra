@@ -190,6 +190,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		});
 
 		Event::fire('orchestra.form: users', array($user, $form));
+		Event::fire('orchestra.form: user.account', array($user, $form));
 
 		$data = array(
 			'eloquent'  => $user,
@@ -217,6 +218,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		);
 
 		Event::fire('orchestra.validate: users', array(& $rules));
+		Event::fire('orchestra.validate: user.account', array(& $rules));
 
 		$v = Validator::make($input, $rules);
 		$m = new Messages;
@@ -311,6 +313,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 	private function fire_event($type, $user)
 	{
 		Event::fire("orchestra.{$type}: users", array($user));
+		Event::fire("orchestra.{$type}: user.account", array($user));
 	}
 
 }
