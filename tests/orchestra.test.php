@@ -10,7 +10,7 @@ class TestOrchestra extends PHPUnit_Framework_TestCase
 		Config::set('database.default', 'sqlite');
 		Config::set('database.connections.sqlite', array(
 			'driver'   => 'sqlite',
-			'database' => 'application',
+			'database' => ':memory:',
 			'prefix'   => '',
 		));
 
@@ -39,16 +39,10 @@ class TestOrchestra extends PHPUnit_Framework_TestCase
 
 		$this->assertInstanceOf('Hybrid\Memory\Fluent', $memory);
 		$this->assertEquals('Orchestra', $memory->get('site.name'));
+		$this->assertEquals('', $memory->get('site.description'));
 		$this->assertEquals('mail', $memory->get('email.default'));
+		$this->assertEquals('example@test.com', $memory->get('email.from'));
 		
 		$this->assertInstanceOf('Hybrid\Acl', $acl);
-	}
-
-	/**
-	 * Teardown
-	 */
-	public function tearDown()
-	{
-		File::delete(path('storage').'database'.DS.'application.sqlite');
 	}
 }
