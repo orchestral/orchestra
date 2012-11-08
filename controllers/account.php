@@ -1,6 +1,8 @@
 <?php
 
-use Orchestra\Form, Orchestra\Messages;
+use Orchestra\Form, 
+	Orchestra\Messages, 
+	Orchestra\View;
 
 class Orchestra_Account_Controller extends Orchestra\Controller
 {

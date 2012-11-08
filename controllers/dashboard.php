@@ -1,5 +1,7 @@
 <?php
 
+use Orchestra\View;
+
 class Orchestra_Dashboard_Controller extends Orchestra\Controller
 {
 	/**

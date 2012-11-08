@@ -1,7 +1,11 @@
 <?php 
 
-use Laravel\Fluent, Orchestra\Core, Orchestra\Extension, 
-	Orchestra\Form, Orchestra\Messages;
+use Laravel\Fluent, 
+	Orchestra\Core, 
+	Orchestra\Extension, 
+	Orchestra\Form, 
+	Orchestra\Messages, 
+	Orchestra\View;
 
 class Orchestra_Extensions_Controller extends Orchestra\Controller 
 {

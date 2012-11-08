@@ -1,6 +1,7 @@
 <?php
 
-use Orchestra\Messages;
+use Orchestra\Messages, 
+	Orchestra\View;
 
 class Orchestra_Credential_Controller extends Orchestra\Controller
 {

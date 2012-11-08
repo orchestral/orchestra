@@ -4,7 +4,8 @@ use Laravel\Fluent,
 	Orchestra\Core,
 	Orchestra\Extension,
 	Orchestra\Form,
-	Orchestra\Messages;
+	Orchestra\Messages,
+	Orchestra\View;
 
 class Orchestra_Settings_Controller extends Orchestra\Controller 
 {

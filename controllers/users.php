@@ -4,7 +4,8 @@ use Orchestra\Form,
 	Orchestra\Messages, 
 	Orchestra\Table,
 	Orchestra\Model\Role, 
-	Orchestra\Model\User;
+	Orchestra\Model\User,
+	Orchestra\View;
 
 class Orchestra_Users_Controller extends Orchestra\Controller
 {

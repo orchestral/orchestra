@@ -1,7 +1,8 @@
 <?php
 
 use Orchestra\Resources,
-	Orchestra\Table;
+	Orchestra\Table,
+	Orchestra\View;
 
 class Orchestra_Resources_Controller extends Orchestra\Controller
 {

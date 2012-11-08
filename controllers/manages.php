@@ -1,6 +1,7 @@
 <?php
 
-use Orchestra\Extension;
+use Orchestra\Extension,
+	Orchestra\View;
 
 class Orchestra_Manages_Controller extends Orchestra\Controller
 {

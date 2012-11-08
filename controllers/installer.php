@@ -3,7 +3,8 @@
 use Orchestra\Core, 
 	Orchestra\Installer, 
 	Orchestra\Installer\Runner,
-	Orchestra\Messages;
+	Orchestra\Messages,
+	Orchestra\View;
 
 class Orchestra_Installer_Controller extends Controller 
 {

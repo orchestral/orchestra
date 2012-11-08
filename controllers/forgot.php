@@ -3,7 +3,8 @@
 use Orchestra\Core, 
 	Orchestra\Messages,
 	Orchestra\Model\User,
-	Orchestra\Model\User\Meta as User_Meta;
+	Orchestra\Model\User\Meta as User_Meta,
+	Orchestra\View;
 
 class Orchestra_Forgot_Controller extends Orchestra\Controller 
 {
