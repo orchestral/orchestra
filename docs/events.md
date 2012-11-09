@@ -1,5 +1,7 @@
 # Events
 
+Orchestra utilise `Event` class from Laravel to extends the functionality, without having to modified any of the code.
+
 ## Table of Contents
 - [General Events](#general)
 - [Installation Events](#installation)
@@ -33,7 +35,7 @@ Event fired when user is accessing Orchestra Administrator Interface.
 	});
 
 ### `orchestra.started: view`
-Event fired when a View is from `Orchestra\View`, which mean it's possible to use View replacement using Theme.
+Event fired when a View is from `Orchestra\View`. Which make it possible to use View replacement using Theme.
 
 	Event::listen('orchestra.started: view', function ()
 	{
