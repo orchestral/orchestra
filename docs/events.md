@@ -1,6 +1,6 @@
 # Events
 
-Orchestra utilise `Event` class from Laravel to extends the functionality, without having to modified any of the code.
+Orchestra utilise `Event` class from Laravel to extends the functionality, without having to modify any of the code.
 
 ## Table of Contents
 - [General Events](#general)
