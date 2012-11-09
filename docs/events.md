@@ -8,8 +8,18 @@
 <a name="general"></a>
 ## General Events
 
-* `laravel.started: orchestra`
-* `orchestra.started`
+### `orchestra.started`
+Event fired when Orchestra is loaded by Laravel.
+
+	Event::listen('orchestra.started', function ()
+	{
+		// Add a resource page
+		$enquiry = Orchestra\Resources::make('contact', array(
+			'name' => 'Contacts',
+			'uses' => 'api.enquiries',
+		));
+	});
+
 * `orchestra.started: backend`
 * `orchestra.started: view`
 
