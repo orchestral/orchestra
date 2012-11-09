@@ -7,4 +7,5 @@
 	- [Pages](/bundocs/orchestra/extensions/pages)
 	- [Resources](/bundocs/orchestra/extensions/resources)
 - [Helpers](/bundocs/orchestra/helpers)
+- [Events](/bundocs/orchestra/events)
 
