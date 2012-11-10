@@ -8,7 +8,7 @@
 		<h2>{{ $page_name }}</h2>
 	</div>
 
-	<div class="navbar">
+	<div class="navbar hidden-phone">
 		<div class="navbar-inner">
 
 			{{ Form::open(handles('orchestra::users'), 'GET', array('class' => 'navbar-form')) }}

@@ -44,6 +44,18 @@ section.container, section.container-fluid {
 	}
 }
 
+@media (max-width: 978px) {
+	.navbar .nav > li {
+		> .dropdown-menu::after, > .dropdown-menu::before {
+			display: none;
+		}
+
+		a[rel="user-menu"] {
+			display: block;
+		}
+	}
+}
+
 @media (min-width: 979px) {
 	&.navbar-fixed-top {
 		.navbar-inner {
