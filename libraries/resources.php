@@ -57,6 +57,7 @@ class Resources
 			list($name, $child) = explode('.', $name);
 		}
 
+		// If resources is not set, we should return false.
 		if ( ! isset(static::$registrar[$name])) return false;
 
 		if ( ! is_null($child))
@@ -69,6 +70,8 @@ class Resources
 			$controller = static::$registrar[$name]->uses;
 		}
 
+		// This would cater request to valid resource but pointing to an invalid
+		// child. We should show a 404 response to the user on this case.
 		if (is_null($controller)) return false;
 
 		return Controller::call("{$controller}@{$action}", $arguments);
