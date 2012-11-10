@@ -69,8 +69,7 @@ Route::controller(array(
  */
 Route::filter('orchestra::auth', function ()
 {
-	$redirect = Input::get('redirect');
-	Session::flash('orchestra.redirect', $redirect);
+	Session::flash('orchestra.redirect', Input::get('redirect'));
 
 	// Redirect the user to login page if user is not logged in.
 	if (Auth::guest()) return Redirect::to(handles('orchestra::login'));
@@ -78,8 +77,7 @@ Route::filter('orchestra::auth', function ()
 
 Route::filter('orchestra::not-auth', function ()
 {
-	$redirect = Input::get('redirect');
-	Session::flash('orchestra.redirect', $redirect);
+	Session::flash('orchestra.redirect', Input::get('redirect'));
 	
 	// Redirect the user to login page if user is not logged in.
 	if ( ! Auth::guest()) return Redirect::to(handles('orchestra'));
@@ -110,8 +108,7 @@ Route::filter('orchestra::manage', function ()
 	{
 		if (Auth::guest()) 
 		{
-			$redirect = Input::get('redirect');
-			Session::flash('orchestra.redirect', $redirect);
+			Session::flash('orchestra.redirect', Input::get('redirect'));
 		
 			return Redirect::to(handles('orchestra::login'));
 		}

@@ -20,7 +20,6 @@ class Orchestra_Resources_Controller extends Orchestra\Controller
 		parent::__construct();
 
 		$this->filter('before', 'orchestra::auth');
-		$this->filter('before', 'orchestra::manage');
 		
 		Event::fire('orchestra.started: backend');
 	}

@@ -249,32 +249,31 @@ class Core
 					->title(__('orchestra::title.extensions.list')->get())
 					->link(handles('orchestra::extensions'));
 
-				$resources = Resources::all();
-
-				if ( ! empty($resources))
-				{
-					$menu->add('resources', 'after:extensions')
-						->title(__('orchestra::title.resources.list')->get())
-						->link(handles('orchestra::resources'));
-
-					foreach (Resources::all() as $name => $resource)
-					{
-						$menu->add($name, 'child_of:resources')
-							->title($resource->name)
-							->link(handles("orchestra::resources/{$name}"));
-					}
-				}
-
 				$menu->add('settings')
 					->title(__('orchestra::title.settings.list')->get())
 					->link(handles('orchestra::settings'));
-
 
 				if ($memory->get('site.web_upgrade', false))
 				{
 					$menu->add('settings', 'child_of:settings')
 						->title(__('orchestra::title.settings.upgrade')->get())
 						->link(handles('orchestra::settings/upgrade'));
+				}
+			}
+
+			$resources = Resources::all();
+
+			if ( ! empty($resources))
+			{
+				$menu->add('resources', 'after:extensions')
+					->title(__('orchestra::title.resources.list')->get())
+					->link(handles('orchestra::resources'));
+
+				foreach (Resources::all() as $name => $resource)
+				{
+					$menu->add($name, 'child_of:resources')
+						->title($resource->name)
+						->link(handles("orchestra::resources/{$name}"));
 				}
 			}
 		});
