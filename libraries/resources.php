@@ -17,9 +17,9 @@ class Resources
 	 *
 	 * @static
 	 * @access public
-	 * @param  string $name
-	 * @param  mixed  $controller
-	 * @return void
+	 * @param  string   $name
+	 * @param  mixed    $controller
+	 * @return Resources
 	 */
 	public static function make($name, $controller)
 	{
@@ -61,7 +61,8 @@ class Resources
 
 		if ( ! is_null($child))
 		{
-			$controller = isset(static::$registrar[$name]->childs[$child]) ? static::$registrar[$name]->childs[$child] : null;
+			$controller = isset(static::$registrar[$name]->childs[$child]) ? 
+				static::$registrar[$name]->childs[$child] : null;
 		}
 		else
 		{
