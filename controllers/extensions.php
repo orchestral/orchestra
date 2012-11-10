@@ -161,9 +161,11 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 		}
 
 		// In any event where extension need to do some custom handling.
-		Event::fire("orchestra.save: extension.{$name}", array($config));
+		Event::fire("orchestra.saving: extension.{$name}", array($config));
 
 		$memory->put("extension_{$name}", $input);
+
+		Event::fire("orchestra.saved: extension.{$name}", array($config));
 
 		$m->add('success', __("orchestra::response.extensions.configure", compact('name')));
 

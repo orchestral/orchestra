@@ -141,7 +141,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 		$memory->put('email.transports.smtp.encryption', $input['email_smtp_encryption']);
 		$memory->put('email.transports.sendmail.command', $input['email_sendmail_command']);
 
-		Event::fire('orchestra.save: settings', array($memory));
+		Event::fire('orchestra.saved: settings', array($memory, $input));
 
 		$m = Messages::make('success', __('orchestra::response.settings.update'));
 

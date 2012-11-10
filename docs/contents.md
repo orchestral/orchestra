@@ -1,5 +1,5 @@
 ### General
-- [Orchestra Overviews](/bundocs/orchestra/home)
+- [Overviews](/bundocs/orchestra/home)
 - [Installation](/bundocs/orchestra/install)
 	- [Download](/bundocs/orchestra/install#download)
 	- [Setup](/bundocs/orchestra/install#setup)
@@ -8,4 +8,4 @@
 	- [Resources](/bundocs/orchestra/extensions/resources)
 - [Helpers](/bundocs/orchestra/helpers)
 - [Events](/bundocs/orchestra/events)
-
+	- [General Events](/bundocs/orchestra/events/general)

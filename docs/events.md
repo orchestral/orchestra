@@ -5,44 +5,22 @@ Orchestra utilise `Event` class from Laravel to extends the functionality, witho
 ## Table of Contents
 - [General Events](#general)
 - [Installation Events](#installation)
-- [User & Account Events](#user)
+- [Credential Events](#credential)
+- [Extension Events](#extension)
+- [Page Events](#page)
+- [Manage User Events](#user)
+- [User Account Events](#account)
+- [Setting Events](#setting)
+
 
 <a name="general"></a>
 ## General Events
 
-### `orchestra.started`
-Event fired when Orchestra is loaded by Laravel.
-
-	Event::listen('orchestra.started', function ()
-	{
-		// Add an enquiry resource page
-		$enquiry = Orchestra\Resources::make('contact', array(
-			'name' => 'Contacts',
-			'uses' => 'api.enquiries',
-		));
-	});
-
-### `orchestra.started: backend`
-Event fired when user is accessing Orchestra Administrator Interface.
-
-	Event::listen('orchestra.started: backend', function ()
-	{
-		$asset = Asset::container('orchestra.backend');
-		
-		// Add Redactor CSS and JavaScript.
-		$asset->script('redactor', 'bundles/cartie/vendor/redactor/redactor.js', array('jquery', 'bootstrap'));
-		$asset->style('redactor', 'bundles/cartie/vendor/redactor/css/redactor.css', array('bootstrap'));
-	});
-
-### `orchestra.started: view`
-Event fired when a View is from `Orchestra\View`. Which make it possible to use View replacement using Theme.
-
-	Event::listen('orchestra.started: view', function ()
-	{
-		Orchestra\Theme::map(array(
-			'cartie::layout.main' => 'layout.main'
-		));
-	});
+* `orchestra.started`
+* `orchestra.started: backend`
+* `orchestra.started: view`
+* `orchestra.done`
+* `orchestra.done: backend`
  
 <a name="installation"></a>
 ## Installation Events
@@ -52,24 +30,56 @@ Event fired when a View is from `Orchestra\View`. Which make it possible to use 
 * `orchestra.install: user`
 * `orchestra.install: acl`
 
+<a name="credential"></a>
+## Credential Events
+
+* `orchestra.logged.in`
+* `orchestra.logged.out`
+
+<a name="extension"></a>
+## Extension Events
+
+* `orchestra.form: extension.{name}`
+* `orchestra.saving: extension.{name}`
+* `orchestra.saved: extension.{name}`
+
+<a name="page"></a>
+## Page Events
+
+* `orchestra.pages: {name}.{action}`
+* `orchestra.manages: {name}.action}`
+
 <a name="user"></a>
-## User & Account Events
+## Manage User Events
+
 * `orchestra.list: users`
-* `orchestra.form: user`
-* `orchestra.form: user.account`
+* `orchestra.form: users`
 * `orchestra.validate: users`
-* `orchestra.validate: user.account`
 * `orchestra.creating: users`
-* `orchestra.creating: user.account`
 * `orchestra.updating: users`
-* `orchestra.updating: user.account`
 * `orchestra.deleting: users`
-* `orchestra.deleting: user.account`
 * `orchestra.created: users`
-* `orchestra.created: user.account`
 * `orchestra.updated: users`
-* `orchestra.updated: user.account`
 * `orchestra.deleted: users`
+
+<a name="account"></a>
+## User Account Events
+
+* `orchestra.form: user.account`
+* `orchestra.validate: user.account`
+* `orchestra.creating: user.account`
+* `orchestra.updating: user.account`
+* `orchestra.deleting: user.account`
+* `orchestra.created: user.account`
+* `orchestra.updated: user.account`
 * `orchestra.deleted: user.account`
+
+<a name="setting"></a>
+## Setting Events
+
+* `orchestra.form: settings`
+* `orchestra.validate: settings`
+* `orchestra.saved: settings`
+
 
 
