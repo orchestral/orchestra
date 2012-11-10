@@ -35,7 +35,7 @@ class View extends V
 	{
 		Event::fire('orchestra.started: view');
 
-		$view       = IoC::resolve('orchestra.theme: '.static::$theme)->parse($view);
+		$view       = Theme::resolve()->parse($view);
 		$this->view = $view;
 		$this->data = $data;
 
