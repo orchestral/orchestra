@@ -18,8 +18,6 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 		parent::__construct();
 
 		$this->filter('before', 'orchestra::auth');
-		
-		Event::fire('orchestra.started: backend');
 	}
 
 	/**

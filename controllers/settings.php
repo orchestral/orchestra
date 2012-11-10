@@ -22,8 +22,6 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 
 		$this->filter('before', 'orchestra::auth');
 		$this->filter('before', 'orchestra::manage');
-
-		Event::fire('orchestra.started: backend');
 	}
 
 	/**
@@ -37,6 +35,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 		// Orchestra settings are stored using Hybrid\Memory, we need to fetch 
 		// it and convert it to Fluent (to mimick Eloquent properties).
 		$memory   = Core::memory();
+
 		$settings = new Fluent(array(
 			'site_name'              => $memory->get('site.name', ''),
 			'site_description'       => $memory->get('site.description', ''),

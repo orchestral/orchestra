@@ -20,8 +20,6 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 		parent::__construct();
 		
 		$this->filter('before', 'orchestra::manage-users');
-
-		Event::fire('orchestra.started: backend');
 	}
 
 	/**
@@ -231,8 +229,8 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 					->with_errors($v);
 		}
 
-		$type  = 'update';
-		$user  = User::find($id);
+		$type = 'update';
+		$user = User::find($id);
 
 		if (is_null($user)) 
 		{
@@ -293,11 +291,21 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 
 		$this->fire_event('deleting', $user);
 
-		$user->delete();
+		try
+		{
+			DB::transaction(function () use ($user)
+			{
+				$user->delete();
+			});
 
-		$this->fire_event('deleted', $user);
+			$this->fire_event('deleted', $user);
 
-		$m->add('success', __('orchestra::response.users.delete'));
+			$m->add('success', __('orchestra::response.users.delete'));
+		}
+		catch (Exception $e)
+		{
+			$m->add('error', __('orchestra::response.db-failed', array('error' => $e->getMessage())));
+		}
 
 		return Redirect::to(handles('orchestra::users'))
 				->with('message', $m->serialize());

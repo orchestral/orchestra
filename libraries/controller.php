@@ -1,6 +1,8 @@
 <?php namespace Orchestra;
 
-use \Controller as Base_Controller, \View;
+use \Controller as Base_Controller, 
+	\Event,
+	\View;
 
 class Controller extends Base_Controller
 {
@@ -27,5 +29,14 @@ class Controller extends Base_Controller
 
 		View::share('fluent_layout', true);
 		View::share('orchestra_memory', Core::memory());
+		
+		Event::fire('orchestra.started: backend');
+	}
+
+	public function after($response)
+	{
+		Event::fire('orchestra.done: backend');
+
+		return $response;
 	}
 }
