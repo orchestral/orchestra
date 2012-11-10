@@ -6,7 +6,9 @@
 |--------------------------------------------------------------------------
 |
 | Run installation route when Orchestra is not installed yet.
- */
+|
+*/
+
 Route::any('(:bundle)/installer/?(:any)?/?(:num)?', function ($action = 'index', $steps = 0) 
 {
 	// we should disable this routing when the system detect it's already 
@@ -24,7 +26,8 @@ Route::any('(:bundle)/installer/?(:any)?/?(:num)?', function ($action = 'index',
 |--------------------------------------------------------------------------
 | Default Routing
 |--------------------------------------------------------------------------
- */
+*/
+
 Route::any('(:bundle)', array('before' => 'orchestra::installed|orchestra::auth', function ()
 {
 	// Display the dashboard
@@ -35,7 +38,8 @@ Route::any('(:bundle)', array('before' => 'orchestra::installed|orchestra::auth'
 |--------------------------------------------------------------------------
 | Credential Routing
 |--------------------------------------------------------------------------
- */
+*/
+
 Route::any('(:bundle)/(login|register|logout)', function ($action)
 {
 	return Controller::call("orchestra::credential@{$action}");
@@ -46,8 +50,10 @@ Route::any('(:bundle)/(login|register|logout)', function ($action)
 | Controllers
 |--------------------------------------------------------------------------
 |
-| Detects all controller under Orchestra bundle and register it to routing
- */
+| Detects all controller under Orchestra bundle and register it to routing.
+|
+*/
+
 Route::controller(array(
 	'orchestra::account', 
 	'orchestra::credential', 
@@ -65,8 +71,8 @@ Route::controller(array(
 |--------------------------------------------------------------------------
 | Route Filtering
 |--------------------------------------------------------------------------
-|
- */
+*/
+
 Route::filter('orchestra::auth', function ()
 {
 	Session::flash('orchestra.redirect', Input::get('redirect'));
@@ -82,7 +88,6 @@ Route::filter('orchestra::not-auth', function ()
 	// Redirect the user to login page if user is not logged in.
 	if ( ! Auth::guest()) return Redirect::to(handles('orchestra'));
 });
-
 
 Route::filter('orchestra::manage-users', function ()
 {
