@@ -1,7 +1,12 @@
 <?php namespace Orchestra;
 
-use \Config, \Exception, \Event, \IoC,
-	Hybrid\Acl, Hybrid\Memory;
+use \Auth, 
+	\Config, 
+	\Exception, 
+	\Event, 
+	\IoC,
+	Hybrid\Acl, 
+	Hybrid\Memory;
 
 class Core
 {
@@ -260,6 +265,8 @@ class Core
 						->link(handles('orchestra::settings/upgrade'));
 				}
 			}
+
+			if (Auth::guest()) return;
 
 			$resources = Resources::all();
 
