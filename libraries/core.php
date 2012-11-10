@@ -1,6 +1,7 @@
 <?php namespace Orchestra;
 
-use \Auth, 
+use \Asset,
+	\Auth, 
 	\Config, 
 	\Exception, 
 	\Event, 
@@ -222,6 +223,16 @@ class Core
 	 */
 	protected static function loader()
 	{
+		// Define basic core Assets
+		$asset = Asset::container('orchestra.backend');
+
+		$asset->script('jquery', 'bundles/orchestra/js/jquery.min.js');
+		$asset->script('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.js', array('jquery'));
+		$asset->script('orchestra', 'bundles/orchestra/js/script.js', array('jquery', 'bootstrap'));
+		
+		$asset->style('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.css');
+		$asset->style('orchestra', 'bundles/orchestra/css/style.css', array('bootstrap'));
+
 		// Multiple event listener for Backend (administrator panel)
 		Event::listen('orchestra.done: backend', function ()
 		{

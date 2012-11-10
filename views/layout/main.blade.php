@@ -16,18 +16,10 @@
 		<?php 
 
 		$asset = Asset::container('orchestra.backend');
-
-		$asset->script('jquery', 'bundles/orchestra/js/jquery.min.js');
-
-		$asset->script('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.js', array('jquery'));
-		$asset->style('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.css');
+		
 		$asset->style('bootstrap-responsive', 'bundles/orchestra/vendor/bootstrap/bootstrap-responsive.min.css', array('bootstrap'));
-
 		$asset->style('select2', 'bundles/orchestra/vendor/select2/select2.css');
 		$asset->script('select2', 'bundles/orchestra/vendor/select2/select2.min.js', array('jquery'));
-
-		$asset->style('orchestra', 'bundles/orchestra/css/style.css', array('bootstrap'));
-		$asset->script('orchestra', 'bundles/orchestra/js/script.js', array('jquery', 'bootstrap'));
 
 		echo $asset->styles();
 		echo $asset->scripts(); ?>
