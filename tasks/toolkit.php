@@ -130,6 +130,6 @@ class Orchestra_Toolkit_Task {
 
 		if (Bundle::exists($bundle)) return array($bundle, Bundle::path($bundle));
 
-		return array($bundle, path('bundle').$bundle);
+		return array($bundle, path('bundle').$bundle.DS);
 	}
 }
