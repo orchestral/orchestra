@@ -13,7 +13,7 @@
 				<legend>{{ __('orchestra::title.login') }}</legend>
 				
 				<div class="control-group {{ $errors->has('username') ? 'error' : '' }}">
-					{{ Form::label('username', __("orchestra::label.users.{$username}"), array('class' => 'control-label')) }}
+					{{ Form::label('username', __("orchestra::label.users.{$username_types}"), array('class' => 'control-label')) }}
 					<div class="controls">
 						{{ Form::input('text', 'username', '', array('required' => true, 'class' => 'span4')) }}
 						{{ $errors->first('username', '<p class="help-block">:message</p>') }}
