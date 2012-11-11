@@ -2,6 +2,19 @@
 
 class Orchestra_Toolkit_Task {
 	
+	/**
+	 * Run Orchestra Toolkit
+	 *
+	 * <code>
+	 * 		$ php artisan orchestra::toolkit start
+	 * 		$ php artisan orchestra::toolkit init --bundle=mybundle
+	 * </code>
+	 * 
+	 * @access public
+	 * @param  array    $args   Arguments passed by CLI
+	 * @throws Exception        If provided action is not available
+	 * @return void
+	 */
 	public function run($args)
 	{
 		$action = array_shift($args);
@@ -13,7 +26,34 @@ class Orchestra_Toolkit_Task {
 
 		$this->{$action}($args);
 	}
-	
+
+	/**
+	 * Run initiate task for Orchestra Toolkit, this would add the definition 
+	 * file as well as start file for Orchestra.
+	 *
+	 * <code>
+	 * 		$ php artisan orchestra::toolkit:init
+	 * 		$ php artisan orchestra::toolkit:init --bundle=mybundle
+	 * </code>
+	 * 
+	 * @access public
+	 * @param  array    $args   Arguments passed by CLI
+	 * @return void
+	 */
+	public function init($args)
+	{
+		$this->definition($args);
+		$this->start($args);
+	}
+
+	/**
+	 * Add definition file to bundle.
+	 * 
+	 * @access public
+	 * @param  array    $args   Arguments passed by CLI
+	 * @throws Exception        If file already exists.
+	 * @return void
+	 */
 	public function definition($args)
 	{
 		$bundle = get_cli_option('bundle') ?: DEFAULT_BUNDLE;
@@ -21,25 +61,43 @@ class Orchestra_Toolkit_Task {
 
 		if (File::exists($file = $path.'orchestra.json'))
 		{
-			echo "File [{$bundle}::orchestra.json] already exists, unable to overwrite.\r\n";
+			throw new Exception("File [{$bundle}::orchestra.json] already exists, unable to overwrite.");
 		}
-		else
-		{
-			File::copy(Bundle::path('orchestra').'tasks'.DS.'stubs'.DS.'orchestra.json', $file);
-			echo "File [{$bundle}::orchestra.json] is created.\r\n";
-		}
+		
+		File::copy(Bundle::path('orchestra').'tasks'.DS.'stubs'.DS.'orchestra.json', $file);
+		echo "File [{$bundle}::orchestra.json] is created.\r\n";
+	}
+
+	/**
+	 * Add start file to bundle.
+	 * 
+	 * @access public
+	 * @param  array    $args   Arguments passed by CLI
+	 * @throws Exception        If file already exists.
+	 * @return void
+	 */
+	public function start($args)
+	{
+		$bundle = get_cli_option('bundle') ?: DEFAULT_BUNDLE;
+		$path   = Bundle::path($bundle);
 
 		if (File::exists($file = $path.'orchestra.php'))
 		{
-			echo "File [{$bundle}::orchestra.php] already exists, unable to overwrite.\r\n";
+			throw new Exception("File [{$bundle}::orchestra.php] already exists, unable to overwrite.");
 		}
-		else
-		{
-			File::copy(Bundle::path('orchestra').'tasks'.DS.'stubs'.DS.'orchestra.php', $file);
-			echo "File [{$bundle}::orchestra.php] is created.\r\n";
-		}
+		
+		File::copy(Bundle::path('orchestra').'tasks'.DS.'stubs'.DS.'orchestra.php', $file);
+		echo "File [{$bundle}::orchestra.php] is created.\r\n";
 	}
 
+	/**
+	 * Add installer file to bundle.
+	 * 
+	 * @access public
+	 * @param  array    $args   Arguments passed by CLI
+	 * @throws Exception        If file already exists or bundle is not the DEFAULT_BUNDLE.
+	 * @return void
+	 */
 	public function installer($args)
 	{
 		$bundle = get_cli_option('bundle') ?: DEFAULT_BUNDLE;
@@ -52,14 +110,12 @@ class Orchestra_Toolkit_Task {
 
 		if (File::exists($file = $path.'orchestra/installer.php'))
 		{
-			echo "File [{$bundle}::orchestra/installer.php] already exists, unable to overwrite.\r\n";
+			throw new Exception("File [{$bundle}::orchestra/installer.php] already exists, unable to overwrite.");
 		}
-		else
-		{
-			File::mkdir($path.'orchestra');
-			File::copy(Bundle::path('orchestra').'tasks'.DS.'stubs'.DS.'orchestra'.DS.'installer.php', $file);
+		
+		File::mkdir($path.'orchestra');
+		File::copy(Bundle::path('orchestra').'tasks'.DS.'stubs'.DS.'orchestra'.DS.'installer.php', $file);
 
-			echo "File [{$bundle}::orchestra/installer.php] is created.\r\n";
-		}
+		echo "File [{$bundle}::orchestra/installer.php] is created.\r\n";
 	}
 }
