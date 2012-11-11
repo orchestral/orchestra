@@ -39,7 +39,7 @@ class Runner
 		if ( ! (static::$message instanceof Messages)) static::$message = new Messages;
 
 		// Check if DEFAULT_BUNDLE has an instruction for Orchestra installation, if so include it.
-		if (is_file($file = Bundle::path(DEFAULT_BUNDLE).'orchestra/installer.php'))
+		if (is_file($file = Bundle::path(DEFAULT_BUNDLE).'orchestra'.DS.'installer'.EXT))
 		{
 			include_once $file;
 		}

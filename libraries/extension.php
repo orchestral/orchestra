@@ -36,7 +36,7 @@ class Extension
 
 		// by now, extension should already exist as an extension. We should
 		// be able start orchestra.php starter file on each bundles.
-		if (is_file($file = Bundle::path($name).'orchestra.php'))
+		if (is_file($file = Bundle::path($name).'orchestra'.EXT))
 		{
 			include_once $file;
 		}
@@ -94,7 +94,7 @@ class Extension
 
 		if (is_file(path('app').'/orchestra.json'))
 		{
-			$extensions[DEFAULT_BUNDLE] = json_decode(file_get_contents(path('app').'/orchestra.json'));
+			$extensions[DEFAULT_BUNDLE] = json_decode(file_get_contents(path('app').DS.'orchestra.json'));
 		}
 
 		$directory = path('bundle');
@@ -105,9 +105,9 @@ class Extension
 		{
 			if ($item->isDir())
 			{
-				if (is_file($item->getRealPath().'/orchestra.json'))
+				if (is_file($item->getRealPath().DS.'orchestra.json'))
 				{
-					$extensions[$item->getFilename()] = json_decode(file_get_contents($item->getRealPath().'/orchestra.json'));
+					$extensions[$item->getFilename()] = json_decode(file_get_contents($item->getRealPath().DS.'orchestra.json'));
 					
 					if (is_null($extensions[$item->getFilename()])) 
 					{
