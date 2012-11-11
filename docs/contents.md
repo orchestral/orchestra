@@ -9,3 +9,4 @@
 - [Helpers](/bundocs/orchestra/helpers)
 - [Events](/bundocs/orchestra/events)
 	- [General Events](/bundocs/orchestra/events/general)
+	- [Installation Events](/bundocs/orchestra/events/install)
