@@ -87,7 +87,7 @@ class Core
 			// Installation status to false routing for installation is 
 			// enabled.
 			Installer::$status = true;
-
+			
 			static::loader();
 			static::extensions();
 		}
@@ -119,6 +119,16 @@ class Core
 				return $memory->put('site.theme.frontend', 'default');
 			}));
 		});
+
+		// Define basic core Assets
+		$asset = Asset::container('orchestra.backend');
+
+		$asset->script('jquery', 'bundles/orchestra/js/jquery.min.js');
+		$asset->script('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.js', array('jquery'));
+		$asset->script('orchestra', 'bundles/orchestra/js/script.min.js', array('jquery', 'bootstrap'));
+		
+		$asset->style('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.css');
+		$asset->style('orchestra', 'bundles/orchestra/css/style.css', array('bootstrap'));
 
 		Event::fire('orchestra.started');
 
@@ -223,16 +233,6 @@ class Core
 	 */
 	protected static function loader()
 	{
-		// Define basic core Assets
-		$asset = Asset::container('orchestra.backend');
-
-		$asset->script('jquery', 'bundles/orchestra/js/jquery.min.js');
-		$asset->script('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.js', array('jquery'));
-		$asset->script('orchestra', 'bundles/orchestra/js/script.js', array('jquery', 'bootstrap'));
-		
-		$asset->style('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.css');
-		$asset->style('orchestra', 'bundles/orchestra/css/style.css', array('bootstrap'));
-
 		// Multiple event listener for Backend (administrator panel)
 		Event::listen('orchestra.done: backend', function ()
 		{
@@ -277,17 +277,21 @@ class Core
 				}
 			}
 
+			// If user aren't logged in, we should stop at this point, Resources
+			// should only be available to logged-in user.
 			if (Auth::guest()) return;
 
 			$resources = Resources::all();
 
+			// Resources menu should only be appended if there is actually resources
+			// to be displayed.
 			if ( ! empty($resources))
 			{
 				$menu->add('resources', 'after:extensions')
 					->title(__('orchestra::title.resources.list')->get())
 					->link(handles('orchestra::resources'));
 
-				foreach (Resources::all() as $name => $resource)
+				foreach ($resources as $name => $resource)
 				{
 					$menu->add($name, 'child_of:resources')
 						->title($resource->name)
