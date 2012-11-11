@@ -2,7 +2,7 @@
 
 ## Table of Content
 - [Introduction](#introduction)
-- [Convert a Bundle to an Extension](#convert-to-extension)
+- [Convert a Bundle](#convert-to-extension)
 - [Enabling an Extension](#enable-extension)
 - [Extension Start File](#start-file)
 - [Configuring an Extension](#configure-extension)
@@ -17,7 +17,7 @@ Extension may contain widget or resources (components) to be added for Orchestra
 - Publish asset for bundle
 
 <a name="convert-to-extension"></a>
-## Convert a Bundle to an Extension
+## Convert a Bundle
 
 The process is simple, an extension is a Bundle except that first it need to have a definition file. The definition file will be stored in `bundles/bundle-name/orchestra.json`. Here's an example of Definition File for OneAuth extension.
 
@@ -31,6 +31,8 @@ The process is simple, an extension is a Bundle except that first it need to hav
 			"handles" : "oneauth"
 		}
 	}
+
+> The definition file can easily be created using `php artisan orchestra::toolkit definition`.
 
 <a name="enable-extension"></a>
 ## Enabling an Extension

@@ -1,4 +1,8 @@
-# Install Events
+# Installation Events
+
+Installation Events are unique set of events where you can only attach 
+from `DEFAULT_BUNDLE` (or application). This is to allow developer to 
+create migrations straight away from Orchestra Installation process.
 
 ## `orchestra.install.schema`
 

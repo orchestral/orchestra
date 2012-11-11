@@ -3,9 +3,9 @@
 ## Table of Content
 
 - [Introduction](#introduction)
-- [Register A Resource](#register)
-- [Register Child Resources](#register-child)
-- [Returning Response from Resources](#returning-response)
+- [Add a Resource](#register)
+- [Add Child Resources](#register-child)
+- [Returning Response](#returning-response)
 
 <a name="introduction"></a>
 ## Introduction
@@ -14,7 +14,7 @@ Resources for Extension offer more control to developer to create application on
 allow controllers to be map to specific URL in Orchestra Administrator Interface instead of just pages.
 
 <a name="register"></a>
-## Register A Resource
+## Add a Resource
 
 Normally we would identify a bundle to a resource for ease of use, however Orchestra still allow a single bundle to register multiple resources 
 if such requirement is needed.
@@ -29,7 +29,7 @@ if such requirement is needed.
 Orchestra Administrator Interface now would display a new tab next to Extension, and you can now navigate to available resources.
 
 <a name="register-child"></a>
-## Register Child Resources
+## Add Child Resources
 
 A single resource might require multiple actions (or controllers), we allow such feature to be used by assigning child resources.
 
@@ -39,7 +39,7 @@ Child resources will not get a direct URL hyperlink from Orchestra Administrator
 resource using `handles('orchestra::resources/oneauth.pages')`.
 
 <a name="returning-response"></a>
-## Returning Response from Resources
+## Returning Response
 
 Controllers mapped as Orchestra Resources is no different from any other controller except the layout is using Orchestra UI. 
 You can use `View`, `Response` and `Redirect` normally as you would without Orchestra integration.
