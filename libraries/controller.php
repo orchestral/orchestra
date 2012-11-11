@@ -33,6 +33,14 @@ class Controller extends Base_Controller
 		Event::fire('orchestra.started: backend');
 	}
 
+	/**
+	 * After filter for Orchestra\Controller, we primarily use this to 
+	 * fire `orchestra.done: backend` event.
+	 * 
+	 * @access public
+	 * @param  mixed    $response
+	 * @return mixed
+	 */
 	public function after($response)
 	{
 		Event::fire('orchestra.done: backend');
