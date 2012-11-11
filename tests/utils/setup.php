@@ -11,7 +11,6 @@ if ( ! Orchestra\Installer::installed())
 	));
 
 	Orchestra\Installer\Runner::install();
-	
 
 	Orchestra\Installer\Runner::create_user(array(
 		'site_name' => 'Orchestra',
