@@ -5,20 +5,26 @@ Orchestra Platform is best installed in a clean Laravel environment, due to the 
 <a name="download"></a>
 ## Installation with Laravel Artisan
 
+Orchestra can be downloaded directly from Artisan using the following commands:
+
 	php artisan bundle:install orchestra
 
 ### Bundle Registration
 
-	'orchestra' => array('auto' => true, 'handles' => 'orchestra'),
-	'hybrid'
+In the `application/bundles.php` file, add the following entries:
 
-> Registering Hybrid bundle is optional, but allow you to upgrade Orchestra and Hybrid with just a single `php artisan bundle:upgrade`.
+	'orchestra' => array('auto' => true, 'handles' => 'orchestra'),
+	'hybrid',
+
+> **Note on Orchestra**, you can change `handles` value to anything unique, such as `admin` for example.
+
+> **Note on Hybrid**, registering Hybrid bundle is optional, but allow you to upgrade Orchestra and Hybrid with just a single `php artisan bundle:upgrade`.
 
 ### Publish Bundle Asset
 
-	php artisan bundle:publish
+Before running the Setup instruction, run the following from Artisan to publish all related assets for Orchestra:
 
-You can change handles value to anything unique, such as `admin` for example.
+	php artisan bundle:publish
 
 <a name="setup"></a>
 # Setup
