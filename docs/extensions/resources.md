@@ -33,7 +33,7 @@ Orchestra Administrator Interface now would display a new tab next to Extension,
 
 A single resource might require multiple actions (or controllers), we allow such feature to be used by assigning child resources.
 
-	$oneauth->pages = 'oneauth.api.pages';
+	$oneauth->pages = 'oneauth::api.pages';
 
 Child resources will not get a direct URL hyperlink from Orchestra Administrator Interface, but you can link any page to display the above 
 resource using `handles('orchestra::resources/oneauth.pages')`.
