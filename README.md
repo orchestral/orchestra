@@ -36,7 +36,7 @@ Before running the Setup instruction, run the following from Artisan to publish 
 
 ## Setup
 
-Now navigate to your [Orchestra](/admin) in a web browser, you should see an installation page. Do remember to change the URL if you use a different handles value.
+Now navigate to your Orchestra handles URL in a web browser, you should see an installation page. Do remember to change the URL if you use a different handles value.
 
 Please ensure that your configuration is correct, Orchestra will utilize configuration from `application/config` folder to make the process stream-less with your other application (or bundles).
 
