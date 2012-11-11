@@ -1,19 +1,40 @@
 <?php
 
-class TestCore extends PHPUnit_Framework_TestCase
-{
+class CoreTest extends PHPUnit_Framework_TestCase {
+	
+	/**
+	 * Setup the test environment.
+	 */
 	public function setUp()
 	{
 		Bundle::start('orchestra');
+		$_SERVER['test.orchestra.started'] = null;
+	
+		// before we can manually test Orchestra\Core::start()
+		// we need to shutdown Orchestra first.
+		Orchestra\Core::shutdown();
 	}
 
 	/**
-	 * Test Orchestra\Core::start()
+	 * Teardown the test environment.
+	 */
+	public function tearDown()
+	{
+		unset($_SERVER['test.orchestra.started']);
+	}
+
+	/**
+	 * Test Orchestra\Core::start() is properly done.
 	 *
 	 * @test
 	 */
 	public function testStartingUpOrchestra()
 	{
+		Event::listen('orchestra.started', function ()
+		{
+			$_SERVER['test.orchestra.started'] = 'foo';
+		});
+
 		Orchestra\Core::start();
 
 		$memory = Orchestra\Core::memory();
@@ -24,5 +45,8 @@ class TestCore extends PHPUnit_Framework_TestCase
 
 		$this->assertNotNull($menu);
 		$this->assertInstanceOf('Orchestra\Widget\Menu', $menu);
+	
+		$this->assertEquals('foo', $_SERVER['test.orchestra.started']);
 	}
+	
 }
