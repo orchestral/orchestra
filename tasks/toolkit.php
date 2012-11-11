@@ -56,8 +56,7 @@ class Orchestra_Toolkit_Task {
 	 */
 	public function definition($args)
 	{
-		$bundle = get_cli_option('bundle') ?: DEFAULT_BUNDLE;
-		$path   = Bundle::path($bundle);
+		list($bundle, $path) = $this->path_resolver();
 
 		if (File::exists($file = $path.'orchestra.json'))
 		{
@@ -78,8 +77,7 @@ class Orchestra_Toolkit_Task {
 	 */
 	public function start($args)
 	{
-		$bundle = get_cli_option('bundle') ?: DEFAULT_BUNDLE;
-		$path   = Bundle::path($bundle);
+		list($bundle, $path) = $this->path_resolver();
 
 		if (File::exists($file = $path.'orchestra.php'))
 		{
@@ -100,8 +98,7 @@ class Orchestra_Toolkit_Task {
 	 */
 	public function installer($args)
 	{
-		$bundle = get_cli_option('bundle') ?: DEFAULT_BUNDLE;
-		$path   = Bundle::path($bundle);
+		list($bundle, $path) = $this->path_resolver();
 
 		if ($bundle !== DEFAULT_BUNDLE)
 		{
@@ -117,5 +114,22 @@ class Orchestra_Toolkit_Task {
 		File::copy(Bundle::path('orchestra').'tasks'.DS.'stubs'.DS.'orchestra'.DS.'installer.php', $file);
 
 		echo "File [{$bundle}::orchestra/installer.php] is created.\r\n";
+	}
+
+	/**
+	 * Resolve bundle path, for unregistered bundle it would not be accessible
+	 * from Bundle::path() helper, in this case we need to manually figure out
+	 * the valid path using path() helpers.
+	 *
+	 * @access private
+	 * @return string
+	 */
+	private function path_resolver()
+	{
+		$bundle = get_cli_option('bundle') ?: DEFAULT_BUNDLE;
+
+		if (Bundle::exists($bundle)) return array($bundle, Bundle::path($bundle));
+
+		return array($bundle, path('bundle').$bundle);
 	}
 }
