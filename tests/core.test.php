@@ -9,7 +9,8 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 	{
 		Bundle::start('orchestra');
 		$_SERVER['test.orchestra.started'] = null;
-	
+		$_SERVER['test.orchestra.done'] = null;
+
 		// before we can manually test Orchestra\Core::start()
 		// we need to shutdown Orchestra first.
 		Orchestra\Core::shutdown();
@@ -21,6 +22,7 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 	public function tearDown()
 	{
 		unset($_SERVER['test.orchestra.started']);
+		unset($_SERVER['test.orchestra.done']);
 	}
 
 	/**
@@ -48,5 +50,21 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 	
 		$this->assertEquals('foo', $_SERVER['test.orchestra.started']);
 	}
-	
+
+	/**
+	 * Test Orchestra\Core::shutdown() triggers `orchestra.done`.
+	 *
+	 * @test
+	 */
+	public function testShutdownTriggerEvent()
+	{
+		Event::listen('orchestra.done', function ()
+		{
+			$_SERVER['test.orchestra.done'] = 'foo';
+		});
+
+		Orchestra\Core::shutdown();
+
+		$this->assertEquals('foo', $_SERVER['test.orchestra.done']);
+	}
 }

@@ -147,6 +147,9 @@ class Core
 		static::$initiated = false;
 		static::$cached    = array();
 
+		// Orchestra is shutdown, let notify everyone.
+		Event::fire('orchestra.done');
+
 		// Only do this on installed application
 		if (false === Installer::$status) return;
 	}
