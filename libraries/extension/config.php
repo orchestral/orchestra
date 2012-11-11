@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Extension;
 
-use Laravel\Config as Laravel_Config, Orchestra\Core;
+use Laravel\Config as C, Orchestra\Core;
 
 class Config
 { 
@@ -20,12 +20,9 @@ class Config
 
 		foreach ($maps as $current => $default)
 		{
-			if (isset($config[$current]))
-			{
-				Laravel_Config::set($default, $config[$current]);
-			}
+			isset($config[$current]) and C::set($default, $config[$current]);
 			
-			$config[$current] = Laravel_Config::get($default);
+			$config[$current] = C::get($default);
 		}
 
 		$config = $memory->put("extension_{$name}", $config);
