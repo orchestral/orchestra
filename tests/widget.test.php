@@ -1,9 +1,9 @@
 <?php
 
-class TestWidget extends PHPUnit_Framework_TestCase
-{
+class WidgetTest extends PHPUnit_Framework_TestCase {
+	
 	/**
-	 * Setup the test
+	 * Setup the test environment.
 	 */
 	public function setUp()
 	{

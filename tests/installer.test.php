@@ -1,9 +1,9 @@
 <?php
 
-class TestInstaller extends PHPUnit_Framework_TestCase
-{
+class InstallerTest extends PHPUnit_Framework_TestCase {
+	
 	/**
-	 * Setup the test
+	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
@@ -11,11 +11,19 @@ class TestInstaller extends PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * Teardown the test environment.
+	 */
+	public function tearDown()
+	{
+		Orchestra\Installer::$status = false;
+	}
+
+	/**
 	 * Test Orchestra\Installer::installed()
 	 *
 	 * @test
 	 */
-	public function testStatus()
+	public function testInstallationStatus()
 	{
 		Orchestra\Installer::$status = false;
 
@@ -41,13 +49,5 @@ class TestInstaller extends PHPUnit_Framework_TestCase
 		));
 		
 		$this->assertTrue(Orchestra\Installer::check_database());
-	}
-
-	/**
-	 * Teardown
-	 */
-	public function tearDown()
-	{
-		Orchestra\Installer::$status = false;
 	}
 }

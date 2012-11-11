@@ -1,14 +1,22 @@
 <?php
 
-class TestTheme extends PHPUnit_Framework_TestCase 
-{
+class ThemeTest extends PHPUnit_Framework_TestCase {
+
 	/**
-	 * Setup the test
+	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
 		Bundle::start('orchestra');
 
+		Orchestra\View::$theme = 'frontend';
+	}
+
+	/**
+	 * Teardown the test environment.
+	 */
+	public function tearDown()
+	{
 		Orchestra\View::$theme = 'frontend';
 	}
 
@@ -53,13 +61,5 @@ class TestTheme extends PHPUnit_Framework_TestCase
 
 		$this->assertTrue(Orchestra\Theme::resolve() === $backend);
 		$this->assertFalse(Orchestra\Theme::resolve() === $frontend);
-	}
-
-	/**
-	 * Teardown
-	 */
-	public function tearDown()
-	{
-		Orchestra\View::$theme = 'frontend';
 	}
 }

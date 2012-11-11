@@ -1,9 +1,9 @@
 <?php
 
-class TestOrchestra extends PHPUnit_Framework_TestCase
-{
+class OrchestraTest extends PHPUnit_Framework_TestCase {
+
 	/**
-	 * Setup the test
+	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
