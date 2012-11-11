@@ -107,8 +107,7 @@ if ( ! IoC::registered('task: orchestra.upgrader'))
 	IoC::singleton('task: orchestra.upgrader', function($bundle)
 	{
 		$repository = new Laravel\CLI\Tasks\Bundle\Repository;
-
-		$upgrader = new Laravel\CLI\Tasks\Bundle\Bundler($repository);
+		$upgrader   = new Laravel\CLI\Tasks\Bundle\Bundler($repository);
 
 		try
 		{
@@ -167,7 +166,8 @@ if ( ! IoC::registered('orchestra.mailer'))
 | Orchestra Memory IoC
 |--------------------------------------------------------------------------
 |
-| Lets Orchestra handle Hybrid\Memory instance using IoC
+| Lets Orchestra handle Hybrid\Memory instance using IoC.
+|
 */
 
 if ( ! IoC::registered('orchestra.memory'))
