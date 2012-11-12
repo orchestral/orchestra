@@ -35,12 +35,6 @@ include_once Bundle::path('orchestra').'includes'.DS.'dependencies'.EXT;
 |
 | Lets listen to when Orchestra bundle is started.
 */ 
-
-Event::listen('laravel.started: orchestra', function () 
-{
-	Orchestra\Core::start();
-});
-
 Event::listen('laravel.done', function () 
 {
 	Orchestra\Core::shutdown();
@@ -50,3 +44,6 @@ Event::listen('orchestra.started: backend', function ()
 {
 	Orchestra\View::$theme = 'backend';
 });
+
+Orchestra\Core::start();
+Orchestra\Core::asset();

@@ -101,6 +101,39 @@ class Core
 			static::$cached['orchestra_menu']->add('install')->title('Install')->link(handles('orchestra::installer'));
 		}
 
+		Event::fire('orchestra.started');
+
+		static::$initiated = true;
+	}
+
+	/**
+	 * Shutdown Orchestra
+	 *
+	 * @static
+	 * @access public
+	 * @return void
+	 */
+	public static function shutdown()
+	{	
+		static::$initiated = false;
+		static::$cached    = array();
+
+		// Orchestra is shutdown, let notify everyone.
+		Event::fire('orchestra.done');
+
+		// Only do this on installed application
+		if (false === Installer::$status) return;
+	}
+
+	/**
+	 * Initiate Asset and Theme IoC for Orchestra.
+	 *
+	 * @static
+	 * @access public
+	 * @return void
+	 */
+	public static function asset()
+	{
 		// localize memory variable
 		$memory = static::$cached['memory'];
 		
@@ -129,29 +162,6 @@ class Core
 		
 		$asset->style('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.css');
 		$asset->style('orchestra', 'bundles/orchestra/css/style.css', array('bootstrap'));
-
-		Event::fire('orchestra.started');
-
-		static::$initiated = true;
-	}
-
-	/**
-	 * Shutdown Orchestra
-	 *
-	 * @static
-	 * @access public
-	 * @return void
-	 */
-	public static function shutdown()
-	{	
-		static::$initiated = false;
-		static::$cached    = array();
-
-		// Orchestra is shutdown, let notify everyone.
-		Event::fire('orchestra.done');
-
-		// Only do this on installed application
-		if (false === Installer::$status) return;
 	}
 
 	/**
