@@ -117,8 +117,6 @@ class Extension
 	 */
 	public static function detect($bundles = array())
 	{
-		$memory     = Core::memory();
-
 		if (empty($bundles))
 		{
 			$bundles[DEFAULT_BUNDLE] = path('app');
@@ -134,7 +132,6 @@ class Extension
 		}
 
 		$extensions = static::load($bundles);
-		$memory     = Core::memory();
 		$cached     = array();
 
 		// we should cache extension to be stored to Hybrid\Memory to avoid 
@@ -152,7 +149,7 @@ class Extension
 			);
 		}
 
-		$memory->put('extensions.available', $cached);
+		Core::memory()->put('extensions.available', $cached);
 
 		return $extensions;
 	}
