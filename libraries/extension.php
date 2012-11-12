@@ -79,6 +79,34 @@ class Extension
 		return array_get($extension, $option, $default);
 	}
 
+	/**
+	 * Load extensions for Orchestra (from a list of folders)
+	 *
+	 * @static
+	 * @access protected
+	 * @param  array    $bundles
+	 * @return array
+	 */
+	protected static function load($bundles = array())
+	{
+		$extensions = array();
+
+		foreach ($bundles as $name => $path)
+		{
+			if (is_file($path.'orchestra.json'))
+			{
+				$extensions[$name] = json_decode(file_get_contents($path.'orchestra.json'));
+					
+				if (is_null($extensions[$name])) 
+				{
+					// json_decode couldn't parse, throw an exception
+					throw new Exception("Extension [{$name}]: cannot decode orchestra.json file");
+				}
+			}
+		}
+
+		return $extensions;
+	}
 
 	/**
 	 * Detect all of the extensions for orchestra
@@ -87,38 +115,27 @@ class Extension
 	 * @access public
 	 * @return array
 	 */
-	public static function detect()
+	public static function detect($bundles = array())
 	{
-		$extensions = array();
 		$memory     = Core::memory();
 
-		if (is_file(path('app').'/orchestra.json'))
+		if (empty($bundles))
 		{
-			$extensions[DEFAULT_BUNDLE] = json_decode(file_get_contents(path('app').DS.'orchestra.json'));
-		}
+			$bundles[DEFAULT_BUNDLE] = path('app');
 
-		$directory = path('bundle');
+			$items = new fIterator(path('bundle'), fIterator::SKIP_DOTS);
 
-		$items = new fIterator($directory, fIterator::SKIP_DOTS);
-
-		foreach ($items as $item)
-		{
-			if ($item->isDir())
+			foreach ($items as $item)
 			{
-				if (is_file($item->getRealPath().DS.'orchestra.json'))
-				{
-					$extensions[$item->getFilename()] = json_decode(file_get_contents($item->getRealPath().DS.'orchestra.json'));
-					
-					if (is_null($extensions[$item->getFilename()])) 
-					{
-						// json_decode couldn't parse, throw an exception
-						throw new Exception('Cannot decode orchestra.json file in extension '.$item->getFilename());
-					}
-				}
+				if ( ! $item->isDir()) continue;
+
+				$bundles[$item->getFilename()] = rtrim($item->getRealPath(), DS).DS;
 			}
 		}
 
-		$cached = array();
+		$extensions = static::load($bundles);
+		$memory     = Core::memory();
+		$cached     = array();
 
 		// we should cache extension to be stored to Hybrid\Memory to avoid 
 		// over usage of database space
@@ -145,7 +162,7 @@ class Extension
 	 *
 	 * @static
 	 * @access public
-	 * @param  string $name
+	 * @param  string   $name
 	 * @return void
 	 */
 	public static function activate($name)
@@ -171,7 +188,7 @@ class Extension
 	 *
 	 * @static
 	 * @access public
-	 * @param  string $name
+	 * @param  string   $name
 	 * @return bool
 	 */
 	public static function activated($name)
@@ -187,7 +204,7 @@ class Extension
 	 *
 	 * @static
 	 * @access public
-	 * @param  string $name
+	 * @param  string   $name
 	 * @return void
 	 */
 	public static function deactivate($name)
@@ -218,7 +235,7 @@ class Extension
 	 * 
 	 * @static
 	 * @access public
-	 * @param  string $name
+	 * @param  string   $name
 	 * @return void
 	 */
 	public static function publish($name)
