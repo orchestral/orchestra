@@ -5,6 +5,11 @@ use Orchestra\Messages,
 
 class Orchestra_Credential_Controller extends Orchestra\Controller
 {
+	/**
+	 * List of auth.username configuration value.
+	 * 
+	 * @var mixed
+	 */
 	private $username_types = null;
 
 	/**
@@ -22,6 +27,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 		$this->filter('before', 'orchestra::not-auth')->only(array('login', 'register'));
 		$this->filter('before', 'orchestra::csrf')->only(array('login', 'register'))->on(array('post'));
 	}
+	
 	/**
 	 * Login Page
 	 *

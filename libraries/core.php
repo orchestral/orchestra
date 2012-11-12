@@ -42,22 +42,19 @@ class Core
 		// avoid current method from being called more than once.
 		if (true === static::$initiated) return ;
 
-		// Make Menu instance
+		// Make Menu instance for backend and frontend appliction
 		static::$cached['orchestra_menu'] = Widget::make('menu.orchestra');
-		
-		// Make Menu instance for frontend application
-		static::$cached['app_menu'] = Widget::make('menu.application');
+		static::$cached['app_menu']       = Widget::make('menu.application');
 
-		// Make ACL instance
+		// Make ACL instance for Orchestra
 		static::$cached['acl'] = Acl::make('orchestra');
 
 		// First, we need to ensure that Hybrid\Acl is compliance with 
 		// our Eloquent Model, This would overwrite the default configuration
 		Config::set('hybrid::auth.roles', function ($user, $roles)
 		{
-			// Check if user is null, there roles shouldn't be available, returning 
-			// null would allow any other Event listening to the same id to overwrite
-			// this.
+			// Check if user is null, where roles wouldn't be available, returning 
+			// null would allow any other event listener (if any).
 			if (is_null($user)) return ;
 
 			foreach ($user->roles()->get() as $role)
@@ -70,7 +67,8 @@ class Core
 
 		try 
 		{
-			// Initiate Memory class
+			// Initiate Memory class from IoC, this to allow advanced user 
+			// to use other implementation if there is a need for it.
 			static::$cached['memory'] = IoC::resolve('orchestra.memory');
 
 			if (is_null(static::$cached['memory']->get('site.name')))
@@ -98,7 +96,9 @@ class Core
 			// runtime/in-memory setup
 			static::$cached['memory'] = Memory::make('runtime.orchestra');
 
-			static::$cached['orchestra_menu']->add('install')->title('Install')->link(handles('orchestra::installer'));
+			static::$cached['orchestra_menu']->add('install')
+				->title('Install')
+				->link(handles('orchestra::installer'));
 		}
 
 		Event::fire('orchestra.started');
@@ -197,7 +197,7 @@ class Core
 	 */
 	public static function menu($type = 'orchestra')
 	{
-		return static::$cached["{$type}_menu"] ?: null;
+		return isset(static::$cached["{$type}_menu"]) ? static::$cached["{$type}_menu"] : null;
 	}
 
 	/**
@@ -259,7 +259,7 @@ class Core
 				->title(__('orchestra::title.home.list')->get())
 				->link(handles('orchestra'));
 
-			// Add menu when user can manage users
+			// Add menu when logged-user user has authorization to `manage users`
 			if ($acl->can('manage-users'))
 			{
 				$menu->add('users')
@@ -271,7 +271,7 @@ class Core
 					->link(handles('orchestra::users/view'));
 			}
 
-			// Add menu when user can manage orchestra
+			// Add menu when logged-in user has authorization to `manage orchestra`
 			if ($acl->can('manage-orchestra'))
 			{
 				$menu->add('extensions', 'after:home')
