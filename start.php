@@ -6,6 +6,7 @@
 |--------------------------------------------------------------------------
 |
 | Map Orchestra Library using PSR-0 standard namespace. 
+|
 */
 
 Autoloader::namespaces(array(
@@ -22,7 +23,8 @@ Autoloader::map(array(
 | Orchestra Dependencies
 |--------------------------------------------------------------------------
 |
-| Add Orchestra helpers function and dependencies
+| Add Orchestra helpers function and dependencies.
+|
 */
 
 include_once Bundle::path('orchestra').'helpers'.EXT;
@@ -34,6 +36,7 @@ include_once Bundle::path('orchestra').'includes'.DS.'dependencies'.EXT;
 |--------------------------------------------------------------------------
 |
 | Lets listen to when Orchestra bundle is started.
+|
 */ 
 Event::listen('laravel.done', function () 
 {
@@ -44,6 +47,12 @@ Event::listen('orchestra.started: backend', function ()
 {
 	Orchestra\View::$theme = 'backend';
 });
+
+/*
+|--------------------------------------------------------------------------
+| Let's Start
+|--------------------------------------------------------------------------
+*/
 
 Orchestra\Core::start();
 Orchestra\Core::asset();
