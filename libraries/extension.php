@@ -237,15 +237,8 @@ class Extension {
 	 */
 	public static function publish($name)
 	{
-		if (IoC::registered('task: orchestra.migrator'))
-		{
-			IoC::resolve('task: orchestra.migrator', array('migrate', $name));
-		}
-
-		if (IoC::registered('task: orchestra.publisher'))
-		{
-			IoC::resolve('task: orchestra.publisher', array($name));
-		}
+		IoC::resolve('task: orchestra.migrator', array('migrate', $name));
+		IoC::resolve('task: orchestra.publisher', array($name));
 	}
 
 	/**
