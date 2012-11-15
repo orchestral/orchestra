@@ -2,8 +2,8 @@
 
 use Laravel\Fluent;
 
-class Traverse 
-{
+class Traverse {
+
 	/**
 	 * List of items
 	 *

@@ -8,8 +8,8 @@ use \Bundle, \Config, \DB, \Event, \Exception, \Hash, \Input, \IoC,
 	Orchestra\Model\Role,
 	Hybrid\Acl;
 
-class Runner
-{
+class Runner {
+
 	/**
 	 * Orchestra\Messages instance
 	 *

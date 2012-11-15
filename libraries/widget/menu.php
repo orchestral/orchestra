@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Widget;
 
-class Menu extends Driver
-{
+class Menu extends Driver {
+	
 	/**
 	 * Type
 	 *

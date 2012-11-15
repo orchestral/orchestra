@@ -2,8 +2,8 @@
 
 use \Eloquent;
 
-class User extends Eloquent 
-{
+class User extends Eloquent {
+	
 	/**
 	 * Has Many relationship to `user_meta` table.
 	 *

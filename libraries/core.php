@@ -9,8 +9,8 @@ use \Asset,
 	Hybrid\Acl, 
 	Hybrid\Memory;
 
-class Core
-{
+class Core {
+	
 	/**
 	 * Core initiated status
 	 *

@@ -6,8 +6,8 @@ use Orchestra\Core,
 	Orchestra\Model\User\Meta as User_Meta,
 	Orchestra\View;
 
-class Orchestra_Forgot_Controller extends Orchestra\Controller 
-{
+class Orchestra_Forgot_Controller extends Orchestra\Controller {
+
 	/**
 	 * Construct Forgot Password Controller with some pre-define configuration 
 	 *

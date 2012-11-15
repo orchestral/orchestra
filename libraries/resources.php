@@ -3,8 +3,8 @@
 use Exception, 
 	Laravel\Str;
 
-class Resources
-{
+class Resources {
+
 	/**
 	 * The resources registrar.
 	 *

@@ -3,8 +3,8 @@
 use \Session, 
 	Laravel\Messages as Laravel_Messages;
 
-class Messages extends Laravel_Messages 
-{
+class Messages extends Laravel_Messages {
+
 	/**
 	 * Add a message to the collector.
 	 *
@@ -21,7 +21,6 @@ class Messages extends Laravel_Messages
 	public static function make($key, $message)
 	{
 		$instance = new static();
-
 		$instance->add($key, $message);
 
 		return $instance;

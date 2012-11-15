@@ -2,8 +2,8 @@
 
 use \Exception;
 
-class Widget 
-{
+class Widget {
+
 	/**
 	 * Cache widget instance so we can reuse it
 	 * 

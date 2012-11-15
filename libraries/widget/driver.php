@@ -1,9 +1,10 @@
 <?php namespace Orchestra\Widget;
 
-use \Config, Laravel\Fluent;
+use \Config, 
+	Laravel\Fluent;
 
-abstract class Driver
-{
+abstract class Driver {
+
 	/**
 	 * Transerve instance
 	 *

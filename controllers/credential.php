@@ -3,8 +3,8 @@
 use Orchestra\Messages, 
 	Orchestra\View;
 
-class Orchestra_Credential_Controller extends Orchestra\Controller
-{
+class Orchestra_Credential_Controller extends Orchestra\Controller {
+
 	/**
 	 * List of auth.username configuration value.
 	 * 

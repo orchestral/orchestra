@@ -1,10 +1,12 @@
 <?php namespace Orchestra;
 
-use \Event, \IoC, \Session, 
+use \Event, 
+	\IoC, 
+	\Session, 
 	Laravel\View as V;
 
-class View extends V
-{
+class View extends V {
+
 	/**
 	 * Theme group name
 	 * 

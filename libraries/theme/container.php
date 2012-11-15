@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Theme;
 
-use \Bundle, \URL;
+use \Bundle, 
+	\URL;
 
-class Container
-{
+class Container {
 
 	/**
 	 * Active theme folder name

@@ -2,8 +2,8 @@
 
 use \Config, \DB, Exception;
 
-class Installer
-{
+class Installer {
+
 	/**
 	 * Installation status
 	 *

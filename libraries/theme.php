@@ -1,9 +1,11 @@
 <?php namespace Orchestra;
 
-use \Bundle, \IoC, \URL;
+use \Bundle, 
+	\IoC, 
+	\URL;
 
-class Theme
-{
+class Theme {
+
 	/**
 	 * All of the instantiated theme containers.
 	 *

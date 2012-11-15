@@ -4,8 +4,8 @@ use \Controller as Base_Controller,
 	\Event,
 	\View;
 
-class Controller extends Base_Controller
-{
+class Controller extends Base_Controller {
+
 	/**
 	 * Set Orchestra\Controller to default use Restful Controller
 	 *

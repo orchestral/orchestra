@@ -21,6 +21,9 @@ return array(
 		),
 	),
 
+	'edit'         => 'Edit',
+	'delete'       => 'Delete',
+
 	'no-data'      => 'Нет данных на текущий момент',
 	'no-extension' => 'Нет доступных расширений',
 	

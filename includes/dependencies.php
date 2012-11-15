@@ -6,7 +6,8 @@
 |--------------------------------------------------------------------------
 |
 | Register and start Hybrid bundle if it's not registered in 
-| application/bundles.php
+| `application/bundles.php`.
+|
 */
 
 if ( ! Bundle::exists('hybrid'))
@@ -21,7 +22,8 @@ Bundle::start('hybrid');
 | Orchestra IoC (Migration)
 |--------------------------------------------------------------------------
 |
-| Lets Orchestra run Laravel\CLI migration actions
+| Lets Orchestra run Laravel\CLI migration actions.
+|
 */
 
 if ( ! IoC::registered('task: orchestra.migrator'))
@@ -61,7 +63,8 @@ if ( ! IoC::registered('task: orchestra.migrator'))
 |--------------------------------------------------------------------------
 |
 | Lets Orchestra run Laravel\CLI bundle asset publish actions. This is an
-| alias to `php artisan bundle:publish`
+| alias to `php artisan bundle:publish`.
+|
 */
 
 if ( ! IoC::registered('task: orchestra.publisher'))
@@ -91,7 +94,8 @@ if ( ! IoC::registered('task: orchestra.publisher'))
 |--------------------------------------------------------------------------
 |
 | Lets Orchestra run Laravel\CLI bundle upgrade actions. This is an
-| alias to `php artisan bundle:upgrade`
+| alias to `php artisan bundle:upgrade`.
+|
 */
 
 if ( ! IoC::registered('task: orchestra.upgrader'))
@@ -128,7 +132,8 @@ if ( ! IoC::registered('task: orchestra.upgrader'))
 | Orchestra Mailer IoC
 |--------------------------------------------------------------------------
 |
-| Lets Orchestra handle mailer (integration with Message bundle) using IoC
+| Lets Orchestra handle mailer (integration with Message bundle) using IoC.
+|
 */
 
 if ( ! IoC::registered('orchestra.mailer'))

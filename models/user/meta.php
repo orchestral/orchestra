@@ -2,8 +2,8 @@
 
 use \Eloquent;
 
-class Meta extends Eloquent
-{
+class Meta extends Eloquent {
+
 	/**
 	 * Overwrite table name
 	 * 

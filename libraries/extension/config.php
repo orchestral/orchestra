@@ -1,9 +1,10 @@
 <?php namespace Orchestra\Extension;
 
-use Laravel\Config as C, Orchestra\Core;
+use Laravel\Config as C, 
+	Orchestra\Core;
 
-class Config
-{ 
+class Config {
+ 
 	/**
 	 * Map configuration to allow orchestra to store it in database
 	 *

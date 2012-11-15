@@ -3,9 +3,7 @@
 use Orchestra\Extension,
 	Orchestra\View;
 
-class Orchestra_Manages_Controller extends Orchestra\Controller
-{
-	public $restful = true;
+class Orchestra_Manages_Controller extends Orchestra\Controller {
 
 	/**
 	 * Construct Pages Controller, only authenticated user should 

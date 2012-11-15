@@ -2,8 +2,8 @@
 
 use \Eloquent;
 
-class Role extends Eloquent 
-{
+class Role extends Eloquent {
+
 	/**
 	 * Return pair of id and name array for all roles
 	 *

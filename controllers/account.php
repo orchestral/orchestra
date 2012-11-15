@@ -4,8 +4,8 @@ use Orchestra\Form,
 	Orchestra\Messages, 
 	Orchestra\View;
 
-class Orchestra_Account_Controller extends Orchestra\Controller
-{
+class Orchestra_Account_Controller extends Orchestra\Controller {
+
 	/**
 	 * Construct Account Controller to allow user to update own profile. Only 
 	 * authenticated user should be able to access this controller.

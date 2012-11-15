@@ -2,8 +2,8 @@
 
 use \Closure;
 
-class Pane extends Driver
-{
+class Pane extends Driver {
+
 	/**
 	 * Type
 	 *

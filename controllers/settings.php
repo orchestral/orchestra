@@ -7,8 +7,8 @@ use Laravel\Fluent,
 	Orchestra\Messages,
 	Orchestra\View;
 
-class Orchestra_Settings_Controller extends Orchestra\Controller 
-{
+class Orchestra_Settings_Controller extends Orchestra\Controller {
+	
 	/**
 	 * Construct Settings Controller, only authenticated user should 
 	 * be able to access this controller.

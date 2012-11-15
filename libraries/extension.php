@@ -2,8 +2,8 @@
 
 use \Bundle, \Exception, \IoC, FileSystemIterator as fIterator;
 
-class Extension 
-{
+class Extension {
+
 	/**
 	 * List of extensions
 	 * 

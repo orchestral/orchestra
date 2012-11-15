@@ -1,9 +1,8 @@
 <?php namespace Orchestra;
 
-use Hybrid\Form as Hybrid_Form;
+use Hybrid\Form as F;
 
-class Form extends Hybrid_Form 
-{
+class Form extends F {
 
 	/**
 	 * Alias Hybrid\Form class

@@ -1,14 +1,15 @@
 <?php 
 
 use Orchestra\Form, 
+	Orchestra\HTML,
 	Orchestra\Messages, 
 	Orchestra\Table,
+	Orchestra\View,
 	Orchestra\Model\Role, 
-	Orchestra\Model\User,
-	Orchestra\View;
+	Orchestra\Model\User;
 
-class Orchestra_Users_Controller extends Orchestra\Controller
-{
+class Orchestra_Users_Controller extends Orchestra\Controller {
+
 	/**
 	 * Construct Users Controller with some pre-define configuration 
 	 *
@@ -81,10 +82,14 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 					
 					foreach ($roles as $role)
 					{
-						$value[] = '<span class="label label-info">'.$role->name.'</span>';
+						$value[] = HTML::create('span', $role->name, array('class' => 'label label-info'));
 					}
 					
-					return '<strong>'.$row->fullname.'</strong><br><span class="meta">'.implode(' ', $value).'</span>';
+					return implode('', array(
+						HTML::create('strong', $row->fullname),
+						HTML::create('br'),
+						HTML::create('span', HTML::raw(implode(' ', $value)), array('class' => 'meta')),
+					));
 				};
 
 			});
@@ -110,14 +115,15 @@ class Orchestra_Users_Controller extends Orchestra\Controller
 				$column->label = '';
 				$column->value = function ($row) 
 				{
-					$btn = array(
-						'<div class="btn-group">',
-						'<a class="btn btn-mini" href="'.handles('orchestra::users/view/'.$row->id).'">Edit</a>',
-						Auth::user()->id !== $row->id ? '<a class="btn btn-mini btn-danger" href="'.handles('orchestra::users/delete/'.$row->id).'">Delete</a>' : '',
-						'</div>',
-					);
+					$btn = array();
+					$btn[] = HTML::link(handles('orchestra::users/view/'.$row->id), __('orchestra::label.edit')->get(), array('class' => 'btn btn-mini'));
 
-					return implode('', $btn);
+					if (Auth::user()->id !== $row->id)
+					{
+						$btn[] = HTML::link(handles('orchestra::users/delete/'.$row->id), __('orchestra::label.delete')->get(), array('class' => 'btn btn-mini btn-danger'));
+					}
+
+					return HTML::create('div', HTML::raw(implode('', $btn)), array('class' => 'btn-group'));
 				};
 			});
 		});

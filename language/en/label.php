@@ -21,6 +21,9 @@ return array(
 		),
 	),
 
+	'edit'         => 'Edit',
+	'delete'       => 'Delete',
+	
 	'no-data'      => 'No data at the moment',
 	'no-extension' => 'No extension available at the moment',
 	

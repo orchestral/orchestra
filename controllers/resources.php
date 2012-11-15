@@ -1,12 +1,11 @@
 <?php
 
-use Orchestra\Resources,
+use Orchestra\HTML,
+	Orchestra\Resources,
 	Orchestra\Table,
 	Orchestra\View;
 
-class Orchestra_Resources_Controller extends Orchestra\Controller
-{
-	public $restful = true;
+class Orchestra_Resources_Controller extends Orchestra\Controller {
 
 	/**
 	 * Construct Resources Controller, only authenticated user should 
@@ -45,7 +44,8 @@ class Orchestra_Resources_Controller extends Orchestra\Controller
 			{
 				$column->value = function ($row)
 				{
-					return '<strong>'.HTML::link(handles("orchestra::resources/{$row->id}"), $row->name).'</strong>';
+					$link = HTML::link(handles("orchestra::resources/{$row->id}"), $row->name);
+					return HTML::create('strong', HTML::raw($link));
 				};
 			});
 		});

@@ -6,8 +6,8 @@ use Orchestra\Core,
 	Orchestra\Messages,
 	Orchestra\View;
 
-class Orchestra_Installer_Controller extends Controller 
-{
+class Orchestra_Installer_Controller extends Controller {
+
 	/**
 	 * Construct Installer Controller with some pre-define configuration 
 	 *
