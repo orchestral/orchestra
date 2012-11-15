@@ -16,6 +16,7 @@ return array(
 		'invalid-combination' => 'Invalid user and password combination',
 		'logged-in'           => 'You has been logged in',
 		'logged-out'          => 'You have been logged out',
+		'unauthorized'        => 'You are not authorized to access this action',
 	),
 
 	'db-failed' => 'Unable to save to database',

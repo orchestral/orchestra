@@ -16,6 +16,7 @@ return array(
 		'invalid-combination' => 'Неверная комбинация логина и пароля',
 		'logged-in'           => 'Вы успешно вошли',
 		'logged-out'          => 'Вы успешно вышли',
+		'unauthorized'        => 'You are not authorized to access this action',
 	),
 
 	'db-failed' => 'Невозможно сохранить в базу данных',
