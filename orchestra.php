@@ -3,12 +3,12 @@
 class Orchestra 
 {
 	/**
-	 * Shorthand for calling Orchestra\Core methods.
+	 * Facade for Orchestra\Core.
 	 *
 	 * @static
 	 * @access public
-	 * @param  string $method
-	 * @param  array $parameters
+	 * @param  string   $method
+	 * @param  array    $parameters
 	 * @return Orchestra\Core
 	 */
 	public static function __callStatic($method, $parameters)

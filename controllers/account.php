@@ -23,6 +23,8 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 	/**
 	 * Edit User Profile Page
 	 *
+	 * GET (:bundle)/account
+	 *
 	 * @access public
 	 * @return Response
 	 */
@@ -59,6 +61,8 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 	/**
 	 * POST Edit User Profile
 	 *
+	 * POST (:bundle)/account
+	 * 
 	 * @access public
 	 * @return Response
 	 */
@@ -113,6 +117,8 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 	/**
 	 * Edit Password Page
 	 *
+	 * GET (:bundle)/account/password
+	 * 
 	 * @access public
 	 * @return Response
 	 */
@@ -125,6 +131,8 @@ class Orchestra_Account_Controller extends Orchestra\Controller
 
 	/**
 	 * POST Edit User Password
+	 *
+	 * POST (:bundle)/account/password
 	 *
 	 * @access public
 	 * @return Response

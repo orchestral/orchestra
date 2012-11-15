@@ -37,7 +37,8 @@ include_once Bundle::path('orchestra').'includes'.DS.'dependencies'.EXT;
 |
 | Lets listen to when Orchestra bundle is started.
 |
-*/ 
+*/
+
 Event::listen('laravel.done', function () 
 {
 	Orchestra\Core::shutdown();

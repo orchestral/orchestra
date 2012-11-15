@@ -31,6 +31,8 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 	/**
 	 * Login Page
 	 *
+	 * GET (:bundle)/login
+	 *
 	 * @access public
 	 * @return Response
 	 */
@@ -45,6 +47,8 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 	/**
 	 * POST Login
 	 *
+	 * POST (:bundle)/login
+	 * 
 	 * @access public
 	 * @return Response
 	 */
@@ -95,6 +99,8 @@ class Orchestra_Credential_Controller extends Orchestra\Controller
 	/**
 	 * Logout the user
 	 *
+	 * GET (:bundle)/logout
+	 * 
 	 * @access public
 	 * @return Response
 	 */

@@ -27,6 +27,8 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 	/**
 	 * List all available extensions
 	 *
+	 * GET (:bundle)/extensions
+	 *
 	 * @access public
 	 * @return Response
 	 */
@@ -39,6 +41,8 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 
 	/**
 	 * Activate an extension
+	 *
+	 * GET (:bundle)/extensions/activate/(:name)
 	 *
 	 * @access public
 	 * @param  string   $name name of the extension
@@ -60,6 +64,8 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 	/**
 	 * Deactivate an extension
 	 *
+	 * GET (:bundle)/extensions/deactivate/(:name)
+	 * 
 	 * @access public
 	 * @param  string   $name name of the extension
 	 * @return Response
@@ -79,6 +85,8 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 
 	/**
 	 * Configure an extension
+	 * 
+	 * GET (:bundle)/extensions/configure/(:name)
 	 * 
 	 * @access public
 	 * @param  string   $name name of the extension
@@ -135,6 +143,8 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 
 	/**
 	 * Update extension configuration
+	 *
+	 * POST (:bundle)/extensions/configure/(:name)
 	 * 
 	 * @access public
 	 * @param  string   $name name of the extension
@@ -175,6 +185,8 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller
 
 	/**
 	 * Upgrade an extension
+	 * 
+	 * GET (:bundle)/extensions/upgrade/(:name)
 	 * 
 	 * @access public
 	 * @param  string   $name name of the extension

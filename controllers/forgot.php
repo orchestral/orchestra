@@ -25,6 +25,8 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller
 	/**
 	 * Show Forgot Password Page where user can enter their current e-mail address
 	 *
+	 * GET (:bundle)/forgot
+	 * 
 	 * @access public
 	 * @return Response
 	 */
@@ -38,6 +40,8 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller
 	 * a URL where user need to visit before the system can actually change the 
 	 * password on their behave. 
 	 *
+	 * POST (:bundle)/forgot
+	 * 
 	 * @access public
 	 * @return Response
 	 */
@@ -116,6 +120,8 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller
 	/**
 	 * Once user actually visit the reset my password page, we now should be able to 
 	 * make the operation to create a temporary password on behave of the user
+	 *
+	 * GET (:bundle)/forgot/reset/(:id)/(:hash)
 	 *
 	 * @access public
 	 * @param  int      $id

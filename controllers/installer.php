@@ -29,6 +29,8 @@ class Orchestra_Installer_Controller extends Controller
 	/**
 	 * Initiate Installer and show database and environment setting
 	 *
+	 * ANY (:bundle)/installer
+	 *
 	 * @access public
 	 * @return Response
 	 */
@@ -72,6 +74,8 @@ class Orchestra_Installer_Controller extends Controller
 	/**
 	 * Installation steps, migrate database as well as create first 
 	 * administration user for current application
+	 *
+	 * ANY (:bundle)/installer/steps/(:step)
 	 *
 	 * @access public
 	 * @param  integer $step step number

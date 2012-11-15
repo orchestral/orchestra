@@ -25,8 +25,8 @@ class Orchestra_Pages_Controller extends Orchestra\Controller
 	 * Add a drop-in page anywhere on Orchestra
 	 *
 	 * @access public
-	 * @param  string $request
-	 * @param  array $arguments
+	 * @param  string   $request
+	 * @param  array    $arguments
 	 * @return Response
 	 */
 	public function __call($request, $arguments)

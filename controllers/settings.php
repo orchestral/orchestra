@@ -27,6 +27,8 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 	/**
 	 * Orchestra Settings Page
 	 *
+	 * GET (:bundle)/settings
+	 *
 	 * @access public
 	 * @return Response
 	 */
@@ -108,6 +110,14 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 		return View::make('orchestra::resources.edit', $data);
 	}
 
+	/**
+	 * POST Orchestra Settings Page
+	 * 
+	 * POST (:bundle)/settings
+	 * 
+	 * @access public
+	 * @return Response
+	 */
 	public function post_index()
 	{
 		$input = Input::all();
@@ -149,6 +159,14 @@ class Orchestra_Settings_Controller extends Orchestra\Controller
 				->with('message', $m->serialize());
 	}
 
+	/**
+	 * Upgrade Orchestra and it's dependencies.
+	 *
+	 * GET (:bundle)/settings/upgrade
+	 *
+	 * @access public
+	 * @return Response
+	 */
 	public function get_upgrade()
 	{
 		$memory = Core::memory();
