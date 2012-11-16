@@ -1,6 +1,9 @@
 <?php namespace Orchestra;
 
-use \Bundle, \Exception, \IoC, FileSystemIterator as fIterator;
+use \Bundle, 
+	\Exception, 
+	\IoC, 
+	FileSystemIterator as fIterator;
 
 class Extension {
 
@@ -109,7 +112,7 @@ class Extension {
 	}
 
 	/**
-	 * Detect all of the extensions for orchestra
+	 * Detect all of the extensions for Orchestra
 	 *
 	 * @static
 	 * @access public
