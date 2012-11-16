@@ -9,7 +9,8 @@ projects but never took the time to build. Orchestra is what Bonfire is for Code
 
 ## Installation
 
-Orchestra Platform is best installed in a clean Laravel environment, due to the facts it require to create `users` table and administrator account during installation.
+Orchestra Platform is best installed in a clean Laravel environment, due to the facts it 
+require to create `users` table and administrator account during installation.
 
 ### Installation with Laravel Artisan
 
