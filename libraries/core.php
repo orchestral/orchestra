@@ -246,14 +246,19 @@ class Core {
 	 */
 	protected static function loader()
 	{
-		// Multiple event listener for Backend (administrator panel)
-		Event::listen('orchestra.done: backend', function ()
-		{
-			// localize the variable, and ensure it by references.
-			$menu   = Core::menu('orchestra');
-			$acl    = Core::acl();
-			$memory = Core::memory();
+		// localize the variable, and ensure it by references.
+		$acl    = static::acl();
+		$memory = static::memory();
+		$menu   = static::menu('orchestra');
 
+		// Add basic menu.
+		$menu->add('home')
+			->title(__('orchestra::title.home.list')->get())
+			->link(handles('orchestra'));
+
+		// Multiple event listener for Backend (administrator panel)
+		Event::listen('orchestra.done: backend', function () use ($acl, $memory, $menu)
+		{
 			// Add basic menu.
 			$menu->add('home')
 				->title(__('orchestra::title.home.list')->get())
