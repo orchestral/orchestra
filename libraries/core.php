@@ -156,9 +156,10 @@ class Core {
 		// Define basic core Assets
 		$asset = Asset::container('orchestra.backend');
 
+		$asset->script('underscore', 'bundles/orchestra/js/underscore.min.js');
 		$asset->script('jquery', 'bundles/orchestra/js/jquery.min.js');
 		$asset->script('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.js', array('jquery'));
-		$asset->script('orchestra', 'bundles/orchestra/js/script.min.js', array('jquery', 'bootstrap'));
+		$asset->script('orchestra', 'bundles/orchestra/js/script.min.js', array('jquery', 'bootstrap', 'underscore'));
 		
 		$asset->style('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.css');
 		$asset->style('orchestra', 'bundles/orchestra/css/style.css', array('bootstrap'));
