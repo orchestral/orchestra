@@ -1,4 +1,6 @@
 jQuery(function($) {
+	$('select[role!="switcher"]').select2();
+	
 	$('div.btn-group[data-toggle-name]').each(function() {
 		var group, form, name, hidden, buttons;
 

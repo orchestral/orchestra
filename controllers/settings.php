@@ -71,6 +71,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 				$fieldset->control('select', 'Upgrade via Web', function ($control)
 				{
 					$control->name = 'site_web_upgrade';
+					$control->attr = array('role' => 'switcher');
 					$control->options = array(
 						'yes' => 'Yes',
 						'no'  => 'No',

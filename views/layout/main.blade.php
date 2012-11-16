@@ -21,8 +21,13 @@
 		$asset->style('select2', 'bundles/orchestra/vendor/select2/select2.css');
 		$asset->script('select2', 'bundles/orchestra/vendor/select2/select2.min.js', array('jquery'));
 
-		echo $asset->styles();
-		echo $asset->scripts(); ?>
+		// Add jQuery-UI Library with Delta theme.
+		$asset->script('jquery-ui', 'bundles/orchestra/vendor/jquery.ui.js', array('jquery'));
+		$asset->script('jquery-ui-ts', 'bundles/orchestra/vendor/delta/js/jquery-ui.toggleSwitch.js', array('jquery-ui'));
+		$asset->style('delta-custom', 'bundles/orchestra/vendor/delta/css/custom.css');
+		$asset->style('jquery-ui', 'bundles/orchestra/vendor/delta/theme/jquery-ui.css'); ?>
+
+		{{ $asset->styles(); }}
 	</head>
 
 	<body>
@@ -44,5 +49,6 @@
 			</div>
 		</footer>
 
+		{{ $asset->scripts(); }}
 	</body>
 </html>

@@ -114,18 +114,36 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 			$handles = Extension::option($name, 'handles');
 
-			// We should only cater for custom URL handles for a route.
-			if ( ! is_null($handles) and Extension::option($name, 'configurable') !== false)
+			$form->fieldset(function ($fieldset) use ($handles, $name)
 			{
-				$form->fieldset(function ($fieldset) use ($handles)
+				// We should only cater for custom URL handles for a route.
+				if ( ! is_null($handles) and Extension::option($name, 'configurable') !== false)
 				{
 					$fieldset->control('input:text', 'handles', function ($control) use ($handles)
 					{
 						$control->label = 'Handle URL';
 						$control->value = $handles;
 					});
-				});
-			}
+				}
+
+				if ($name !== DEFAULT_BUNDLE)
+				{
+					$fieldset->control('select', 'web_upgrade', function ($control) use ($handles)
+					{
+						$control->value = function ($row)
+						{
+							return ($row->web_upgrade ? 'yes' : 'no');
+						};
+
+						$control->label = 'Upgrade via Web';
+						$control->attr = array('role' => 'switcher');
+						$control->options = array(
+							'yes' => 'Yes',
+							'no'  => 'No',
+						);
+					});
+				}
+			});
 		});
 
 		// Now lets the extension do their magic.
@@ -165,10 +183,16 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 		if (isset($input['handles']) and ! empty($input['handles']))
 		{
 			$loader['handles'] = $input['handles'];
-			unset($input['handles']);
-
-			$memory->put("extensions.active.{$name}", $loader);
 		}
+
+		// Configure whether extension should be able to be upgraded via web.
+		if (isset($input['web_upgrade']) and ! empty($input['web_upgrade']))
+		{
+			$input['web_upgrade']  = ('yes' === $input['web_upgrade'] ? true : false);
+			$loader['web_upgrade'] = $input['web_upgrade'];
+		}
+		
+		$memory->put("extensions.active.{$name}", $loader);
 
 		// In any event where extension need to do some custom handling.
 		Event::fire("orchestra.saving: extension.{$name}", array($config));
@@ -194,8 +218,12 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	 */
 	public function get_upgrade($name)
 	{
+		// we should only be able to upgrade extension which is already started
 		if ( ! Extension::started($name) or $name === DEFAULT_BUNDLE) return Response::error('404');
-		
+
+		// we shouldn't upgrade extension which is not allowed to upgrade using web
+		if (false === Extension::option($name, 'web_upgrade')) return Response::error('404');
+
 		IoC::resolve('task: orchestra.upgrader', array(array($name)));
 
 		Extension::publish($name);

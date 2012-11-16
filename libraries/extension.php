@@ -27,7 +27,7 @@ class Extension {
 	 */
 	public static function start($name, $config = array())
 	{
-		$default = array('handles' => null, 'auto' => false);
+		$default = array('handles' => null, 'auto' => false, 'web_upgrade' => false);
 		$name    = $name ?: null;
 		$config  = (array) $config;
 

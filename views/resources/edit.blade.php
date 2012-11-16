@@ -16,10 +16,4 @@
 
 </div>
 
-<script>
-jQuery(function($) {
-	$('select').select2();
-});
-</script>
-
 @endsection
