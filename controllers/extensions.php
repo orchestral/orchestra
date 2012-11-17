@@ -41,7 +41,6 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 		foreach($data['extensions'] as $name => &$ext)
 		{
-			//$solve = Extension::solve($name);
 			$ext->activable = Extension::solve($name);
 		}
 
