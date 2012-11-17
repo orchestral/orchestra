@@ -1,5 +1,22 @@
 jQuery(function($) {
-	$('select[role!="switcher"]').select2();
+	var ev = Javie.Events.make();
+	
+	$('*[role="redactor"]').redactor();
+
+	$('select[role="switcher"]').each(function(i, item) {
+		var el = $(item);
+
+		el.toggleSwitch({
+			highlight: $(item).data("highlight"),
+			width: 25,
+			change : function () {
+				ev.fire('switcher.change', this);
+			}
+		})
+
+		el.css('display', 'none');
+	})
+	$('select[role!="switcher"]').select2();;
 	
 	$('div.btn-group[data-toggle-name]').each(function() {
 		var group, form, name, hidden, buttons;

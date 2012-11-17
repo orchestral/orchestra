@@ -158,8 +158,10 @@ class Core {
 
 		$asset->script('underscore', 'bundles/orchestra/js/underscore.min.js');
 		$asset->script('jquery', 'bundles/orchestra/js/jquery.min.js');
+		$asset->script('javie', 'bundles/orchestra/js/javie.min.js', array('underscore'));
+
 		$asset->script('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.js', array('jquery'));
-		$asset->script('orchestra', 'bundles/orchestra/js/script.min.js', array('jquery', 'bootstrap', 'underscore'));
+		$asset->script('orchestra', 'bundles/orchestra/js/script.min.js', array('bootstrap', 'javie'));
 		
 		$asset->style('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.css');
 		$asset->style('orchestra', 'bundles/orchestra/css/style.css', array('bootstrap'));

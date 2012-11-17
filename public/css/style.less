@@ -139,3 +139,41 @@ section.container, section.container-fluid {
 		margin-left: 0;
 	}
 }
+
+/*
+| Fixes for Delta jQuery UI  
+*/
+form {
+	label.ui-state-active {
+		background: transparent;
+	}
+
+	.ui-slider .ui-slider-handle {
+		z-index: 1;
+	}
+}
+
+table {
+	&.table {
+		th.th-actions {
+			width: 100px;
+		}
+	}
+
+	&.ui-datepicker-calendar {
+		td.ui-datepicker-unselectable.ui-state-disabled {
+			span.ui-state-default {
+				display: block;
+				padding: 0 !important;
+				border: 0 none !important;
+				width: 30px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				font-size: 12px;
+				text-decoration: none;
+				font-weight: normal !important;
+			}
+		}
+	}
+}
