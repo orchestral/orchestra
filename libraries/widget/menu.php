@@ -1,5 +1,7 @@
 <?php namespace Orchestra\Widget;
 
+use \Closure;
+
 class Menu extends Driver {
 	
 	/**
@@ -37,13 +39,25 @@ class Menu extends Driver {
 	 *
 	 * @access public
 	 * @param  string   $id
-	 * @param  string   $location
+	 * @param  mixed    $location
+	 * @param  Closure  $callback
 	 * @return mixed
 	 */
-	public function add($id, $location = null)
+	public function add($id, $location = 'parent', $callback = null)
 	{
-		$location = $location ?: 'parent';
+		if ($location instanceof Closure)
+		{
+			$callback = $location;
+			$location = 'parent';
+		}
 		
-		return $this->traverse->add($id, $location);
+		$item = $this->traverse->add($id, $location ?: 'parent');
+
+		if ($callback instanceof Closure)
+		{
+			call_user_func($callback, $item);
+		}
+
+		return $item;
 	}
 }

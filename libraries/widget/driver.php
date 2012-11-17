@@ -70,9 +70,10 @@ abstract class Driver {
 	 * @access public
 	 * @param  string   $id
 	 * @param  mixed    $location
+	 * @param  Closure  $callback
 	 * @return mixed
 	 */
-	public abstract function add($id, $location = null);
+	public abstract function add($id, $location = 'parent', $callback = null);
 
 	/**
 	 * Render widget as a view

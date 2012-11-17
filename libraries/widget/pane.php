@@ -41,16 +41,23 @@ class Pane extends Driver {
 	 *
 	 * @access public
 	 * @param  string   $id
-	 * @param  Closure  $location
+	 * @param  mixed    $location
+	 * @param  Closure  $callback
 	 * @return mixed
 	 */
-	public function add($id, $location = null)
+	public function add($id, $location = 'parent', $callback = null)
 	{
-		$item = $this->traverse->add($id, 'parent');
-
 		if ($location instanceof Closure)
 		{
-			call_user_func($location, $item);
+			$callback = $location;
+			$location = 'parent';
+		}
+		
+		$item = $this->traverse->add($id, $location ?: 'parent');
+
+		if ($callback instanceof Closure)
+		{
+			call_user_func($callback, $item);
 		}
 
 		return $item;
