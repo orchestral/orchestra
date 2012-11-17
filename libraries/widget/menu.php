@@ -40,8 +40,10 @@ class Menu extends Driver {
 	 * @param  string   $location
 	 * @return mixed
 	 */
-	public function add($id, $location = 'parent')
+	public function add($id, $location = null)
 	{
+		$location = $location ?: 'parent';
+		
 		return $this->traverse->add($id, $location);
 	}
 }

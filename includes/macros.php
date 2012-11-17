@@ -13,3 +13,10 @@ HTML::macro('title', function ($page_title)
 		":page-title" => $page_title,
 	));
 });
+
+Blade::extend(function ($view)
+{
+	$pattern = '/(\s*)@placeholder\s?\(\s*(.*)\)/';
+
+	return preg_replace($pattern, '$1<?php foreach (Orchestra\Widget::make("placeholder.".$2)->get() as $_placeholder_): echo value($_placeholder_->value ?:""); endforeach; ?>', $view);
+});

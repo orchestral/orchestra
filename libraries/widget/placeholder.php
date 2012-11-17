@@ -1,16 +1,14 @@
 <?php namespace Orchestra\Widget;
 
-use \Closure;
-
-class Pane extends Driver {
-
+class Placeholder extends Driver {
+	
 	/**
 	 * Type
 	 *
 	 * @access  protected
 	 * @var     string
 	 */
-	protected $type = 'pane';
+	protected $type = 'placeholder';
 
 	/**
 	 * Configuration
@@ -20,10 +18,7 @@ class Pane extends Driver {
 	 */
 	protected $config = array(
 		'defaults' => array(
-			'attr'    => array(),
-			'title'   => '',
-			'content' => '',
-			'html'    => '',
+			'value' => '',
 		),
 	);
 
@@ -41,17 +36,13 @@ class Pane extends Driver {
 	 *
 	 * @access public
 	 * @param  string   $id
-	 * @param  Closure  $location
+	 * @param  mixed    $location
 	 * @return mixed
 	 */
 	public function add($id, $location = null)
 	{
-		$item = $this->traverse->add($id, 'parent');
-
-		if ($location instanceof Closure)
-		{
-			call_user_func($location, $item);
-		}
+		$item        = $this->traverse->add($id, 'parent');
+		$item->value = $location;
 
 		return $item;
 	}

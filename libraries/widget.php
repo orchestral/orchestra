@@ -38,6 +38,9 @@ class Widget {
 				case 'pane' :
 					static::$instances[$name] = new Widget\Pane($driver, $config);
 					break;
+				case 'placeholder' :
+					static::$instances[$name] = new Widget\Placeholder($driver, $config);
+					break;
 				default :
 					throw new Exception("Requested Orchestra\Widget Driver [{$type}] does not exist.");
 			}
