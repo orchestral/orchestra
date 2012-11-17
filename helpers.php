@@ -3,16 +3,49 @@
 if ( ! function_exists('theme_path'))
 {
 	/**
-	 * Return theme path
+	 * Return theme path location
 	 *
+	 * 
+	 * @deprecated      Replaced with locate
+	 * @see    locate()
 	 * @see    Orchestra\Theme::path()
-	 * @param  string $view
+	 * @param  string   $view
 	 * @return string
 	 */
 	function theme_path($view)
 	{
-		$theme = Orchestra\View::$theme;
-		return IoC::resolve("orchestra.theme: {$theme}")->path($view);
+		return locate($view);
+	}
+}
+
+if ( ! function_exists('locate'))
+{
+	/**
+	 * Return theme path location
+	 *
+	 * @see    Orchestra\Theme::path()
+	 * @param  string   $view
+	 * @return string
+	 */
+	function locate($view)
+	{
+		return Orchestra\Theme::resolve()->path($view);
+	}
+}
+
+if ( ! function_exists('memorize'))
+{
+	/**
+	 * Return memory configuration associated to the request
+	 *
+	 * @see    Orchestra\Core::memory()
+	 * @param  string   $key
+	 * @param  string   $default
+	 * @return mixed
+	 */
+	function memorize($key, $default = null)
+	{
+		return Orchestra\Core::memory()->get($key, $default);
 	}
 }
 
