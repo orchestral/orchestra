@@ -1,15 +1,15 @@
 <?php namespace Orchestra;
 
-use \Bundle, 
-	\Exception, 
-	\IoC, 
+use \Bundle,
+	\Exception,
+	\IoC,
 	FileSystemIterator as fIterator;
 
 class Extension {
 
 	/**
 	 * List of extensions
-	 * 
+	 *
 	 * @var array
 	 */
 	protected static $extensions = array();
@@ -99,8 +99,8 @@ class Extension {
 			if (is_file($path.'orchestra.json'))
 			{
 				$extensions[$name] = json_decode(file_get_contents($path.'orchestra.json'));
-					
-				if (is_null($extensions[$name])) 
+
+				if (is_null($extensions[$name]))
 				{
 					// json_decode couldn't parse, throw an exception
 					throw new Exception("Extension [{$name}]: cannot decode orchestra.json file");
@@ -137,18 +137,22 @@ class Extension {
 		$extensions = static::load($bundles);
 		$cached     = array();
 
-		// we should cache extension to be stored to Hybrid\Memory to avoid 
+		// we should cache extension to be stored to Hybrid\Memory to avoid
 		// over usage of database space
 		foreach ($extensions as $name => $extension)
 		{
-			$ext_name   = isset($extension->name) ? $extension->name : null;
-			$ext_config = isset($extension->config) ? $extension->config : array();
+			$ext_name    = isset($extension->name) ? $extension->name : null;
+			$ext_version = isset($extension->version) ? $extension->version : '>0';
+			$ext_config  = isset($extension->config) ? $extension->config : array();
+			$ext_require = isset($extension->require) ? $extension->require : array();
 
 			if (is_null($ext_name)) continue;
 
 			$cached[$name] = array(
-				'name'   => $ext_name,
-				'config' => (array) $ext_config,
+				'name'    => $ext_name,
+				'version' => $ext_version,
+				'config'  => (array) $ext_config,
+				'require' => (array) $ext_require,
 			);
 		}
 
@@ -215,7 +219,7 @@ class Extension {
 
 		foreach ($current as $extension => $config)
 		{
-			if (is_numeric($extension)) 
+			if (is_numeric($extension))
 			{
 				$extension = $config;
 				$config    = array();
@@ -228,11 +232,19 @@ class Extension {
 		}
 
 		$memory->put('extensions.active', $active);
+
+		foreach($memory->get('extensions.available') as $folder => $ext)
+		{
+			if( in_array($folder, array_keys($active)) )
+			{
+				static::deactivate($folder);
+			}
+		}
 	}
-	
+
 	/**
-	 * Publish migration and asset for an extension 
-	 * 
+	 * Publish migration and asset for an extension
+	 *
 	 * @static
 	 * @access public
 	 * @param  string   $name
@@ -254,5 +266,61 @@ class Extension {
 	public static function all()
 	{
 		return static::$extensions;
+	}
+
+	/**
+	 * Get the folder name for an extension
+	 *
+	 * @param  string $name
+	 * @return string
+	 */
+	public static function getFolderName($name)
+	{
+		foreach(Core::memory()->get('extensions.available') as $folder => $ext)
+		{
+			if( $ext['name'] == $name )
+				return $folder;
+		}
+	}
+
+	/**
+	 * Solve dependency for an extension
+	 *
+	 * @param  string $name
+	 * @return array
+	 */
+	public static function solve($name)
+	{
+		$unistalled = array();
+
+		$avaible = Core::memory()->get('extensions.available');
+
+		foreach($avaible[$name]['require'] as $ext => $ver)
+		{
+			list($op) = preg_split("/\d+/", $ver, 2);
+			$ver = str_replace($op, '', $ver);
+
+			if(empty($op))
+			{
+				$op = '>=';
+			}
+
+			$folder = static::getFolderName($ext);
+
+			if(!static::started($folder))
+			{
+				$unistalled[] = array('name' => $ext, 'version' => $op.$ver);
+				continue;
+			}
+
+			$installed = $avaible[$folder]['version'];
+
+			if(!version_compare($installed, $ver, $op))
+			{
+				$unistalled[] = array('name' => $ext, 'version' => $op.$ver);
+			}
+		}
+
+		return $unistalled;
 	}
 }

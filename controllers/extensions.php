@@ -1,16 +1,16 @@
-<?php 
+<?php
 
-use Laravel\Fluent, 
-	Orchestra\Core, 
-	Orchestra\Extension, 
-	Orchestra\Form, 
-	Orchestra\Messages, 
+use Laravel\Fluent,
+	Orchestra\Core,
+	Orchestra\Extension,
+	Orchestra\Form,
+	Orchestra\Messages,
 	Orchestra\View;
 
 class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 	/**
-	 * Construct Extensions Controller, only authenticated user should 
+	 * Construct Extensions Controller, only authenticated user should
 	 * be able to access this controller.
 	 *
 	 * @access public
@@ -39,6 +39,12 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 			'_title_' => __("orchestra::title.extensions.list")->get(),
 		);
 
+		foreach($data['extensions'] as $name => &$ext)
+		{
+			//$solve = Extension::solve($name);
+			$ext->activable = Extension::solve($name);
+		}
+
 		return View::make('orchestra::extensions.index', $data);
 	}
 
@@ -55,9 +61,24 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	{
 		if (is_null($name) or Extension::started($name)) return Event::first('404');
 
+		$m = new Messages;
+
+		$dependencies = Extension::solve($name);
+
+		if( ! empty($dependencies) )
+		{
+			$dependencies = array_map(function($dep) { return $dep['name'].' '.$dep['version']; }, $dependencies);
+			$m->add('error', __('orchestra::response.extensions.depend-on', array(
+				'name'         => $name,
+				'dependencies' => implode(', ', $dependencies)
+			)));
+
+			return Redirect::to(handles('orchestra::extensions'))
+				->with('message', $m->serialize());
+		}
+
 		Extension::activate($name);
 
-		$m = new Messages;
 		$m->add('success', __('orchestra::response.extensions.activate', array('name' => $name)));
 
 		return Redirect::to(handles('orchestra::extensions'))
@@ -68,7 +89,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	 * Deactivate an extension
 	 *
 	 * GET (:bundle)/extensions/deactivate/(:name)
-	 * 
+	 *
 	 * @access public
 	 * @param  string   $name name of the extension
 	 * @return Response
@@ -88,9 +109,9 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 	/**
 	 * Configure an extension
-	 * 
+	 *
 	 * GET (:bundle)/extensions/configure/(:name)
-	 * 
+	 *
 	 * @access public
 	 * @param  string   $name name of the extension
 	 * @return Response
@@ -168,7 +189,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	 * Update extension configuration
 	 *
 	 * POST (:bundle)/extensions/configure/(:name)
-	 * 
+	 *
 	 * @access public
 	 * @param  string   $name name of the extension
 	 * @return Response
@@ -182,7 +203,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 		$config = new Fluent((array) $memory->get("extension_{$name}", array()));
 		$loader = (array) $memory->get("extensions.active.{$name}", array());
 		$m      = new Messages;
-		
+
 		// This part should be part of extension loader configuration. What saved here
 		// wouldn't be part of extension configuration.
 		if (isset($input['handles']) and ! empty($input['handles']))
@@ -196,7 +217,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 			$input['web_upgrade']  = ('yes' === $input['web_upgrade'] ? true : false);
 			$loader['web_upgrade'] = $input['web_upgrade'];
 		}
-		
+
 		$memory->put("extensions.active.{$name}", $loader);
 
 		// In any event where extension need to do some custom handling.
@@ -214,9 +235,9 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 	/**
 	 * Upgrade an extension
-	 * 
+	 *
 	 * GET (:bundle)/extensions/upgrade/(:name)
-	 * 
+	 *
 	 * @access public
 	 * @param  string   $name name of the extension
 	 * @return Response
@@ -236,6 +257,6 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 		$m = Messages::make('success', __('orchestra::response.extensions.upgrade', compact('name')));
 
 		return Redirect::to(handles('orchestra::extensions'))
-				->with('message', $m->serialize());	
+				->with('message', $m->serialize());
 	}
 }

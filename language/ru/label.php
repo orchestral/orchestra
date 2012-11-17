@@ -10,9 +10,10 @@ return array(
 	'description' => 'Description',
 
 	'extensions' => array(
-		'name'    => 'Extension',
-		'author'  => 'By :author',
-		'version' => 'Version :version',
+		'name'         => 'Extension',
+		'author'       => 'By :author',
+		'version'      => 'Version :version',
+		'dependencies' => 'Dependencies',
 
 		'actions' => array(
 			'activate'   => 'Activate',
@@ -26,13 +27,13 @@ return array(
 
 	'no-data'      => 'Нет данных на текущий момент',
 	'no-extension' => 'Нет доступных расширений',
-	
+
 	'search'    => array(
 		'button'  => 'Поиск',
 		'keyword' => 'Поиск...',
 	),
 	'site_name' => 'Название приложения',
-	
+
 	'users' => array(
 		'email'    => 'Адрес почты',
 		'fullname' => 'Полное имя',
