@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Widget;
 
-use \Closure;
+use \Closure, \Exception;
 
 class Placeholder extends Driver {
 	
@@ -49,6 +49,8 @@ class Placeholder extends Driver {
 			$callback = $location;
 			$location = 'parent';
 		}
+
+		if (starts_with($location, 'child')) $location = 'parent';
 		
 		$item = $this->traverse->add($id, $location ?: 'parent');
 

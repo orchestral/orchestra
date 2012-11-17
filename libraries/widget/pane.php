@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Widget;
 
-use \Closure;
+use \Closure, \Exception;
 
 class Pane extends Driver {
 
@@ -52,6 +52,8 @@ class Pane extends Driver {
 			$callback = $location;
 			$location = 'parent';
 		}
+
+		if (starts_with($location, 'child')) $location = 'parent';
 		
 		$item = $this->traverse->add($id, $location ?: 'parent');
 
