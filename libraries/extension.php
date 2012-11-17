@@ -233,9 +233,9 @@ class Extension {
 
 		$memory->put('extensions.active', $active);
 
-		foreach($memory->get('extensions.available') as $folder => $ext)
+		foreach ($memory->get('extensions.available') as $folder => $ext)
 		{
-			if( in_array($folder, array_keys($active)) )
+			if (in_array($folder, array_keys($active)))
 			{
 				static::deactivate($folder);
 			}
@@ -276,15 +276,16 @@ class Extension {
 	 */
 	public static function getFolderName($name)
 	{
-		foreach(Core::memory()->get('extensions.available') as $folder => $ext)
+		foreach (Core::memory()->get('extensions.available') as $folder => $ext)
 		{
-			if( $ext['name'] == $name )
+			if ($ext['name'] == $name)
 				return $folder;
 		}
 	}
 
 	/**
 	 * Solve dependency for an extension
+	 * Return the array of the unsolved dependencies
 	 *
 	 * @param  string $name
 	 * @return array
@@ -295,28 +296,28 @@ class Extension {
 
 		$avaible = Core::memory()->get('extensions.available');
 
-		foreach($avaible[$name]['require'] as $ext => $ver)
+		foreach ($avaible[$name]['require'] as $ext => $ver)
 		{
 			list($op) = preg_split("/\d+/", $ver, 2);
 			$ver = str_replace($op, '', $ver);
 
-			if(empty($op))
-			{
-				$op = '>=';
-			}
-
 			$folder = static::getFolderName($ext);
 
-			if(!static::started($folder))
+			if ( ! static::started($folder) )
 			{
+				$op = ($op == '=') ? 'v' : $op;
 				$unistalled[] = array('name' => $ext, 'version' => $op.$ver);
 				continue;
 			}
 
+			$op  = empty($op) ? '>=' : $op;
+			$ver = empty($ver) ? '0' : $ver;
+
 			$installed = $avaible[$folder]['version'];
 
-			if(!version_compare($installed, $ver, $op))
+			if ( ! version_compare($installed, $ver, $op) )
 			{
+				$op = ($op == '=') ? 'v' : $op;
 				$unistalled[] = array('name' => $ext, 'version' => $op.$ver);
 			}
 		}

@@ -41,7 +41,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 		foreach($data['extensions'] as $name => &$ext)
 		{
-			$ext->activable = Extension::solve($name);
+			if ( ! Extension::started($name) ) $ext->activable = Extension::solve($name);
 		}
 
 		return View::make('orchestra::extensions.index', $data);
