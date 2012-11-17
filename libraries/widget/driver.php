@@ -6,12 +6,12 @@ use \Config,
 abstract class Driver {
 
 	/**
-	 * Transerve instance
+	 * Nesty instance
 	 *
 	 * @access  protected
-	 * @var     Widget\Traverse
+	 * @var     Widget\Nesty
 	 */
-	protected $traverse = null;
+	protected $nesty = null;
 
 	/**
 	 * Name of this instance
@@ -47,10 +47,10 @@ abstract class Driver {
 	 */
 	public function __construct($name, $config = array())
 	{
-		$_config        = Config::get('orchestra::widget.'.$this->type, array());
-		$this->name     = $name;
-		$this->config   = array_merge($config, $_config);
-		$this->traverse = new Traverse($this->config);
+		$_config      = Config::get('orchestra::widget.'.$this->type, array());
+		$this->name   = $name;
+		$this->config = array_merge($config, $_config);
+		$this->nesty  = new Nesty($this->config);
 	}
 
 	/**
@@ -88,7 +88,7 @@ abstract class Driver {
 	 */
 	public function get()
 	{
-		return $this->traverse->get();
+		return $this->nesty->get();
 	}
 
 	/**

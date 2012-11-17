@@ -2,7 +2,7 @@
 
 use Laravel\Fluent;
 
-class Traverse {
+class Nesty {
 
 	/**
 	 * List of items

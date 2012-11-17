@@ -51,7 +51,7 @@ class Menu extends Driver {
 			$location = 'parent';
 		}
 		
-		$item = $this->traverse->add($id, $location ?: 'parent');
+		$item = $this->nesty->add($id, $location ?: 'parent');
 
 		if ($callback instanceof Closure)
 		{

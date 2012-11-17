@@ -55,7 +55,7 @@ class Pane extends Driver {
 
 		if (starts_with($location, 'child')) $location = 'parent';
 		
-		$item = $this->traverse->add($id, $location ?: 'parent');
+		$item = $this->nesty->add($id, $location ?: 'parent');
 
 		if ($callback instanceof Closure)
 		{
