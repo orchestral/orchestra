@@ -34,9 +34,12 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	 */
 	public function get_index()
 	{
-		$extensions = Extension::detect();
+		$data = array(
+			'extensions' => Extension::detect(),
+			'_title_' => __("orchestra::title.extensions.list")->get(),
+		);
 
-		return View::make('orchestra::extensions.index', compact('extensions'));
+		return View::make('orchestra::extensions.index', $data);
 	}
 
 	/**
@@ -102,6 +105,8 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 		$memory = Core::memory();
 		$config = new Fluent((array) $memory->get("extension_{$name}", array()));
 
+		$extension_name = $memory->get("extensions.available.{$name}.name", $name);
+
 		// Add basic form, allow extension to add custom configuration field to this
 		$form = Form::of("orchestra.extension: {$name}", function ($form) use ($name, $config)
 		{
@@ -150,10 +155,10 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 		Event::fire("orchestra.form: extension.{$name}", array($config, $form));
 
 		$data = array(
-			'eloquent'  => $config,
-			'form'      => Form::of("orchestra.extension: {$name}"),
-			'page_name' => $name,
-			'page_desc' => __("orchestra::title.extensions.configure")->get()
+			'eloquent'      => $config,
+			'form'          => Form::of("orchestra.extension: {$name}"),
+			'_title_'       => $extension_name,
+			'_description_' => __("orchestra::title.extensions.configure")->get(),
 		);
 
 		return View::make('orchestra::resources.edit', $data);

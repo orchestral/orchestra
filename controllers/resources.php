@@ -51,9 +51,9 @@ class Orchestra_Resources_Controller extends Orchestra\Controller {
 		});
 
 		return View::make('orchestra::resources.index', array(
-			'table'     => $table,
-			'page_name' => __('orchestra::title.resources.list')->get(),
-			'page_desc' => __('orchestra::title.resources.list-detail')->get(),
+			'table'         => $table,
+			'_title_'       => __('orchestra::title.resources.list')->get(),
+			'_description_' => __('orchestra::title.resources.list-detail')->get(),
 		));
 	}
 
@@ -70,8 +70,6 @@ class Orchestra_Resources_Controller extends Orchestra\Controller {
 		list($method, $name) = explode('_', $request, 2);
 
 		$action    = array_shift($arguments) ?: 'index';
-		$page_name = '';
-		$page_desc = '';
 		$content   = "";
 
 		$resources = Resources::all();
@@ -101,8 +99,6 @@ class Orchestra_Resources_Controller extends Orchestra\Controller {
 		return View::make('orchestra::resources.resources', array(
 			'content'        => $content,
 			'resources_list' => $resources,
-			'page_name'      => $page_name,
-			'page_desc'      => $page_desc,
 		));
 	}	
 }

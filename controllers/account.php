@@ -50,9 +50,9 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 		Event::fire('orchestra.form: user.account', array($user, $form));
 
 		$data = array(
-			'eloquent'  => $user,
-			'form'      => $form,
-			'page_name' => __("orchestra::title.account.profile")->get(),
+			'eloquent' => $user,
+			'form'     => $form,
+			'_title_'  => __("orchestra::title.account.profile")->get(),
 		);
 
 		return View::make('orchestra::resources.edit', $data);
@@ -124,9 +124,12 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 	 */
 	public function get_password()
 	{
-		$user = Auth::user();
+		$data = array(
+			'eloquent' => Auth::user(),
+			'_title_'  => __("orchestra::title.account.password")->get(),
+		);
 
-		return View::make('orchestra::account.password', compact('user'));
+		return View::make('orchestra::account.password', $data);
 	}
 
 	/**

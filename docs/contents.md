@@ -4,6 +4,7 @@
 	- [Download](/bundocs/orchestra/install#download)
 	- [Setup](/bundocs/orchestra/install#setup)
 - [Helpers](/bundocs/orchestra/helpers)
+- [Change Logs](/bundocs/orchestra/changes)
 
 ## Extension
 - [The Basics](/bundocs/orchestra/extensions)

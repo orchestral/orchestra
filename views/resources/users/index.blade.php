@@ -5,7 +5,7 @@
 <div class="row-fluid">
 	
 	<div class="page-header">
-		<h2>{{ $page_name }}</h2>
+		<h2>{{ ! empty($_title_) ? $_title_ : 'Something Awesome Without A Name' }}</h2>
 	</div>
 
 	<div class="navbar hidden-phone">

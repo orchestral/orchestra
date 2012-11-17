@@ -29,6 +29,7 @@ Autoloader::map(array(
 
 include_once Bundle::path('orchestra').'helpers'.EXT;
 include_once Bundle::path('orchestra').'includes'.DS.'dependencies'.EXT;
+include_once Bundle::path('orchestra').'includes'.DS.'macros'.EXT;
 
 /*
 |--------------------------------------------------------------------------
