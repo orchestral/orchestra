@@ -52,8 +52,8 @@
 					<span class="meta">
 						{{ __('orchestra::label.extensions.version', array('version' => $extension->version )) }} |
 						{{ __('orchestra::label.extensions.author', array('author' => HTML::link($extension->url ?: '#', $extension->author))) }}
-						@if ( isset($extension->require))
-							| {{ __('orchestra::label.extensions.dependencies') }}: {{ implode(', ', array_keys((array)$extension->require)) }}
+						@if ( ! empty($extension->require) )
+							| {{ __('orchestra::label.extensions.dependencies') }}: {{ implode(', ', array_keys($extension->require)) }}
 						@endif
 					</span>
 				</td>

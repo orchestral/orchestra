@@ -39,9 +39,10 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 			'_title_' => __("orchestra::title.extensions.list")->get(),
 		);
 
-		foreach($data['extensions'] as $name => &$ext)
+		foreach($data['extensions'] as $name => &$extension)
 		{
-			$ext->unresolved = Extension::not_activatable($name);
+			$extension->require    = (array)$extension->require;
+			$extension->unresolved = Extension::not_activatable($name);
 		}
 
 		return View::make('orchestra::extensions.index', $data);
