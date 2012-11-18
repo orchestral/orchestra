@@ -239,15 +239,6 @@ class Extension {
 		}
 
 		$memory->put('extensions.active', $active);
-
-		// we should deactivate all the extensions that depends on the deactivated
-		foreach ($memory->get('extensions.active') as $folder => $ext)
-		{
-			if (in_array($folder, array_keys($active)))
-			{
-				static::deactivate($folder);
-			}
-		}
 	}
 
 	/**
@@ -294,14 +285,29 @@ class Extension {
 
 	/**
 	 * Solve dependencies for an extension and
-	 * return the array of the unsolved dependencies
-	 *
+	 * return if an extension can't be installed.
+	 * 
 	 * @static
 	 * @access public
 	 * @param  string   $name
 	 * @return array
 	 */
-	public static function unresolved($name)
+	public static function not_installable($name)
+	{
+		return static::unresolved($name, true);
+	}
+
+	/**
+	 * Solve dependencies for an extension and
+	 * return the array of the unsolved dependencies
+	 *
+	 * @static
+	 * @access public
+	 * @param  string   $name
+	 * @param  bool     $check_installable    
+	 * @return array
+	 */
+	public static function unresolved($name, $check_installable = false)
 	{
 		$unresolved = array();
 		$available  = Core::memory()->get("extensions.available");
@@ -311,6 +317,8 @@ class Extension {
 		{
 			$is_bundle = false;
 
+			// Whenever the version is marked as `bundle`, we can assume 
+			// this is a bundle.
 			if ($version === 'bundle')
 			{
 				$is_bundle = true;
@@ -320,13 +328,35 @@ class Extension {
 			list($op)  = preg_split("/\d+/", $version, 2);
 			$version   = str_replace($op, '', $version);
 
+			// Check if the requirement is a bundle, we can ignore it if
+			// bundle is already started.
 			if ($is_bundle and Bundle::started($bundle)) continue;
 
-			if (static::started($bundle) and ! $is_bundle) continue;
+			// Now check for an extension, at the same time will also detect 
+			// if the dependencies is updated with the 
+			if (static::started($bundle) and ! $is_bundle)
+			{
+				if ( ! version_compare($available[$bundle]['version'], $version, $op))
+				{
+					$unresolved[] = array('name' => $bundle, 'version' => $op.$version);
+				}
 
-			$op        = empty($op) ? '>=' : $op;
-			$version   = empty($version) ? '0' : $version;
+				continue;
+			}
+			
+			$op      = empty($op) ? '>=' : $op;
+			$version = empty($version) ? '0' : $version;
 
+			// If we need to check if such extension can be activated (installed), 
+			// useful when we want to check if such extension is outdated.
+			if ( !! $check_installable)
+			{
+				$unresolved[] = array('name' => $bundle, 'version' => $op.$version);
+				continue;	
+			}
+
+			// final check, verify the dependencies is available (registered), and 
+			// compare the version.
 			if ( ! isset($available[$bundle]) 
 				or ! version_compare($available[$bundle]['version'], $version, $op))
 			{
