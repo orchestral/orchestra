@@ -62,23 +62,19 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 		$m = new Messages;
 
-		$dependencies = Extension::unresolved($name);
-
-		if( ! empty($dependencies) )
+		try
 		{
-			$dependencies = array_map(function($dep) { return $dep['name'].' '.$dep['version']; }, $dependencies);
+			Extension::activate($name);
+			$m->add('success', __('orchestra::response.extensions.activate', array('name' => $name)));
+		}
+		catch (Orchestra\Extension\UnresolvedException $e)
+		{
+			$dependencies = array_map(function($dep) { return $dep['name'].' '.$dep['version']; }, $e->getDependencies());
 			$m->add('error', __('orchestra::response.extensions.depend-on', array(
 				'name'         => $name,
 				'dependencies' => implode(', ', $dependencies)
 			)));
-
-			return Redirect::to(handles('orchestra::extensions'))
-				->with('message', $m->serialize());
 		}
-
-		Extension::activate($name);
-
-		$m->add('success', __('orchestra::response.extensions.activate', array('name' => $name)));
 
 		return Redirect::to(handles('orchestra::extensions'))
 				->with('message', $m->serialize());

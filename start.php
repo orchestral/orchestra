@@ -16,6 +16,9 @@ Autoloader::namespaces(array(
 
 Autoloader::map(array(
 	'Orchestra' => Bundle::path('orchestra').'orchestra'.EXT,
+
+	// Exceptions
+	'Orchestra\Extension\UnresolvedException' => Bundle::path('orchestra').'libraries'.DS.'extension'.DS.'exceptions'.EXT,
 ));
 
 /*

@@ -3,7 +3,7 @@
 use \Bundle,
 	\Exception,
 	\IoC,
-	FileSystemIterator as fIterator;
+	FileSystemIterator as fIterator,
 
 class Extension {
 
@@ -179,6 +179,13 @@ class Extension {
 		{
 			$active[$name] = (array) $available[$name]['config'];
 
+			$dependencies = static::unresolved($name);
+
+			if ( ! empty($dependencies))
+			{
+				throw new Extension\UnresolvedException($dependencies);
+			}
+
 			// we should also start the bundle
 			static::start($name, $active[$name]);
 			static::publish($name);
@@ -272,57 +279,59 @@ class Extension {
 	/**
 	 * Get the folder name for an extension
 	 *
-	 * @param  string $name
+	 * @static
+	 * @access public
+	 * @param  string   $name
 	 * @return string
 	 */
 	public static function getFolderName($name)
 	{
-		foreach (Core::memory()->get('extensions.available') as $folder => $ext)
+		foreach (Core::memory()->get('extensions.available') as $folder => $extension)
 		{
-			if ($ext['name'] == $name)
-				return $folder;
+			if ($extension['name'] == $name) return $folder;
 		}
 	}
 
 	/**
-	 * Solve dependency for an extension
-	 * Return the array of the unsolved dependencies
+	 * Solve dependencies for an extension and
+	 * return the array of the unsolved dependencies
 	 *
-	 * @param  string $name
+	 * @static
+	 * @access public
+	 * @param  string   $name
 	 * @return array
 	 */
 	public static function unresolved($name)
 	{
-		$unistalled = array();
+		$unresolved = array();
+		$available  = Core::memory()->get("extensions.available.{$name}.require");
+		$requires   = array_get("{$name}.require", $available);
 
-		$avaible = Core::memory()->get('extensions.available');
-
-		foreach ($avaible[$name]['require'] as $ext => $ver)
+		foreach ($requires as $bundle => $version)
 		{
 			list($op) = preg_split("/\d+/", $ver, 2);
-			$ver = str_replace($op, '', $ver);
+			$ver      = str_replace($op, '', $ver);
 
-			$folder = static::getFolderName($ext);
+			$folder = static::getFolderName($bundle);
 
-			if ( ! static::started($folder) )
+			if ( ! static::started($folder))
 			{
 				$op = ($op == '=') ? 'v' : $op;
-				$unistalled[] = array('name' => $ext, 'version' => $op.$ver);
+				$unresolved[] = array('name' => $ext, 'version' => $op.$ver);
 				continue;
 			}
 
-			$op  = empty($op) ? '>=' : $op;
-			$ver = empty($ver) ? '0' : $ver;
+			$op        = empty($op) ? '>=' : $op;
+			$version   = empty($version) ? '0' : $version;
+			$installed = $available[$folder]['version'];
 
-			$installed = $avaible[$folder]['version'];
-
-			if ( ! version_compare($installed, $ver, $op) )
+			if ( ! version_compare($installed, $version, $op))
 			{
-				$op = ($op == '=') ? 'v' : $op;
-				$unistalled[] = array('name' => $ext, 'version' => $op.$ver);
+				$op           = ($op == '=') ? 'v' : $op;
+				$unresolved[] = array('name' => $ext, 'version' => $op.$ver);
 			}
 		}
 
-		return $unistalled;
+		return $unresolved;
 	}
 }
