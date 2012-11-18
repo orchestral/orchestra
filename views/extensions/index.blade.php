@@ -22,12 +22,12 @@
 					<strong>
 						@if ( ! ($started = Orchestra\Extension::started($name)))
 							{{ $extension->name }}
-							@foreach($extension->unresolved as $dep)
-								<span class="label label-important">{{ $dep['name'] . ' ' . $dep['version'] }}</span>
-							@endforeach
 						@else
 							{{ HTML::link(handles('orchestra::extensions/configure/'.$name), $extension->name) }}
 						@endif
+						@foreach($extension->unresolved as $dep)
+							<span class="label label-important">{{ $dep['name'] . ' ' . $dep['version'] }}</span>
+						@endforeach
 					</strong>
 					<div class="pull-right btn-group">
 						@if ( ! $started )

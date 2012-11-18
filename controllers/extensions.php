@@ -41,7 +41,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 		foreach($data['extensions'] as $name => &$ext)
 		{
-			if ( ! Extension::started($name) ) $ext->unresolved = Extension::unresolved($name);
+			$ext->unresolved = Extension::not_installable($name);
 		}
 
 		return View::make('orchestra::extensions.index', $data);
@@ -70,7 +70,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 		catch (Orchestra\Extension\UnresolvedException $e)
 		{
 			$dependencies = array_map(function($dep) { return $dep['name'].' '.$dep['version']; }, $e->getDependencies());
-			$m->add('error', __('orchestra::response.extensions.depend-on', array(
+			$m->add('error', __('orchestra::response.extensions.depends-on', array(
 				'name'         => $name,
 				'dependencies' => implode(', ', $dependencies)
 			)));
@@ -93,7 +93,14 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	{
 		if (is_null($name) or ! Extension::started($name)) return Event::first('404');
 
-		Extension::deactivate($name);
+		try
+		{
+			Extension::deactivate($name);
+		}
+		catch (Orchestra\Extension\UnresolvedException $e)
+		{
+
+		}
 
 		$m = new Messages;
 		$m->add('success', __('orchestra::response.extensions.deactivate', array('name' => $name)));
