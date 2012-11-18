@@ -239,6 +239,18 @@ class Extension {
 		}
 
 		$memory->put('extensions.active', $active);
+
+		$available = $memory->get('extensions.available');
+		$name      = $available[$name]['name'];
+
+		// we should deactivate all the extensions that depends on the deactivated
+		foreach ($active as $bundle => $extension)
+		{
+			if (in_array($name, array_keys($available[$bundle]['require'])))
+			{
+				static::deactivate($bundle);
+			}
+		}
 	}
 
 	/**
