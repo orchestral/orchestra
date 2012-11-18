@@ -233,6 +233,7 @@ class Extension {
 
 		$memory->put('extensions.active', $active);
 
+		// we should deactivate all the extensions that depends on the deactivated
 		foreach ($memory->get('extensions.active') as $folder => $ext)
 		{
 			if (in_array($folder, array_keys($active)))
