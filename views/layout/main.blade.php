@@ -15,19 +15,23 @@
 		<!-- Le styles -->
 		<?php 
 
-		$asset = Asset::container('orchestra.backend');
+		$backend = Asset::container('orchestra.backend');
+		$bottom  = Asset::container('orchestra.backend: bottom');
 		
-		$asset->style('bootstrap-responsive', 'bundles/orchestra/vendor/bootstrap/bootstrap-responsive.min.css', array('bootstrap'));
-		$asset->style('select2', 'bundles/orchestra/vendor/select2/select2.css');
-		$asset->script('select2', 'bundles/orchestra/vendor/select2/select2.min.js', array('jquery'));
+		$backend->style('bootstrap-responsive', 'bundles/orchestra/vendor/bootstrap/bootstrap-responsive.min.css', array('bootstrap'));
+		$backend->style('select2', 'bundles/orchestra/vendor/select2/select2.css');
+		$backend->style('delta-custom', 'bundles/orchestra/vendor/delta/css/custom.css');
+		$backend->style('jquery-ui', 'bundles/orchestra/vendor/delta/theme/jquery-ui.css');
+
+		$bottom->script('select2', 'bundles/orchestra/vendor/select2/select2.min.js', array('jquery'));
 
 		// Add jQuery-UI Library with Delta theme.
-		$asset->script('jquery-ui', 'bundles/orchestra/vendor/jquery.ui.js', array('jquery'));
-		$asset->script('jquery-ui-ts', 'bundles/orchestra/vendor/delta/js/jquery-ui.toggleSwitch.js', array('jquery-ui'));
-		$asset->style('delta-custom', 'bundles/orchestra/vendor/delta/css/custom.css');
-		$asset->style('jquery-ui', 'bundles/orchestra/vendor/delta/theme/jquery-ui.css'); ?>
+		$bottom->script('jquery-ui', 'bundles/orchestra/vendor/jquery.ui.js', array('jquery'));
+		$bottom->script('jquery-ui-ts', 'bundles/orchestra/vendor/delta/js/jquery-ui.toggleSwitch.js', array('jquery-ui')); ?>
 
-		{{ $asset->styles(); }}
+		{{ $backend->styles(); }}
+		{{ $backend->scripts(); }}
+
 	</head>
 
 	<body>
@@ -49,6 +53,7 @@
 			</div>
 		</footer>
 
-		{{ $asset->scripts(); }}
+		{{ $bottom->styles() }}
+		{{ $bottom->scripts() }}
 	</body>
 </html>
