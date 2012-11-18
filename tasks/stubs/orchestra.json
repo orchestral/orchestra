@@ -4,5 +4,6 @@
 	"author"      : "",
 	"url"         : "",
 	"version"     : "0.1.0",
-	"config"      : {}
+	"config"      : {},
+	"require"     : {}
 }
