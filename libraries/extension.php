@@ -309,23 +309,26 @@ class Extension {
 
 		foreach ($requires as $bundle => $version)
 		{
-			list($op) = preg_split("/\d+/", $version, 2);
-			$version  = str_replace($op, '', $version);
-			
-			$folder   = static::getFolderName($bundle);
+			$is_bundle = false;
 
-			if ( ! static::started($folder))
+			if ($version === 'bundle')
 			{
-				$op           = ($op == '=') ? 'v' : $op;
-				$unresolved[] = array('name' => $bundle, 'version' => $op.$version);
-				continue;
+				$is_bundle = true;
+				$version   = '0';
 			}
+
+			list($op)  = preg_split("/\d+/", $version, 2);
+			$version   = str_replace($op, '', $version);
+
+			if ($is_bundle and Bundle::started($bundle)) continue;
+
+			if (static::started($bundle) and ! $is_bundle) continue;
 
 			$op        = empty($op) ? '>=' : $op;
 			$version   = empty($version) ? '0' : $version;
-			$installed = $available[$folder]['version'];
 
-			if ( ! version_compare($installed, $version, $op))
+			if ( ! isset($available[$bundle]) 
+				or ! version_compare($available[$bundle]['version'], $version, $op))
 			{
 				$op           = ($op == '=') ? 'v' : $op;
 				$unresolved[] = array('name' => $bundle, 'version' => $op.$version);
