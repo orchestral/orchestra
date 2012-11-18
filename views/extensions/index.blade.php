@@ -22,7 +22,7 @@
 					<strong>
 						@if ( ! ($started = Orchestra\Extension::started($name)))
 							{{ $extension->name }}
-							@forelse($extension->activable as $dep)
+							@forelse($extension->unresolved as $dep)
 								<span class="label label-important">{{ $dep['name'] . ' ' . $dep['version'] }}</span>
 							@empty
 							@endforelse
@@ -32,7 +32,7 @@
 					</strong>
 					<div class="pull-right btn-group">
 						@if ( ! $started )
-							@if (empty($extension->activable))
+							@if (empty($extension->unresolved))
 								{{ HTML::link(handles('orchestra::extensions/activate/'.$name), __('orchestra::label.extensions.actions.activate'), array('class' => 'btn btn-primary btn-mini')) }}
 							@else
 								<button class="btn btn-mini" disabled="disabled" type="button">{{ __('orchestra::label.extensions.actions.activate') }}</button>

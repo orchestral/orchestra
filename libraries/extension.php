@@ -233,7 +233,7 @@ class Extension {
 
 		$memory->put('extensions.active', $active);
 
-		foreach ($memory->get('extensions.available') as $folder => $ext)
+		foreach ($memory->get('extensions.active') as $folder => $ext)
 		{
 			if (in_array($folder, array_keys($active)))
 			{
@@ -290,7 +290,7 @@ class Extension {
 	 * @param  string $name
 	 * @return array
 	 */
-	public static function solve($name)
+	public static function unresolved($name)
 	{
 		$unistalled = array();
 

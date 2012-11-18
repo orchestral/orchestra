@@ -41,7 +41,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 		foreach($data['extensions'] as $name => &$ext)
 		{
-			if ( ! Extension::started($name) ) $ext->activable = Extension::solve($name);
+			if ( ! Extension::started($name) ) $ext->unresolved = Extension::unresolved($name);
 		}
 
 		return View::make('orchestra::extensions.index', $data);
@@ -62,7 +62,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 		$m = new Messages;
 
-		$dependencies = Extension::solve($name);
+		$dependencies = Extension::unresolved($name);
 
 		if( ! empty($dependencies) )
 		{
