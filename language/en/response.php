@@ -27,6 +27,7 @@ return array(
 		'deactivate' => 'Extension :name deactivate',
 		'configure'  => 'Configuration for Extension :name has been updated',
 		'upgrade'    => 'Extension :name has been upgraded',
+		'depend-on'  => 'Extension :name was not activated because depends on :dependencies',
 	),
 
 	'forgot' => array(
