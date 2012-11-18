@@ -22,10 +22,9 @@
 					<strong>
 						@if ( ! ($started = Orchestra\Extension::started($name)))
 							{{ $extension->name }}
-							@forelse($extension->unresolved as $dep)
+							@foreach($extension->unresolved as $dep)
 								<span class="label label-important">{{ $dep['name'] . ' ' . $dep['version'] }}</span>
-							@empty
-							@endforelse
+							@endforeach
 						@else
 							{{ HTML::link(handles('orchestra::extensions/configure/'.$name), $extension->name) }}
 						@endif

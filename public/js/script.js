@@ -1,7 +1,5 @@
 jQuery(function($) {
 	var ev = Javie.Events.make();
-	
-	$('*[role="redactor"]').redactor();
 
 	$('select[role="switcher"]').each(function(i, item) {
 		var el = $(item);
@@ -16,7 +14,10 @@ jQuery(function($) {
 
 		el.css('display', 'none');
 	})
+
 	$('select[role!="switcher"]').select2();;
+
+	$('*[role="tooltip"]').tooltip();
 	
 	$('div.btn-group[data-toggle-name]').each(function() {
 		var group, form, name, hidden, buttons;

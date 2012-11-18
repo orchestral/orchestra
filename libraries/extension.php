@@ -304,13 +304,13 @@ class Extension {
 	public static function unresolved($name)
 	{
 		$unresolved = array();
-		$available  = Core::memory()->get("extensions.available.{$name}.require");
+		$available  = Core::memory()->get("extensions.available");
 		$requires   = array_get($available, "{$name}.require", array());
 
 		foreach ($requires as $bundle => $version)
 		{
-			list($op) = preg_split("/\d+/", $ver, 2);
-			$ver      = str_replace($op, '', $ver);
+			list($op) = preg_split("/\d+/", $version, 2);
+			$version  = str_replace($op, '', $version);
 			
 			$folder   = static::getFolderName($bundle);
 
