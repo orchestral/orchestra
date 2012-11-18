@@ -29,7 +29,8 @@ The process is simple, an extension is a Bundle except that first it need to hav
 		"version"     : "0.1.0",
 		"config"      : {
 			"handles" : "oneauth"
-		}
+		},
+		"require"     : {}
 	}
 
 > The definition file can easily be created using `php artisan orchestra::toolkit definition`.

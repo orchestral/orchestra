@@ -21,7 +21,9 @@ if ( ! function_exists('theme_path'))
 if ( ! function_exists('locate'))
 {
 	/**
-	 * Return theme path location
+	 * Return theme path location of a requested view, this would 
+	 * allow `Orchestra\Theme` to check for existent of theme file 
+	 * associated to the given path before fallback to default view.
 	 *
 	 * @see    Orchestra\Theme::path()
 	 * @param  string   $view

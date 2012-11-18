@@ -2,7 +2,7 @@
 
 Basic Events that would be use by Orchestra.
 
-## `orchestra.started`
+## orchestra.started
 
 Event fired when Orchestra is loaded by Laravel.
 
@@ -15,7 +15,7 @@ Event fired when Orchestra is loaded by Laravel.
 		));
 	});
 
-## `orchestra.started: backend`
+## orchestra.started: backend
 
 Event fired when user is accessing Orchestra Administrator Interface.
 
@@ -28,7 +28,7 @@ Event fired when user is accessing Orchestra Administrator Interface.
 		$asset->style('redactor', 'bundles/cartie/vendor/redactor/css/redactor.css', array('bootstrap'));
 	});
 
-## `orchestra.started: view`
+## orchestra.started: view
 
 Event fired when a View is from `Orchestra\View`. Which make it possible to use View replacement using Theme.
 
@@ -39,7 +39,7 @@ Event fired when a View is from `Orchestra\View`. Which make it possible to use 
 		));
 	});
 
-## `orchestra.done`
+## orchestra.done
 
 Event fire when `laravel.done` execute `Orchestra\Core::shutdown()`. If an extension would need to trigger anything right
 before request is output to end-user this would be a suitable event:
@@ -49,7 +49,7 @@ before request is output to end-user this would be a suitable event:
 		// some awesome implementation.
 	}); 
 
-## `orchestra.done: backend`
+## orchestra.done: backend
 
 Event fire after a request is handled by `Orchestra\Controller`, this is being used internally to generate 
 Orchestra Administrator Interface menu.
