@@ -41,7 +41,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 		foreach($data['extensions'] as $name => &$ext)
 		{
-			$ext->unresolved = Extension::not_installable($name);
+			$ext->unresolved = Extension::not_activatable($name);
 		}
 
 		return View::make('orchestra::extensions.index', $data);

@@ -285,14 +285,14 @@ class Extension {
 
 	/**
 	 * Solve dependencies for an extension and
-	 * return if an extension can't be installed.
+	 * return if an extension can't be activated.
 	 * 
 	 * @static
 	 * @access public
 	 * @param  string   $name
 	 * @return array
 	 */
-	public static function not_installable($name)
+	public static function not_activatable($name)
 	{
 		return static::unresolved($name, true);
 	}
@@ -304,10 +304,10 @@ class Extension {
 	 * @static
 	 * @access public
 	 * @param  string   $name
-	 * @param  bool     $check_installable    
+	 * @param  bool     $is_activatable    
 	 * @return array
 	 */
-	public static function unresolved($name, $check_installable = false)
+	public static function unresolved($name, $is_activatable = false)
 	{
 		$unresolved = array();
 		$available  = Core::memory()->get("extensions.available");
@@ -353,9 +353,9 @@ class Extension {
 			$op      = empty($op) ? '>=' : $op;
 			$version = empty($version) ? '0' : $version;
 
-			// If we need to check if such extension can be activated (installed), 
+			// If we need to check if such extension can be activated, 
 			// useful when we want to check if such extension is outdated.
-			if ( !! $check_installable)
+			if ( !! $is_activatable)
 			{
 				$unresolved[] = array('name' => $reference, 'version' => $op.$version);
 				continue;	
