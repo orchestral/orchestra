@@ -62,7 +62,14 @@ if ( ! function_exists('handles'))
 	function handles($name)
 	{
 		$handles = '';
+		$query   = '';
 
+		// split URI and query string.
+		if (strpos($name, '?') !== false)
+		{
+			list($name, $query) = explode('?', $name, 2);
+		}
+		
 		if (strpos($name, '::') !== false)
 		{
 			list($bundle, $to) = Bundle::parse($name);
@@ -90,6 +97,9 @@ if ( ! function_exists('handles'))
 		}
 		
 		$to = ltrim($to, '/');
+
+		// reappend query string.
+		empty($query) or $to .= '?'.$query;
 
 		return url($handles.'/'.$to);
 	}
