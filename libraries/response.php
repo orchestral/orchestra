@@ -1,8 +1,8 @@
 <?php namespace Orchestra;
 
-use Hybrid\Response as Hybrid_Response;
+use Hybrid\Response as R;
 
-class Response extends Hybrid_Response {
+class Response extends R {
 
 	/**
 	 * Alias Hybrid\Response class
