@@ -12,7 +12,9 @@
 	- [Enabling an Extension](/bundocs/orchestra/extensions#enable-extension)
 	- [Extension Start File](/bundocs/orchestra/extensions#start-file)
 	- [Configuring an Extension](/bundocs/orchestra/extensions#configure-extension)
-	- [Disable configuration](/bundocs/orchestra/extensions#disable-configure-extension)
+		- [Disable configuration](/bundocs/orchestra/extensions#disable-configure-extension)
+		- [Dependencies Management](/bundocs/orchestra/extensions#dependency-extension)
+
 - [Pages](/bundocs/orchestra/extensions/pages)
 	- [for Administrators](/bundocs/orchestra/extensions/pages#manage)
 	- [for Users](/bundocs/orchestra/extensions/pages#page)
@@ -28,6 +30,7 @@
 	- [Credential](/bundocs/orchestra/events/credential)
 
 ## Themes
+- [The Basics](/bundocs/orchestra/themes)
 
 ## IoC
 

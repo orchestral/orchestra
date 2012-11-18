@@ -6,7 +6,8 @@
 - [Enabling an Extension](#enable-extension)
 - [Extension Start File](#start-file)
 - [Configuring an Extension](#configure-extension)
-- [Disable configuration](#disable-configure-extension)
+	- [Disable configuration](#disable-configure-extension)
+	- [Dependencies Management](#dependency-extension)
 
 <a name="introduction"></a>
 ## Introduction
@@ -82,7 +83,7 @@ Extension developer can disable configuration option by adding `"configurable" :
 
 By doing so, Orchestra will take extension as it is and will not try to modify any of the configuration.
 
-<a name="require-extension"></a>
+<a name="dependency-extension"></a>
 ### Dependencies Management with Extension
 
 Managing dependencies has never been easier, extension developer can define and manage dependencies using `"require" : {}`, 
