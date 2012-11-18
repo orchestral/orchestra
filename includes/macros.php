@@ -1,5 +1,14 @@
 <?php
 
+/*
+|--------------------------------------------------------------------------
+| HTML::title() macro
+|--------------------------------------------------------------------------
+|
+| Page title macro helper.
+|
+*/
+
 HTML::macro('title', function ($page_title)
 {
 	$memory     = Orchestra::memory();
@@ -14,9 +23,19 @@ HTML::macro('title', function ($page_title)
 	));
 });
 
+/*
+|--------------------------------------------------------------------------
+| Blade extend for @placeholder
+|--------------------------------------------------------------------------
+|
+| Placeholder is Orchestra version of widget for theme.
+|
+*/
+
 Blade::extend(function ($view)
 {
-	$pattern = '/(\s*)@placeholder\s?\(\s*(.*)\)/';
-
-	return preg_replace($pattern, '$1<?php foreach (Orchestra\Widget::make("placeholder.".$2)->get() as $_placeholder_): echo value($_placeholder_->value ?:""); endforeach; ?>', $view);
+	$pattern     = '/(\s*)@placeholder\s?\(\s*(.*)\)/';
+	$replacement = '$1<?php foreach (Orchestra\Widget::make("placeholder.".$2)->get() as $_placeholder_): echo value($_placeholder_->value ?:""); endforeach; ?>';
+	
+	return preg_replace($pattern, $replacement, $view);
 });
