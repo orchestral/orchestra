@@ -179,7 +179,7 @@ class Extension {
 		{
 			$active[$name] = (array) $available[$name]['config'];
 
-			$dependencies = static::unresolved($name);
+			$dependencies = static::not_activatable($name);
 
 			if ( ! empty($dependencies))
 			{
@@ -286,7 +286,7 @@ class Extension {
 	/**
 	 * Solve dependencies for an extension and
 	 * return if an extension can't be activated.
-	 * 
+	 *
 	 * @static
 	 * @access public
 	 * @param  string   $name
@@ -304,7 +304,7 @@ class Extension {
 	 * @static
 	 * @access public
 	 * @param  string   $name
-	 * @param  bool     $is_activatable    
+	 * @param  bool     $is_activatable
 	 * @return array
 	 */
 	public static function unresolved($name, $is_activatable = false)
@@ -317,7 +317,7 @@ class Extension {
 		{
 			$is_bundle = false;
 
-			// Whenever the version is marked as `bundle`, we can assume 
+			// Whenever the version is marked as `bundle`, we can assume
 			// this is a bundle.
 			if ($version === 'bundle')
 			{
@@ -338,8 +338,8 @@ class Extension {
 				$reference = $identifier;
 			}
 
-			// Now check for an extension, at the same time will also detect 
-			// if the dependencies is updated with the 
+			// Now check for an extension, at the same time will also detect
+			// if the dependencies is updated with the
 			if (static::started($reference) and ! $is_bundle)
 			{
 				if ( ! version_compare($available[$reference]['version'], $version, $op))
@@ -349,21 +349,21 @@ class Extension {
 
 				continue;
 			}
-			
+
 			$op      = empty($op) ? '>=' : $op;
 			$version = empty($version) ? '0' : $version;
 
-			// If we need to check if such extension can be activated, 
+			// If we need to check if such extension can be activated,
 			// useful when we want to check if such extension is outdated.
 			if ( !! $is_activatable)
 			{
 				$unresolved[] = array('name' => $reference, 'version' => $op.$version);
-				continue;	
+				continue;
 			}
 
-			// final check, verify the dependencies is available (registered), and 
+			// final check, verify the dependencies is available (registered), and
 			// compare the version.
-			if ( ! isset($available[$reference]) 
+			if ( ! isset($available[$reference])
 				or ! version_compare($available[$reference]['version'], $version, $op))
 			{
 				$op           = ($op == '=') ? 'v' : $op;
