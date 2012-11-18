@@ -3,7 +3,7 @@
 use \Bundle,
 	\Exception,
 	\IoC,
-	FileSystemIterator as fIterator,
+	FileSystemIterator as fIterator;
 
 class Extension {
 
@@ -305,19 +305,19 @@ class Extension {
 	{
 		$unresolved = array();
 		$available  = Core::memory()->get("extensions.available.{$name}.require");
-		$requires   = array_get("{$name}.require", $available);
+		$requires   = array_get($available, "{$name}.require", array());
 
 		foreach ($requires as $bundle => $version)
 		{
 			list($op) = preg_split("/\d+/", $ver, 2);
 			$ver      = str_replace($op, '', $ver);
-
-			$folder = static::getFolderName($bundle);
+			
+			$folder   = static::getFolderName($bundle);
 
 			if ( ! static::started($folder))
 			{
-				$op = ($op == '=') ? 'v' : $op;
-				$unresolved[] = array('name' => $ext, 'version' => $op.$ver);
+				$op           = ($op == '=') ? 'v' : $op;
+				$unresolved[] = array('name' => $bundle, 'version' => $op.$version);
 				continue;
 			}
 
@@ -328,7 +328,7 @@ class Extension {
 			if ( ! version_compare($installed, $version, $op))
 			{
 				$op           = ($op == '=') ? 'v' : $op;
-				$unresolved[] = array('name' => $ext, 'version' => $op.$ver);
+				$unresolved[] = array('name' => $bundle, 'version' => $op.$version);
 			}
 		}
 
