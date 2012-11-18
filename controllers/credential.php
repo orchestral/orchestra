@@ -110,10 +110,10 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 
 		Event::fire('orchestra.logged.out');
 
-		$m = new Messages;
-		$m->add('success', __('orchestra::response.credential.logged-out'));
+		$redirect = Input::get('redirect', handles('orchestra::login'));		
+		$m        = Messages::make('success', __('orchestra::response.credential.logged-out'));
 		
-		return Redirect::to(handles('orchestra::login'))
+		return Redirect::to($redirect)
 				->with('message', $m->serialize());
 	}
 }
