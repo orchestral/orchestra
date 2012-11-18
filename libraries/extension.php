@@ -268,18 +268,18 @@ class Extension {
 	}
 
 	/**
-	 * Get the folder name for an extension
+	 * Get the identifier from an extension name
 	 *
 	 * @static
-	 * @access public
+	 * @access protected
 	 * @param  string   $name
 	 * @return string
 	 */
-	public static function getFolderName($name)
+	protected static function identifier($name)
 	{
-		foreach (Core::memory()->get('extensions.available') as $folder => $extension)
+		foreach (Core::memory()->get('extensions.available') as $bundle => $extension)
 		{
-			if ($extension['name'] == $name) return $folder;
+			if ($extension['name'] === $name) return $bundle;
 		}
 	}
 
@@ -313,7 +313,7 @@ class Extension {
 		$available  = Core::memory()->get("extensions.available");
 		$requires   = array_get($available, "{$name}.require", array());
 
-		foreach ($requires as $bundle => $version)
+		foreach ($requires as $reference => $version)
 		{
 			$is_bundle = false;
 
@@ -325,20 +325,26 @@ class Extension {
 				$version   = '0';
 			}
 
-			list($op)  = preg_split("/\d+/", $version, 2);
-			$version   = str_replace($op, '', $version);
+			list($op) = preg_split("/\d+/", $version, 2);
+			$version  = str_replace($op, '', $version);
 
 			// Check if the requirement is a bundle, we can ignore it if
 			// bundle is already started.
-			if ($is_bundle and Bundle::started($bundle)) continue;
+			if ($is_bundle and Bundle::started($reference)) continue;
+
+			// If require are using name instead of identifier, we need to get the identifier.
+			if ( ! is_null($identifier = static::identifier($reference)))
+			{
+				$reference = $identifier;
+			}
 
 			// Now check for an extension, at the same time will also detect 
 			// if the dependencies is updated with the 
-			if (static::started($bundle) and ! $is_bundle)
+			if (static::started($reference) and ! $is_bundle)
 			{
-				if ( ! version_compare($available[$bundle]['version'], $version, $op))
+				if ( ! version_compare($available[$reference]['version'], $version, $op))
 				{
-					$unresolved[] = array('name' => $bundle, 'version' => $op.$version);
+					$unresolved[] = array('name' => $reference, 'version' => $op.$version);
 				}
 
 				continue;
@@ -351,17 +357,17 @@ class Extension {
 			// useful when we want to check if such extension is outdated.
 			if ( !! $check_installable)
 			{
-				$unresolved[] = array('name' => $bundle, 'version' => $op.$version);
+				$unresolved[] = array('name' => $reference, 'version' => $op.$version);
 				continue;	
 			}
 
 			// final check, verify the dependencies is available (registered), and 
 			// compare the version.
-			if ( ! isset($available[$bundle]) 
-				or ! version_compare($available[$bundle]['version'], $version, $op))
+			if ( ! isset($available[$reference]) 
+				or ! version_compare($available[$reference]['version'], $version, $op))
 			{
 				$op           = ($op == '=') ? 'v' : $op;
-				$unresolved[] = array('name' => $bundle, 'version' => $op.$version);
+				$unresolved[] = array('name' => $reference, 'version' => $op.$version);
 			}
 		}
 
