@@ -77,8 +77,8 @@ if ( ! function_exists('handles'))
 		// that we are handle "application" routing
 		if ( ! Bundle::exists($bundle))
 		{
-			$bundle = DEFAULT_BUNDLE;
 			$to     = $bundle;
+			$bundle = DEFAULT_BUNDLE;
 
 			// DEFAULT_BUNDLE should handle root path
 			$handles = '';
