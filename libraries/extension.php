@@ -238,6 +238,21 @@ class Extension {
 			}
 		}
 
+		$available    = $memory->get('extensions.available');
+		$name         = $available[$name]['name'];
+		$dependencies = array();
+
+		// we should check that other extensions don't depend on it
+		foreach ($active as $bundle => $extension)
+		{
+			if (in_array($name, array_keys($available[$bundle]['require'])))
+			{
+				$dependencies[] = $available[$bundle]['name'];
+			}
+		}
+
+		if ( ! empty($dependencies)) throw new Extension\UnresolvedException($dependencies);
+
 		$memory->put('extensions.active', $active);
 	}
 

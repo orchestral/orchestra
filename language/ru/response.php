@@ -23,11 +23,12 @@ return array(
 	'db-404'    => 'Ничего не найдено в базе данных',
 
 	'extensions' => array(
-		'activate'   => 'Расширение :name активировано',
-		'deactivate' => 'Расширение :name деактивировано',
-		'configure'  => 'Настройки для расширения :name обновлены',
-		'upgrade'    => 'Extension :name has been upgraded',
-		'depends-on' => 'Extension :name was not activated because depends on :dependencies',
+		'activate'         => 'Расширение :name активировано',
+		'deactivate'       => 'Расширение :name деактивировано',
+		'configure'        => 'Настройки для расширения :name обновлены',
+		'upgrade'          => 'Extension :name has been upgraded',
+		'depends-on'       => 'Extension :name was not activated because depends on :dependencies',
+		'other-depends-on' => 'Extension :name was not deactivated because :dependencies depends on it',
 	),
 
 	'forgot' => array(

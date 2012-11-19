@@ -23,11 +23,12 @@ return array(
 	'db-404'    => 'Requested data is not available on the database',
 
 	'extensions' => array(
-		'activate'   => 'Extension :name activated',
-		'deactivate' => 'Extension :name deactivate',
-		'configure'  => 'Configuration for Extension :name has been updated',
-		'upgrade'    => 'Extension :name has been upgraded',
-		'depends-on' => 'Extension :name was not activated because depends on :dependencies',
+		'activate'         => 'Extension :name activated',
+		'deactivate'       => 'Extension :name deactivate',
+		'configure'        => 'Configuration for Extension :name has been updated',
+		'upgrade'          => 'Extension :name has been upgraded',
+		'depends-on'       => 'Extension :name was not activated because depends on :dependencies',
+		'other-depends-on' => 'Extension :name was not deactivated because :dependencies depends on it',
 	),
 
 	'forgot' => array(

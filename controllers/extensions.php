@@ -94,10 +94,20 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	{
 		if (is_null($name) or ! Extension::started($name)) return Event::first('404');
 
-		Extension::deactivate($name);
-
 		$m = new Messages;
-		$m->add('success', __('orchestra::response.extensions.deactivate', array('name' => $name)));
+
+		try
+		{
+			Extension::deactivate($name);
+			$m->add('success', __('orchestra::response.extensions.deactivate', array('name' => $name)));
+		}
+		catch (Orchestra\Extension\UnresolvedException $e)
+		{
+			$m->add('error', __('orchestra::response.extensions.other-depends-on', array(
+				'name'         => $name,
+				'dependencies' => implode(', ', $e->getDependencies())
+			)));
+		}
 
 		return Redirect::to(handles('orchestra::extensions'))
 				->with('message', $m->serialize());
