@@ -338,8 +338,10 @@ class Extension {
 				$reference = $identifier;
 			}
 
-			// Now check for an extension, at the same time will also detect 
-			// if the dependencies is updated with the 
+			// Now check for an extension, at the same time will also detect
+			// if the dependencies is updated with a new `require` attributes,
+			// Orchestra can tell the user that this dependency is broken due
+			// to outdated repository.
 			if (static::started($reference) and ! $is_bundle)
 			{
 				if ( ! version_compare($available[$reference]['version'], $version, $op))
