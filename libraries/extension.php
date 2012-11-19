@@ -238,19 +238,22 @@ class Extension {
 			}
 		}
 
-		$memory->put('extensions.active', $active);
+		$available    = $memory->get('extensions.available');
+		$name         = $available[$name]['name'];
+		$dependencies = array();
 
-		$available = $memory->get('extensions.available');
-		$name      = $available[$name]['name'];
-
-		// we should deactivate all the extensions that depends on the deactivated
+		// we should check that other extensions don't depend on it
 		foreach ($active as $bundle => $extension)
 		{
 			if (in_array($name, array_keys($available[$bundle]['require'])))
 			{
-				static::deactivate($bundle);
+				$dependencies[] = $available[$bundle]['name'];
 			}
 		}
+
+		if ( ! empty($dependencies)) throw new Extension\UnresolvedException($dependencies);
+
+		$memory->put('extensions.active', $active);
 	}
 
 	/**
