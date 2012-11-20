@@ -6,7 +6,7 @@ use Orchestra\Extension,
 class Orchestra_Pages_Controller extends Orchestra\Controller {
 
 	/**
-	 * Construct Pages Controller, only authenticated user should 
+	 * Construct Pages Controller, only authenticated user should
 	 * be able to access this controller.
 	 *
 	 * @access public
@@ -34,9 +34,9 @@ class Orchestra_Pages_Controller extends Orchestra\Controller {
 		list($method, $fragment) = explode('_', $request, 2);
 
 		str_contains($fragment, '.') and list($name, $action) = explode('.', $fragment, 2);
-		
-		// we first check if $name actually an extension, if not we should 
-		// consider it's pointing to 'application'
+
+		// we first check if $name actually an extension, if not
+		// we should consider it's pointing to 'application'
 		if ( ! Extension::started($name))
 		{
 			if ( ! Extension::started($fragment))
@@ -51,13 +51,15 @@ class Orchestra_Pages_Controller extends Orchestra\Controller {
 			}
 		}
 
-		// We shouldn't handle any event that is not associated with a valid extension
+		// We shouldn't handle any event that is not associated
+		// with a valid extension
 		if ( ! Extension::started($name) or is_null($action))
 		{
 			return Response::error('404');
 		}
 
-		// Let get the first event associated to the requested keyword.
+		// Let get the first event associated to the requested
+		// keyword.
 		$content = Event::first("orchestra.pages: {$name}.{$action}", $arguments);
 
 		if ($content instanceof Redirect)

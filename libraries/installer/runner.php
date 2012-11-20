@@ -1,18 +1,18 @@
 <?php namespace Orchestra\Installer;
 
-use \Bundle, 
-	\Config, 
-	\DB, 
-	\Event, 
-	\Exception, 
-	\Hash, 
-	\Input, 
-	\IoC, 
-	\Request, 
-	\Schema, 
-	\Session, 
-	\Str, 
-	\Validator, 
+use \Bundle,
+	\Config,
+	\DB,
+	\Event,
+	\Exception,
+	\Hash,
+	\Input,
+	\IoC,
+	\Request,
+	\Schema,
+	\Session,
+	\Str,
+	\Validator,
 	Orchestra\Installer as Installer,
 	Orchestra\Messages,
 	Orchestra\Model\User,
@@ -42,14 +42,18 @@ class Runner {
 		// avoid this method to from being called more than once.
 		if ( ! is_null(static::$message)) return;
 
-		// Fetch message from session, the message should be in serialize, or else should return empty string.
+		// Fetch message from session, the message should be in
+		// serialize, or else should return empty string.
 		static::$message = Session::has('message') ? unserialize(Session::get('message', "")) : null;
 
-		// check whether message actually an instanceof Messages, if for any reason it's not we should
-		// assume the object is invalid and therefore we need to construct a new object.
+		// check whether message actually an instanceof Messages,
+		// if for any reason it's not we should assume the object
+		// is invalid and therefore we need to construct a new
+		// object.
 		if ( ! (static::$message instanceof Messages)) static::$message = new Messages;
 
-		// Check if DEFAULT_BUNDLE has an instruction for Orchestra installation, if so include it.
+		// Check if DEFAULT_BUNDLE has an instruction for
+		// Orchestra installation, if so include it.
 		if (is_file($file = Bundle::path(DEFAULT_BUNDLE).'orchestra'.DS.'installer'.EXT))
 		{
 			include_once $file;
@@ -80,14 +84,14 @@ class Runner {
 	{
 		static::initiate();
 
-		// Run migration script to install `laravel_migrations` table
-		// to this installation.
+		// Run migration script to install `laravel_migrations`
+		// table to this installation.
 		if (IoC::registered('task: orchestra.migrator'))
 		{
 			IoC::resolve('task: orchestra.migrator', array('install'));
 		}
 
-		// We now need to run schema migration for Orchestra. 
+		// We now need to run schema migration for Orchestra.
 		static::install_migrations_schema();
 		static::install_options_schema();
 		static::install_users_schema();
@@ -112,9 +116,10 @@ class Runner {
 
 		static::initiate();
 
-		try 
+		try
 		{
-			// Grab input fields and define the rules for user validations.
+			// Grab input fields and define the rules for user
+			// validations.
 			$rules = array(
 				'email'     => array('required', 'email'),
 				'password'  => array('required'),
@@ -124,16 +129,17 @@ class Runner {
 
 			$v = Validator::make($input, $rules);
 
-			// Validate user registration, we should stop this process
-			// if the user not properly formatted.
+			// Validate user registration, we should stop this
+			// process if the user not properly formatted.
 			if ($v->fails())
 			{
 				Session::flash('errors', $v->errors);
 				return false;
 			}
-			
-			// Before we create administrator, we should ensure that users 
-			// table is empty to avoid any possible hijack or invalid request.
+
+			// Before we create administrator, we should ensure
+			// that users table is empty to avoid any possible
+			// hijack or invalid request.
 			$all = User::all();
 
 			if ( ! empty($all))
@@ -153,8 +159,8 @@ class Runner {
 
 			$user->save();
 
-			// Attach Administrator role to the newly created administrator 
-			// account.
+			// Attach Administrator role to the newly created
+			// administrator account.
 			$user->roles()->insert(new Role(array('name' => 'Administrator')));
 
 			// Make a new instance of Memory using provided IoC
@@ -170,8 +176,8 @@ class Runner {
 			// We should also create a basic ACL for Orchestra.
 			$acl = Acl::make('orchestra');
 
-			// attach memory instance, this allow the acl to be saved to 
-			// database
+			// attach memory instance, this allow the acl to be
+			// saved to database.
 			$acl->attach($memory);
 
 			$actions = array(
@@ -192,16 +198,16 @@ class Runner {
 
 			Event::fire('orchestra.install: acl', array($acl));
 
-			// Installation is successful, we should be able to generate 
-			// success message to notify the user. Installer route will be 
-			// disabled after this point.
+			// Installation is successful, we should be able to
+			// generate success message to notify the user.
+			// Installer route will be disabled after this point.
 			static::$message->add('success', "User created, you can now login to the administation page");
-		} 
-		catch (Exception $e) 
+		}
+		catch (Exception $e)
 		{
 			static::$message->add('error', $e->getMessage());
 		}
-		
+
 		static::shutdown();
 
 		return true;
@@ -217,10 +223,11 @@ class Runner {
 	 */
 	protected static function install_migrations_schema()
 	{
-		try 
+		try
 		{
-			// If this query does not return any Exception, we can assume
-			// that migrations is already installed to current application
+			// If this query does not return any Exception, we
+			// can assume that migrations is already installed to
+			// current application
 			DB::table('orchestra_migrations')->get();
 		}
 		catch (Exception $e)
@@ -229,18 +236,20 @@ class Runner {
 			{
 				$table->create();
 
-				// Migrations can be run for a specific extension, so we'll use
-				// the core name and string migration name as an unique ID
-				// for the migrations, allowing us to easily identify which
-				// migrations have been run for each bundle.
+				// Migrations can be run for a specific extension,
+				// so we'll use the core name and string migration
+				// name as an unique ID for the migrations,
+				// allowing us to easily identify which migrations
+				// have been run for each bundle.
 				$table->string('extension', 50);
 
 				$table->string('name', 200);
 
-				// When running a migration command, we will store a batch
-				// ID with each of the rows on the table. This will allow
-				// us to grab all of the migrations that were run for the
-				// last command when performing rollbacks.
+				// When running a migration command, we will store
+				// a batch ID with each of the rows on the table.
+				// This will allow us to grab all of the
+				// migrations that were run for the last command
+				// when performing rollbacks.
 				$table->integer('batch');
 			});
 
@@ -259,8 +268,9 @@ class Runner {
 	{
 		try
 		{
-			// If this query does not return any Exception, we can assume
-			// that users is already installed to current application
+			// If this query does not return any Exception, we
+			// can assume that users is already installed to
+			// current application
 			DB::table('orchestra_options')->get();
 		}
 		catch (Exception $e)
@@ -292,8 +302,9 @@ class Runner {
 	{
 		try
 		{
-			// If this query does not return any Exception, we can assume
-			// that users is already installed to current application
+			// If this query does not return any Exception, we
+			// can assume that users is already installed to
+			// current application
 			DB::table('users')->get();
 		}
 		catch (Exception $e)

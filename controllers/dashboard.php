@@ -5,8 +5,8 @@ use Orchestra\View;
 class Orchestra_Dashboard_Controller extends Orchestra\Controller {
 
 	/**
-	 * Construct Dashboard Controller, only authenticated user should 
-	 * be able to access this controller.
+	 * Construct Dashboard Controller, only authenticated user
+	 * should be able to access this controller.
 	 *
 	 * @access public
 	 * @return void

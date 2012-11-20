@@ -1,7 +1,7 @@
 <?php
 
 class ControllerTest extends PHPUnit_Framework_TestCase {
-	
+
 	/**
 	 * Setup the test environment.
 	 */
@@ -20,7 +20,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		unset($_SERVER['test.orchestra.started']);
 		unset($_SERVER['test.orchestra.done']);
 	}
-	
+
 	/**
 	 * Test Orchestra\Controller::__construct()
 	 *
@@ -61,7 +61,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 
 		Event::listen('orchestra.done: backend', function()
 		{
-			$_SERVER['test.orchestra.done'] = 'foo'; 
+			$_SERVER['test.orchestra.done'] = 'foo';
 		});
 
 		$controller = with(new Orchestra\Controller)->after('foobar');

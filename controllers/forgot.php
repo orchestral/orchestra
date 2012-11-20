@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-use Orchestra\Core, 
+use Orchestra\Core,
 	Orchestra\Messages,
 	Orchestra\Model\User,
 	Orchestra\Model\User\Meta as User_Meta,
@@ -9,7 +9,8 @@ use Orchestra\Core,
 class Orchestra_Forgot_Controller extends Orchestra\Controller {
 
 	/**
-	 * Construct Forgot Password Controller with some pre-define configuration 
+	 * Construct Forgot Password Controller with some pre-define
+	 * configuration
 	 *
 	 * @access public
 	 * @return void
@@ -19,14 +20,17 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 		parent::__construct();
 
 		$this->filter('before', 'orchestra::not-auth');
-		$this->filter('before', 'orchestra::csrf')->only(array('index'))->on(array('post'));
+		$this->filter('before', 'orchestra::csrf')
+			->only(array('index'))
+			->on(array('post'));
 	}
 
 	/**
-	 * Show Forgot Password Page where user can enter their current e-mail address
+	 * Show Forgot Password Page where user can enter their
+	 * current e-mail address
 	 *
 	 * GET (:bundle)/forgot
-	 * 
+	 *
 	 * @access public
 	 * @return Response
 	 */
@@ -36,12 +40,13 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 	}
 
 	/**
-	 * Validate requested e-mail address for password reset, we should first send 
-	 * a URL where user need to visit before the system can actually change the 
-	 * password on their behave. 
+	 * Validate requested e-mail address for password reset, we
+	 * should first send a URL where user need to visit before
+	 * the system can actually change the password on their
+	 * behave.
 	 *
 	 * POST (:bundle)/forgot
-	 * 
+	 *
 	 * @access public
 	 * @return Response
 	 */
@@ -57,9 +62,10 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 
 		if ($v->fails())
 		{
-			// If any of the validation is not properly formatted, we need to
-			// tell it the the user. This might not be important but a good 
-			// practice to make sure all form use the same e-mail address validation
+			// If any of the validation is not properly formatted,
+			// we need to tell it the the user. This might not be
+			// important but a good practice to make sure all form
+			// use the same e-mail address validation
 			return Redirect::to(handles('orchestra::forgot'))
 					->with_input()
 					->with_errors($v);
@@ -69,7 +75,8 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 
 		if (is_null($user))
 		{
-			// no user could be associated with the provided email address
+			// no user could be associated with the provided
+			// email address
 			$m->add('error', __('orchestra::response.db-404'));
 
 			return Redirect::to(handles('orchestra::forgot'))
@@ -92,9 +99,14 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 		$hash    = sha1($user->email.Str::random(10));
 		$url     = handles('orchestra::forgot/reset/'.$user->id.'/'.$hash);
 		$site    = $memory->get('site.name', 'Orchestra');
-		$subject = __('orchestra::email.forgot.subject', array('site' => $site))->get();
-		$message = __('orchestra::email.forgot.message', array('fullname' => $user->fullname, 'url' => $url))->get();
-		
+		$data    = array(
+			'fullname' => $user->fullname,
+			'url'      => $url,
+			'site'     => $site,
+		);
+		$subject = __('orchestra::email.forgot.subject', $data)->get();
+		$message = __('orchestra::email.forgot.message', $data)->get();
+
 		$mailer  = IoC::resolve('orchestra.mailer');
 		$mailer->to($user->email, $user->fullname)
 			->subject($subject)
@@ -105,28 +117,29 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 		{
 			$m->add('error', __('orchestra::response.forgot.fail'));
 		}
-		else 
+		else
 		{
 			$meta->value = $hash;
 			$meta->save();
 
 			$m->add('success', __('orchestra::response.forgot.send'));
 		}
-		
+
 		return Redirect::to(handles('orchestra::forgot'))
 			->with('message', $m->serialize());
 	}
 
 	/**
-	 * Once user actually visit the reset my password page, we now should be able to 
-	 * make the operation to create a temporary password on behave of the user
+	 * Once user actually visit the reset my password page, we now
+	 * should be able to make the operation to create a temporary
+	 * password on behave of the user
 	 *
 	 * GET (:bundle)/forgot/reset/(:id)/(:hash)
 	 *
 	 * @access public
 	 * @param  int      $id
 	 * @param  string   $hash
-	 * @return Response      
+	 * @return Response
 	 */
 	public function get_reset($id, $hash)
 	{
@@ -141,7 +154,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 					->first();
 
 		if (is_null($meta)) return Response::error('404');
-		
+
 		$m        = new Messages;
 		$user     = $meta->users()->first();
 
@@ -149,9 +162,14 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 		$hash     = sha1($user->email.Str::random(10));
 		$password = Str::random(5);
 		$site     = $memory->get('site.name', 'Orchestra');
-		$subject  = __('orchestra::email.reset.subject', array('site' => $site))->get();
-		$message  = __('orchestra::email.reset.message', array('fullname' => $user->fullname, 'password' => $password))->get();
-		
+		$data     = array(
+			'fullname' => $user->fullname,
+			'password' => $password,
+			'site'     => $site,
+		);
+		$subject  = __('orchestra::email.reset.subject', $data)->get();
+		$message  = __('orchestra::email.reset.message', $data)->get();
+
 		$mailer  = IoC::resolve('orchestra.mailer');
 		$mailer->to($user->email, $user->fullname)
 			->subject($subject)
@@ -162,7 +180,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 		{
 			$m->add('error', __('orchestra::response.forgot.fail'));
 		}
-		else 
+		else
 		{
 			$meta->value = '';
 			$meta->save();
@@ -172,7 +190,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 
 			$m->add('success', __('orchestra::response.forgot.send'));
 		}
-		
+
 		return Redirect::to(handles('orchestra::login'))
 			->with('message', $m->serialize());
 	}

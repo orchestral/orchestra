@@ -1,14 +1,15 @@
 <?php
 
-use Orchestra\Form, 
-	Orchestra\Messages, 
+use Orchestra\Form,
+	Orchestra\Messages,
 	Orchestra\View;
 
 class Orchestra_Account_Controller extends Orchestra\Controller {
 
 	/**
-	 * Construct Account Controller to allow user to update own profile. Only 
-	 * authenticated user should be able to access this controller.
+	 * Construct Account Controller to allow user to update own
+	 * profile. Only authenticated user should be able to access
+	 * this controller.
 	 *
 	 * @access public
 	 * @return void
@@ -40,10 +41,17 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 				'method' => 'POST',
 			));
 
-			$form->fieldset(function ($fieldset) 
+			$form->fieldset(function ($fieldset)
 			{
-				$fieldset->control('input:text', __('orchestra::label.users.email')->get(), 'email');
-				$fieldset->control('input:text', __('orchestra::label.users.fullname')->get(), 'fullname');
+				$fieldset->control('input:text', 'email', function ($control)
+				{
+					$control->label = __('orchestra::label.users.email')->get();
+				});
+
+				$fieldset->control('input:text', 'fullname', function ($control)
+				{
+					$control->label = __('orchestra::label.users.fullname')->get();
+				});
 			});
 		});
 
@@ -62,7 +70,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 	 * POST Edit User Profile
 	 *
 	 * POST (:bundle)/account
-	 * 
+	 *
 	 * @access public
 	 * @return Response
 	 */
@@ -107,7 +115,9 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 		}
 		catch (Exception $e)
 		{
-			$m->add('error', __('orchestra::response.db-failed', array('error' => $e->getMessage())));
+			$m->add('error', __('orchestra::response.db-failed', array(
+				'error' => $e->getMessage(),
+			)));
 		}
 
 		return Redirect::to(handles('orchestra::account'))
@@ -118,7 +128,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 	 * Edit Password Page
 	 *
 	 * GET (:bundle)/account/password
-	 * 
+	 *
 	 * @access public
 	 * @return Response
 	 */
@@ -148,7 +158,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 				'required',
 			),
 			'new_password'     => array(
-				'required', 
+				'required',
 				'different:current_password',
 			),
 			'confirm_password' => array(
@@ -172,7 +182,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 		{
 			$user->password = Hash::make($input['new_password']);
 			$user->save();
-			
+
 			$m->add('success', __('orchestra::response.account.password.update'));
 		}
 		else
@@ -186,9 +196,9 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 
 	/**
 	 * Fire Event related to eloquent process
-	 * 
+	 *
 	 * @access private
-	 * @param  string   $type  
+	 * @param  string   $type
 	 * @param  Eloquent $user
 	 * @return void
 	 */

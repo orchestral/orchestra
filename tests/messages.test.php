@@ -1,14 +1,14 @@
 <?php
 
 class MessagesTest extends PHPUnit_Framework_TestCase {
-	
+
 	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
 		\Session::load();
-		
+
 		Bundle::start('orchestra');
 	}
 
@@ -27,9 +27,10 @@ class MessagesTest extends PHPUnit_Framework_TestCase {
 		$messages->add('welcome', 'Hi Foobar');
 		$this->assertEquals(array('Hello world', 'Hi Foobar'), $messages->get('welcome'));
 	}
-	
+
 	/**
-	 * Test serializing and retrieving Orchestra\Messages over Session
+	 * Test serializing and retrieving Orchestra\Messages over
+	 * Session
 	 *
 	 * @test
 	 */

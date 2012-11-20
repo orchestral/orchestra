@@ -1,6 +1,6 @@
 <?php
 
-use Laravel\Fluent, 
+use Laravel\Fluent,
 	Orchestra\Core,
 	Orchestra\Extension,
 	Orchestra\Form,
@@ -8,10 +8,10 @@ use Laravel\Fluent,
 	Orchestra\View;
 
 class Orchestra_Settings_Controller extends Orchestra\Controller {
-	
+
 	/**
-	 * Construct Settings Controller, only authenticated user should 
-	 * be able to access this controller.
+	 * Construct Settings Controller, only authenticated user
+	 * should be able to access this controller.
 	 *
 	 * @access public
 	 * @return void
@@ -34,15 +34,16 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 	 */
 	public function get_index()
 	{
-		// Orchestra settings are stored using Hybrid\Memory, we need to fetch 
-		// it and convert it to Fluent (to mimick Eloquent properties).
+		// Orchestra settings are stored using Hybrid\Memory, we
+		// need to fetch it and convert it to Fluent (to mimick
+		// Eloquent properties).
 		$memory   = Core::memory();
 
 		$settings = new Fluent(array(
 			'site_name'              => $memory->get('site.name', ''),
 			'site_description'       => $memory->get('site.description', ''),
 			'site_web_upgrade'       => ( ! $memory->get('site.web_upgrade', false) ? 'no' : 'yes'),
-			
+
 			'email_default'          => $memory->get('email.default', ''),
 			'email_smtp_host'        => $memory->get('email.transports.smtp.host', ''),
 			'email_smtp_port'        => $memory->get('email.transports.smtp.port', ''),
@@ -54,7 +55,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 
 		$form = Form::of('orchestra.settings', function ($form) use ($settings)
 		{
-			$form->row($settings);	
+			$form->row($settings);
 			$form->attr(array(
 				'action' => handles('orchestra::settings'),
 				'method' => 'POST',
@@ -63,7 +64,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 			$form->fieldset(function ($fieldset)
 			{
 				$fieldset->control('input:text', 'Site Name', 'site_name');
-				$fieldset->control('textarea', 'Site Description', function ($control) 
+				$fieldset->control('textarea', 'Site Description', function ($control)
 				{
 					$control->name = 'site_description';
 					$control->attr = array('rows' => 3);
@@ -113,9 +114,9 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 
 	/**
 	 * POST Orchestra Settings Page
-	 * 
+	 *
 	 * POST (:bundle)/settings
-	 * 
+	 *
 	 * @access public
 	 * @return Response
 	 */
@@ -179,12 +180,12 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 		}
 
 		IoC::resolve('task: orchestra.upgrader', array(array('orchestra', 'hybrid', 'messages')));
-		
+
 		Extension::publish('orchestra');
 
 		$m->add('success', __('orchestra::response.settings.upgrade'));
 
 		return Redirect::to(handles('orchestra::settings'))
-				->with('message', $m->serialize());	
+				->with('message', $m->serialize());
 	}
 }

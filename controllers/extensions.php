@@ -10,8 +10,8 @@ use Laravel\Fluent,
 class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 	/**
-	 * Construct Extensions Controller, only authenticated user should
-	 * be able to access this controller.
+	 * Construct Extensions Controller, only authenticated user
+	 * should be able to access this controller.
 	 *
 	 * @access public
 	 * @return void
@@ -41,6 +41,8 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 		foreach($data['extensions'] as $name => &$extension)
 		{
+			isset($extension->require) or $extension->require = array();
+
 			$extension->require    = (array) $extension->require;
 			$extension->unresolved = Extension::not_activatable($name);
 		}
@@ -66,11 +68,18 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 		try
 		{
 			Extension::activate($name);
-			$m->add('success', __('orchestra::response.extensions.activate', array('name' => $name)));
+			$m->add('success', __('orchestra::response.extensions.activate', array(
+				'name' => $name,
+			)));
 		}
 		catch (Orchestra\Extension\UnresolvedException $e)
 		{
-			$dependencies = array_map(function($dep) { return $dep['name'].' '.$dep['version']; }, $e->getDependencies());
+			$get_name_version = function($dep)
+			{
+				return $dep['name'].' '.$dep['version'];
+			};
+
+			$dependencies = array_map($get_name_version, $e->getDependencies());
 			$m->add('error', __('orchestra::response.extensions.depends-on', array(
 				'name'         => $name,
 				'dependencies' => implode(', ', $dependencies)
@@ -99,7 +108,9 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 		try
 		{
 			Extension::deactivate($name);
-			$m->add('success', __('orchestra::response.extensions.deactivate', array('name' => $name)));
+			$m->add('success', __('orchestra::response.extensions.deactivate', array(
+				'name' => $name,
+			)));
 		}
 		catch (Orchestra\Extension\UnresolvedException $e)
 		{
@@ -134,7 +145,8 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 		$extension_name = $memory->get("extensions.available.{$name}.name", $name);
 
-		// Add basic form, allow extension to add custom configuration field to this
+		// Add basic form, allow extension to add custom
+		// configuration field to this
 		$form = Form::of("orchestra.extension: {$name}", function ($form) use ($name, $config)
 		{
 			$form->row($config);
@@ -148,7 +160,8 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 			$form->fieldset(function ($fieldset) use ($handles, $name)
 			{
-				// We should only cater for custom URL handles for a route.
+				// We should only cater for custom URL handles
+				// for a route.
 				if ( ! is_null($handles) and Extension::option($name, 'configurable') !== false)
 				{
 					$fieldset->control('input:text', 'handles', function ($control) use ($handles)
@@ -210,14 +223,16 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 		$loader = (array) $memory->get("extensions.active.{$name}", array());
 		$m      = new Messages;
 
-		// This part should be part of extension loader configuration. What saved here
-		// wouldn't be part of extension configuration.
+		// This part should be part of extension loader
+		// configuration. What saved here wouldn't be part of
+		// extension configuration.
 		if (isset($input['handles']) and ! empty($input['handles']))
 		{
 			$loader['handles'] = $input['handles'];
 		}
 
-		// Configure whether extension should be able to be upgraded via web.
+		// Configure whether extension should be able to be
+		// upgraded via web.
 		if (isset($input['web_upgrade']) and ! empty($input['web_upgrade']))
 		{
 			$input['web_upgrade']  = ('yes' === $input['web_upgrade'] ? true : false);
@@ -226,7 +241,8 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 		$memory->put("extensions.active.{$name}", $loader);
 
-		// In any event where extension need to do some custom handling.
+		// In any event where extension need to do some custom
+		// handling.
 		Event::fire("orchestra.saving: extension.{$name}", array($config));
 
 		$memory->put("extension_{$name}", $input);
@@ -250,17 +266,27 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	 */
 	public function get_upgrade($name)
 	{
-		// we should only be able to upgrade extension which is already started
-		if ( ! Extension::started($name) or $name === DEFAULT_BUNDLE) return Response::error('404');
+		// we should only be able to upgrade extension which is
+		// already started
+		if ( ! Extension::started($name) or $name === DEFAULT_BUNDLE)
+		{
+			return Response::error('404');
+		}
 
-		// we shouldn't upgrade extension which is not allowed to upgrade using web
-		if (false === Extension::option($name, 'web_upgrade')) return Response::error('404');
+		// we shouldn't upgrade extension which is not allowed to
+		// upgrade using web
+		if (false === Extension::option($name, 'web_upgrade'))
+		{
+			return Response::error('404');
+		}
+
+		$m = new Messages;
 
 		IoC::resolve('task: orchestra.upgrader', array(array($name)));
 
 		Extension::publish($name);
 
-		$m = Messages::make('success', __('orchestra::response.extensions.upgrade', compact('name')));
+		$m->add('success', __('orchestra::response.extensions.upgrade', compact('name')));
 
 		return Redirect::to(handles('orchestra::extensions'))
 				->with('message', $m->serialize());

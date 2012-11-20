@@ -1,11 +1,11 @@
 <?php
 
 /*
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
 | Load dependencies
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
 |
-| Register and start Hybrid bundle if it's not registered in 
+| Register and start Hybrid bundle if it's not registered in
 | `application/bundles.php`.
 |
 */
@@ -18,9 +18,9 @@ if ( ! Bundle::exists('hybrid'))
 Bundle::start('hybrid');
 
 /*
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
 | Orchestra IoC (Migration)
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
 |
 | Lets Orchestra run Laravel\CLI migration actions.
 |
@@ -39,8 +39,8 @@ if ( ! IoC::registered('task: orchestra.migrator'))
 		{
 			try
 			{
-				// We need to resolve to output buffering Task Migrator will echo some 
-				// output to terminal.
+				// We need to resolve to output buffering Task
+				// Migrator will echo some output to terminal.
 				ob_start();
 
 				$migrate->{$method}($bundle);
@@ -49,21 +49,21 @@ if ( ! IoC::registered('task: orchestra.migrator'))
 			}
 			catch (Exception $e) {}
 		}
-		else 
+		else
 		{
 			throw new Exception('Unable to find migration action');
 		}
-		
+
 	});
 }
 
 /*
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
 | Orchestra IoC (Publisher)
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
 |
-| Lets Orchestra run Laravel\CLI bundle asset publish actions. This is an
-| alias to `php artisan bundle:publish`.
+| Lets Orchestra run Laravel\CLI bundle asset publish actions.
+| This is an alias to `php artisan bundle:publish`.
 |
 */
 
@@ -71,13 +71,14 @@ if ( ! IoC::registered('task: orchestra.publisher'))
 {
 	IoC::register('task: orchestra.publisher', function($bundle = null)
 	{
-		// Initiate the dependencies to Laravel\CLI bundle publisher.
+		// Initiate the dependencies to Laravel\CLI bundle
+		// publisher.
 		$publisher = new Laravel\CLI\Tasks\Bundle\Publisher;
 
 		try
 		{
-			// We need to resolve to output buffering Task Migrator will echo some 
-			// output to terminal.
+			// We need to resolve to output buffering Task
+			// Migrator will echo some output to terminal.
 			ob_start();
 
 			$publisher->publish($bundle);
@@ -85,16 +86,16 @@ if ( ! IoC::registered('task: orchestra.publisher'))
 			ob_end_clean();
 		}
 		catch (Exception $e) {}
-	});	
+	});
 }
 
 /*
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
 | Orchestra IoC (Upgrader)
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
 |
-| Lets Orchestra run Laravel\CLI bundle upgrade actions. This is an
-| alias to `php artisan bundle:upgrade`.
+| Lets Orchestra run Laravel\CLI bundle upgrade actions. This is
+| an alias to `php artisan bundle:upgrade`.
 |
 */
 
@@ -115,8 +116,8 @@ if ( ! IoC::registered('task: orchestra.upgrader'))
 
 		try
 		{
-			// We need to resolve to output buffering Task Upgrader will echo some 
-			// output to terminal.
+			// We need to resolve to output buffering Task Upgrader
+			// will echo some output to terminal.
 			ob_start();
 
 			$upgrader->upgrade($bundle);
@@ -128,11 +129,12 @@ if ( ! IoC::registered('task: orchestra.upgrader'))
 }
 
 /*
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
 | Orchestra Mailer IoC
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
 |
-| Lets Orchestra handle mailer (integration with Message bundle) using IoC.
+| Lets Orchestra handle mailer (integration with Message bundle)
+| using IoC.
 |
 */
 
@@ -147,7 +149,7 @@ if ( ! IoC::registered('orchestra.mailer'))
 		if ( ! Bundle::started('messages')) Bundle::start('messages');
 
 		$memory     = Orchestra\Core::memory();
-		
+
 		$config     = $memory->get('email');
 		$driver     = $config['default'];
 		$transports = $config['transports'];
@@ -157,7 +159,7 @@ if ( ! IoC::registered('orchestra.mailer'))
 
 		$mailer = Message::instance($driver);
 
-		if ($from === true) 
+		if ($from === true)
 		{
 			$mailer->from($email, $memory->get('site.name', 'Orchestra'));
 		}
@@ -167,9 +169,9 @@ if ( ! IoC::registered('orchestra.mailer'))
 }
 
 /*
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
 | Orchestra Memory IoC
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
 |
 | Lets Orchestra handle Hybrid\Memory instance using IoC.
 |

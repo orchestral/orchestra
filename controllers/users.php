@@ -1,17 +1,18 @@
-<?php 
+<?php
 
-use Orchestra\Form, 
+use Orchestra\Form,
 	Orchestra\HTML,
-	Orchestra\Messages, 
+	Orchestra\Messages,
 	Orchestra\Table,
 	Orchestra\View,
-	Orchestra\Model\Role, 
+	Orchestra\Model\Role,
 	Orchestra\Model\User;
 
 class Orchestra_Users_Controller extends Orchestra\Controller {
 
 	/**
-	 * Construct Users Controller with some pre-define configuration 
+	 * Construct Users Controller with some pre-define
+	 * configuration
 	 *
 	 * @access public
 	 * @return void
@@ -19,7 +20,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		
+
 		$this->filter('before', 'orchestra::manage-users');
 	}
 
@@ -34,8 +35,9 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		$keyword = Input::get('q', '');
 		$roles   = Input::get('roles', array());
 
-		// Get Users (with roles) and limit it to only 30 results for 
-		// pagination. Don't you just love it when pagination simply works.
+		// Get Users (with roles) and limit it to only 30 results
+		// for pagination. Don't you just love it when pagination
+		// simply works.
 		$users = User::with('roles')->where_not_null('users.id');
 
 		if ( ! empty($roles))
@@ -58,11 +60,12 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 
 		$users = $users->paginate(30);
 
-		// Build users table HTML using a schema liked code structure.
-		$table = Table::of('orchestra.users', function ($table) use ($users) 
+		// Build users table HTML using a schema liked code
+		// structure.
+		$table = Table::of('orchestra.users', function ($table) use ($users)
 		{
 			$table->empty_message = __('orchestra::label.no-data')->get();
-			
+
 			// Add HTML attributes option for the table.
 			$table->attr('class', 'table table-bordered table-striped');
 
@@ -71,7 +74,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 
 			// Add columns
 			$table->column('id');
-			
+
 			$table->column('fullname', function ($column)
 			{
 				$column->label = __('orchestra::label.users.fullname')->get();
@@ -79,25 +82,29 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 				{
 					$roles = $row->roles;
 					$value = array();
-					
+
 					foreach ($roles as $role)
 					{
-						$value[] = HTML::create('span', $role->name, array('class' => 'label label-info'));
+						$value[] = HTML::create('span', $role->name, array(
+							'class' => 'label label-info',
+						));
 					}
-					
+
 					return implode('', array(
 						HTML::create('strong', $row->fullname),
 						HTML::create('br'),
-						HTML::create('span', HTML::raw(implode(' ', $value)), array('class' => 'meta')),
+						HTML::create('span', HTML::raw(implode(' ', $value)), array(
+							'class' => 'meta',
+						)),
 					));
 				};
 
 			});
 
-			$table->column('email', function ($column) 
+			$table->column('email', function ($column)
 			{
 				$column->label = __('orchestra::label.users.email')->get();
-				$column->value = function ($row) 
+				$column->value = function ($row)
 				{
 					return $row->email;
 				};
@@ -106,24 +113,37 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 
 		Event::fire('orchestra.list: users', array($users, $table));
 
-		// Once all event listening to `orchestra.list: users` is executed, we can add
-		// we can now add the final column, edit and delete action for users
-		$table->extend(function ($table) 
+		// Once all event listening to `orchestra.list: users` is
+		// executed, we can add we can now add the final column,
+		// edit and delete action for users
+		$table->extend(function ($table)
 		{
-			$table->column('action', function ($column) 
+			$table->column('action', function ($column)
 			{
 				$column->label = '';
-				$column->value = function ($row) 
+				$column->value = function ($row)
 				{
 					$btn = array();
-					$btn[] = HTML::link(handles('orchestra::users/view/'.$row->id), __('orchestra::label.edit')->get(), array('class' => 'btn btn-mini'));
+					$btn[] = HTML::link(
+						handles('orchestra::users/view/'.$row->id),
+						__('orchestra::label.edit')->get(),
+						array('class' => 'btn btn-mini')
+					);
 
 					if (Auth::user()->id !== $row->id)
 					{
-						$btn[] = HTML::link(handles('orchestra::users/delete/'.$row->id), __('orchestra::label.delete')->get(), array('class' => 'btn btn-mini btn-danger'));
+						$btn[] = HTML::link(
+							handles('orchestra::users/delete/'.$row->id),
+							__('orchestra::label.delete')->get(),
+							array('class' => 'btn btn-mini btn-danger')
+						);
 					}
 
-					return HTML::create('div', HTML::raw(implode('', $btn)), array('class' => 'btn-group'));
+					return HTML::create(
+						'div',
+						HTML::raw(implode('', $btn)),
+						array('class' => 'btn-group')
+					);
 				};
 			});
 		});
@@ -145,12 +165,12 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 	 * @param  integer $id
 	 * @return Response
 	 */
-	public function get_view($id = null) 
+	public function get_view($id = null)
 	{
 		$type = 'update';
 		$user = User::find($id);
 
-		if (is_null($user)) 
+		if (is_null($user))
 		{
 			$type = 'create';
 			$user = new User;
@@ -164,26 +184,37 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 				'method' => 'POST',
 			));
 
-			$form->fieldset(function ($fieldset) 
+			$form->fieldset(function ($fieldset)
 			{
-				$fieldset->control('input:text', __('orchestra::label.users.email')->get(), 'email');
-				$fieldset->control('input:text', __('orchestra::label.users.fullname')->get(), 'fullname');
+				$fieldset->control('input:text', 'email', function ($control)
+				{
+					$control->label =  __('orchestra::label.users.email')->get();
+				});
 
-				$fieldset->control('input:password', __('orchestra::label.users.password')->get(), 'password');
+				$fieldset->control('input:text', 'fullname', function($control)
+				{
+					$control->label = __('orchestra::label.users.fullname')->get();
+				});
 
-				$fieldset->control('select', __('orchestra::label.users.roles')->get(), function ($control) 
+				$fieldset->control('input:password', 'password', function($control)
+				{
+					$control->label = __('orchestra::label.users.password')->get();
+				});
+
+				$fieldset->control('select', 'roles[]', function ($control)
 				{
 					$options = Role::pair();
-					
+
+					$control->label   = __('orchestra::label.users.roles')->get();
 					$control->name    = 'roles[]';
 					$control->options = $options;
 					$control->attr    = array('multiple' => true);
-					$control->value   = function ($row, $self) use ($options) 
+					$control->value   = function ($row, $self) use ($options)
 					{
 						// get all the user roles from objects
 						$roles = array();
 
-						foreach ($row->roles as $row) 
+						foreach ($row->roles as $row)
 						{
 							$roles[] = $row->id;
 						}
@@ -213,7 +244,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 	 * @param  integer $id
 	 * @return Response
 	 */
-	public function post_view($id = null) 
+	public function post_view($id = null)
 	{
 		$input = Input::all();
 		$rules = array(
@@ -238,7 +269,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		$type = 'update';
 		$user = User::find($id);
 
-		if (is_null($user)) 
+		if (is_null($user))
 		{
 			$type = 'create';
 			$user = new User(array(
@@ -248,8 +279,8 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 
 		$user->fullname = $input['fullname'];
 		$user->email    = $input['email'];
-		
-		if ( ! empty($input['password'])) 
+
+		if ( ! empty($input['password']))
 		{
 			$user->password = Hash::make($input['password']);
 		}
@@ -272,7 +303,9 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		}
 		catch (Exception $e)
 		{
-			$m->add('error', __('orchestra::response.db-failed', array('error' => $e->getMessage())));
+			$m->add('error', __('orchestra::response.db-failed', array(
+				'error' => $e->getMessage(),
+			)));
 		}
 
 		return Redirect::to(handles('orchestra::users'))
@@ -310,7 +343,9 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		}
 		catch (Exception $e)
 		{
-			$m->add('error', __('orchestra::response.db-failed', array('error' => $e->getMessage())));
+			$m->add('error', __('orchestra::response.db-failed', array(
+				'error' => $e->getMessage(),
+			)));
 		}
 
 		return Redirect::to(handles('orchestra::users'))
@@ -319,9 +354,9 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 
 	/**
 	 * Fire Event related to eloquent process
-	 * 
+	 *
 	 * @access private
-	 * @param  string   $type  
+	 * @param  string   $type
 	 * @param  Eloquent $user
 	 * @return void
 	 */

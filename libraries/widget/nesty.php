@@ -128,8 +128,8 @@ class Nesty {
 	{
 		$node = $this->descendants($parent);
 
-		// it might be possible parent is not defined due to ACL, 
-		// in this case we should simply ignore this request as child 
+		// it might be possible parent is not defined due to ACL,
+		// in this case we should simply ignore this request as child
 		// should inherit parent ACL access
 		if ( ! isset($node)) return null;
 
@@ -176,7 +176,7 @@ class Nesty {
 			case count($matches) >= 3 and $matches[1] === 'before' :
 				return $this->add_before($id, $matches[2]);
 				break;
-			
+
 			case count($matches) >= 3 and $matches[1] === 'after' :
 				return $this->add_after($id, $matches[2]);
 				break;
@@ -184,7 +184,7 @@ class Nesty {
 			case count($matches) >= 3 and in_array($matches[1], array('childof', 'child_of')) :
 				return $this->add_child($id, $matches[2]);
 				break;
-			
+
 			default :
 				return $this->add_parent($id);
 				break;
@@ -193,8 +193,8 @@ class Nesty {
 
 	/**
 	 * Get node from items recursively
-	 * 
-	 * @access protected 	
+	 *
+	 * @access protected
 	 * @param  string       $key
 	 * @return Fluent
 	 */
@@ -207,10 +207,11 @@ class Nesty {
 		$keys  = explode('.', $key);
 		$array = $array[array_shift($keys)];
 
-		// To retrieve the array item using dot syntax, we'll iterate through
-		// each segment in the key and look for that value. If it exists, we
-		// will return it, otherwise we will set the depth of the array and
-		// look for the next segment.
+		// To retrieve the array item using dot syntax, we'll
+		// iterate through each segment in the key and look for
+		// that value. If it exists, we will return it, otherwise
+		// we will set the depth of the array and look for the
+		// next segment.
 		foreach ($keys as $segment)
 		{
 			if ( ! is_array($array->childs) or ! isset($array->childs[$segment]))

@@ -3,7 +3,7 @@
 use \Eloquent;
 
 class User extends Eloquent {
-	
+
 	/**
 	 * Has Many relationship to `user_meta` table.
 	 *
@@ -14,10 +14,11 @@ class User extends Eloquent {
 	{
 		return $this->has_many('Orchestra\Model\User\Meta');
 	}
-	
+
 	/**
-	 * Has Many and Belongs To `roles` table using pivot table `user_roles`.
-	 * 
+	 * Has Many and Belongs To `roles` table using pivot table
+	 * `user_roles`.
+	 *
 	 * @access public
 	 * @return Orchestra\Model\Role
 	 */

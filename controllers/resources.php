@@ -8,8 +8,8 @@ use Orchestra\HTML,
 class Orchestra_Resources_Controller extends Orchestra\Controller {
 
 	/**
-	 * Construct Resources Controller, only authenticated user should 
-	 * be able to access this controller.
+	 * Construct Resources Controller, only authenticated user
+	 * should be able to access this controller.
 	 *
 	 * @access public
 	 * @return void
@@ -74,7 +74,7 @@ class Orchestra_Resources_Controller extends Orchestra\Controller {
 
 		$resources = Resources::all();
 
-		switch (true) 
+		switch (true)
 		{
 			case ($name === 'index' and $name === $action) :
 				return $this->_index($resources);
@@ -100,5 +100,5 @@ class Orchestra_Resources_Controller extends Orchestra\Controller {
 			'content'        => $content,
 			'resources_list' => $resources,
 		));
-	}	
+	}
 }

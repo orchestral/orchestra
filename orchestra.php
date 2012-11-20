@@ -1,6 +1,6 @@
 <?php
 
-class Orchestra 
+class Orchestra
 {
 	/**
 	 * Facade for Orchestra\Core.
@@ -13,6 +13,8 @@ class Orchestra
 	 */
 	public static function __callStatic($method, $parameters)
 	{
-		return forward_static_call_array(array("Orchestra\Core", $method), $parameters);
+		$forward_to = array("Orchestra\Core", $method);
+
+		return forward_static_call_array($forward_to, $parameters);
 	}
 }

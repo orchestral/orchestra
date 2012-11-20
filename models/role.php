@@ -15,17 +15,18 @@ class Role extends Eloquent {
 	{
 		$data = array();
 
-		foreach (static::all() as $role) 
+		foreach (static::all() as $role)
 		{
 			$data[$role->id] = $role->name;
 		}
 
 		return $data;
 	}
-	
+
 	/**
-	 * Has Many and Belongs To `users` table using pivot table `user_roles`.
-	 * 
+	 * Has Many and Belongs To `users` table using pivot table
+	 * `user_roles`.
+	 *
 	 * @access public
 	 * @return Orchestra\Model\User
 	 */

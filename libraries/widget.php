@@ -6,7 +6,7 @@ class Widget {
 
 	/**
 	 * Cache widget instance so we can reuse it
-	 * 
+	 *
 	 * @static
 	 * @access  protected
 	 * @var     array
@@ -22,7 +22,7 @@ class Widget {
 	 * @param  arrat    $config  a configuration array
 	 * @return Widget\Driver
 	 */
-	public static function make($name, $config = array()) 
+	public static function make($name, $config = array())
 	{
 		if (false === strpos($name, '.')) $name = $name.'.default';
 
@@ -42,7 +42,9 @@ class Widget {
 					static::$instances[$name] = new Widget\Placeholder($driver, $config);
 					break;
 				default :
-					throw new Exception("Requested Orchestra\Widget Driver [{$type}] does not exist.");
+					throw new Exception(
+						"Requested Orchestra\Widget Driver [{$type}] does not exist."
+					);
 			}
 		}
 

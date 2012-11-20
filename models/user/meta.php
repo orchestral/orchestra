@@ -6,7 +6,7 @@ class Meta extends Eloquent {
 
 	/**
 	 * Overwrite table name
-	 * 
+	 *
 	 * @var string
 	 */
 	public static $table = 'user_meta';
@@ -21,5 +21,5 @@ class Meta extends Eloquent {
 	{
 		return $this->belongs_to('Orchestra\Model\User', 'user_id');
 	}
-	
+
 }

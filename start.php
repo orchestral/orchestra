@@ -1,11 +1,11 @@
 <?php
 
 /*
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
 | Orchestra Library
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
 |
-| Map Orchestra Library using PSR-0 standard namespace. 
+| Map Orchestra Library using PSR-0 standard namespace.
 |
 */
 
@@ -18,13 +18,14 @@ Autoloader::map(array(
 	'Orchestra' => Bundle::path('orchestra').'orchestra'.EXT,
 
 	// Exceptions
-	'Orchestra\Extension\UnresolvedException' => Bundle::path('orchestra').'libraries'.DS.'extension'.DS.'exceptions'.EXT,
+	'Orchestra\Extension\UnresolvedException'
+		=> Bundle::path('orchestra').'libraries'.DS.'extension'.DS.'exceptions'.EXT,
 ));
 
 /*
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
 | Orchestra Dependencies
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
 |
 | Add Orchestra helpers function and dependencies.
 |
@@ -35,15 +36,15 @@ include_once Bundle::path('orchestra').'includes'.DS.'dependencies'.EXT;
 include_once Bundle::path('orchestra').'includes'.DS.'macros'.EXT;
 
 /*
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
 | Orchestra Events Listener
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
 |
 | Lets listen to when Orchestra bundle is started.
 |
 */
 
-Event::listen('laravel.done', function () 
+Event::listen('laravel.done', function ()
 {
 	Orchestra\Core::shutdown();
 });
@@ -54,9 +55,9 @@ Event::listen('orchestra.started: backend', function ()
 });
 
 /*
-|--------------------------------------------------------------------------
-| Let's Start
-|--------------------------------------------------------------------------
+|----------------------------------------------------------------
+| Start Your Engine
+|----------------------------------------------------------------
 */
 
 Orchestra\Core::start();

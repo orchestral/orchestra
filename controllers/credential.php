@@ -1,13 +1,13 @@
 <?php
 
-use Orchestra\Messages, 
+use Orchestra\Messages,
 	Orchestra\View;
 
 class Orchestra_Credential_Controller extends Orchestra\Controller {
 
 	/**
 	 * List of auth.username configuration value.
-	 * 
+	 *
 	 * @var mixed
 	 */
 	private $username_types = null;
@@ -24,10 +24,14 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 
 		$this->username_types = (array) Config::get('auth.username');
 
-		$this->filter('before', 'orchestra::not-auth')->only(array('login', 'register'));
-		$this->filter('before', 'orchestra::csrf')->only(array('login', 'register'))->on(array('post'));
+		$this->filter('before', 'orchestra::not-auth')
+			->only(array('login', 'register'));
+
+		$this->filter('before', 'orchestra::csrf')
+			->only(array('login', 'register'))
+			->on(array('post'));
 	}
-	
+
 	/**
 	 * Login Page
 	 *
@@ -41,14 +45,17 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		$redirect       = Session::get('orchestra.redirect', handles('orchestra'));
 		$username_types = current($this->username_types);
 
-		return View::make('orchestra::credential.login', compact('redirect', 'username_types'));
+		return View::make('orchestra::credential.login', compact(
+			'redirect',
+			'username_types'
+		));
 	}
 
 	/**
 	 * POST Login
 	 *
 	 * POST (:bundle)/login
-	 * 
+	 *
 	 * @access public
 	 * @return Response
 	 */
@@ -63,8 +70,8 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		$m = new Messages;
 		$v = Validator::make($input, $rules);
 
-		// Validate user login, if any errors is found redirect it back to 
-		// login page with the errors
+		// Validate user login, if any errors is found redirect
+		// it back to login page with the errors
 		if ($v->fails())
 		{
 			return Redirect::to(handles('orchestra::login'))
@@ -73,15 +80,16 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		}
 
 		$attempt = array(
-			'username' => $input['username'], 
+			'username' => $input['username'],
 			'password' => $input['password']
 		);
 
-		// We should now attempt to login the user using Auth class, 
+		// We should now attempt to login the user using Auth
+		// class.
 		if (Auth::attempt($attempt))
 		{
 			Event::fire('orchestra.logged.in');
-			
+
 			$m->add('success', __('orchestra::response.credential.logged-in'));
 
 			$redirect = Input::get('redirect', handles('orchestra'));
@@ -100,19 +108,20 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 	 * Logout the user
 	 *
 	 * GET (:bundle)/logout
-	 * 
+	 *
 	 * @access public
 	 * @return Response
 	 */
 	public function get_logout()
 	{
+		$redirect = Input::get('redirect', handles('orchestra::login'));
+
 		Auth::logout();
 
 		Event::fire('orchestra.logged.out');
 
-		$redirect = Input::get('redirect', handles('orchestra::login'));		
-		$m        = Messages::make('success', __('orchestra::response.credential.logged-out'));
-		
+		$m = Messages::make('success', __('orchestra::response.credential.logged-out'));
+
 		return Redirect::to($redirect)
 				->with('message', $m->serialize());
 	}
