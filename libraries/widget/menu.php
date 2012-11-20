@@ -3,7 +3,7 @@
 use \Closure;
 
 class Menu extends Driver {
-	
+
 	/**
 	 * Type
 	 *
@@ -26,8 +26,8 @@ class Menu extends Driver {
 	);
 
 	/**
-	 * Render doesn't do anything at the moment but instead just
-	 * comply with the abstract class from Orchestra\Widget\Driver
+	 * Render doesn't do anything at the moment but instead just comply with
+	 * the abstract class from Orchestra\Widget\Driver
 	 *
 	 * @access public
 	 * @return void
@@ -50,7 +50,7 @@ class Menu extends Driver {
 			$callback = $location;
 			$location = 'parent';
 		}
-		
+
 		$item = $this->nesty->add($id, $location ?: 'parent');
 
 		if ($callback instanceof Closure)

@@ -7,9 +7,8 @@ use Orchestra\Form,
 class Orchestra_Account_Controller extends Orchestra\Controller {
 
 	/**
-	 * Construct Account Controller to allow user to update own
-	 * profile. Only authenticated user should be able to access
-	 * this controller.
+	 * Construct Account Controller to allow user to update own profile.
+	 * Only authenticated user should be able to access this controller.
 	 *
 	 * @access public
 	 * @return void

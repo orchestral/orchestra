@@ -28,8 +28,8 @@ class Orchestra_Toolkit_Task {
 	}
 
 	/**
-	 * Run initiate task for Orchestra Toolkit, this would add
-	 * the definition file as well as start file for Orchestra.
+	 * Run initiate task for Orchestra Toolkit, this would add the definition
+	 * file as well as start file for Orchestra.
 	 *
 	 * <code>
 	 * 		$ php artisan orchestra::toolkit:init
@@ -98,8 +98,8 @@ class Orchestra_Toolkit_Task {
 	 *
 	 * @access public
 	 * @param  array    $args   Arguments passed by CLI
-	 * @throws Exception        If file already exists or bundle
-	 *         					is not the DEFAULT_BUNDLE.
+	 * @throws Exception        If file already exists or bundle is not the
+	 *                          DEFAULT_BUNDLE.
 	 * @return void
 	 */
 	public function installer($args)
@@ -128,10 +128,9 @@ class Orchestra_Toolkit_Task {
 	}
 
 	/**
-	 * Resolve bundle path, for unregistered bundle it would not
-	 * be accessible from Bundle::path() helper, in this case we
-	 * need to manually figure out the valid path using path()
-	 * helpers.
+	 * Resolve bundle path, for unregistered bundle it would not be accessible
+	 * from Bundle::path() helper, in this case we need to manually figure
+	 * out the valid path using path() helpers.
 	 *
 	 * @access private
 	 * @return string

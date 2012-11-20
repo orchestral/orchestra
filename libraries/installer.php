@@ -30,8 +30,7 @@ class Installer {
 	 *
 	 * @static
 	 * @access public
-	 * @return bool     return true if database successfully
-	 *                  connected
+	 * @return bool     return true if database successfully connected
 	 */
 	public static function check_database()
 	{

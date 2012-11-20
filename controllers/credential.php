@@ -70,8 +70,8 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		$m = new Messages;
 		$v = Validator::make($input, $rules);
 
-		// Validate user login, if any errors is found redirect
-		// it back to login page with the errors
+		// Validate user login, if any errors is found redirect it back to
+		// login page with the errors
 		if ($v->fails())
 		{
 			return Redirect::to(handles('orchestra::login'))
@@ -84,8 +84,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 			'password' => $input['password']
 		);
 
-		// We should now attempt to login the user using Auth
-		// class.
+		// We should now attempt to login the user using Auth class.
 		if (Auth::attempt($attempt))
 		{
 			Event::fire('orchestra.logged.in');

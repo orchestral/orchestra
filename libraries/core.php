@@ -50,14 +50,12 @@ class Core {
 		// Make ACL instance for Orchestra
 		static::$cached['acl'] = Acl::make('orchestra');
 
-		// First, we need to ensure that Hybrid\Acl is compliance
-		// with our Eloquent Model, This would overwrite the
-		// default configuration
+		// First, we need to ensure that Hybrid\Acl is compliance with our
+		// Eloquent Model, This would overwrite the default configuration
 		Config::set('hybrid::auth.roles', function ($user, $roles)
 		{
-			// Check if user is null, where roles wouldn't be
-			// available, returning null would allow any other
-			// event listener (if any).
+			// Check if user is null, where roles wouldn't be available,
+			// returning null would allow any other event listener (if any).
 			if (is_null($user)) return ;
 
 			foreach ($user->roles()->get() as $role)
@@ -70,9 +68,8 @@ class Core {
 
 		try
 		{
-			// Initiate Memory class from IoC, this to allow
-			// advanced user to use other implementation if there
-			// is a need for it.
+			// Initiate Memory class from IoC, this to allow advanced user
+			// to use other implementation if there is a need for it.
 			static::$cached['memory'] = IoC::resolve('orchestra.memory');
 
 			if (is_null(static::$cached['memory']->get('site.name')))
@@ -80,14 +77,14 @@ class Core {
 				throw new Exception('Installation is not completed');
 			}
 
-			// In event where we reach this point, we can consider
-			// no exception has occur, we should be able to
-			// compile acl and menu configuration
+			// In event where we reach this point, we can consider no
+			// exception has occur, we should be able to compile acl and
+			// menu configuration
 			static::$cached['acl']->attach(static::$cached['memory']);
 
-			// In any event where Memory failed to load, we should
-			// set Installation status to false routing for
-			// installation is enabled.
+			// In any event where Memory failed to load, we should set
+			// Installation status to false routing for installation is
+			// enabled.
 			Installer::$status = true;
 
 			static::loader();
@@ -95,9 +92,9 @@ class Core {
 		}
 		catch (Exception $e)
 		{
-			// In any case where Exception is catched, we can be
-			// assure that Installation is not done/completed, in
-			// this case we should use runtime/in-memory setup
+			// In any case where Exception is catched, we can be assure that
+			// Installation is not done/completed, in this case we should
+			// use runtime/in-memory setup
 			static::$cached['memory'] = Memory::make('runtime.orchestra');
 
 			static::$cached['orchestra_menu']->add('install')
@@ -275,8 +272,8 @@ class Core {
 				->title(__('orchestra::title.home.list')->get())
 				->link(handles('orchestra'));
 
-			// Add menu when logged-user user has authorization
-			// to `manage users`
+			// Add menu when logged-user user has authorization to
+			// `manage users`
 			if ($acl->can('manage-users'))
 			{
 				$menu->add('users')
@@ -308,15 +305,14 @@ class Core {
 				}
 			}
 
-			// If user aren't logged in, we should stop at this
-			// point, Resources  only be available to logged-in
-			// user.
+			// If user aren't logged in, we should stop at this point,
+			// Resources  only be available to logged-in user.
 			if (Auth::guest()) return;
 
 			$resources = Resources::all();
 
-			// Resources menu should only be appended if there is
-			// actually resources to be displayed.
+			// Resources menu should only be appended if there is actually
+			// resources to be displayed.
 			if ( ! empty($resources))
 			{
 				$menu->add('resources', 'after:extensions')

@@ -17,8 +17,7 @@ class Extension {
 	/**
 	 * Load an extension by running it's start-up script.
 	 *
-	 * If the extension has already been started, no action will
-	 * be taken.
+	 * If the extension has already been started, no action will be taken.
 	 *
 	 * @static
 	 * @access public
@@ -43,9 +42,8 @@ class Extension {
 		Bundle::register($name, $config);
 		Bundle::start($name);
 
-		// by now, extension should already exist as an extension.
-		// We should be able start orchestra.php starter file on
-		// each bundles.
+		// by now, extension should already exist as an extension. We should
+		// be able start orchestra.php starter file on each bundles.
 		if (is_file($file = Bundle::path($name).'orchestra'.EXT))
 		{
 			include_once $file;
@@ -111,8 +109,7 @@ class Extension {
 
 				if (is_null($extensions[$name]))
 				{
-					// json_decode couldn't parse, throw an
-					// exception
+					// json_decode couldn't parse, throw an exception
 					throw new Exception(
 						"Extension [{$name}]: cannot decode orchestra.json file"
 					);
@@ -149,8 +146,8 @@ class Extension {
 		$extensions = static::load($bundles);
 		$cached     = array();
 
-		// we should cache extension to be stored to Hybrid\Memory
-		// to avoid over usage of database space
+		// we should cache extension to be stored to Hybrid\Memory to avoid
+		// over usage of database space
 		foreach ($extensions as $name => $extension)
 		{
 			$ext_name    = isset($extension->name) ? $extension->name : null;
@@ -314,8 +311,8 @@ class Extension {
 	}
 
 	/**
-	 * Solve dependencies for an extension and
-	 * return if an extension can't be activated.
+	 * Solve dependencies for an extension and return if an extension can't
+	 * be activated.
 	 *
 	 * @static
 	 * @access public
@@ -328,8 +325,8 @@ class Extension {
 	}
 
 	/**
-	 * Solve dependencies for an extension and
-	 * return the array of the unsolved dependencies
+	 * Solve dependencies for an extension and return the array of the
+	 * unsolved dependencies
 	 *
 	 * @static
 	 * @access public
@@ -347,8 +344,8 @@ class Extension {
 		{
 			$is_bundle = false;
 
-			// Whenever the version is marked as `bundle`, we can
-			// assume this is a bundle.
+			// Whenever the version is marked as `bundle`, we can assume
+			// this is a bundle.
 			if ($version === 'bundle')
 			{
 				$is_bundle = true;
@@ -358,22 +355,21 @@ class Extension {
 			list($op) = preg_split("/\d+/", $version, 2);
 			$version  = str_replace($op, '', $version);
 
-			// Check if the requirement is a bundle, we can ignore
-			// it if bundle is already started.
+			// Check if the requirement is a bundle, we can ignore it if
+			// bundle is already started.
 			if ($is_bundle and Bundle::started($reference)) continue;
 
-			// If require are using name instead of identifier,
-			// we need to get the identifier.
+			// If require are using name instead of identifier, we need to
+			// get the identifier.
 			if ( ! is_null($identifier = static::identifier($reference)))
 			{
 				$reference = $identifier;
 			}
 
-			// Now check for an extension, at the same time will
-			// also detect if the dependencies is updated with a
-			// new `require` attributes, Orchestra can tell the
-			// user that this dependency is broken due to
-			// outdated repository.
+			// Now check for an extension, at the same time will also detect
+			// if the dependencies is updated with a new `require` attributes,
+			// Orchestra can tell the user that this dependency is broken
+			// due to outdated repository.
 			if (static::started($reference) and ! $is_bundle)
 			{
 				if ( ! version_compare($available[$reference]['version'], $version, $op))
@@ -390,9 +386,8 @@ class Extension {
 			$op      = empty($op) ? '>=' : $op;
 			$version = empty($version) ? '0' : $version;
 
-			// If we need to check if such extension can be
-			// activated, useful when we want to check if such
-			// extension is outdated.
+			// If we need to check if such extension can be activated, useful
+			// when we want to check if such extension is outdated.
 			if ( !! $is_activatable)
 			{
 				$unresolved[] = array(
@@ -402,8 +397,8 @@ class Extension {
 				continue;
 			}
 
-			// final check, verify the dependencies is available
-			// (registered), and compare the version.
+			// final check, verify the dependencies is available (registered),
+			// and compare the version.
 			if ( ! isset($available[$reference])
 				or ! version_compare($available[$reference]['version'], $version, $op))
 			{

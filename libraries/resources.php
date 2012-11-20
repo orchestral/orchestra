@@ -1,6 +1,6 @@
 <?php namespace Orchestra;
 
-use Exception, 
+use Exception,
 	Laravel\Str;
 
 class Resources {
@@ -62,7 +62,7 @@ class Resources {
 
 		if ( ! is_null($child))
 		{
-			$controller = isset(static::$registrar[$name]->childs[$child]) ? 
+			$controller = isset(static::$registrar[$name]->childs[$child]) ?
 				static::$registrar[$name]->childs[$child] : null;
 		}
 		else
@@ -70,8 +70,9 @@ class Resources {
 			$controller = static::$registrar[$name]->uses;
 		}
 
-		// This would cater request to valid resource but pointing to an invalid
-		// child. We should show a 404 response to the user on this case.
+		// This would cater request to valid resource but pointing to an
+		// invalid child. We should show a 404 response to the user on this
+		// case.
 		if (is_null($controller)) return false;
 
 		return Controller::call("{$controller}@{$action}", $arguments);
@@ -113,14 +114,14 @@ class Resources {
 	 *
 	 * @access protected
 	 */
-	protected function __construct($attributes) 
+	protected function __construct($attributes)
 	{
 		$this->attributes = $attributes;
 	}
 
 	/**
 	 * Resource attributes
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $attributes = array();

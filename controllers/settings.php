@@ -10,8 +10,8 @@ use Laravel\Fluent,
 class Orchestra_Settings_Controller extends Orchestra\Controller {
 
 	/**
-	 * Construct Settings Controller, only authenticated user
-	 * should be able to access this controller.
+	 * Construct Settings Controller, only authenticated user hould be able
+	 * to access this controller.
 	 *
 	 * @access public
 	 * @return void
@@ -34,9 +34,8 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 	 */
 	public function get_index()
 	{
-		// Orchestra settings are stored using Hybrid\Memory, we
-		// need to fetch it and convert it to Fluent (to mimick
-		// Eloquent properties).
+		// Orchestra settings are stored using Hybrid\Memory, we need to
+		// fetch it and convert it to Fluent (to mimick Eloquent properties).
 		$memory   = Core::memory();
 
 		$settings = new Fluent(array(

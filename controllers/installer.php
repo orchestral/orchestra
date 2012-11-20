@@ -9,8 +9,7 @@ use Orchestra\Core,
 class Orchestra_Installer_Controller extends Controller {
 
 	/**
-	 * Construct Installer Controller with some pre-define
-	 * configuration
+	 * Construct Installer Controller with some pre-define configuration
 	 *
 	 * @access public
 	 * @return void
@@ -28,8 +27,7 @@ class Orchestra_Installer_Controller extends Controller {
 	}
 
 	/**
-	 * Initiate Installer and show database and environment
-	 * setting
+	 * Initiate Installer and show database and environment setting
 	 *
 	 * ANY (:bundle)/installer
 	 *
@@ -44,17 +42,15 @@ class Orchestra_Installer_Controller extends Controller {
 		$database = Config::get('database.connections.'.$driver, array());
 		$auth     = Config::get('auth');
 
-		// for security, we shouldn't expose database connection
-		// to anyone.
+		// for security, we shouldn't expose database connection to anyone.
 		if (isset($database['password'])
 			and ($password = strlen($database['password'])))
 		{
 			$database['password'] = str_repeat('*', $password);
 		}
 
-		// check database connection, we should be able to
-		// indicate the user whether the connection is working or
-		// not.
+		// check database connection, we should be able to indicate the user
+		// whether the connection is working or not.
 		$database['status'] = Installer::check_database();
 
 		$auth_status = true;
@@ -79,8 +75,8 @@ class Orchestra_Installer_Controller extends Controller {
 	}
 
 	/**
-	 * Installation steps, migrate database as well as create
-	 * first administration user for current application
+	 * Installation steps, migrate database as well as create first
+	 * administration user for current application
 	 *
 	 * ANY (:bundle)/installer/steps/(:step)
 	 *
@@ -97,10 +93,9 @@ class Orchestra_Installer_Controller extends Controller {
 		switch (intval($step))
 		{
 			case 1 :
-				// step 1 involve running basic database
-				// migrations so we can run Orchestra properly.
-				// Extension migration will not be done at this
-				// point.
+				// step 1 involve running basic database migrations so we
+				// can run Orchestra properly. Extension migration will not
+				// be done at this point.
 				Runner::install();
 
 				return View::make('orchestra::installer.step1', $data);
@@ -109,8 +104,8 @@ class Orchestra_Installer_Controller extends Controller {
 			case 2 :
 				Session::flush();
 
-				// Step 2 involve creating administation user
-				// account for current application.
+				// Step 2 involve creating administation user account for
+				// current application.
 				if (Runner::create_user(Input::all()))
 				{
 					return View::make('orchestra::installer.step2', $data);

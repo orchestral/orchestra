@@ -28,8 +28,8 @@ class Pane extends Driver {
 	);
 
 	/**
-	 * Render doesn't do anything at the moment but instead just
-	 * comply with the abstract class from Orchestra\Widget\Driver
+	 * Render doesn't do anything at the moment but instead just comply with
+	 * the abstract class from Orchestra\Widget\Driver
 	 *
 	 * @access public
 	 * @return void
@@ -54,7 +54,7 @@ class Pane extends Driver {
 		}
 
 		if (starts_with($location, 'child')) $location = 'parent';
-		
+
 		$item = $this->nesty->add($id, $location ?: 'parent');
 
 		if ($callback instanceof Closure)

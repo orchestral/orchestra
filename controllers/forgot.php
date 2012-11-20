@@ -26,8 +26,8 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 	}
 
 	/**
-	 * Show Forgot Password Page where user can enter their
-	 * current e-mail address
+	 * Show Forgot Password Page where user can enter their current e-mail
+	 * address.
 	 *
 	 * GET (:bundle)/forgot
 	 *
@@ -40,10 +40,9 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 	}
 
 	/**
-	 * Validate requested e-mail address for password reset, we
-	 * should first send a URL where user need to visit before
-	 * the system can actually change the password on their
-	 * behave.
+	 * Validate requested e-mail address for password reset, we should first
+	 * send a URL where user need to visit before the system can actually
+	 * change the password on their behave.
 	 *
 	 * POST (:bundle)/forgot
 	 *
@@ -62,10 +61,10 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 
 		if ($v->fails())
 		{
-			// If any of the validation is not properly formatted,
-			// we need to tell it the the user. This might not be
-			// important but a good practice to make sure all form
-			// use the same e-mail address validation
+			// If any of the validation is not properly formatted, we need
+			// to tell it the the user. This might not be important but a
+			// good practice to make sure all form use the same e-mail
+			// address validation
 			return Redirect::to(handles('orchestra::forgot'))
 					->with_input()
 					->with_errors($v);
@@ -75,8 +74,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 
 		if (is_null($user))
 		{
-			// no user could be associated with the provided
-			// email address
+			// no user could be associated with the provided email address
 			$m->add('error', __('orchestra::response.db-404'));
 
 			return Redirect::to(handles('orchestra::forgot'))
@@ -130,9 +128,9 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 	}
 
 	/**
-	 * Once user actually visit the reset my password page, we now
-	 * should be able to make the operation to create a temporary
-	 * password on behave of the user
+	 * Once user actually visit the reset my password page, we now should be
+	 * able to make the operation to create a temporary password on behave
+	 * of the user
 	 *
 	 * GET (:bundle)/forgot/reset/(:id)/(:hash)
 	 *

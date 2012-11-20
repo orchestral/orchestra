@@ -6,8 +6,7 @@ use Laravel\Config as C,
 class Config {
 
 	/**
-	 * Map configuration to allow orchestra to store it in
-	 * database
+	 * Map configuration to allow orchestra to store it in database
 	 *
 	 * @static
 	 * @access public

@@ -16,8 +16,7 @@ class User extends Eloquent {
 	}
 
 	/**
-	 * Has Many and Belongs To `roles` table using pivot table
-	 * `user_roles`.
+	 * Has Many and Belongs To `roles` table using pivot table `user_roles`.
 	 *
 	 * @access public
 	 * @return Orchestra\Model\Role

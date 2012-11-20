@@ -8,8 +8,8 @@ use Orchestra\HTML,
 class Orchestra_Resources_Controller extends Orchestra\Controller {
 
 	/**
-	 * Construct Resources Controller, only authenticated user
-	 * should be able to access this controller.
+	 * Construct Resources Controller, only authenticated user should be able
+	 * to access this controller.
 	 *
 	 * @access public
 	 * @return void

@@ -11,8 +11,7 @@ use Orchestra\Form,
 class Orchestra_Users_Controller extends Orchestra\Controller {
 
 	/**
-	 * Construct Users Controller with some pre-define
-	 * configuration
+	 * Construct Users Controller with some pre-define configuration
 	 *
 	 * @access public
 	 * @return void
@@ -35,9 +34,8 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		$keyword = Input::get('q', '');
 		$roles   = Input::get('roles', array());
 
-		// Get Users (with roles) and limit it to only 30 results
-		// for pagination. Don't you just love it when pagination
-		// simply works.
+		// Get Users (with roles) and limit it to only 30 results for
+		// pagination. Don't you just love it when pagination simply works.
 		$users = User::with('roles')->where_not_null('users.id');
 
 		if ( ! empty($roles))
@@ -60,8 +58,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 
 		$users = $users->paginate(30);
 
-		// Build users table HTML using a schema liked code
-		// structure.
+		// Build users table HTML using a schema liked code structure.
 		$table = Table::of('orchestra.users', function ($table) use ($users)
 		{
 			$table->empty_message = __('orchestra::label.no-data')->get();
@@ -113,9 +110,9 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 
 		Event::fire('orchestra.list: users', array($users, $table));
 
-		// Once all event listening to `orchestra.list: users` is
-		// executed, we can add we can now add the final column,
-		// edit and delete action for users
+		// Once all event listening to `orchestra.list: users` is executed,
+		// we can add we can now add the final column, edit and delete action
+		// for users
 		$table->extend(function ($table)
 		{
 			$table->column('action', function ($column)

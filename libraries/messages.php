@@ -1,6 +1,6 @@
 <?php namespace Orchestra;
 
-use \Session, 
+use \Session,
 	Laravel\Messages as Laravel_Messages;
 
 class Messages extends Laravel_Messages {
@@ -27,7 +27,7 @@ class Messages extends Laravel_Messages {
 	}
 
 	/**
-	 * Retrieve Message instance from Session, the data should be in 
+	 * Retrieve Message instance from Session, the data should be in
 	 * serialize, so we need to unserialize it first.
 	 *
 	 * @static

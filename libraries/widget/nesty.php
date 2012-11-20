@@ -128,9 +128,9 @@ class Nesty {
 	{
 		$node = $this->descendants($parent);
 
-		// it might be possible parent is not defined due to ACL,
-		// in this case we should simply ignore this request as child
-		// should inherit parent ACL access
+		// it might be possible parent is not defined due to ACL, in this
+		// case we should simply ignore this request as child should
+		// inherit parent ACL access
 		if ( ! isset($node)) return null;
 
 		$item = $node->childs;
@@ -207,11 +207,10 @@ class Nesty {
 		$keys  = explode('.', $key);
 		$array = $array[array_shift($keys)];
 
-		// To retrieve the array item using dot syntax, we'll
-		// iterate through each segment in the key and look for
-		// that value. If it exists, we will return it, otherwise
-		// we will set the depth of the array and look for the
-		// next segment.
+		// To retrieve the array item using dot syntax, we'll iterate through
+		// each segment in the key and look for that value. If it exists,
+		// we will return it, otherwise we will set the depth of the array
+		// and look for the next segment.
 		foreach ($keys as $segment)
 		{
 			if ( ! is_array($array->childs) or ! isset($array->childs[$segment]))

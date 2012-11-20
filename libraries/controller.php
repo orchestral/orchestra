@@ -24,8 +24,8 @@ class Controller extends Base_Controller {
 	{
 		parent::__construct();
 
-		// All controller should be accessible only after
-		// Orchestra is installed.
+		// All controller should be accessible only after Orchestra is
+		// installed.
 		$this->filter('before', 'orchestra::installed');
 
 		View::share('fluent_layout', true);
@@ -35,8 +35,8 @@ class Controller extends Base_Controller {
 	}
 
 	/**
-	 * After filter for Orchestra\Controller, we primarily use
-	 * this to fire `orchestra.done: backend` event.
+	 * After filter for Orchestra\Controller, we primarily use this to fire
+	 * `orchestra.done: backend` event.
 	 *
 	 * @access public
 	 * @param  mixed    $response

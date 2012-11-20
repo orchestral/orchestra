@@ -13,8 +13,8 @@ class Container {
 	protected $name = null;
 
 	/**
-	 * Themes aliases, allowing similar view to be mapped without
-	 * having to duplicate the physical file.
+	 * Themes aliases, allowing similar view to be mapped without having to
+	 * duplicate the physical file.
 	 *
 	 * @var array
 	 */
@@ -35,9 +35,8 @@ class Container {
 	protected $url  = null;
 
 	/**
-	 * Start Theme Engine, this should be called from
-	 * Orchestra\Core::start() or whenever we need to overwrite
-	 * current active theme per request.
+	 * Start Theme Engine, this should be called from Orchestra\Core::start()
+	 * or whenever we need to overwrite current active theme per request.
 	 *
 	 * @static
 	 * @access public
@@ -85,8 +84,8 @@ class Container {
 	}
 
 	/**
-	 * Map theme aliases, to allow a similar views to be map
-	 * together without make multiple file.
+	 * Map theme aliases, to allow a similar views to be map together without
+	 * make multiple file.
 	 *
 	 * <code>
 	 *     $theme->map(array(
@@ -121,12 +120,11 @@ class Container {
 	 */
 	public function parse($file, $use_bundle = true)
 	{
-		// Return the file if it's already using full path to
-		// avoid recursive request.
+		// Return the file if it's already using full path to avoid
+		// recursive request.
 		if (starts_with('path: ', $file)) return $file;
 
-		// Check theme aliases if we already have registered
-		// aliases
+		// Check theme aliases if we already have registered aliases
 		if (isset($this->aliases[$file])) return $this->aliases[$file];
 
 		if ( ! is_null($this->name))
@@ -141,9 +139,8 @@ class Container {
 				$view   = $file;
 			}
 
-			// In situation where bundle is not registered, it
-			// best to assume that we are handle "application"
-			// routing
+			// In situation where bundle is not registered, it best to assume
+			// that we are handle "application" routing.
 			if ( ! Bundle::exists($bundle))
 			{
 				$bundle = DEFAULT_BUNDLE;
@@ -158,10 +155,9 @@ class Container {
 
 			$view = str_replace('.', '/', $view);
 
-			// Views may have either the default PHP file
-			// extension or the "Blade" extension, so we will
-			// need to check for both in the view path nd return
-			// the first one we find for the given view.
+			// Views may have either the default PHP file extension or the
+			// "Blade" extension, so we will need to check for both in the
+			// view path and return the first one we find for the given view.
 			if (file_exists($path = $directory.$view.EXT))
 			{
 				return 'path: '.$path;
