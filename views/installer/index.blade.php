@@ -4,7 +4,7 @@
 
 <div class="row">
 	<div class="span3">
-		
+
 		<div class="well" style="padding: 8px 0;">
 			<ul class="nav nav-list">
 				<li class="nav-header">Installation Process</li>
@@ -13,11 +13,11 @@
 				</li>
 			</ul>
 		</div>
-	
+
 	</div>
 
-	<div class="span8 form-horizontal">
-		
+	<div class="span6 form-horizontal">
+
 		<h3>Database Setting</h3>
 
 		<p>
@@ -82,7 +82,7 @@
 		</fieldset>
 
 		<fieldset>
-			
+
 			<h3>Authentication Setting</h3>
 
 			<p>
@@ -119,8 +119,6 @@
 
 		@endif
 
-
-		
 	</div>
 
 </div>

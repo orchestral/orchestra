@@ -4,7 +4,7 @@
 
 <div class="row">
 	<div class="span3">
-		
+
 		<div class="well" style="padding: 8px 0;">
 			<ul class="nav nav-list">
 				<li class="nav-header">Installation Process</li>
@@ -19,8 +19,8 @@
 
 	</div>
 
-	<div class="span8 form-horizontal">
-		
+	<div class="span6 form-horizontal">
+
 		{{ Form::open(handles('orchestra::installer/steps/2'), 'POST', array('class' => 'form-horizontal')) }}
 
 		<fieldset>
@@ -64,7 +64,6 @@
 			</div>
 
 		</fieldset>
-
 
 		<div class="form-actions clean">
 			<button type="submit" class="btn btn-primary">Submit</button>
