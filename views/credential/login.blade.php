@@ -28,7 +28,6 @@
 					</div>
 				</div>
 
-
 			</fieldset>
 
 			<div class="form-actions clean">

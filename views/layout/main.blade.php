@@ -13,12 +13,15 @@
 		<![endif]-->
 
 		<!-- Le styles -->
-		<?php 
+		<?php
 
 		$backend = Asset::container('orchestra.backend');
 		$bottom  = Asset::container('orchestra.backend: bottom');
-		
+
+		$backend->style('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.css');
 		$backend->style('bootstrap-responsive', 'bundles/orchestra/vendor/bootstrap/bootstrap-responsive.min.css', array('bootstrap'));
+		$backend->style('orchestra', 'bundles/orchestra/css/style.css', array('bootstrap-responsive'));
+
 		$backend->style('select2', 'bundles/orchestra/vendor/select2/select2.css');
 		$backend->style('delta-custom', 'bundles/orchestra/vendor/delta/css/custom.css');
 		$backend->style('jquery-ui', 'bundles/orchestra/vendor/delta/theme/jquery-ui.css');
@@ -29,13 +32,13 @@
 		$bottom->script('jquery-ui', 'bundles/orchestra/vendor/jquery.ui.js', array('jquery'));
 		$bottom->script('jquery-ui-ts', 'bundles/orchestra/vendor/delta/js/jquery-ui.toggleSwitch.js', array('jquery-ui')); ?>
 
-		{{ $backend->styles(); }}
-		{{ $backend->scripts(); }}
+		{{ $backend->styles() }}
+		{{ $backend->scripts() }}
 
 	</head>
 
 	<body>
-		
+
 		@include('orchestra::layout.widgets.navigation')
 
 		<section class="container{{ isset($fluent_layout) ? '-fluid' : '' }}">

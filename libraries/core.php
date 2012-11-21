@@ -167,9 +167,6 @@ class Core {
 
 		$asset->script('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.js', array('jquery'));
 		$asset->script('orchestra', 'bundles/orchestra/js/script.min.js', array('bootstrap', 'javie'));
-
-		$asset->style('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.css');
-		$asset->style('orchestra', 'bundles/orchestra/css/style.css', array('bootstrap'));
 	}
 
 	/**
