@@ -29,7 +29,7 @@
 			<div class="control-group {{ $errors->has('email') ? 'error' : '' }}">
 				{{ Form::label('email', __('orchestra::label.users.email'), array('class' => 'control-label')) }}
 				<div class="controls">
-					{{ Form::input('email', 'email', '', array('required' => true, 'class' => 'span4')) }}
+					{{ Form::input('email', 'email', '', array('required' => true, 'class' => 'input-xlarge')) }}
 					{{ $errors->first('email', '<p class="help-block">:message</p>') }}
 				</div>
 			</div>
@@ -37,7 +37,7 @@
 			<div class="control-group {{ $errors->has('password') ? 'error' : '' }}">
 				{{ Form::label('password', __('orchestra::label.users.password'), array('class' => 'control-label')) }}
 				<div class="controls">
-					{{ Form::input('password', 'password', '', array('required' => true, 'class' => 'span4')) }}
+					{{ Form::input('password', 'password', '', array('required' => true, 'class' => 'input-xlarge')) }}
 					{{ $errors->first('password', '<p class="help-block">:message</p>') }}
 				</div>
 			</div>
@@ -45,7 +45,7 @@
 			<div class="control-group {{ $errors->has('fullname') ? 'error' : '' }}">
 				{{ Form::label('fullname', __('orchestra::label.users.fullname'), array('class' => 'control-label')) }}
 				<div class="controls">
-					{{ Form::input('text', 'fullname', '', array('required' => true, 'class' => 'span4')) }}
+					{{ Form::input('text', 'fullname', '', array('required' => true, 'class' => 'input-xlarge')) }}
 					{{ $errors->first('fullname', '<p class="help-block">:message</p>') }}
 				</div>
 			</div>
@@ -58,7 +58,7 @@
 			<div class="control-group {{ $errors->has('site_name') ? 'error' : '' }}">
 				{{ Form::label('site_name', __('orchestra::label.site_name'), array('class' => 'control-label')) }}
 				<div class="controls">
-					{{ Form::input('text', 'site_name', $site_name, array('required' => true, 'class' => 'span4')) }}
+					{{ Form::input('text', 'site_name', $site_name, array('required' => true, 'class' => 'input-xlarge')) }}
 					{{ $errors->first('site_name', '<p class="help-block">:message</p>') }}
 				</div>
 			</div>

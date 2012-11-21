@@ -3,16 +3,13 @@
 @section('content')
 
 <div class="row">
-	<div class="span3">
-
-		<div class="well" style="padding: 8px 0;">
-			<ul class="nav nav-list">
-				<li class="nav-header">Installation Process</li>
-				<li class="active">
-					{{ HTML::link(handles('orchestra::installer'), '1. Verify Database Configuration') }}
-				</li>
-			</ul>
-		</div>
+	<div class="well" style="padding: 8px 0;">
+		<ul class="nav nav-list">
+			<li class="nav-header">Installation Process</li>
+			<li class="active">
+				{{ HTML::link(handles('orchestra::installer'), '1. Verify Database Configuration') }}
+			</li>
+		</ul>
 
 	</div>
 
@@ -29,7 +26,7 @@
 			<div class="control-group">
 				<label class="control-label">Database Type</label>
 				<div class="controls">
-					<span class="uneditable-input span4">{{ $database['driver'] }}</span>
+					<span class="uneditable-input input-xlarge">{{ $database['driver'] }}</span>
 				</div>
 			</div>
 
@@ -37,7 +34,7 @@
 			<div class="control-group">
 				<label class="control-label">Host</label>
 				<div class="controls">
-					<span class="uneditable-input span4">{{ $database['host'] }}</span>
+					<span class="uneditable-input input-xlarge">{{ $database['host'] }}</span>
 				</div>
 			</div>
 			@endif
@@ -45,7 +42,7 @@
 			<div class="control-group">
 				<label class="control-label">Database</label>
 				<div class="controls">
-					<span class="uneditable-input span4">{{ $database['database'] }}</span>
+					<span class="uneditable-input input-xlarge">{{ $database['database'] }}</span>
 				</div>
 			</div>
 
@@ -53,7 +50,7 @@
 			<div class="control-group">
 				<label class="control-label">User</label>
 				<div class="controls">
-					<span class="uneditable-input span4">{{ $database['username'] }}</span>
+					<span class="uneditable-input input-xlarge">{{ $database['username'] }}</span>
 				</div>
 			</div>
 			@endif
@@ -62,7 +59,7 @@
 			<div class="control-group">
 				<label class="control-label">Password</label>
 				<div class="controls">
-					<span class="uneditable-input span4">{{ $database['password'] }}</span>
+					<span class="uneditable-input input-xlarge">{{ $database['password'] }}</span>
 					<p class="help-block">Password is hidden</p>
 				</div>
 			</div>
@@ -92,7 +89,7 @@
 			<div class="control-group">
 				<label class="control-label {{ 'fluent' === $auth['driver'] ? 'error' : '' }}">Driver</label>
 				<div class="controls">
-					<span class="uneditable-input span4">{{ $auth['driver'] }}</span>
+					<span class="uneditable-input input-xlarge">{{ $auth['driver'] }}</span>
 					@if ('fluent' === $auth['driver'])
 					<p class="help-block">Orchestra only work with Eloquent Driver for Auth</p>
 					@endif
@@ -102,7 +99,7 @@
 			<div class="control-group {{ false === $auth_status ? 'error' : '' }} {{ 'eloquent' !== $auth['driver'] ? 'hide' : '' }}">
 				<label class="control-label">Model</label>
 				<div class="controls">
-					<span class="uneditable-input span4">{{ $auth['model'] }}</span>
+					<span class="uneditable-input input-xlarge">{{ $auth['model'] }}</span>
 					@if (false === $auth_status)
 					<p class="help-block">Model name should be an instance of `Orchestra\Model\User`</p>
 					@endif

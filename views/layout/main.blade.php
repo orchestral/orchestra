@@ -23,7 +23,6 @@
 		$backend->style('orchestra', 'bundles/orchestra/css/style.css', array('bootstrap-responsive'));
 
 		$backend->style('select2', 'bundles/orchestra/vendor/select2/select2.css');
-		$backend->style('delta-custom', 'bundles/orchestra/vendor/delta/css/custom.css');
 		$backend->style('jquery-ui', 'bundles/orchestra/vendor/delta/theme/jquery-ui.css');
 
 		$bottom->script('select2', 'bundles/orchestra/vendor/select2/select2.min.js', array('jquery'));

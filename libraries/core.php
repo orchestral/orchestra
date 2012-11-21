@@ -96,6 +96,7 @@ class Core {
 			// Installation is not done/completed, in this case we should
 			// use runtime/in-memory setup
 			static::$cached['memory'] = Memory::make('runtime.orchestra');
+			static::$cached['memory']->put('site.name', 'Orchestra');
 
 			static::$cached['orchestra_menu']->add('install')
 				->title('Install')
@@ -135,9 +136,19 @@ class Core {
 	 */
 	public static function asset()
 	{
-		// localize memory variable
+		// Set default size for Form
+		Config::set('hybrid::form.fieldset', array(
+			'select'   => array('class' => 'span12'),
+			'textarea' => array('class' => 'span12'),
+			'input'    => array('class' => 'span12'),
+			'password' => array('class' => 'span12'),
+			'radio'    => array(),
+		));
+
+		// Localize memory variable.
 		$memory = static::$cached['memory'];
 
+		// Define IoC for Theme.
 		IoC::singleton('orchestra.theme: backend', function() use ($memory)
 		{
 			$theme = $memory->get('site.theme.backend', function () use ($memory)

@@ -205,7 +205,9 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 					$control->label   = __('orchestra::label.users.roles')->get();
 					$control->name    = 'roles[]';
 					$control->options = $options;
-					$control->attr    = array('multiple' => true);
+					$control->attr    = array(
+						'multiple' => true,
+					);
 					$control->value   = function ($row, $self) use ($options)
 					{
 						// get all the user roles from objects
