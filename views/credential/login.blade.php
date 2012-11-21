@@ -5,13 +5,13 @@
 <div class="row">
 
 	<div class="span12 form-horizontal">
-		
+
 		{{ Form::open(handles('orchestra::login'), 'POST', array('class' => 'form-horizontal')) }}
 			{{ Form::hidden('redirect', $redirect) }}
 			{{ Form::token() }}
 			<fieldset>
 				<legend>{{ __('orchestra::title.login') }}</legend>
-				
+
 				<div class="control-group {{ $errors->has('username') ? 'error' : '' }}">
 					{{ Form::label('username', __("orchestra::label.users.{$username_types}"), array('class' => 'control-label')) }}
 					<div class="controls">
@@ -32,7 +32,7 @@
 			</fieldset>
 
 			<div class="form-actions clean">
-				<button type="submit" class="btn btn-primary">Submit</button> 
+				<button type="submit" class="btn btn-primary">{{ __('orchestra::title.login') }}</button>
 				{{ HTML::link(handles('orchestra::forgot'), __('orchestra::title.forgot-password')) }}
 			</div>
 
