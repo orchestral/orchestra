@@ -14,10 +14,12 @@ return array(
 		'author'       => 'By :author',
 		'version'      => 'Version :version',
 		'dependencies' => 'Dependencies',
+		'update'       => 'Update',
 
 		'actions' => array(
 			'activate'   => 'Activate',
 			'deactivate' => 'Deactivate',
+			'update'     => 'Migrate and Publish',
 			'upgrade'    => 'Upgrade',
 		),
 	),

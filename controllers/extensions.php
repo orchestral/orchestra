@@ -4,6 +4,7 @@ use Laravel\Fluent,
 	Orchestra\Core,
 	Orchestra\Extension,
 	Orchestra\Form,
+	Orchestra\HTML,
 	Orchestra\Messages,
 	Orchestra\View;
 
@@ -191,6 +192,22 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 					});
 					 */
 				}
+
+				$fieldset->control('input:text', 'migrate', function ($control) use ($handles, $name)
+				{
+					$control->label = __('orchestra::label.extensions.update');
+
+					$control->field = function($row, $self) use ($name)
+					{
+						return HTML::link(
+							handles('orchestra::extensions/update/'.$name),
+							__('orchestra::label.extensions.actions.update'),
+							array('class' => 'btn btn-info')
+						);
+					};
+
+				});
+
 			});
 		});
 
@@ -287,6 +304,34 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 		Extension::publish($name);
 
 		$m->add('success', __('orchestra::response.extensions.upgrade', compact('name')));
+
+		return Redirect::to(handles('orchestra::extensions'))
+				->with('message', $m->serialize());
+	}
+
+	/**
+	 * Update an extension, run migration and bundle publish command.
+	 *
+	 * GET (:bundle)/extensions/update/(:name)
+	 *
+	 * @access public
+	 * @param  string   $name name of the extension
+	 * @return Response
+	 */
+	public function get_update($name)
+	{
+		// we should only be able to upgrade extension which is already
+		// started
+		if ( ! Extension::started($name))
+		{
+			return Response::error('404');
+		}
+
+		$m = new Messages;
+
+		Extension::publish($name);
+
+		$m->add('success', __('orchestra::response.extensions.update', compact('name')));
 
 		return Redirect::to(handles('orchestra::extensions'))
 				->with('message', $m->serialize());
