@@ -172,7 +172,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 	{
 		$memory      = Core::memory();
 		$m           = new Messages;
-		$web_upgrade = (bool) $memory->get('orchestra.web_upgrade', false);
+		$web_upgrade = (bool) $memory->get('site.web_upgrade', false);
 
 		if (false === $web_upgrade)
 		{
