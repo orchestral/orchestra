@@ -1,9 +1,9 @@
 <?php namespace Orchestra;
 
 use \Session,
-	Laravel\Messages as Laravel_Messages;
+	Laravel\Messages as M;
 
-class Messages extends Laravel_Messages {
+class Messages extends M {
 
 	/**
 	 * Add a message to the collector.

@@ -5,9 +5,7 @@ use \Asset,
 	\Config,
 	\Exception,
 	\Event,
-	\IoC,
-	Hybrid\Acl,
-	Hybrid\Memory;
+	\IoC;
 
 class Core {
 
@@ -50,8 +48,9 @@ class Core {
 		// Make ACL instance for Orchestra
 		static::$cached['acl'] = Acl::make('orchestra');
 
-		// First, we need to ensure that Hybrid\Acl is compliance with our
-		// Eloquent Model, This would overwrite the default configuration
+		// First, we need to ensure that Orchestra\Acl is compliance with
+		// our Eloquent Model, This would overwrite the default
+		// configuration
 		Config::set('hybrid::auth.roles', function ($user, $roles)
 		{
 			// Check if user is null, where roles wouldn't be available,
@@ -185,7 +184,7 @@ class Core {
 	 *
 	 * @static
 	 * @access public
-	 * @return Hybrid\Memory
+	 * @return Orchestra\Memory
 	 */
 	public static function memory()
 	{
@@ -197,7 +196,7 @@ class Core {
 	 *
 	 * @static
 	 * @access public
-	 * @return Hybrid\Acl
+	 * @return Orchestra\Acl
 	 */
 	public static function acl()
 	{
@@ -209,7 +208,7 @@ class Core {
 	 *
 	 * @static
 	 * @access public
-	 * @return Hybrid\Acl
+	 * @return Orchestra\Acl
 	 */
 	public static function menu($type = 'orchestra')
 	{

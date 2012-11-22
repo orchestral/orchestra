@@ -20,8 +20,8 @@ if ( ! Orchestra\Installer::installed())
 	));
 
 	Orchestra\Core::shutdown();
-	Hybrid\Memory::shutdown();
-	Hybrid\Acl::shutdown();
-	
+	Orchestra\Memory::shutdown();
+	Orchestra\Acl::shutdown();
+
 	Orchestra\Core::start();
 }

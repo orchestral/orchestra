@@ -17,7 +17,7 @@ use \Bundle,
 	Orchestra\Messages,
 	Orchestra\Model\User,
 	Orchestra\Model\Role,
-	Hybrid\Acl;
+	Orchestra\Acl;
 
 class Runner {
 

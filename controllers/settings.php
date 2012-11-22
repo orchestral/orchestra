@@ -34,7 +34,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 	 */
 	public function get_index()
 	{
-		// Orchestra settings are stored using Hybrid\Memory, we need to
+		// Orchestra settings are stored using Orchestra\Memory, we need to
 		// fetch it and convert it to Fluent (to mimick Eloquent properties).
 		$memory   = Core::memory();
 
@@ -184,7 +184,11 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 			return Response::error('404');
 		}
 
-		IoC::resolve('task: orchestra.upgrader', array(array('orchestra', 'hybrid', 'messages')));
+		IoC::resolve('task: orchestra.upgrader', array(array(
+			'orchestra',
+			'hybrid',
+			'messages',
+		)));
 
 		Extension::publish('orchestra');
 

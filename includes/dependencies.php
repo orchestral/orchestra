@@ -19,6 +19,23 @@ Bundle::start('hybrid');
 
 /*
 |--------------------------------------------------------------------------
+| Map Hybrid Classes as Orchestra
+|--------------------------------------------------------------------------
+|
+| This would allow user to access Orchestra namespace without having to
+| know Hybrid.
+|
+*/
+
+Autoloader::alias('Hybrid\Acl', 'Orchestra\Acl');
+Autoloader::alias('Hybrid\Form', 'Orchestra\Form');
+Autoloader::alias('Hybrid\HTML', 'Orchestra\HTML');
+Autoloader::alias('Hybrid\Memory', 'Orchestra\Memory');
+Autoloader::alias('Hybrid\Response', 'Orchestra\Response');
+Autoloader::alias('Hybrid\Table', 'Orchestra\Table');
+
+/*
+|--------------------------------------------------------------------------
 | Orchestra IoC (Migration)
 |--------------------------------------------------------------------------
 |
@@ -171,7 +188,7 @@ if ( ! IoC::registered('orchestra.mailer'))
 | Orchestra Memory IoC
 |--------------------------------------------------------------------------
 |
-| Lets Orchestra handle Hybrid\Memory instance using IoC.
+| Lets Orchestra handle Orchestra\Memory instance using IoC.
 |
 */
 
@@ -179,6 +196,6 @@ if ( ! IoC::registered('orchestra.memory'))
 {
 	IoC::singleton('orchestra.memory', function ()
 	{
-		return Hybrid\Memory::make('fluent.orchestra_options');
+		return Orchestra\Memory::make('fluent.orchestra_options');
 	});
 }

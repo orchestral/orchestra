@@ -146,7 +146,7 @@ class Extension {
 		$extensions = static::load($bundles);
 		$cached     = array();
 
-		// we should cache extension to be stored to Hybrid\Memory to avoid
+		// we should cache extension to be stored to Orchestra\Memory to avoid
 		// over usage of database space
 		foreach ($extensions as $name => $extension)
 		{
