@@ -41,7 +41,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 		$settings = new Fluent(array(
 			'site_name'              => $memory->get('site.name', ''),
 			'site_description'       => $memory->get('site.description', ''),
-			'site_web_upgrade'       => ( ! $memory->get('site.web_upgrade', false) ? 'no' : 'yes'),
+			'site_web_upgrade'       => false,
 
 			'email_default'          => $memory->get('email.default', ''),
 			'email_smtp_host'        => $memory->get('email.transports.smtp.host', ''),
@@ -68,6 +68,10 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 					$control->name = 'site_description';
 					$control->attr = array('rows' => 3);
 				});
+
+				/*
+				@todo this require more testing, can't seem to get it to
+				work in some environment.
 				$fieldset->control('select', 'Upgrade via Web', function ($control)
 				{
 					$control->name = 'site_web_upgrade';
@@ -77,6 +81,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 						'no'  => 'No',
 					);
 				});
+				 */
 			});
 
 			$form->fieldset('E-mail and Messaging', function ($fieldset)
@@ -143,7 +148,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 
 		$memory->put('site.name', $input['site_name']);
 		$memory->put('site.description', $input['site_description']);
-		$memory->put('site.web_upgrade', ($input['site_web_upgrade'] === 'yes' ? true : false));
+		$memory->put('site.web_upgrade', false);
 		$memory->put('email.default', $input['email_default']);
 		$memory->put('email.transports.smtp.host', $input['email_smtp_host']);
 		$memory->put('email.transports.smtp.port', $input['email_smtp_port']);

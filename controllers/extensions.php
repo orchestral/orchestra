@@ -172,6 +172,9 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 				if ($name !== DEFAULT_BUNDLE)
 				{
+					/*
+					@todo this require more testing, can't seem to get it
+					to work in some environment.
 					$fieldset->control('select', 'web_upgrade', function ($control) use ($handles)
 					{
 						$control->value = function ($row)
@@ -186,6 +189,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 							'no'  => 'No',
 						);
 					});
+					 */
 				}
 			});
 		});
