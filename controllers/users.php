@@ -153,7 +153,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 			'_title_'  => 'Users',
 		);
 
-		return View::make('orchestra::resources.users.index', $data);
+		return View::make('orchestra::users.index', $data);
 	}
 
 	/**
@@ -234,7 +234,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 			'_title_'  => __("orchestra::title.users.{$type}")->get(),
 		);
 
-		return View::make('orchestra::resources.edit', $data);
+		return View::make('orchestra::users.edit', $data);
 	}
 
 	/**

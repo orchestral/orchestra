@@ -30,6 +30,6 @@ class Orchestra_Dashboard_Controller extends Orchestra\Controller {
 	{
 		$panes = Orchestra\Widget::make('pane.orchestra')->get();
 
-		return View::make('orchestra::resources.dashboard', compact('panes'));
+		return View::make('orchestra::dashboard.index', compact('panes'));
 	}
 }

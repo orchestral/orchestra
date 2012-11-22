@@ -200,7 +200,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 			'_description_' => __("orchestra::title.extensions.configure")->get(),
 		);
 
-		return View::make('orchestra::resources.edit', $data);
+		return View::make('orchestra::extensions.configure', $data);
 	}
 
 	/**

@@ -4,7 +4,7 @@
 
 <div class="row-fluid">
 
-	<div class="form-horizontal">
+	<div class="span8">
 
 		{{ Form::open(handles('orchestra::account/password'), 'POST', array('class' => 'form-horizontal')) }}
 
@@ -37,12 +37,17 @@
 
 			</fieldset>
 
-			<div class="form-actions clean">
+			<div class="form-actions">
 				<button type="submit" class="btn btn-primary">Submit</button>
 			</div>
 
 		{{ Form::close() }}
 
+	</div>
+
+	<div class="span4">
+		@placeholder('orchestra.account')
+		@placeholder('orchestra.helps')
 	</div>
 
 </div>

@@ -108,7 +108,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 			'_title_'  => __('orchestra::title.settings.list')->get(),
 		);
 
-		return View::make('orchestra::resources.edit', $data);
+		return View::make('orchestra::settings.index', $data);
 	}
 
 	/**

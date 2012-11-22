@@ -62,7 +62,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 			'_title_'  => __("orchestra::title.account.profile")->get(),
 		);
 
-		return View::make('orchestra::resources.edit', $data);
+		return View::make('orchestra::account.index', $data);
 	}
 
 	/**
