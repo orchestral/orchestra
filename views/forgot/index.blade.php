@@ -2,19 +2,19 @@
 
 @section('content')
 
-<div class="row">
+<div class="row-fluid">
 
-	<div class="span12 form-horizontal">
-		
+	<div class="span6 offset3">
+
 		{{ Form::open(handles('orchestra::forgot'), 'POST', array('class' => 'form-horizontal')) }}
 			{{ Form::token() }}
 			<fieldset>
 				<legend>{{ __('orchestra::title.forgot-password') }}</legend>
-				
+
 				<div class="control-group {{ $errors->has('email') ? 'error' : '' }}">
 					{{ Form::label('email', __('orchestra::label.users.email'), array('class' => 'control-label')) }}
 					<div class="controls">
-						{{ Form::input('email', 'email', '', array('required' => true, 'class' => 'span4')) }}
+						{{ Form::input('email', 'email', '', array('required' => true, 'class' => 'input-xlarge')) }}
 						{{ $errors->first('email', '<p class="help-block">:message</p>') }}
 					</div>
 				</div>

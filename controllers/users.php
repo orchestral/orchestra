@@ -117,7 +117,8 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		{
 			$table->column('action', function ($column)
 			{
-				$column->label = '';
+				$column->label      = '';
+				$column->label_attr = array('class' => 'th-action');
 				$column->value = function ($row)
 				{
 					$btn = array();
