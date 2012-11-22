@@ -170,10 +170,11 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 	 */
 	public function get_upgrade()
 	{
-		$memory = Core::memory();
-		$m      = new Messages;
+		$memory      = Core::memory();
+		$m           = new Messages;
+		$web_upgrade = (bool) $memory->get('orchestra.web_upgrade', false);
 
-		if ( ! $memory->get('orchestra.web_upgrade', false))
+		if (false === $web_upgrade)
 		{
 			return Response::error('404');
 		}

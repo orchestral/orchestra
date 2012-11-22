@@ -3,20 +3,16 @@
 @section('content')
 
 <div class="row">
-	<div class="span3">
-
-		<div class="well" style="padding: 8px 0;">
-			<ul class="nav nav-list">
-				<li class="nav-header">Installation Process</li>
-				<li>
-					{{ HTML::link(handles('orchestra::installer'), '1. Verify Database Configuration') }}
-				</li>
-				<li class="active">
-					{{ HTML::link(handles('orchestra::installer/steps/1'), '2. Create Administrator Account') }}
-				</li>
-			</ul>
-		</div>
-
+	<div class="well span3" style="padding: 8px 0;">
+		<ul class="nav nav-list">
+			<li class="nav-header">Installation Process</li>
+			<li>
+				{{ HTML::link(handles('orchestra::installer'), '1. Verify Database Configuration') }}
+			</li>
+			<li class="active">
+				{{ HTML::link(handles('orchestra::installer/steps/1'), '2. Create Administrator Account') }}
+			</li>
+		</ul>
 	</div>
 
 	<div class="span6 form-horizontal">
