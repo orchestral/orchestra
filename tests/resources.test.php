@@ -16,6 +16,8 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	{
 		Bundle::start('orchestra');
 
+		set_path('app', Bundle::path('orchestra').'tests'.DS.'_utils'.DS.'application'.DS);
+
 		$this->stub = Orchestra\Resources::make('stub', array(
 			'name' => 'ResourceStub',
 			'uses' => 'stub',
@@ -27,6 +29,8 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
+		set_path('app', path('base').'application'.DS);
+
 		unset($this->stub);
 	}
 
@@ -76,5 +80,22 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals($expected, $this->stub->childs);
 		$this->assertEquals($expected, $this->stub->childs());
+	}
+
+	/**
+	 * Test Orchestra\Resources::call()
+	 *
+	 * @test
+	 */
+	public function testCallAResources()
+	{
+		$resource = Orchestra\Resources::call('stub', 'index', array());
+
+		$this->assertInstanceOf('Laravel\Response', $resource);
+		$this->assertEquals('stub', $resource->content);
+
+		$resource = Orchestra\Resources::call('stub', 'redirect', array());
+
+		$this->assertInstanceOf('Laravel\Redirect', $resource);
 	}
 }
