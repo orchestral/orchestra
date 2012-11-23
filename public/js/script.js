@@ -1,4 +1,4 @@
-jQuery(function($) {
+jQuery(function startOrchestra ($) { 'use strict';
 	var ev = Javie.Events.make();
 
 	$('select[role="switcher"]').each(function(i, item) {
@@ -15,10 +15,10 @@ jQuery(function($) {
 		el.css('display', 'none');
 	})
 
-	$('select[role!="switcher"]').select2();;
+	$('select[role!="switcher"]').select2();
 
 	$('*[role="tooltip"]').tooltip();
-	
+
 	$('div.btn-group[data-toggle-name]').each(function() {
 		var group, form, name, hidden, buttons;
 
@@ -38,7 +38,7 @@ jQuery(function($) {
 					button.addClass('active');
 				}
 			};
-			
+
 			button.on('click', function() {
 				buttons.removeClass('active');
 
