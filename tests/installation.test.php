@@ -7,6 +7,8 @@ class InstallationTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
+		Config::set('auth.driver', 'eloquent');
+		Config::set('auth.model', 'Orchestra\Model\User');
 		Config::set('database.default', 'sqlite');
 		Config::set('database.connections.sqlite', array(
 			'driver'   => 'sqlite',
@@ -41,6 +43,15 @@ class InstallationTest extends PHPUnit_Framework_TestCase {
 		Orchestra\Installer::$status = false;
 
 		require_once "_utils/setup_testcase.php";
+	}
+
+	/**
+	 * Teardown the test environment
+	 */
+	public function tearDown()
+	{
+		Config::set('auth.driver', 'eloquent');
+		Config::set('auth.model', 'User');
 	}
 
 	/**
