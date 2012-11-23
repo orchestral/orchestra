@@ -4,7 +4,7 @@ Bundle::start('orchestra');
 
 class WidgetTest extends PHPUnit_Framework_TestCase {
 	/**
-	 * Basic Orchestra\Widget\Driver instance.
+	 * Stub instance.
 	 *
 	 * @var Orchestra\Widget\Driver
 	 */
@@ -31,7 +31,7 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testMake()
+	public function testMakeReturnProperInstanceOf()
 	{
 		$this->assertInstanceOf('Orchestra\Widget\Menu',
 			Orchestra\Widget::make('menu'));
@@ -77,6 +77,16 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test instanceof stub.
+	 *
+	 * @test
+	 */
+	public function testInstanceOfStub()
+	{
+		$this->assertInstanceOf('Orchestra\Widget\Driver', $this->stub);
+	}
+
+	/**
 	 * Test Orchestra\Widget\Driver::render() stub return as expected.
 	 *
 	 * @test
@@ -87,7 +97,7 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test add an item using stub
+	 * Test add an item using stub.
 	 */
 	public function testAddItemUsingStubReturnProperly()
 	{
@@ -95,7 +105,7 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 			'foo' => new Laravel\Fluent(array(
 				'id'     => 'foo',
 				'title'  => 'foobar',
-				'link'   => '#',
+				'foobar' => true,
 				'childs' => array(),
 			)),
 		);
@@ -111,7 +121,7 @@ class WidgetStub extends Orchestra\Widget\Driver {
 	protected $config = array(
 		'defaults' => array(
 			'title'   => '',
-			'link'    => '#',
+			'foobar'  => true,
 		),
 	);
 

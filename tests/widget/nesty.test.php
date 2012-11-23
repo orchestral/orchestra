@@ -3,11 +3,11 @@
 class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 
 	/**
-	 * Orchestra\Widget\Nesty instance.
+	 * Stub instance.
 	 *
 	 * @var Orchestra\Widget\Nesty
 	 */
-	private $nesty = null;
+	private $stub = null;
 
 	/**
 	 * Setup the test environment.
@@ -15,7 +15,7 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 	public function setUp()
 	{
 		Bundle::start('orchestra');
-		$this->nesty = new Orchestra\Widget\Nesty(array());
+		$this->stub = new Orchestra\Widget\Nesty(array());
 	}
 
 	/**
@@ -23,17 +23,17 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
-		unset($this->nesty);
+		unset($this->stub);
 	}
 
 	/**
-	 * Test instance of $this->nesty
+	 * Test instanceof stub.
 	 *
 	 * @test
 	 */
-	public function testInstanceOf()
+	public function testInstanceOfStub()
 	{
-		$this->assertInstanceOf('Orchestra\Widget\Nesty', $this->nesty);
+		$this->assertInstanceOf('Orchestra\Widget\Nesty', $this->stub);
 	}
 
 	/**
@@ -49,7 +49,7 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test adding an item to nest
+	 * Test adding an item to Orchestra\Widget\Nesty.
 	 *
 	 * @test
 	 */
@@ -79,12 +79,12 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 			))
 		);
 
-		$this->nesty->add('foo');
-		$this->nesty->add('hello', 'before:foo');
-		$this->nesty->add('world', 'after:hello');
-		$this->nesty->add('bar', 'childof:foo');
-		$this->nesty->add('foobar', 'child_of:foo');
+		$this->stub->add('foo');
+		$this->stub->add('hello', 'before:foo');
+		$this->stub->add('world', 'after:hello');
+		$this->stub->add('bar', 'childof:foo');
+		$this->stub->add('foobar', 'child_of:foo');
 
-		$this->assertEquals($expected, $this->nesty->get());
+		$this->assertEquals($expected, $this->stub->get());
 	}
 }
