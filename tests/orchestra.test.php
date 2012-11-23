@@ -17,12 +17,12 @@ class OrchestraTest extends PHPUnit_Framework_TestCase {
 		DB::$connections = array();
 
 		Laravel\Session::load();
-		
+
 		Bundle::start('orchestra');
 
 		Orchestra\Installer::$status = false;
 
-		require_once "utils/setup.php";
+		require_once "_utils/setup.php";
 	}
 
 	/**
@@ -42,7 +42,7 @@ class OrchestraTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('', $memory->get('site.description'));
 		$this->assertEquals('mail', $memory->get('email.default'));
 		$this->assertEquals('example@test.com', $memory->get('email.from'));
-		
+
 		$this->assertInstanceOf('Hybrid\Acl', $acl);
 	}
 }

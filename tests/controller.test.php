@@ -31,7 +31,8 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$controller = new Orchestra\Controller;
 
 		$this->assertTrue(\View::$shared['fluent_layout']);
-		$this->assertEquals(Orchestra\Core::memory(), \View::$shared['orchestra_memory']);
+		$this->assertEquals(Orchestra\Core::memory(),
+			\View::$shared['orchestra_memory']);
 	}
 
 	/**

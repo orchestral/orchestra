@@ -30,8 +30,10 @@ class ThemeTest extends PHPUnit_Framework_TestCase {
 		$theme = new Orchestra\Theme\Container;
 
 		$this->assertInstanceOf('Orchestra\Theme\Container', $theme);
-		$this->assertInstanceOf('Orchestra\Theme\Container', IoC::resolve('orchestra.theme: frontend'));
-		$this->assertInstanceOf('Orchestra\Theme\Container', IoC::resolve('orchestra.theme: backend'));
+		$this->assertInstanceOf('Orchestra\Theme\Container',
+			IoC::resolve('orchestra.theme: frontend'));
+		$this->assertInstanceOf('Orchestra\Theme\Container',
+			IoC::resolve('orchestra.theme: backend'));
 	}
 
 	/**
@@ -41,7 +43,8 @@ class ThemeTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testContainer()
 	{
-		$this->assertEquals(Orchestra\Theme::resolve(), Orchestra\Theme::container(Orchestra\View::$theme));
+		$this->assertEquals(Orchestra\Theme::resolve(),
+			Orchestra\Theme::container(Orchestra\View::$theme));
 	}
 
 	/**
