@@ -9,18 +9,7 @@ class InstallationTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		Config::set('auth.driver', 'eloquent');
-		Config::set('auth.model', 'Orchestra\Model\User');
-		Config::set('database.default', 'sqlite');
-		Config::set('database.connections.sqlite', array(
-			'driver'   => 'sqlite',
-			'database' => ':memory:',
-			'prefix'   => '',
-		));
-
-		DB::$connections = array();
-
-		Laravel\Session::load();
+		setup_orchestra_env();
 
 		$_SESSION['orchestra.installation'] = array();
 
@@ -34,8 +23,7 @@ class InstallationTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
-		Config::set('auth.driver', 'eloquent');
-		Config::set('auth.model', 'User');
+		teardown_orchestra_env();
 	}
 
 	/**

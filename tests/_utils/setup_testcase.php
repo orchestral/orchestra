@@ -4,6 +4,28 @@ use Symfony\Component\HttpFoundation\LaravelRequest;
 
 include_once "controller_testcase.php";
 
+function setup_orchestra_env()
+{
+	Config::set('auth.driver', 'eloquent');
+	Config::set('auth.model', 'Orchestra\Model\User');
+	Config::set('database.default', 'sqlite');
+	Config::set('database.connections.sqlite', array(
+		'driver'   => 'sqlite',
+		'database' => ':memory:',
+		'prefix'   => '',
+	));
+
+	DB::$connections = array();
+
+	Laravel\Session::load();
+}
+
+function teardown_orchestra_env()
+{
+	Config::set('auth.driver', 'eloquent');
+	Config::set('auth.model', 'User');
+}
+
 function setup_orchestra_fixture()
 {
 	if ( ! Orchestra\Installer::installed())
