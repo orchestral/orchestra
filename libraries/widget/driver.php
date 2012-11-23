@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Widget;
 
-use \Config, 
+use \Config,
 	Laravel\Fluent;
 
 abstract class Driver {
@@ -47,7 +47,7 @@ abstract class Driver {
 	 */
 	public function __construct($name, $config = array())
 	{
-		$_config      = Config::get('orchestra::widget.'.$this->type, array());
+		$_config      = Config::get('orchestra::widget.'.$this->type, $this->config);
 		$this->name   = $name;
 		$this->config = array_merge($config, $_config);
 		$this->nesty  = new Nesty($this->config);
@@ -93,7 +93,7 @@ abstract class Driver {
 
 	/**
 	 * Magic method to get all items
-	 * 
+	 *
 	 * @param  string   $key
 	 * @return mixed
 	 */

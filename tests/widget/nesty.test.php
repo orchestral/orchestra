@@ -3,7 +3,7 @@
 class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 
 	/**
-	 * Basic Orchestra\Widget\Nesty instance.
+	 * Orchestra\Widget\Nesty instance.
 	 *
 	 * @var Orchestra\Widget\Nesty
 	 */

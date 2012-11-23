@@ -1,13 +1,29 @@
 <?php
 
+Bundle::start('orchestra');
+
 class WidgetTest extends PHPUnit_Framework_TestCase {
+	/**
+	 * Basic Orchestra\Widget\Driver instance.
+	 *
+	 * @var Orchestra\Widget\Driver
+	 */
+	private $stub = null;
 
 	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
-		Bundle::start('orchestra');
+		$this->stub = new WidgetStub('foobar', array());
+	}
+
+	/**
+	 * Teardown the test environment.
+	 */
+	public function tearDown()
+	{
+		unset($this->stub);
 	}
 
 	/**
@@ -58,5 +74,61 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	public function testMakeWithInvalidDriverThrowException()
 	{
 		Orchestra\Widget::make('menus');
+	}
+
+	/**
+	 * Test Orchestra\Widget\Driver::render() stub return as expected.
+	 *
+	 * @test
+	 */
+	public function testRenderStub()
+	{
+		$this->assertEquals('stub', $this->stub->render());
+	}
+
+	/**
+	 * Test add an item using stub
+	 */
+	public function testAddItemUsingStubReturnProperly()
+	{
+		$expected = array(
+			'foo' => new Laravel\Fluent(array(
+				'id'     => 'foo',
+				'title'  => 'foobar',
+				'link'   => '#',
+				'childs' => array(),
+			)),
+		);
+
+		$this->stub->add('foo')->title('foobar');
+		$this->assertEquals($expected, $this->stub->get());
+	}
+}
+
+class WidgetStub extends Orchestra\Widget\Driver {
+
+	protected $type = 'stub';
+	protected $config = array(
+		'defaults' => array(
+			'title'   => '',
+			'link'    => '#',
+		),
+	);
+
+	public function render()
+	{
+		return $this->type;
+	}
+
+	public function add($id, $location = 'parent', $callback = null)
+	{
+		$item = $this->nesty->add($id, $location ?: 'parent');
+
+		if ($callback instanceof Closure)
+		{
+			call_user_func($callback, $item);
+		}
+
+		return $item;
 	}
 }

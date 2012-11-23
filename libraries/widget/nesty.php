@@ -32,6 +32,24 @@ class Nesty {
 	}
 
 	/**
+	 * Create a new Fluent instance while appending default config.
+	 *
+	 * @access protected
+	 * @param  int  $id
+	 * @return Fluent
+	 */
+	protected function to_fluent($id)
+	{
+		$defaults = isset($this->config['defaults']) ?
+			$this->config['defaults'] : array();
+
+		return new Fluent(array_merge($defaults, array(
+			'id'     => $id,
+			'childs' => array(),
+		)));
+	}
+
+	/**
 	 * Add item before reference $before
 	 *
 	 * @static
@@ -44,10 +62,7 @@ class Nesty {
 	{
 		$items = array();
 		$found = false;
-		$item  = new Fluent(array(
-			'id'     => $id,
-			'childs' => array()
-		));
+		$item  = $this->to_fluent($id);
 
 		$keys     = array_keys($this->items);
 		$position = array_search($before, $keys);
@@ -86,10 +101,7 @@ class Nesty {
 	{
 		$found = false;
 		$items = array();
-		$item  = new Fluent(array(
-			'id'     => $id,
-			'childs' => array(),
-		));
+		$item  = $this->to_fluent($id);
 
 		$keys     = array_keys($this->items);
 		$position = array_search($after, $keys);
@@ -134,10 +146,7 @@ class Nesty {
 		if ( ! isset($node)) return null;
 
 		$item = $node->childs;
-		$item[$id] = new Fluent(array(
-			'id'     => $id,
-			'childs' => array(),
-		));
+		$item[$id] = $this->to_fluent($id);
 
 		$node->childs($item);
 
@@ -153,10 +162,7 @@ class Nesty {
 	 */
 	protected function add_parent($id)
 	{
-		return $this->items[$id] = new Fluent(array(
-			'id'     => $id,
-			'childs' => array(),
-		));
+		return $this->items[$id] = $this->to_fluent($id);
 	}
 
 	/**
