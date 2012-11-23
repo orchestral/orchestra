@@ -40,6 +40,8 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 		$this->assertInstanceOf('Orchestra\Resources', $this->stub);
 		$this->assertEquals('ResourceStub', $this->stub->name);
 		$this->assertEquals('stub', $this->stub->uses);
+		$this->assertEquals('ResourceStub', $this->stub->name());
+		$this->assertEquals('stub', $this->stub->uses());
 
 		$foo = Orchestra\Resources::make('foo', array(
 			'name' => 'Foobar',
@@ -49,5 +51,30 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 		$this->assertInstanceOf('Orchestra\Resources', $foo);
 		$this->assertEquals('Foobar', $foo->name);
 		$this->assertEquals('foo', $foo->uses);
+		$this->assertEquals('Foobar', $foo->name());
+		$this->assertEquals('foo', $foo->uses());
+	}
+
+	/**
+	 * Test adding child attribute value using setter.
+	 *
+	 * @test
+	 */
+	public function testAddChildUsingSetter()
+	{
+		$this->stub->foobar = 'stub.foo';
+		$expected = array('foobar' => 'stub.foo');
+
+		$this->assertEquals($expected, $this->stub->childs);
+		$this->assertEquals($expected, $this->stub->childs());
+
+		$this->stub->map('hello', 'stub.helloworld');
+		$expected = array(
+			'foobar' => 'stub.foo',
+			'hello'  => 'stub.helloworld',
+		);
+
+		$this->assertEquals($expected, $this->stub->childs);
+		$this->assertEquals($expected, $this->stub->childs());
 	}
 }
