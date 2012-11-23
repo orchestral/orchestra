@@ -1,5 +1,7 @@
 <?php
 
+require_once "_utils/setup_testcase.php";
+
 class ExtensionTest extends PHPUnit_Framework_TestCase {
 
 	/**
@@ -7,7 +9,20 @@ class ExtensionTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
+		$base_path =  Bundle::path('orchestra').'tests'.DS.'_utils'.DS;
+		set_path('app', $base_path.'application'.DS);
+		set_path('orchestra.extension', $base_path.'bundles'.DS);
+
 		Bundle::start('orchestra');
+	}
+
+	/**
+	 * Teardown the test environment.
+	 */
+	public function tearDown()
+	{
+		set_path('app', path('base').'application'.DS);
+		set_path('orchestra.extension', path('bundle'));
 	}
 
 	/**
@@ -27,6 +42,6 @@ class ExtensionTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testDetectExtension()
 	{
-		$this->markTestIncomplete('Not done');
+		setup_orchestra_fixture();
 	}
 }

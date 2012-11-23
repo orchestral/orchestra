@@ -114,6 +114,8 @@ class Extension {
 						"Extension [{$name}]: cannot decode orchestra.json file"
 					);
 				}
+
+				array_set($extension[$name], 'config.location', "path: {$path}");
 			}
 		}
 
@@ -133,7 +135,7 @@ class Extension {
 		{
 			$bundles[DEFAULT_BUNDLE] = path('app');
 
-			$items = new fIterator(path('bundle'), fIterator::SKIP_DOTS);
+			$items = new fIterator(path('orchestra.extension'), fIterator::SKIP_DOTS);
 
 			foreach ($items as $item)
 			{
