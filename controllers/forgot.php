@@ -1,6 +1,7 @@
 <?php
 
 use Orchestra\Core,
+	Orchestra\Mail,
 	Orchestra\Messages,
 	Orchestra\Model\User,
 	Orchestra\Model\User\Meta as User_Meta,
@@ -93,23 +94,23 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 			));
 		}
 
-		$memory  = Core::memory();
-		$hash    = sha1($user->email.Str::random(10));
-		$url     = handles('orchestra::forgot/reset/'.$user->id.'/'.$hash);
-		$site    = $memory->get('site.name', 'Orchestra');
-		$data    = array(
+		$memory = Core::memory();
+		$hash   = sha1($user->email.Str::random(10));
+		$url    = handles('orchestra::forgot/reset/'.$user->id.'/'.$hash);
+		$site   = $memory->get('site.name', 'Orchestra');
+		$data   = array(
 			'fullname' => $user->fullname,
 			'url'      => $url,
 			'site'     => $site,
 		);
-		$subject = __('orchestra::email.forgot.subject', $data)->get();
-		$message = __('orchestra::email.forgot.message', $data)->get();
 
-		$mailer  = IoC::resolve('orchestra.mailer');
-		$mailer->to($user->email, $user->fullname)
-			->subject($subject)
-			->body($message)
-			->send();
+		$mailer = Mail::make('orchestra::email.forgot.request', $data,
+			function ($mail) use ($data, $user)
+			{
+				$mail->subject(__('orchestra::email.forgot.subject', $data)->get())
+					->to($user->email, $user->fullname)
+					->send();
+			});
 
 		if( ! $mailer->was_sent($user->email))
 		{
@@ -155,7 +156,6 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 
 		$m        = new Messages;
 		$user     = $meta->users()->first();
-
 		$memory   = Core::memory();
 		$hash     = sha1($user->email.Str::random(10));
 		$password = Str::random(5);
@@ -165,14 +165,14 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 			'password' => $password,
 			'site'     => $site,
 		);
-		$subject  = __('orchestra::email.reset.subject', $data)->get();
-		$message  = __('orchestra::email.reset.message', $data)->get();
 
-		$mailer  = IoC::resolve('orchestra.mailer');
-		$mailer->to($user->email, $user->fullname)
-			->subject($subject)
-			->body($message)
-			->send();
+		$mailer = Mail::make('orchestra::email.forgot.reset', $data,
+			function ($mail) use ($data, $user)
+			{
+				$mail->subject(__('orchestra::email.reset.subject', $data)->get())
+					->to($user->email, $user->fullname)
+					->send();
+			});
 
 		if( ! $mailer->was_sent($user->email))
 		{
