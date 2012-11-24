@@ -32,7 +32,7 @@ class Orchestra_Resources_Controller extends Orchestra\Controller {
 	{
 		$table = Table::of('orchestra.resources: list', function ($table) use ($resources)
 		{
-			$table->empty_message = __('orchestra::label.no-data')->get();
+			$table->empty_message = __('orchestra::label.no-data');
 
 			// Add HTML attributes option for the table.
 			$table->attr('class', 'table table-bordered table-striped');
@@ -52,8 +52,8 @@ class Orchestra_Resources_Controller extends Orchestra\Controller {
 
 		return View::make('orchestra::resources.index', array(
 			'table'         => $table,
-			'_title_'       => __('orchestra::title.resources.list')->get(),
-			'_description_' => __('orchestra::title.resources.list-detail')->get(),
+			'_title_'       => __('orchestra::title.resources.list'),
+			'_description_' => __('orchestra::title.resources.list-detail'),
 		));
 	}
 

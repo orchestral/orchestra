@@ -44,12 +44,12 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 			{
 				$fieldset->control('input:text', 'email', function ($control)
 				{
-					$control->label = __('orchestra::label.users.email')->get();
+					$control->label = __('orchestra::label.users.email');
 				});
 
 				$fieldset->control('input:text', 'fullname', function ($control)
 				{
-					$control->label = __('orchestra::label.users.fullname')->get();
+					$control->label = __('orchestra::label.users.fullname');
 				});
 			});
 		});
@@ -59,7 +59,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 		$data = array(
 			'eloquent' => $user,
 			'form'     => $form,
-			'_title_'  => __("orchestra::title.account.profile")->get(),
+			'_title_'  => __("orchestra::title.account.profile"),
 		);
 
 		return View::make('orchestra::account.index', $data);
@@ -97,18 +97,22 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 		$user->email    = $input['email'];
 		$user->fullname = $input['fullname'];
 
-		$this->fire_event('updating', $user);
-		$this->fire_event('saving', $user);
-
 		try
 		{
-			DB::transaction(function () use ($user)
+			// Reference to self.
+			$self = $this;
+
+			DB::transaction(function () use ($user, $self)
 			{
+				$self->fire_event('updating', $user);
+				$self->fire_event('saving', $user);
+
 				$user->save();
+
+				$self->fire_event('updated', $user);
+				$self->fire_event('saved', $user);
 			});
 
-			$this->fire_event('updated', $user);
-			$this->fire_event('saved', $user);
 
 			$m->add('success', __('orchestra::response.account.profile.update'));
 		}
@@ -135,7 +139,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 	{
 		$data = array(
 			'eloquent' => Auth::user(),
-			'_title_'  => __("orchestra::title.account.password")->get(),
+			'_title_'  => __("orchestra::title.account.password"),
 		);
 
 		return View::make('orchestra::account.password', $data);
@@ -180,9 +184,23 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 		if (Hash::check($input['current_password'], $user->password))
 		{
 			$user->password = Hash::make($input['new_password']);
-			$user->save();
 
-			$m->add('success', __('orchestra::response.account.password.update'));
+			try
+			{
+				// Reference to self.
+				$self = $this;
+
+				DB::transaction(function () use ($user, $self)
+				{
+					$user->save();
+				});
+
+				$m->add('success', __('orchestra::response.account.password.update'));
+			}
+			catch (Exception $e)
+			{
+				$m->add('error', __('orchestra::response.db-failed'));
+			}
 		}
 		else
 		{

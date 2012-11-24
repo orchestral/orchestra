@@ -110,7 +110,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 		$data = array(
 			'eloquent' => $settings,
 			'form'     => Form::of('orchestra.settings'),
-			'_title_'  => __('orchestra::title.settings.list')->get(),
+			'_title_'  => __('orchestra::title.settings.list'),
 		);
 
 		return View::make('orchestra::settings.index', $data);

@@ -39,7 +39,7 @@ class Orchestra_Installer_Controller extends Controller {
 		Session::flush();
 
 		$driver   = Config::get('database.default', 'mysql');
-		$database = Config::get('database.connections.'.$driver, array());
+		$database = Config::get("database.connections.{$driver}", array());
 		$auth     = Config::get('auth');
 
 		// for security, we shouldn't expose database connection to anyone.

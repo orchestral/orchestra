@@ -37,10 +37,10 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	{
 		$data = array(
 			'extensions' => Extension::detect(),
-			'_title_' => __("orchestra::title.extensions.list")->get(),
+			'_title_' => __("orchestra::title.extensions.list"),
 		);
 
-		foreach($data['extensions'] as $name => &$extension)
+		foreach($data['extensions'] as $name => & $extension)
 		{
 			isset($extension->require) or $extension->require = array();
 
@@ -218,7 +218,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 			'eloquent'      => $config,
 			'form'          => Form::of("orchestra.extension: {$name}"),
 			'_title_'       => $extension_name,
-			'_description_' => __("orchestra::title.extensions.configure")->get(),
+			'_description_' => __("orchestra::title.extensions.configure"),
 		);
 
 		return View::make('orchestra::extensions.configure', $data);

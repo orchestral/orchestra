@@ -61,7 +61,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		// Build users table HTML using a schema liked code structure.
 		$table = Table::of('orchestra.users', function ($table) use ($users)
 		{
-			$table->empty_message = __('orchestra::label.no-data')->get();
+			$table->empty_message = __('orchestra::label.no-data');
 
 			// Add HTML attributes option for the table.
 			$table->attr('class', 'table table-bordered table-striped');
@@ -74,7 +74,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 
 			$table->column('fullname', function ($column)
 			{
-				$column->label = __('orchestra::label.users.fullname')->get();
+				$column->label = __('orchestra::label.users.fullname');
 				$column->value = function ($row)
 				{
 					$roles = $row->roles;
@@ -100,7 +100,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 
 			$table->column('email', function ($column)
 			{
-				$column->label = __('orchestra::label.users.email')->get();
+				$column->label = __('orchestra::label.users.email');
 				$column->value = function ($row)
 				{
 					return $row->email;
@@ -124,7 +124,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 					$btn = array();
 					$btn[] = HTML::link(
 						handles('orchestra::users/view/'.$row->id),
-						__('orchestra::label.edit')->get(),
+						__('orchestra::label.edit'),
 						array('class' => 'btn btn-mini')
 					);
 
@@ -132,7 +132,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 					{
 						$btn[] = HTML::link(
 							handles('orchestra::users/delete/'.$row->id),
-							__('orchestra::label.delete')->get(),
+							__('orchestra::label.delete'),
 							array('class' => 'btn btn-mini btn-danger')
 						);
 					}
@@ -186,24 +186,24 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 			{
 				$fieldset->control('input:text', 'email', function ($control)
 				{
-					$control->label =  __('orchestra::label.users.email')->get();
+					$control->label =  __('orchestra::label.users.email');
 				});
 
 				$fieldset->control('input:text', 'fullname', function($control)
 				{
-					$control->label = __('orchestra::label.users.fullname')->get();
+					$control->label = __('orchestra::label.users.fullname');
 				});
 
 				$fieldset->control('input:password', 'password', function($control)
 				{
-					$control->label = __('orchestra::label.users.password')->get();
+					$control->label = __('orchestra::label.users.password');
 				});
 
 				$fieldset->control('select', 'roles[]', function ($control)
 				{
 					$options = Role::pair();
 
-					$control->label   = __('orchestra::label.users.roles')->get();
+					$control->label   = __('orchestra::label.users.roles');
 					$control->name    = 'roles[]';
 					$control->options = $options;
 					$control->attr    = array(
@@ -231,7 +231,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		$data = array(
 			'eloquent' => $user,
 			'form'     => $form,
-			'_title_'  => __("orchestra::title.users.{$type}")->get(),
+			'_title_'  => __("orchestra::title.users.{$type}"),
 		);
 
 		return View::make('orchestra::users.edit', $data);
@@ -285,19 +285,24 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 			$user->password = Hash::make($input['password']);
 		}
 
-		$this->fire_event(($type === 'create' ? 'creating' : 'updating'), $user);
-		$this->fire_event('saving', $user);
+
 
 		try
 		{
-			DB::transaction(function () use ($user, $input)
+			// Reference to self.
+			$self = $this;
+
+			DB::transaction(function () use ($user, $input, $self, $type)
 			{
+				$self->fire_event(($type === 'create' ? 'creating' : 'updating'), $user);
+				$self->fire_event('saving', $user);
+
 				$user->save();
 				$user->roles()->sync($input['roles']);
-			});
 
-			$this->fire_event(($type === 'create' ? 'created' : 'updated'), $user);
-			$this->fire_event('saved', $user);
+				$self->fire_event(($type === 'create' ? 'created' : 'updated'), $user);
+				$self->fire_event('saved', $user);
+			});
 
 			$m->add('success', __("orchestra::response.users.{$type}"));
 		}
@@ -328,16 +333,21 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 
 		if ($user->id === Auth::user()->id) return Event::fire('404');
 
-		$this->fire_event('deleting', $user);
-
 		try
 		{
-			DB::transaction(function () use ($user)
+			// References to self.
+			$self = $this;
+
+			DB::transaction(function () use ($user, $self)
 			{
+				$self->fire_event('deleting', $user);
+
+				$user->roles()->delete();
 				$user->delete();
+
+				$self->fire_event('deleted', $user);
 			});
 
-			$this->fire_event('deleted', $user);
 
 			$m->add('success', __('orchestra::response.users.delete'));
 		}
