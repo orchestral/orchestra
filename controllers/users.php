@@ -285,11 +285,9 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 			$user->password = Hash::make($input['password']);
 		}
 
-
-
 		try
 		{
-			// Reference to self.
+			// References to self.
 			$self = $this;
 
 			DB::transaction(function () use ($user, $input, $self, $type)
