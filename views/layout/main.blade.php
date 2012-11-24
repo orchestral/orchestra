@@ -15,24 +15,29 @@
 		<!-- Le styles -->
 		<?php
 
-		$backend = Asset::container('orchestra.backend');
-		$bottom  = Asset::container('orchestra.backend: bottom');
+		$asset = Asset::container('orchestra.backend');
 
-		$backend->style('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.css');
-		$backend->style('bootstrap-responsive', 'bundles/orchestra/vendor/bootstrap/bootstrap-responsive.min.css', array('bootstrap'));
-		$backend->style('orchestra', 'bundles/orchestra/css/style.css', array('bootstrap-responsive'));
+		$asset->script('underscore', 'bundles/orchestra/js/underscore.min.js');
+		$asset->script('jquery', 'bundles/orchestra/js/jquery.min.js');
+		$asset->script('javie', 'bundles/orchestra/js/javie.min.js', array('underscore'));
 
-		$backend->style('select2', 'bundles/orchestra/vendor/select2/select2.css');
-		$backend->style('jquery-ui', 'bundles/orchestra/vendor/delta/theme/jquery-ui.css');
+		$asset->style('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.css');
+		$asset->style('bootstrap-responsive', 'bundles/orchestra/vendor/bootstrap/bootstrap-responsive.min.css', array('bootstrap'));
+		$asset->style('orchestra', 'bundles/orchestra/css/style.css', array('bootstrap-responsive'));
 
-		$bottom->script('select2', 'bundles/orchestra/vendor/select2/select2.min.js', array('jquery'));
+		$asset->style('select2', 'bundles/orchestra/vendor/select2/select2.css');
+		$asset->style('jquery-ui', 'bundles/orchestra/vendor/delta/theme/jquery-ui.css');
+
+		$asset->script('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.js', array('jquery'));
+		$asset->script('orchestra', 'bundles/orchestra/js/script.min.js', array('bootstrap', 'javie'));
+		$asset->script('select2', 'bundles/orchestra/vendor/select2/select2.min.js', array('jquery'));
 
 		// Add jQuery-UI Library with Delta theme.
-		$bottom->script('jquery-ui', 'bundles/orchestra/vendor/jquery.ui.js', array('jquery'));
-		$bottom->script('jquery-ui-ts', 'bundles/orchestra/vendor/delta/js/jquery-ui.toggleSwitch.js', array('jquery-ui')); ?>
+		$asset->script('jquery-ui', 'bundles/orchestra/vendor/jquery.ui.js', array('jquery'));
+		$asset->script('jquery-ui-ts', 'bundles/orchestra/vendor/delta/js/jquery-ui.toggleSwitch.js', array('jquery-ui')); ?>
 
-		{{ $backend->styles() }}
-		{{ $backend->scripts() }}
+		{{ $asset->styles() }}
+		{{ $asset->scripts() }}
 
 	</head>
 
@@ -55,7 +60,8 @@
 			</div>
 		</footer>
 
-		{{ $bottom->styles() }}
-		{{ $bottom->scripts() }}
+		<?php $asset = Asset::container('orchestra.backend: bottom'); ?>
+		{{ $asset->styles() }}
+		{{ $asset->scripts() }}
 	</body>
 </html>

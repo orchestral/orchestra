@@ -102,6 +102,8 @@ class Core {
 				->link(handles('orchestra::installer'));
 		}
 
+		static::appearance();
+
 		Event::fire('orchestra.started');
 
 		static::$initiated = true;
@@ -130,10 +132,10 @@ class Core {
 	 * Initiate Asset and Theme IoC for Orchestra.
 	 *
 	 * @static
-	 * @access public
+	 * @access protected
 	 * @return void
 	 */
-	public static function asset()
+	protected static function appearance()
 	{
 		// Set default size for Form
 		Config::set('hybrid::form.fieldset', array(
@@ -167,16 +169,6 @@ class Core {
 
 			return Theme::container('frontend', $theme);
 		});
-
-		// Define basic core Assets
-		$asset = Asset::container('orchestra.backend');
-
-		$asset->script('underscore', 'bundles/orchestra/js/underscore.min.js');
-		$asset->script('jquery', 'bundles/orchestra/js/jquery.min.js');
-		$asset->script('javie', 'bundles/orchestra/js/javie.min.js', array('underscore'));
-
-		$asset->script('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.js', array('jquery'));
-		$asset->script('orchestra', 'bundles/orchestra/js/script.min.js', array('bootstrap', 'javie'));
 	}
 
 	/**

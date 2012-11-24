@@ -71,4 +71,3 @@ Event::listen('orchestra.started: backend', function ()
 */
 
 Orchestra\Core::start();
-Orchestra\Core::asset();
