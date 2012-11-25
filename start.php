@@ -30,6 +30,7 @@ Autoloader::map(array(
 | Allow path('orchestra.extension') default path to be customizable.
 |
 */
+
 set_path('orchestra.extension', path('bundle'));
 
 /*

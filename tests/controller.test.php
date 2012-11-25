@@ -59,7 +59,6 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testAfterTriggerEvent()
 	{
-
 		Event::listen('orchestra.done: backend', function()
 		{
 			$_SERVER['test.orchestra.done'] = 'foo';
