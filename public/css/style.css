@@ -21,3 +21,4 @@ section.container,section.container-fluid{padding-top:45px;}
 form label.ui-state-active{background:transparent;}
 form .ui-slider .ui-slider-handle{z-index:1;}
 table.ui-datepicker-calendar td.ui-datepicker-unselectable.ui-state-disabled span.ui-state-default{display:block;padding:0 !important;border:0 none !important;width:30px;height:30px;line-height:30px;text-align:center;font-size:12px;text-decoration:none;font-weight:normal !important;}
+.container .themes img{margin:0 auto;display:block;}
