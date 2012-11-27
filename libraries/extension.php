@@ -374,7 +374,8 @@ class Extension {
 			// due to outdated repository.
 			if (static::started($reference) and ! $is_bundle)
 			{
-				if ( ! version_compare($available[$reference]['version'], $version, $op))
+				if ( ! isset($available[$reference]) 
+					or  ! version_compare($available[$reference]['version'], $version, $op))
 				{
 					$unresolved[] = array(
 						'name'    => $reference,
