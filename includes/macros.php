@@ -16,7 +16,8 @@ HTML::macro('title', function ($page_title)
 	$page_title = trim($page_title);
 	$format     = $memory->get('site.format.title', ':page-title &mdash; :site-title');
 
-	if (empty($page_title)) return $site_title;
+	if (empty($page_title) or URI::is('/')) return $site_title;
+
 	return strtr($format, array(
 		":site-title" => $site_title,
 		":page-title" => $page_title,
