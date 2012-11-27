@@ -4,6 +4,9 @@ use Symfony\Component\HttpFoundation\LaravelRequest;
 
 include_once "controller_testcase.php";
 
+$base_path =  Bundle::path('orchestra').'tests'.DS.'_utils'.DS;
+set_path('storage', $base_path.'storage'.DS);
+
 function setup_orchestra_env()
 {
 	Config::set('auth.driver', 'eloquent');
@@ -11,7 +14,7 @@ function setup_orchestra_env()
 	Config::set('database.default', 'sqlite');
 	Config::set('database.connections.sqlite', array(
 		'driver'   => 'sqlite',
-		'database' => ':memory:',
+		'database' => 'orchestra',
 		'prefix'   => '',
 	));
 
@@ -22,6 +25,7 @@ function setup_orchestra_env()
 
 function teardown_orchestra_env()
 {
+	File::delete(path('storage').'database'.DS.'orchestra.sqlite');
 	Config::set('auth.driver', 'eloquent');
 	Config::set('auth.model', 'User');
 }

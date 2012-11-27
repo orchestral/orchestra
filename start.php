@@ -15,6 +15,7 @@ Autoloader::namespaces(array(
 ));
 
 Autoloader::map(array(
+	// Facade for Orchestra\Core
 	'Orchestra' => Bundle::path('orchestra').'orchestra'.EXT,
 
 	// Exceptions
