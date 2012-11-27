@@ -28,7 +28,8 @@
 		ev           = Javie.Events.make();
 		emailDefault = $('select[name="email_default"]');
 
-		ev.listen('setting.changed: email.default', function (e, self) {
+		// Listen to email.default changed event. 
+		ev.listen('setting.changed: email.default', function listenToEmailDefaultChange(e, self) {
 			var value = self.value ? self.value : '';
 
 			$('input[name^="email_smtp"], input[name^="email_sendmail"]')
@@ -44,6 +45,7 @@
 			}
 		});
 
+		// bind onChange event to publish an event.
 		emailDefault.on('change', function onChangeEmailDefault (e) {
 			ev.fire('setting.changed: email.default', [e, this]);
 		});
