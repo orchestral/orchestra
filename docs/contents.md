@@ -30,12 +30,12 @@
 
 ### Themes
 * [The Basics](/bundocs/orchestra/themes)
-	- [Introduction](#introduction)
-	- [Enable Theme](#enable-theme)
-	- [Default Theme](#default-theme)
-		- [Theme Manager](#manage-theme)
-	- [Anatomy of A Theme](#anatomy)
-		- [Asset Folder](#assets)
+	- [Introduction](/bundocs/orchestra/themes#introduction)
+	- [Enable Theme](/bundocs/orchestra/themes#enable-theme)
+	- [Default Theme](/bundocs/orchestra/themes#default-theme)
+		- [Theme Manager](/bundocs/orchestra/themes#manage-theme)
+	- [Anatomy of A Theme](/bundocs/orchestra/themes#anatomy)
+		- [Asset Folder](/bundocs/orchestra/themes#assets)
 
 ### IoC
 
