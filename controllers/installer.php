@@ -37,8 +37,19 @@ class Orchestra_Installer_Controller extends Controller {
 	 */
 	public function action_index()
 	{
-		$publisher    = new Orchestra\Installer\Publisher;
-		$installable  = true;
+		$publisher   = new Orchestra\Installer\Publisher;
+		$installable = true;
+
+		try
+		{
+			$asset_writable = $publisher->publish();
+		}
+		catch (RuntimeException $e)
+		{
+			$asset_writable = false;
+			
+		}
+
 		$requirements = array(
 			'storage_writable' => array(
 				'is'       => (is_writable(path('storage'))),
@@ -57,7 +68,7 @@ class Orchestra_Installer_Controller extends Controller {
 				),
 			),
 			'asset_writable'  => array(
-				'is'       => ($publisher->publish()),
+				'is'       => ($asset_writable),
 				'should'   => true,
 				'explicit' => true,
 				'data'     => array(

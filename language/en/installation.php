@@ -41,15 +41,15 @@ return array(
 
 		'storage_writable' => array(
 			'name' => "Writable to :path",
-			'solution' => "Change the file permission to 0777, however it might cause a security write if this folder is accessible from the web.",
+			'solution' => "Change the directory permission to 0777, however it might cause a security issue if this folder is accessible from the web.",
 		),
 		'bundle_writable' => array(
 			'name' => "Writable to :path",
-			'solution' => "Change the file permission to 0777, however it might cause a security write if this folder is accessible from the web.",
+			'solution' => "Change the directory permission to 0777, however it might cause a security issue if this folder is accessible from the web.",
 		),
 		'asset_writable' => array(
 			'name'     => "Writable to :path",
-			'solution' => "Delete the folder, Orchestra Platform will generate a new one with the right set of file ownership.",
+			'solution' => "Change the directory permission to 0777. Once installation is completed, please revert the permission to 0755.",
 		),
 	),
 );
