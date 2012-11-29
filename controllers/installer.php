@@ -1,6 +1,7 @@
 <?php
 
 use Orchestra\Core,
+	Orchestra\HTML,
 	Orchestra\Installer,
 	Orchestra\Installer\Runner,
 	Orchestra\Messages,
@@ -36,6 +37,44 @@ class Orchestra_Installer_Controller extends Controller {
 	 */
 	public function action_index()
 	{
+		$publisher    = new Orchestra\Installer\Publisher;
+		$installable  = true;
+		$requirements = array(
+			'storage_writable' => array(
+				'is'       => (is_writable(path('storage'))),
+				'should'   => true,
+				'explicit' => false,
+				'data'     => array(
+					'path' => HTML::create('code', 'storage', array('title' => path('storage'))),
+				),
+			),
+			'bundle_writable' => array(
+				'is'       => (is_writable(path('bundle'))),
+				'should'   => true,
+				'explicit' => false,
+				'data'     => array(
+					'path' => HTML::create('code', 'bundle', array('title' => path('bundle'))),
+				),
+			),
+			'asset_writable'  => array(
+				'is'       => ($publisher->publish()),
+				'should'   => true,
+				'explicit' => true,
+				'data'     => array(
+					'path' => HTML::create('code', 'public'.DS.'bundles', array('title' => path('public').'bundles'.DS)),
+				),
+			),
+		);
+
+		foreach ($requirements as $requirement)
+		{
+			if ($requirement['is'] !== $requirement['should'] 
+				and true === $requirement['explicit'])
+			{
+				$installable = false;
+			}
+		}
+
 		Session::flush();
 
 		$driver   = Config::get('database.default', 'mysql');
@@ -51,24 +90,31 @@ class Orchestra_Installer_Controller extends Controller {
 
 		// check database connection, we should be able to indicate the user
 		// whether the connection is working or not.
-		$database['status'] = Installer::check_database();
+		if ( ! ($database['status'] = Installer::check_database()))
+		{
+			$installable = false;
+		}
 
-		$auth_status = true;
+		$auth_status = false;
 
 		if ($auth['driver'] === 'eloquent')
 		{
 			if (class_exists($auth['model'])) $driver = new $auth['model'];
 
-			if ( ! (isset($driver) and $driver instanceof Orchestra\Model\User))
+			if (isset($driver) and $driver instanceof Orchestra\Model\User)
 			{
-				$auth_status = false;
+				$auth_status = true;
 			}
 		}
 
+		(true === $auth_status) or $installable = false;
+
 		$data = array(
-			'database'      => $database,
-			'auth'          => $auth,
-			'auth_status'   => $auth_status,
+			'database'     => $database,
+			'auth'         => $auth,
+			'auth_status'  => $auth_status,
+			'installable'  => $installable,
+			'requirements' => $requirements,
 		);
 
 		return View::make('orchestra::installer.index', $data);
@@ -119,7 +165,6 @@ class Orchestra_Installer_Controller extends Controller {
 							->with('message', serialize($message));
 				}
 				break;
-
 		}
 	}
 }

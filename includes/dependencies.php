@@ -87,9 +87,18 @@ if ( ! IoC::registered('task: orchestra.publisher'))
 	{
 		// Initiate the dependencies to Laravel\CLI bundle publisher.
 		$publisher = new Laravel\CLI\Tasks\Bundle\Publisher;
+		$directory = path('public').'bundles'.DS;
+
+		@chmod($directory, 0777);
+
+		if ( ! is_writable($directory)) 
+		{
+			throw new RuntimeException("Unable to write to [{$directory}]");
+		}
 
 		try
 		{
+
 			// We need to resolve to output buffering Task Migrator will echo
 			// some output to terminal.
 			ob_start();
@@ -99,6 +108,8 @@ if ( ! IoC::registered('task: orchestra.publisher'))
 			ob_end_clean();
 		}
 		catch (Exception $e) {}
+
+		@chmod($directory, 0755);
 	});
 }
 
@@ -126,6 +137,14 @@ if ( ! IoC::registered('task: orchestra.upgrader'))
 	{
 		$repository = new Laravel\CLI\Tasks\Bundle\Repository;
 		$upgrader   = new Laravel\CLI\Tasks\Bundle\Bundler($repository);
+		$directory = path('bundle');
+
+		@chmod($directory, 0777);
+
+		if ( ! is_writable($directory)) 
+		{
+			throw new RuntimeException("Unable to write to [{$directory}]");
+		}
 
 		try
 		{
@@ -138,6 +157,8 @@ if ( ! IoC::registered('task: orchestra.upgrader'))
 			ob_end_clean();
 		}
 		catch (Exception $e) {}
+
+		@chmod($directory, 0755);
 	});
 }
 
