@@ -53,7 +53,7 @@ class Orchestra_Installer_Controller extends Controller {
 				'should'   => true,
 				'explicit' => false,
 				'data'     => array(
-					'path' => HTML::create('code', 'bundle', array('title' => path('bundle'))),
+					'path' => HTML::create('code', 'bundles', array('title' => path('bundle'))),
 				),
 			),
 			'asset_writable'  => array(
