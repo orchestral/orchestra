@@ -8,7 +8,7 @@ class Mail {
 	 * Make a new Orchestra\Mail instance.
 	 *
 	 * <code>
-	 * 		Orchestra\Mail::make('view.file', array(), function ($mail)
+	 * 		Orchestra\Mail::send('view.file', array(), function ($mail)
 	 * 		{
 	 * 			$mail->to('example@test.com', "Username")
 	 * 				->subject("An awesome title")
@@ -23,7 +23,7 @@ class Mail {
 	 * @param  Closure  $callback
 	 * @return self
 	 */
-	public static function make($view, $data = array(), Closure $callback)
+	public static function send($view, $data = array(), Closure $callback)
 	{
 		$instance = new static($view, $data, $callback);
 
@@ -54,13 +54,5 @@ class Mail {
 		$this->mailer->body($view->render(), 'text/html');
 
 		call_user_func($callback, $this->mailer);
-	}
-
-	/**
-	 * Dynamically retrieve the value.
-	 */
-	public function __get($method)
-	{
-		return $this->{$method};
 	}
 }

@@ -104,7 +104,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 			'site'     => $site,
 		);
 
-		$mailer = Mail::make('orchestra::email.forgot.request', $data,
+		$mailer = Mail::send('orchestra::email.forgot.request', $data,
 			function ($mail) use ($data, $user)
 			{
 				$mail->subject(__('orchestra::email.forgot.subject', $data)->get())
@@ -166,7 +166,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 			'site'     => $site,
 		);
 
-		$mailer = Mail::make('orchestra::email.forgot.reset', $data,
+		$mailer = Mail::send('orchestra::email.forgot.reset', $data,
 			function ($mail) use ($data, $user)
 			{
 				$mail->subject(__('orchestra::email.reset.subject', $data)->get())
