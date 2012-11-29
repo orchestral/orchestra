@@ -1,8 +1,8 @@
 <?php
 
-require_once "_utils/setup_testcase.php";
+require_once __DIR__."/../_utils/setup_testcase.php";
 
-class InstallationTest extends PHPUnit_Framework_TestCase {
+class InstallerRunnerTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Setup the test environment.
