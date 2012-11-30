@@ -9,7 +9,7 @@
 		<ul class="nav nav-list">
 			<li class="nav-header">Installation Process</li>
 			<li class="active">
-				{{ HTML::link(handles('orchestra::installer'), '1. Verify Database Configuration') }}
+				{{ HTML::link(handles('orchestra::installer'), '1. Check Requirements') }}
 			</li>
 		</ul>
 

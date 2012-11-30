@@ -93,7 +93,7 @@ if ( ! IoC::registered('task: orchestra.publisher'))
 
 		if ( ! is_writable($directory)) 
 		{
-			throw new RuntimeException(
+			throw new Orchestra\Extension\FilePermissionException(
 				"Unable to write on directory [{$directory}] due to permission issue."
 			);
 		}
@@ -145,7 +145,7 @@ if ( ! IoC::registered('task: orchestra.upgrader'))
 
 		if ( ! is_writable($directory)) 
 		{
-			throw new RuntimeException(
+			throw new Orchestra\Extension\FilePermissionException(
 				"Unable to write on directory [{$directory}] due to permission issue."
 			);
 		}

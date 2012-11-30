@@ -2,6 +2,8 @@
 
 use \Exception as E;
 
+class FilePermissionException extends E {}
+
 class UnresolvedException extends E {
 
 	private $deps = array();

@@ -3,6 +3,7 @@
 use Laravel\Fluent,
 	Orchestra\Core,
 	Orchestra\Extension,
+	Orchestra\Extension\Publisher,
 	Orchestra\Form,
 	Orchestra\HTML,
 	Orchestra\Messages,
@@ -69,12 +70,23 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 		try
 		{
 			Extension::activate($name);
+
 			$m->add('success', __('orchestra::response.extensions.activate', array(
 				'name' => $name,
 			)));
 		}
+		catch (Orchestra\Extension\FilePermissionException $e)
+		{
+			Publisher::queue($name);
+
+			// In events where extension can't be activated due to 
+			// bundle:publish we need to put this under queue.
+			return Redirect::to(handles('orchestra::publisher'));
+		}
 		catch (Orchestra\Extension\UnresolvedException $e)
 		{
+			// In events where extension may require other extension, we 
+			// should notify them to such issues.
 			$get_name_version = function($dep)
 			{
 				return $dep['name'].' '.$dep['version'];
@@ -329,7 +341,18 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 		$m = new Messages;
 
-		Extension::publish($name);
+		try
+		{
+			Extension::publish($name);
+		}
+		catch (Orchestra\Extension\FilePermissionException $e)
+		{
+			Publisher::queue($name);
+			
+			// In events where extension can't be activated due to 
+			// bundle:publish we need to put this under queue.
+			return Redirect::to(handles('orchestra::publisher'));
+		}
 
 		$m->add('success', __('orchestra::response.extensions.update', compact('name')));
 

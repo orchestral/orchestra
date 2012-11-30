@@ -21,6 +21,8 @@ Autoloader::map(array(
 	// Exceptions
 	'Orchestra\Extension\UnresolvedException'
 		=> Bundle::path('orchestra').'libraries'.DS.'extension'.DS.'exceptions'.EXT,
+	'Orchestra\Extension\FilePermissionException'
+		=> Bundle::path('orchestra').'libraries'.DS.'extension'.DS.'exceptions'.EXT,
 ));
 
 /*

@@ -22,6 +22,12 @@ return array(
 			'update'     => 'Migrate and Publish',
 			'upgrade'    => 'Upgrade',
 		),
+		
+		'publisher' => array(
+			'host'     => 'Host',
+			'user'     => 'User',
+			'password' => 'Password',
+		),
 	),
 
 	'submit'       => 'Submit',

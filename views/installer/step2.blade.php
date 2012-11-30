@@ -8,7 +8,7 @@
 		<ul class="nav nav-list">
 			<li class="nav-header">Installation Process</li>
 			<li>
-				{{ HTML::link('#', '1. Verify Database Configuration') }}
+				{{ HTML::link('#', '1. Check Requirements') }}
 			</li>
 			<li>
 				{{ HTML::link('#', '2. Create Administrator Account') }}
