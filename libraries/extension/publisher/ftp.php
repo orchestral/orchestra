@@ -121,7 +121,12 @@ class FTP extends Driver {
 		$public = rtrim($public, DS).DS;
 		$path   = $public.'bundles'.DS;
 
-		try {
+		// If the extension directory exist, we should start chmod from the
+		// folder instead.
+		if (is_dir($public.'bundles'.DS.$name.DS)) $path = $path.$name.DS;
+
+		try 
+		{
 			$this->recursive_chmod($path, 0777);
 		}
 		catch (Hybrid\RuntimeException $e)
@@ -134,6 +139,7 @@ class FTP extends Driver {
 
 		Extension::activate($name);
 		
+		// Revert chmod back to original state.
 		$this->recursive_chmod($path, 0755);
 		
 		return true;
