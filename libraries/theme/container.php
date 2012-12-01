@@ -21,6 +21,13 @@ class Container {
 	protected $aliases = array();
 
 	/**
+	 * Theme view path cache, avoid extensive call to resolve path for theme.
+	 *
+	 * @var array
+	 */
+	protected $cache_path = array();
+
+	/**
 	 * Filesystem path of Theme
 	 *
 	 * @var string
@@ -120,12 +127,17 @@ class Container {
 	 */
 	public function parse($file, $use_bundle = true)
 	{
+		$name = $file;
+
 		// Return the file if it's already using full path to avoid
 		// recursive request.
 		if (starts_with('path: ', $file)) return $file;
 
 		// Check theme aliases if we already have registered aliases
-		if (isset($this->aliases[$file])) return $this->aliases[$file];
+		if (isset($this->aliases[$name])) return $this->aliases[$file];
+
+		// Check from theme path cache.
+		if (isset($this->cache_path[$name])) return $this->cache_path[$file];
 
 		if ( ! is_null($this->name))
 		{
@@ -160,14 +172,14 @@ class Container {
 			// view path and return the first one we find for the given view.
 			if (file_exists($path = $directory.$view.EXT))
 			{
-				return 'path: '.$path;
+				$file = 'path: '.$path;
 			}
 			elseif (file_exists($path = $directory.$view.BLADE_EXT))
 			{
-				return 'path: '.$path;
+				$file = 'path: '.$path;
 			}
 		}
 
-		return $file;
+		return $this->cache_path[$name] = $file;
 	}
 }
