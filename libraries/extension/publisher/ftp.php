@@ -20,6 +20,8 @@ class FTP extends Driver {
 	 */
 	public function __construct()
 	{
+		// If FTP credential is stored in the session, we should reuse it 
+		// and connect to FTP server straight away.
 		$config = Session::get('orchestra.ftp', array());
 
 		if ( ! empty($config)) $this->connect($config);
@@ -52,9 +54,47 @@ class FTP extends Driver {
 		}
 		catch (RuntimeException $e)
 		{
-
+			// Connection might failed, but there nothing really to report.
 		}
 	}
+
+	/**
+	 * Check chmod for a file/directory recursively.
+	 *
+	 * @access private
+	 * @param  string   $path
+	 * @param  int      $mode
+	 * @return bool
+	 */
+	private function recursive_chmod($path, $mode = 0755)
+	{
+		$this->connection->chmod($path, $mode);
+
+		try
+		{
+			$lists = $this->connection->ls($path);
+
+			// this is to check if return value is just a single file, 
+			// avoiding infinite loop when we reach a file.
+			if ($lists === array($path)) return true;
+		}
+		catch (Hybrid\RuntimeException $e)
+		{
+			return true;
+		}
+
+		foreach ($lists as $dir)
+		{
+			// Not a file or folder, ignore it.
+			if (substr($dir, -3) === '/..' or substr($dir, -2) === '/.') continue;
+			
+			$this->recursive_chmod($dir, $mode);
+		}
+
+		return true;
+	}
+
+
 	/**
 	 * Upload the file.
 	 *
@@ -64,25 +104,38 @@ class FTP extends Driver {
 	 */
 	public function upload($name)
 	{
-		$base_pwd    = $this->connection->pwd();
-		$public_path = path('public');
+		$base_pwd = $this->connection->pwd();
+		$public   = path('public');
 
-		// This set of preg_match would filter ftp user is not accessing 
-		// the pull path, in most shared hosting ftp user would only gain
-		// access to it's /home/username directory
-		if (preg_match('/^\/(home)\/([a-zA-Z0-9]+)\/(.*)$/', $public_path, $matches))
+		// This set of preg_match would filter ftp' user is not accessing 
+		// exact path as path('public'), in most shared hosting ftp' user 
+		// would only gain access to it's /home/username directory.
+		if (preg_match('/^\/(home)\/([a-zA-Z0-9]+)\/(.*)$/', $public, $matches))
 		{
-			$public_path = DS.ltrim($matches[3], DS);
+			$public = DS.ltrim($matches[3], DS);
 		}
 
-		$public_path = rtrim($public_path, DS).DS;
+		// Start chmod from public/bundles directory, if the extension folder
+		// is yet to be created, it would be created and own by the web server
+		// (Apache or Nginx). If otherwise, we would then emulate chmod -Rf
+		$public = rtrim($public, DS).DS;
+		$path   = $public.'bundles'.DS;
 
-		$this->connection->chmod($public_path.'bundles', 0777);
+		try {
+			$this->recursive_chmod($path, 0777);
+		}
+		catch (Hybrid\RuntimeException $e)
+		{
+			// We found an exception with FTP, but it would be hard to say 
+			// extension can't be activated, let's try activating the 
+			// extension and if it failed, we should actually catching 
+			// those exception instead.
+		}
 
 		Extension::activate($name);
-
-		$this->connection->chmod($public_path.'bundles', 0755);
-
+		
+		$this->recursive_chmod($path, 0755);
+		
 		return true;
 	}
 
