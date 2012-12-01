@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Model;
 
-use \Eloquent;
+use \Eloquent,
+	\Hash;
 
 class User extends Eloquent {
 
