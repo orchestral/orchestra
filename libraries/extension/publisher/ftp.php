@@ -59,6 +59,19 @@ class FTP extends Driver {
 	}
 
 	/**
+	 * CHMOD a directory/file.
+	 *
+	 * @access private
+	 * @param  string   $path
+	 * @param  int      $mode
+	 * @return bool
+	 */
+	private function chmod($path, $mode = 0755)
+	{
+		return $this->connection->chmod($path, $mode);
+	}
+
+	/**
 	 * Check chmod for a file/directory recursively.
 	 *
 	 * @access private
@@ -68,7 +81,7 @@ class FTP extends Driver {
 	 */
 	private function recursive_chmod($path, $mode = 0755)
 	{
-		$this->connection->chmod($path, $mode);
+		$this->chmod($path, $mode);
 
 		try
 		{
@@ -104,8 +117,9 @@ class FTP extends Driver {
 	 */
 	public function upload($name)
 	{
-		$base_pwd = $this->connection->pwd();
-		$public   = path('public');
+		$base_pwd    = $this->connection->pwd();
+		$public      = path('public');
+		$recursively = false;
 
 		// This set of preg_match would filter ftp' user is not accessing 
 		// exact path as path('public'), in most shared hosting ftp' user 
@@ -123,11 +137,15 @@ class FTP extends Driver {
 
 		// If the extension directory exist, we should start chmod from the
 		// folder instead.
-		if (is_dir($public.'bundles'.DS.$name.DS)) $path = $path.$name.DS;
+		if (is_dir(path('public').'bundles'.DS.$name.DS)) 
+		{
+			$recursively = true;
+			$path        = $path.$name.DS;
+		}
 
 		try 
 		{
-			$this->recursive_chmod($path, 0777);
+			($recursively ? $this->recursive_chmod($path, 0777) : $this->chmod($path, 0777));
 		}
 		catch (Hybrid\RuntimeException $e)
 		{
@@ -140,7 +158,7 @@ class FTP extends Driver {
 		Extension::activate($name);
 		
 		// Revert chmod back to original state.
-		$this->recursive_chmod($path, 0755);
+		($recursively ? $this->recursive_chmod($path, 0777) : $this->chmod($path, 0777));
 		
 		return true;
 	}
