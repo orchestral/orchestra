@@ -17,5 +17,5 @@ Listen to whenever a user logged-out from Orchestra.
 
 	Event::listen('orchestra.logged.out', function ()
 	{
-		
+		Session::forget('oneauth');
 	});
