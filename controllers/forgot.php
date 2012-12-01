@@ -183,7 +183,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 			$meta->value = '';
 			$meta->save();
 
-			$user->password = Hash::make($password);
+			$user->password = $password;
 			$user->save();
 
 			$m->add('success', __('orchestra::response.forgot.send'));

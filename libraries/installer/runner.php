@@ -148,7 +148,7 @@ class Runner {
 			// Create administator user
 			$user = new User(array(
 				'email'    => $input['email'],
-				'password' => Hash::make($input['password']),
+				'password' => $input['password'],
 				'fullname' => $input['fullname'],
 				'status'   => 0,
 			));

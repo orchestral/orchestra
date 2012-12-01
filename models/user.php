@@ -25,4 +25,16 @@ class User extends Eloquent {
 	{
 		return $this->has_many_and_belongs_to('Orchestra\Model\Role', 'user_roles');
 	}
+
+	/**
+	 * Setter for password attributes.
+	 * 
+	 * @access public 
+	 * @param  string   $password
+	 * @return void
+	 */
+	public function set_password($password)
+	{
+		$this->set_attribute('password', Hash::make($password));
+	}
 }

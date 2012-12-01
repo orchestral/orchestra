@@ -183,7 +183,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 
 		if (Hash::check($input['current_password'], $user->password))
 		{
-			$user->password = Hash::make($input['new_password']);
+			$user->password = $input['new_password'];
 
 			try
 			{

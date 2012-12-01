@@ -273,7 +273,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		{
 			$type = 'create';
 			$user = new User(array(
-				'password' => Hash::make($input['password'] ?: ''),
+				'password' => $input['password'] ?: '',
 			));
 		}
 
@@ -282,7 +282,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 
 		if ( ! empty($input['password']))
 		{
-			$user->password = Hash::make($input['password']);
+			$user->password = $input['password'];
 		}
 
 		try
