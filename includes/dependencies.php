@@ -89,6 +89,8 @@ if ( ! IoC::registered('task: orchestra.publisher'))
 		$publisher = new Laravel\CLI\Tasks\Bundle\Publisher;
 		$directory = path('public').'bundles'.DS;
 
+		if (is_dir($directory.$bundle.DS)) $directory = $directory.$bundle.DS;
+
 		@chmod($directory, 0777);
 
 		if ( ! is_writable($directory)) 
