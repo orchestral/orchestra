@@ -85,6 +85,10 @@ if ( ! IoC::registered('task: orchestra.publisher'))
 {
 	IoC::register('task: orchestra.publisher', function($bundle = null)
 	{
+		// If bundle doesn't have a public folder, avoid all file 
+		// permission fuss.
+		if ( ! is_dir(Bundle::path($bundle).'public'.DS)) return ;
+
 		// Initiate the dependencies to Laravel\CLI bundle publisher.
 		$publisher = new Laravel\CLI\Tasks\Bundle\Publisher;
 		$directory = path('public').'bundles'.DS;
