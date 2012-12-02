@@ -55,6 +55,14 @@ class Orchestra_Publisher_Controller extends Controller {
 		return View::make('orchestra::publisher.ftp');
 	}
 
+	/**
+	 * POST FTP configuration and run the queue.
+	 *
+	 * POST (orchestra)/publisher/ftp
+	 *
+	 * @access public
+	 * @return Response
+	 */
 	public function post_ftp()
 	{
 		$input = Input::only(array('host', 'user', 'password'));
