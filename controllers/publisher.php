@@ -15,13 +15,6 @@ class Orchestra_Publisher_Controller extends Controller {
 	public $restful = true;
 
 	/**
-	 * Repository Publisher instance.
-	 *
-	 * @var Orchestra\Extension\Publisher\Driver
-	 */
-	private $driver = null;
-
-	/**
 	 * Load dependencies during __construct
 	 *
 	 * @access public
