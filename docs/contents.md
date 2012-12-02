@@ -40,6 +40,7 @@
 		- [Asset Folder](/bundocs/orchestra/themes#assets)
 
 ### IoC
+* [The Basics](/bundocs/orchestra/ioc)
 
 ### Toolkit
 * [Overviews](/bundocs/orchestra/toolkit)
