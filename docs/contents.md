@@ -9,7 +9,7 @@
 * [Mail](/bundocs/orchestra/mail)
 
 ### Extension
-* [The Basics](/bundocs/orchestra/extensions)
+* [Overviews](/bundocs/orchestra/extensions)
 	- [Convert a Bundle](/bundocs/orchestra/extensions#convert-to-extension)
 	- [Enabling an Extension](/bundocs/orchestra/extensions#enable-extension)
 	- [Extension Start File](/bundocs/orchestra/extensions#start-file)
@@ -25,13 +25,13 @@
 	- [Returning Response](/bundocs/orchestra/extensions/resources#returning-response)
 
 ### Events
-* [The Basics](/bundocs/orchestra/events)
+* [Overviews](/bundocs/orchestra/events)
 	- [General](/bundocs/orchestra/events/general)
 	- [Installation](/bundocs/orchestra/events/install)
 	- [Credential](/bundocs/orchestra/events/credential)
 
 ### Themes
-* [The Basics](/bundocs/orchestra/themes)
+* [Overviews](/bundocs/orchestra/themes)
 	- [Introduction](/bundocs/orchestra/themes#introduction)
 	- [Enable Theme](/bundocs/orchestra/themes#enable-theme)
 	- [Default Theme](/bundocs/orchestra/themes#default-theme)
@@ -40,7 +40,7 @@
 		- [Asset Folder](/bundocs/orchestra/themes#assets)
 
 ### IoC
-* [The Basics](/bundocs/orchestra/ioc)
+* [Overviews](/bundocs/orchestra/ioc)
 
 ### Toolkit
 * [Overviews](/bundocs/orchestra/toolkit)
