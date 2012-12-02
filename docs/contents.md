@@ -6,6 +6,7 @@
 	- [Setup](/bundocs/orchestra/install#setup)
 	- [Server Requirement](/bundocs/orchestra/install#requirement)
 * [Helpers](/bundocs/orchestra/helpers)
+* [Mail](/bundocs/orchestra/mail)
 
 ### Extension
 * [The Basics](/bundocs/orchestra/extensions)
