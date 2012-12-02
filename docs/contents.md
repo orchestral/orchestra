@@ -1,10 +1,11 @@
 ### General
 * [Overviews](/bundocs/orchestra/home)
-* [Installation](/bundocs/orchestra/install)
+* [Change Logs](/bundocs/orchestra/changes)
+* [Installation & Setup](/bundocs/orchestra/install)
 	- [Download](/bundocs/orchestra/install#download)
 	- [Setup](/bundocs/orchestra/install#setup)
+	- [Server Requirement](/bundocs/orchestra/install#requirement)
 * [Helpers](/bundocs/orchestra/helpers)
-* [Change Logs](/bundocs/orchestra/changes)
 
 ### Extension
 * [The Basics](/bundocs/orchestra/extensions)
