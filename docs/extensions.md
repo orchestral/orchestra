@@ -12,7 +12,9 @@
 <a name="introduction"></a>
 ## Introduction
 
-Extension may contain widget or resources (components) to be added for Orchestra. By principle Extension in Orchestra is a bundle except that Orchestra will manage setup process:
+Extension may contain widget or resources (components) to be added for Orchestra. 
+By principle Extension in Orchestra is a bundle except that Orchestra will manage 
+setup process:
 
 - Migration for bundle
 - Publish asset for bundle
@@ -20,7 +22,10 @@ Extension may contain widget or resources (components) to be added for Orchestra
 <a name="convert-to-extension"></a>
 ## Convert a Bundle
 
-The process is simple, an extension is a Bundle except that first it need to have a definition file. The definition file will be stored in `bundles/bundle-name/orchestra.json`. Here's an example of Definition File for OneAuth extension.
+The process is simple, an extension is a Bundle except that first it need to have 
+a definition file. The definition file will be stored in `bundles/bundle-name/orchestra.json`, 
+this tell Orchestra Platform to handle the bundle as an extension. Here's an 
+example of Definition File for OneAuth extension.
 
 	{
 		"name"        : "OneAuth",
