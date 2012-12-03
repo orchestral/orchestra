@@ -115,7 +115,7 @@ class Extension {
 					);
 				}
 
-				array_set($extension[$name], 'config.location', "path: {$path}");
+				$extensions[$name]->config->location = "path: {$path}";
 			}
 		}
 
