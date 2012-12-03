@@ -135,13 +135,13 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 
 		Event::fire('orchestra.validate: settings', array(& $rules));
 
-		$v = Validator::make($input, $rules);
+		$val = Validator::make($input, $rules);
 
-		if ($v->fails())
+		if ($val->fails())
 		{
 			return Redirect::to(handles('orchestra::settings'))
 					->with_input()
-					->with_errors($v);
+					->with_errors($val);
 		}
 
 		$memory = Core::memory();
@@ -159,10 +159,10 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 
 		Event::fire('orchestra.saved: settings', array($memory, $input));
 
-		$m = Messages::make('success', __('orchestra::response.settings.update'));
+		$msg = Messages::make('success', __('orchestra::response.settings.update'));
 
 		return Redirect::to(handles('orchestra::settings'))
-				->with('message', $m->serialize());
+				->with('message', $msg->serialize());
 	}
 
 	/**
@@ -176,13 +176,10 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 	public function get_upgrade()
 	{
 		$memory      = Core::memory();
-		$m           = new Messages;
+		$msg         = new Messages;
 		$web_upgrade = (bool) $memory->get('site.web_upgrade', false);
 
-		if (false === $web_upgrade)
-		{
-			return Response::error('404');
-		}
+		if (false === $web_upgrade) return Response::error('404');
 
 		IoC::resolve('task: orchestra.upgrader', array(array(
 			'orchestra',
@@ -192,9 +189,9 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 
 		Extension::publish('orchestra');
 
-		$m->add('success', __('orchestra::response.settings.upgrade'));
+		$msg->add('success', __('orchestra::response.settings.upgrade'));
 
 		return Redirect::to(handles('orchestra::settings'))
-				->with('message', $m->serialize());
+				->with('message', $msg->serialize());
 	}
 }

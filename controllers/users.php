@@ -256,14 +256,14 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		Event::fire('orchestra.validate: users', array(& $rules));
 		Event::fire('orchestra.validate: user.account', array(& $rules));
 
-		$v = Validator::make($input, $rules);
-		$m = new Messages;
+		$val = Validator::make($input, $rules);
+		$msg = new Messages;
 
-		if ($v->fails())
+		if ($val->fails())
 		{
 			return Redirect::to(handles('orchestra::users/view/'.$id))
 					->with_input()
-					->with_errors($v);
+					->with_errors($val);
 		}
 
 		$type = 'update';
@@ -302,17 +302,17 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 				$self->fire_event('saved', $user);
 			});
 
-			$m->add('success', __("orchestra::response.users.{$type}"));
+			$msg->add('success', __("orchestra::response.users.{$type}"));
 		}
 		catch (Exception $e)
 		{
-			$m->add('error', __('orchestra::response.db-failed', array(
+			$msg->add('error', __('orchestra::response.db-failed', array(
 				'error' => $e->getMessage(),
 			)));
 		}
 
 		return Redirect::to(handles('orchestra::users'))
-				->with('message', $m->serialize());
+				->with('message', $msg->serialize());
 	}
 
 	/**
@@ -327,7 +327,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		if (is_null($id)) return Event::fire('404');
 
 		$user = User::find($id);
-		$m    = new Messages;
+		$msg  = new Messages;
 
 		if ($user->id === Auth::user()->id) return Event::fire('404');
 
@@ -346,18 +346,17 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 				$self->fire_event('deleted', $user);
 			});
 
-
-			$m->add('success', __('orchestra::response.users.delete'));
+			$msg->add('success', __('orchestra::response.users.delete'));
 		}
 		catch (Exception $e)
 		{
-			$m->add('error', __('orchestra::response.db-failed', array(
+			$msg->add('error', __('orchestra::response.db-failed', array(
 				'error' => $e->getMessage(),
 			)));
 		}
 
 		return Redirect::to(handles('orchestra::users'))
-				->with('message', $m->serialize());
+				->with('message', $msg->serialize());
 	}
 
 	/**
@@ -373,5 +372,4 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		Event::fire("orchestra.{$type}: users", array($user));
 		Event::fire("orchestra.{$type}: user.account", array($user));
 	}
-
 }

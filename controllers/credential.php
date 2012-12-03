@@ -67,16 +67,16 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 			'password' => array('required'),
 		);
 
-		$m = new Messages;
-		$v = Validator::make($input, $rules);
+		$msg = new Messages;
+		$val = Validator::make($input, $rules);
 
 		// Validate user login, if any errors is found redirect it back to
 		// login page with the errors
-		if ($v->fails())
+		if ($val->fails())
 		{
 			return Redirect::to(handles('orchestra::login'))
 					->with_input()
-					->with_errors($v);
+					->with_errors($val);
 		}
 
 		$attempt = array(
@@ -89,18 +89,18 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		{
 			Event::fire('orchestra.logged.in');
 
-			$m->add('success', __('orchestra::response.credential.logged-in'));
+			$msg->add('success', __('orchestra::response.credential.logged-in'));
 
 			$redirect = Input::get('redirect', handles('orchestra'));
 
 			return Redirect::to($redirect)
-					->with('message', $m->serialize());
+					->with('message', $msg->serialize());
 		}
 
-		$m->add('error', __('orchestra::response.credential.invalid-combination'));
+		$msg->add('error', __('orchestra::response.credential.invalid-combination'));
 
 		return Redirect::to(handles('orchestra::login'))
-				->with('message', $m->serialize());
+				->with('message', $msg->serialize());
 	}
 
 	/**
@@ -119,9 +119,9 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 
 		Event::fire('orchestra.logged.out');
 
-		$m = Messages::make('success', __('orchestra::response.credential.logged-out'));
+		$msg = Messages::make('success', __('orchestra::response.credential.logged-out'));
 
 		return Redirect::to($redirect)
-				->with('message', $m->serialize());
+				->with('message', $msg->serialize());
 	}
 }

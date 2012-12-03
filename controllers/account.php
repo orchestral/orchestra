@@ -83,14 +83,14 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 
 		Event::fire('orchestra.validate: user.account', array(& $rules));
 
-		$m = new Messages;
-		$v = Validator::make($input, $rules);
+		$msg = new Messages;
+		$val = Validator::make($input, $rules);
 
-		if ($v->fails())
+		if ($val->fails())
 		{
 			return Redirect::to(handles('orchestra::account'))
 					->with_input()
-					->with_errors($v);
+					->with_errors($val);
 		}
 
 		$user           = Auth::user();
@@ -114,17 +114,17 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 			});
 
 
-			$m->add('success', __('orchestra::response.account.profile.update'));
+			$msg->add('success', __('orchestra::response.account.profile.update'));
 		}
 		catch (Exception $e)
 		{
-			$m->add('error', __('orchestra::response.db-failed', array(
+			$msg->add('error', __('orchestra::response.db-failed', array(
 				'error' => $e->getMessage(),
 			)));
 		}
 
 		return Redirect::to(handles('orchestra::account'))
-				->with('message', $m->serialize());
+				->with('message', $msg->serialize());
 	}
 
 	/**
@@ -169,16 +169,16 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 			),
 		);
 
-		$v = Validator::make($input, $rules);
+		$val = Validator::make($input, $rules);
 
-		if ($v->fails())
+		if ($val->fails())
 		{
 			return Redirect::to(handles('orchestra::account/password'))
 					->with_input()
-					->with_errors($v);
+					->with_errors($val);
 		}
 
-		$m    = new Messages;
+		$msg  = new Messages;
 		$user = Auth::user();
 
 		if (Hash::check($input['current_password'], $user->password))
@@ -195,20 +195,20 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 					$user->save();
 				});
 
-				$m->add('success', __('orchestra::response.account.password.update'));
+				$msg->add('success', __('orchestra::response.account.password.update'));
 			}
 			catch (Exception $e)
 			{
-				$m->add('error', __('orchestra::response.db-failed'));
+				$msg->add('error', __('orchestra::response.db-failed'));
 			}
 		}
 		else
 		{
-			$m->add('error', __('orchestra::response.account.password.invalid'));
+			$msg->add('error', __('orchestra::response.account.password.invalid'));
 		}
 
 		return Redirect::to(handles('orchestra::account/password'))
-				->with('message', $m->serialize());
+				->with('message', $msg->serialize());
 	}
 
 	/**

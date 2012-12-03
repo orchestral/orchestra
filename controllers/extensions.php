@@ -65,13 +65,13 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	{
 		if (is_null($name) or Extension::started($name)) return Event::first('404');
 
-		$m = new Messages;
+		$msg = new Messages;
 
 		try
 		{
 			Extension::activate($name);
 
-			$m->add('success', __('orchestra::response.extensions.activate', array(
+			$msg->add('success', __('orchestra::response.extensions.activate', array(
 				'name' => $name,
 			)));
 		}
@@ -93,14 +93,14 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 			};
 
 			$dependencies = array_map($get_name_version, $e->getDependencies());
-			$m->add('error', __('orchestra::response.extensions.depends-on', array(
+			$msg->add('error', __('orchestra::response.extensions.depends-on', array(
 				'name'         => $name,
 				'dependencies' => implode(', ', $dependencies)
 			)));
 		}
 
 		return Redirect::to(handles('orchestra::extensions'))
-				->with('message', $m->serialize());
+				->with('message', $msg->serialize());
 	}
 
 	/**
@@ -116,25 +116,25 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	{
 		if (is_null($name) or ! Extension::started($name)) return Event::first('404');
 
-		$m = new Messages;
+		$msg = new Messages;
 
 		try
 		{
 			Extension::deactivate($name);
-			$m->add('success', __('orchestra::response.extensions.deactivate', array(
+			$msg->add('success', __('orchestra::response.extensions.deactivate', array(
 				'name' => $name,
 			)));
 		}
 		catch (Orchestra\Extension\UnresolvedException $e)
 		{
-			$m->add('error', __('orchestra::response.extensions.other-depends-on', array(
+			$msg->add('error', __('orchestra::response.extensions.other-depends-on', array(
 				'name'         => $name,
 				'dependencies' => implode(', ', $e->getDependencies())
 			)));
 		}
 
 		return Redirect::to(handles('orchestra::extensions'))
-				->with('message', $m->serialize());
+				->with('message', $msg->serialize());
 	}
 
 	/**
@@ -253,7 +253,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 		$memory = Core::memory();
 		$config = new Fluent((array) $memory->get("extension_{$name}", array()));
 		$loader = (array) $memory->get("extensions.active.{$name}", array());
-		$m      = new Messages;
+		$msg    = new Messages;
 
 		// This part should be part of extension loader configuration. What
 		// saved here wouldn't be part of extension configuration.
@@ -278,10 +278,10 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 		Event::fire("orchestra.saved: extension.{$name}", array($config));
 
-		$m->add('success', __("orchestra::response.extensions.configure", compact('name')));
+		$msg->add('success', __("orchestra::response.extensions.configure", compact('name')));
 
 		return Redirect::to(handles('orchestra::extensions'))
-			->with('message', $m->serialize());
+			->with('message', $msg->serialize());
 	}
 
 	/**
@@ -309,16 +309,16 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 			return Response::error('404');
 		}
 
-		$m = new Messages;
+		$msg = new Messages;
 
 		IoC::resolve('task: orchestra.upgrader', array(array($name)));
 
 		Extension::publish($name);
 
-		$m->add('success', __('orchestra::response.extensions.upgrade', compact('name')));
+		$msg->add('success', __('orchestra::response.extensions.upgrade', compact('name')));
 
 		return Redirect::to(handles('orchestra::extensions'))
-				->with('message', $m->serialize());
+				->with('message', $msg->serialize());
 	}
 
 	/**
@@ -339,7 +339,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 			return Response::error('404');
 		}
 
-		$m = new Messages;
+		$msg = new Messages;
 
 		try
 		{
@@ -354,9 +354,9 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 			return Redirect::to(handles('orchestra::publisher'));
 		}
 
-		$m->add('success', __('orchestra::response.extensions.update', compact('name')));
+		$msg->add('success', __('orchestra::response.extensions.update', compact('name')));
 
 		return Redirect::to(handles('orchestra::extensions'))
-				->with('message', $m->serialize());
+				->with('message', $msg->serialize());
 	}
 }

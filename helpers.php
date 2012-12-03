@@ -72,19 +72,19 @@ if ( ! function_exists('handles'))
 
 		if (strpos($name, '::') !== false)
 		{
-			list($bundle, $to) = Bundle::parse($name);
+			list($bundle, $path) = Bundle::parse($name);
 		}
 		else
 		{
 			$bundle = $name;
-			$to     = '';
+			$path   = '';
 		}
 
 		// In situation where bundle is not registered, it best to assume
 		// that we are handle "application" routing
 		if ( ! Bundle::exists($bundle))
 		{
-			$to     = $bundle;
+			$path   = $bundle;
 			$bundle = DEFAULT_BUNDLE;
 
 			// DEFAULT_BUNDLE should handle root path
@@ -96,11 +96,11 @@ if ( ! function_exists('handles'))
 			$handles = rtrim($handles, '/');
 		}
 
-		$to = ltrim($to, '/');
+		$path = ltrim($path, '/');
 
 		// reappend query string.
-		empty($query) or $to .= '?'.$query;
+		empty($query) or $path .= '?'.$query;
 
-		return url($handles.'/'.$to);
+		return url($handles.'/'.$path);
 	}
 }

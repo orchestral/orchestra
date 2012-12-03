@@ -1,6 +1,7 @@
 <?php
 
-use Orchestra\View;
+use Orchestra\View,
+	Orchestra\Widget;
 
 class Orchestra_Dashboard_Controller extends Orchestra\Controller {
 
@@ -28,7 +29,7 @@ class Orchestra_Dashboard_Controller extends Orchestra\Controller {
 	 */
 	public function get_index()
 	{
-		$panes = Orchestra\Widget::make('pane.orchestra')->get();
+		$panes = Widget::make('pane.orchestra')->get();
 
 		return View::make('orchestra::dashboard.index', compact('panes'));
 	}

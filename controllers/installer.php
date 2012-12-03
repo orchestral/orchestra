@@ -47,7 +47,6 @@ class Orchestra_Installer_Controller extends Controller {
 		catch (RuntimeException $e)
 		{
 			$asset_writable = false;
-			
 		}
 
 		$requirements = array(

@@ -57,10 +57,10 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 			'email' => array('required', 'email'),
 		);
 
-		$m = new Messages;
-		$v = Validator::make($input, $rules);
+		$msg = new Messages;
+		$val = Validator::make($input, $rules);
 
-		if ($v->fails())
+		if ($val->fails())
 		{
 			// If any of the validation is not properly formatted, we need
 			// to tell it the the user. This might not be important but a
@@ -68,7 +68,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 			// address validation
 			return Redirect::to(handles('orchestra::forgot'))
 					->with_input()
-					->with_errors($v);
+					->with_errors($val);
 		}
 
 		$user = User::where_email($input['email'])->first();
@@ -76,10 +76,10 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 		if (is_null($user))
 		{
 			// no user could be associated with the provided email address
-			$m->add('error', __('orchestra::response.db-404'));
+			$msg->add('error', __('orchestra::response.db-404'));
 
 			return Redirect::to(handles('orchestra::forgot'))
-					->with('message', $m->serialize());
+					->with('message', $msg->serialize());
 		}
 
 		$meta   = User_Meta::where('user_id', '=', $user->id)
@@ -114,18 +114,18 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 
 		if( ! $mailer->was_sent($user->email))
 		{
-			$m->add('error', __('orchestra::response.forgot.fail'));
+			$msg->add('error', __('orchestra::response.forgot.fail'));
 		}
 		else
 		{
 			$meta->value = $hash;
 			$meta->save();
 
-			$m->add('success', __('orchestra::response.forgot.send'));
+			$msg->add('success', __('orchestra::response.forgot.send'));
 		}
 
 		return Redirect::to(handles('orchestra::forgot'))
-			->with('message', $m->serialize());
+			->with('message', $msg->serialize());
 	}
 
 	/**
@@ -136,25 +136,25 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 	 * GET (:bundle)/forgot/reset/(:id)/(:hash)
 	 *
 	 * @access public
-	 * @param  int      $id
+	 * @param  int      $user_id
 	 * @param  string   $hash
 	 * @return Response
 	 */
-	public function get_reset($id, $hash)
+	public function get_reset($user_id, $hash)
 	{
-		if ( ! (is_numeric($id) and is_string($hash)) or empty($hash))
+		if ( ! (is_numeric($user_id) and is_string($hash)) or empty($hash))
 		{
 			return Response::error('404');
 		}
 
-		$meta = User_Meta::where('user_id', '=', $id)
+		$meta = User_Meta::where('user_id', '=', $user_id)
 					->where('name', '=', 'reset_password_hash')
 					->where('value', '=', $hash)
 					->first();
 
 		if (is_null($meta)) return Response::error('404');
 
-		$m        = new Messages;
+		$msg      = new Messages;
 		$user     = $meta->users()->first();
 		$memory   = Core::memory();
 		$hash     = sha1($user->email.Str::random(10));
@@ -176,7 +176,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 
 		if( ! $mailer->was_sent($user->email))
 		{
-			$m->add('error', __('orchestra::response.forgot.fail'));
+			$msg->add('error', __('orchestra::response.forgot.fail'));
 		}
 		else
 		{
@@ -186,10 +186,10 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 			$user->password = $password;
 			$user->save();
 
-			$m->add('success', __('orchestra::response.forgot.send'));
+			$msg->add('success', __('orchestra::response.forgot.send'));
 		}
 
 		return Redirect::to(handles('orchestra::login'))
-			->with('message', $m->serialize());
+			->with('message', $msg->serialize());
 	}
 }

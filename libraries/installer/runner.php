@@ -125,13 +125,13 @@ class Runner {
 				'site_name' => array('required'),
 			);
 
-			$v = Validator::make($input, $rules);
+			$val = Validator::make($input, $rules);
 
 			// Validate user registration, we should stop this process if
 			// the user not properly formatted.
-			if ($v->fails())
+			if ($val->fails())
 			{
-				Session::flash('errors', $v->errors);
+				Session::flash('errors', $val->errors);
 				return false;
 			}
 

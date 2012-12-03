@@ -66,7 +66,7 @@ class Orchestra_Publisher_Controller extends Controller {
 	public function post_ftp()
 	{
 		$input = Input::only(array('host', 'user', 'password'));
-		$m     = new Messages;
+		$msg   = new Messages;
 
 		// Make an attempt to connect to service first before
 		try
@@ -78,10 +78,10 @@ class Orchestra_Publisher_Controller extends Controller {
 		{
 			Session::forget('orchestra.ftp');
 
-			$m->add('error', $e->getMessage());
+			$msg->add('error', $e->getMessage());
 
 			return Redirect::to(handles('orchestra::publisher/ftp'))
-				->with('message', $m->serialize());
+				->with('message', $msg->serialize());
 		}
 
 		if (Publisher::connected())

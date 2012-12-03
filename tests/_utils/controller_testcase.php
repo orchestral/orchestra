@@ -4,7 +4,7 @@
 use Laravel\Request,
 	Laravel\Routing\Controller;
 
-abstract class Controller_Runner
+class Controller_Runner
 {
 	public static function call($destination, $parameters = array(), $method = 'GET')
 	{
@@ -17,6 +17,8 @@ abstract class Controller_Runner
 
 	public static function get($destination, $parameters = array())
 	{
+		static::flush();
+
 		return static::call($destination, $parameters, 'GET');
 	}
 
