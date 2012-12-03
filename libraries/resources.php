@@ -1,6 +1,7 @@
 <?php namespace Orchestra;
 
-use Exception,
+use \Exception,
+	\InvalidArgumentException,
 	Laravel\Str;
 
 class Resources {
@@ -162,6 +163,11 @@ class Resources {
 	 */
 	public function __call($method, $parameters)
 	{
+		if( ! empty($parameters))
+		{
+			throw new InvalidArgumentException("Unexpected parameters.");
+		}
+
 		return $this->attributes[$method] ?: null;
 	}
 }

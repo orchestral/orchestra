@@ -183,16 +183,14 @@ class Runner {
 				'manage users',
 			);
 
-			$acl->add_role('Administrator');
 			$acl->add_actions($actions);
 
-			$acl->allow('Administrator', $actions);
-
-			Role::create(array(
-				'name' => 'Member'
-			));
+			Role::create(array('name' => 'Member'));
 
 			$acl->add_role('Member');
+			$acl->add_role('Administrator');
+
+			$acl->allow('Administrator', $actions);
 
 			Event::fire('orchestra.install: acl', array($acl));
 
@@ -209,7 +207,6 @@ class Runner {
 		static::shutdown();
 
 		return true;
-
 	}
 
 	/**

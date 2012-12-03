@@ -117,7 +117,6 @@ class FTP extends Driver {
 	 */
 	public function upload($name)
 	{
-		$base_pwd    = $this->connection->pwd();
 		$public      = path('public');
 		$recursively = false;
 

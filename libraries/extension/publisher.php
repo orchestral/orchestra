@@ -109,7 +109,7 @@ class Publisher {
 		$queue = static::queued();
 		$m     = new Messages;
 
-		foreach ($queue as $key => $name)
+		foreach ($queue as $name)
 		{
 			try
 			{

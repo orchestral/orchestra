@@ -3,6 +3,7 @@
 use \Bundle,
 	\Exception,
 	\IoC,
+	\stdClass,
 	FileSystemIterator as fIterator;
 
 class Extension {
@@ -113,6 +114,11 @@ class Extension {
 					throw new Exception(
 						"Extension [{$name}]: cannot decode orchestra.json file"
 					);
+				}
+
+				if ( ! isset($extensions[$name]->config))
+				{
+					$extensions[$name]->config = new stdClass;
 				}
 
 				$extensions[$name]->config->location = "path: {$path}";
