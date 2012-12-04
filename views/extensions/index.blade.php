@@ -8,7 +8,7 @@
 		<h2>{{ __('orchestra::title.extensions.list') }}</h2>
 	</div>
 
-	<table class="table table-bordered table-stripped">
+	<table class="table table-bordered table-striped">
 		<thead>
 			<tr>
 				<th>{{ __('orchestra::label.extensions.name') }}</th>
