@@ -63,11 +63,14 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 
 			$form->fieldset(function ($fieldset)
 			{
-				$fieldset->control('input:text', 'Site Name', 'site_name');
-				$fieldset->control('textarea', 'Site Description', function ($control)
+				$fieldset->control('input:text', 'site_name', function ($control)
 				{
-					$control->name = 'site_description';
-					$control->attr = array('rows' => 3);
+					$control->label = __('orchestra::label.site_name');
+				});
+				$fieldset->control('textarea', 'site_description', function ($control)
+				{
+					$control->label = __('orchestra::label.site_description');
+					$control->attr  = array('rows' => 3);
 				});
 
 				/*
@@ -85,11 +88,11 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 				 */
 			});
 
-			$form->fieldset('E-mail and Messaging', function ($fieldset)
+			$form->fieldset('E-mail and Messaging', function ($fieldset) use ($settings)
 			{
-				$fieldset->control('select', 'E-mail Transport', function ($control)
+				$fieldset->control('select', 'email_default', function ($control)
 				{
-					$control->name    = 'email_default';
+					$control->label   = __('orchestra::label.email.transport');
 					$control->options = array(
 						'mail'     => 'Mail',
 						'smtp'     => 'SMTP',
@@ -97,24 +100,28 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 					);
 				});
 
-				$fieldset->control('input:text', 'SMTP Host', 'email_smtp_host');
-				$fieldset->control('input:text', 'SMTP Port', 'email_smtp_port');
-				$fieldset->control('input:text', 'SMTP Username', 'email_smtp_username');
-				$fieldset->control('input:password', 'SMTP Password', function ($control)
+				$fieldset->control('input:text', __('orchestra::label.email.host')->get(), 'email_smtp_host');
+				$fieldset->control('input:text', __('orchestra::label.email.port')->get(), 'email_smtp_port');
+				$fieldset->control('input:text', __('orchestra::label.email.username')->get(), 'email_smtp_username');
+				$fieldset->control('input:password', 'email_smtp_password', function ($control) use ($settings)
 				{
 					$help = array(
-						HTML::link('#', 'Clear Password', array(
-							'id' => 'email_smtp_clear_password_button',
-							'class' => 'btn btn-mini btn-danger',
+						HTML::create('span', str_repeat('*', strlen($settings->email_smtp_password))),
+						'&nbsp;&nbsp;',
+						HTML::link('#', __('orchestra::label.email.change_password')->get(), array(
+							'id' => 'smtp_change_password_button',
+							'class' => 'btn btn-mini btn-warning',
 						)),
-						Laravel\Form::hidden('email_stmp_clear_password', 'no'),
+						Laravel\Form::hidden('stmp_change_password', 'no'),
 					);
 
-					$control->name = 'email_smtp_password';
-					$control->help = implode('', $help);
+					$control->label = __('orchestra::label.email.password');
+					$control->help  = HTML::create('span', HTML::raw(implode('', $help)), array(
+						'id' => 'smtp_change_password_container',
+					));
 				});
-				$fieldset->control('input:text', 'STMP Encryption', 'email_smtp_encryption');
-				$fieldset->control('input:text', 'Sendmail Command', 'email_sendmail_command');
+				$fieldset->control('input:text', __('orchestra::label.email.encryption')->get(), 'email_smtp_encryption');
+				$fieldset->control('input:text', __('orchestra::label.email.command')->get(), 'email_sendmail_command');
 			});
 		});
 
@@ -167,7 +174,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 		$memory->put('email.transports.smtp.port', $input['email_smtp_port']);
 		$memory->put('email.transports.smtp.username', $input['email_smtp_username']);
 
-		if ((empty($input['email_smtp_password']) and $input['email_stmp_clear_password'] === 'no'))
+		if ((empty($input['email_smtp_password']) and $input['email_stmp_change_password'] === 'no'))
 		{
 			$input['email_smtp_password'] = $memory->get('email.transports.smtp.password');	
 		}

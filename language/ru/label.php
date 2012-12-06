@@ -42,7 +42,20 @@ return array(
 		'button'  => 'Поиск',
 		'keyword' => 'Поиск...',
 	),
-	'site_name' => 'Название приложения',
+	
+	'site_name'        => 'Название приложения',
+	'site_description' => 'Применение Описание',
+
+	'email' => array(
+		'transport'       => 'E-mail Transport',
+		'host'            => 'SMTP Host',
+		'port'            => 'SMTP Port',
+		'username'        => 'SMTP Username',
+		'password'        => 'SMTP Password',
+		'encryption'      => 'STMP Encryption',
+		'command'         => 'Sendmail Command',
+		'change_password' => 'Change Password',
+	),
 
 	'users' => array(
 		'email'    => 'Адрес почты',

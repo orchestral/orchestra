@@ -43,7 +43,19 @@ return array(
 		'keyword' => 'Search keyword...',
 	),
 
-	'site_name' => 'Application Name',
+	'site_name'        => 'Application Name',
+	'site_description' => 'Application Description',
+
+	'email' => array(
+		'transport'       => 'E-mail Transport',
+		'host'            => 'SMTP Host',
+		'port'            => 'SMTP Port',
+		'username'        => 'SMTP Username',
+		'password'        => 'SMTP Password',
+		'encryption'      => 'STMP Encryption',
+		'command'         => 'Sendmail Command',
+		'change_password' => 'Change Password',
+	),
 
 	'users' => array(
 		'email'    => 'E-mail Address',

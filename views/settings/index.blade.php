@@ -23,15 +23,18 @@
 
 <script>
 	jQuery(function onSettingPageReady ($) { 'use strict';
-		var ev, emailDefault, clearPassButton;
+		var ev, emailDefault, password;
 
 		ev           = Javie.Events.make();
 		emailDefault = $('select[name="email_default"]');
-		
-		$('#email_smtp_clear_password_button').on('click', function (e) {
+		password     = $('#email_smtp_password').hide();
+
+		$('#smtp_change_password_button').on('click', function (e) {
 			e.preventDefault();
 			
-			$('input[name="email_stmp_clear_password"]').val('yes');
+			$('input[name="stmp_change_password"]').val('yes');
+			password.show();
+			$('#smtp_change_password_container').hide();
 
 			return false;
 		});
