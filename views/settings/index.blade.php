@@ -23,10 +23,18 @@
 
 <script>
 	jQuery(function onSettingPageReady ($) { 'use strict';
-		var ev, emailDefault;
+		var ev, emailDefault, clearPassButton;
 
 		ev           = Javie.Events.make();
 		emailDefault = $('select[name="email_default"]');
+		
+		$('#email_smtp_clear_password_button').on('click', function (e) {
+			e.preventDefault();
+			
+			$('input[name="email_stmp_clear_password"]').val('yes');
+
+			return false;
+		});
 
 		// Listen to email.default changed event. 
 		ev.listen('setting.changed: email.default', function listenToEmailDefaultChange(e, self) {

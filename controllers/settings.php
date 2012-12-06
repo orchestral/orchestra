@@ -4,6 +4,7 @@ use Laravel\Fluent,
 	Orchestra\Core,
 	Orchestra\Extension,
 	Orchestra\Form,
+	Orchestra\HTML,
 	Orchestra\Messages,
 	Orchestra\View;
 
@@ -99,7 +100,19 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 				$fieldset->control('input:text', 'SMTP Host', 'email_smtp_host');
 				$fieldset->control('input:text', 'SMTP Port', 'email_smtp_port');
 				$fieldset->control('input:text', 'SMTP Username', 'email_smtp_username');
-				$fieldset->control('input:password', 'SMTP Password', 'email_smtp_password');
+				$fieldset->control('input:password', 'SMTP Password', function ($control)
+				{
+					$help = array(
+						HTML::link('#', 'Clear Password', array(
+							'id' => 'email_smtp_clear_password_button',
+							'class' => 'btn btn-mini btn-danger',
+						)),
+						Laravel\Form::hidden('email_stmp_clear_password', 'no'),
+					);
+
+					$control->name = 'email_smtp_password';
+					$control->help = implode('', $help);
+				});
 				$fieldset->control('input:text', 'STMP Encryption', 'email_smtp_encryption');
 				$fieldset->control('input:text', 'Sendmail Command', 'email_sendmail_command');
 			});
@@ -153,6 +166,12 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 		$memory->put('email.transports.smtp.host', $input['email_smtp_host']);
 		$memory->put('email.transports.smtp.port', $input['email_smtp_port']);
 		$memory->put('email.transports.smtp.username', $input['email_smtp_username']);
+
+		if ((empty($input['email_smtp_password']) and $input['email_stmp_clear_password'] === 'no'))
+		{
+			$input['email_smtp_password'] = $memory->get('email.transports.smtp.password');	
+		}
+		
 		$memory->put('email.transports.smtp.password', $input['email_smtp_password']);
 		$memory->put('email.transports.smtp.encryption', $input['email_smtp_encryption']);
 		$memory->put('email.transports.sendmail.command', $input['email_sendmail_command']);
