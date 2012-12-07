@@ -1,5 +1,9 @@
 <?php namespace Orchestra\Testable;
 
+use \Controller,
+	\Request,
+	Symfony\Component\HttpFoundation\LaravelRequest;
+
 class Client {
 
 	/**
@@ -11,8 +15,12 @@ class Client {
 	 * @param  string   $method
 	 * @return Response
 	 */
-	public function call($destination, $parameters = array(), $method = 'GET')
+	public function call($destination, $parameters = array(), $method = 'GET', $data = array())
 	{
+		$this->flush();
+
+		Request::foundation()->request->add($data);
+
 		Request::foundation()->server->add(array(
 			'REQUEST_METHOD' => $method,
 		));
@@ -30,8 +38,6 @@ class Client {
 	 */
 	public function get($destination, $parameters = array())
 	{
-		$this->flush();
-
 		return $this->call($destination, $parameters, 'GET');
 	}
 
@@ -41,15 +47,14 @@ class Client {
 	 * @access public
 	 * @param  string   $destination
 	 * @param  array    $parameters
+	 * @param  array    $data
 	 * @return Response
 	 */
-	public function post($destination, $post_data, $parameters = array())
+	public function post($destination,$parameters = array(), $data = array())
 	{
 		$this->flush();
 
-		Request::foundation()->request->add($post_data);
-
-		return $this->call($destination, $parameters, 'POST');
+		return $this->call($destination, $parameters, 'POST', $data);
 	}
 
 	/**
@@ -66,5 +71,7 @@ class Client {
 		{
 			$request->remove($key);
 		}
+
+		Request::$foundation = LaravelRequest::createFromGlobals();
 	}
 }

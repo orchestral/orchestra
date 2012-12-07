@@ -7,7 +7,18 @@ class InstallerPublisherTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
+		Session::$instance = null;
+		Session::load();
+
 		Bundle::start('orchestra');
+	}
+
+	/**
+	 * Teardown the test environment.
+	 */
+	public function tearDown()
+	{
+		Session::$instance = null;
 	}
 
 	/**

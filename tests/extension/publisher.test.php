@@ -1,15 +1,9 @@
 <?php
 
-class ExtensionPublisherTest extends PHPUnit_Framework_TestCase {
-	
-	/**
-	 * Setup the test environment.
-	 */
-	public function setUp()
-	{
-		Bundle::start('orchestra');
-	}
+Bundle::start('orchestra');
 
+class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
+	
 	/**
 	 * Test instance of Orchestra\Extension\Publisher default driver
 	 *

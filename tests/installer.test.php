@@ -44,7 +44,7 @@ class InstallerTest extends PHPUnit_Framework_TestCase {
 		Config::set('database.default', 'sqlite');
 		Config::set('database.connections.sqlite', array(
 			'driver'   => 'sqlite',
-			'database' => 'application',
+			'database' => ':memory:',
 			'prefix'   => '',
 		));
 		

@@ -7,9 +7,19 @@ class MessagesTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		\Session::load();
+		Session::$instance = null;
+
+		Session::load();
 
 		Bundle::start('orchestra');
+	}
+
+	/**
+	 * Teardown the test environment.
+	 */
+	public function tearDown()
+	{
+		Session::$instance = null;
 	}
 
 	/**

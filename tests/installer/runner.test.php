@@ -9,9 +9,9 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 	 */
 	public function setUp()
 	{
-		parent::setUp();
+		$_SERVER['orchestra.installation'] = array();
 
-		$_SESSION['orchestra.installation'] = array();
+		parent::setUp();
 
 		Orchestra\Installer::$status = false;
 	}
@@ -23,7 +23,7 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testInstallationGenerateProperConfiguration()
 	{
-		$this->createApplication();
+		$this->restartApplication();
 
 		$this->assertTrue(Orchestra\Installer::installed());
 
@@ -46,7 +46,7 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testAdministratorUserProperlyCreated()
 	{
-		$this->createApplication();
+		$this->restartApplication();
 
 		$user = Orchestra\Model\User::find(1);
 		$this->assertEquals('Orchestra TestRunner', $user->fullname);
@@ -59,7 +59,7 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 
 			$acl = Orchestra\Core::acl();
 
-			$this->assertInstanceOf('Hybrid\Acl', $acl);
+			$this->assertInstanceOf('Orchestra\Acl', $acl);
 
 			if ($acl->can('manage-orchestra'))
 			{
@@ -75,6 +75,7 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 			$this->assertTrue(false, 'If unable to authenticate');
 		}
 
+		Auth::logout();
 	}
 
 	/**
@@ -86,25 +87,25 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 	{
 		Event::listen('orchestra.install.schema: users', function()
 		{
-			$_SESSION['orchestra.installation'][] = 'orchestra.install.schema: users';
+			$_SERVER['orchestra.installation'][] = 'orchestra.install.schema: users';
 		});
 
 		Event::listen('orchestra.install.schema', function()
 		{
-			$_SESSION['orchestra.installation'][] = 'orchestra.install.schema';
+			$_SERVER['orchestra.installation'][] = 'orchestra.install.schema';
 		});
 
 		Event::listen('orchestra.install: user', function()
 		{
-			$_SESSION['orchestra.installation'][] = 'orchestra.install: user';
+			$_SERVER['orchestra.installation'][] = 'orchestra.install: user';
 		});
 
 		Event::listen('orchestra.install: acl', function()
 		{
-			$_SESSION['orchestra.installation'][] = 'orchestra.install: acl';
+			$_SERVER['orchestra.installation'][] = 'orchestra.install: acl';
 		});
 
-		$this->createApplication();
+		$this->restartApplication();
 
 		$expected = array(
 			'orchestra.install.schema: users',
@@ -113,6 +114,6 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 			'orchestra.install: acl',
 		);
 
-		$this->assertEquals($expected, $_SESSION['orchestra.installation']);
+		$this->assertEquals($expected, $_SERVER['orchestra.installation']);
 	}
 }

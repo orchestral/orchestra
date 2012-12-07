@@ -44,7 +44,7 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testDetectExtension()
 	{
-		$this->createApplication();
+		$this->restartApplication();
 
 		$memory = Orchestra\Core::memory();
 

@@ -1,9 +1,12 @@
 <?php namespace Orchestra\Testable;
 
-use \Bundle,
+use \Auth, 
+	\Bundle,
 	\Config,
+	\Cookie,
 	\DB,
 	\File,
+	\Orchestra as O,
 	\PHPUnit_Framework_TestCase,
 	\Request,
 	\Session,
@@ -26,21 +29,17 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
 		set_path('storage', $base_path.'storage'.DS);
 
-		Config::set('auth.driver', 'eloquent');
-		Config::set('auth.model', 'Orchestra\Model\User');
 		Config::set('database.default', 'sqlite');
 		Config::set('database.connections.sqlite', array(
 			'driver'   => 'sqlite',
 			'database' => 'orchestra',
 			'prefix'   => '',
 		));
-
-		DB::$connections = array();
-		
-		// load the session.
-		Session::load();
+		Config::set('application.url', 'http://localhost');
+		Config::set('application.index', '');
 
 		$this->client = $this->createClient();
+		$this->createApplication();
 	}
 
 	/**
@@ -48,9 +47,20 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
-		File::delete(path('storage').'database'.DS.'orchestra.sqlite');
+		$this->removeApplication();
+
 		Config::set('auth.driver', 'eloquent');
 		Config::set('auth.model', 'User');
+		Config::set('application.url', 'http://localhost');
+		Config::set('application.index', 'index.php');
+	}
+
+	/**
+	 * Call a controller.
+	 */
+	public function call()
+	{
+		return call_user_func_array(array($this->client, 'call'), func_get_args());
 	}
 
 	/**
@@ -66,7 +76,19 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 */
 	public function createApplication()
 	{
-		if ( ! \Orchestra\Installer::installed())
+		Auth::$drivers     = null;
+		Cookie::$jar       = array();
+		Session::$instance = null;
+
+		Config::set('auth.driver', 'eloquent');
+		Config::set('auth.model', 'Orchestra\Model\User');
+
+		DB::$connections = array();
+		
+		// load the session.
+		Session::load();
+
+		if ( ! O\Installer::installed())
 		{
 			Request::$foundation = LaravelRequest::createFromGlobals();
 
@@ -74,20 +96,42 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 				'REQUEST_METHOD' => 'POST',
 			));
 
-			\Orchestra\Installer\Runner::install();
+			O\Installer\Runner::install();
 
-			\Orchestra\Installer\Runner::create_user(array(
+			O\Installer\Runner::create_user(array(
 				'site_name' => 'Orchestra',
 				'email'     => 'example@test.com',
 				'password'  => '123456',
 				'fullname'  => 'Orchestra TestRunner',
 			));
 
-			\Orchestra\Core::shutdown();
-			\Orchestra\Memory::shutdown();
-			\Orchestra\Acl::shutdown();
-
-			\Orchestra\Core::start();
+			O\Core::shutdown();
+			O\Memory::shutdown();
+			O\Acl::shutdown();
 		}
+
+		O\Core::start();
+	}
+
+	/**
+	 * Remove Application
+	 */
+	public function removeApplication()
+	{
+		Auth::$drivers = null;
+		Cookie::$jar = array();
+		Session::$instance = null;
+		
+		O\Installer::$status = false;
+		File::delete(path('storage').'database'.DS.'orchestra.sqlite');
+	}
+
+	/**
+	 * Restart Application
+	 */
+	public function restartApplication()
+	{
+		$this->removeApplication();
+		$this->createApplication();
 	}
 }
