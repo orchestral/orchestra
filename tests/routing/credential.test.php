@@ -32,6 +32,36 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 		));
 
 		$this->assertInstanceOf('Laravel\Redirect', $response);
-		$this->assertEquals('http://localhost/admin/', $response->foundation->headers->get('location'));
+		$this->assertEquals(handles('orchestra'), $response->foundation->headers->get('location'));
+	}
+
+	/**
+	 * Test Request GET (orchestra)/credential/login
+	 * 
+	 * @test
+	 */
+	public function testGetLogoutPage()
+	{
+		$response = $this->call('orchestra::credential@logout', array());
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(handles('orchestra::login'), $response->foundation->headers->get('location'));
+	}
+
+	/**
+	 * Test Request POST (orchestra)/credential/login
+	 * 
+	 * @test
+	 */
+	public function testPostLoginWithInvalidResponse()
+	{
+		$response = $this->call('orchestra::credential@login', array(), 'POST', array(
+			'username' => 'example@test.com',
+			'password' => '1234561',
+			Session::csrf_token => Session::token(),
+		));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(handles('orchestra::login'), $response->foundation->headers->get('location'));
 	}
 }
