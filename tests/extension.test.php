@@ -1,21 +1,19 @@
 <?php
 
-require_once "_utils/setup_testcase.php";
+Bundle::start('orchestra');
 
-class ExtensionTest extends PHPUnit_Framework_TestCase {
+class ExtensionTest extends Orchestra\Testable\TestCase {
 
 	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
-		setup_orchestra_env();
+		parent::setUp();
 
-		$base_path =  Bundle::path('orchestra').'tests'.DS.'_utils'.DS;
+		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
 		set_path('app', $base_path.'application'.DS);
 		set_path('orchestra.extension', $base_path.'bundles'.DS);
-
-		Bundle::start('orchestra');
 	}
 
 	/**
@@ -23,7 +21,7 @@ class ExtensionTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
-		teardown_orchestra_env();
+		parent::tearDown();
 
 		set_path('app', path('base').'application'.DS);
 		set_path('orchestra.extension', path('bundle'));
@@ -46,7 +44,7 @@ class ExtensionTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testDetectExtension()
 	{
-		setup_orchestra_fixture();
+		$this->createApplication();
 
 		$memory = Orchestra\Core::memory();
 

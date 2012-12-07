@@ -16,7 +16,7 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	{
 		Bundle::start('orchestra');
 
-		set_path('app', Bundle::path('orchestra').'tests'.DS.'_utils'.DS.'application'.DS);
+		set_path('app', Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'application'.DS);
 
 		$this->stub = Orchestra\Resources::make('stub', array(
 			'name' => 'ResourceStub',

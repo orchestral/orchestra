@@ -1,29 +1,19 @@
 <?php
 
-require_once __DIR__."/../_utils/setup_testcase.php";
+Bundle::start('orchestra');
 
-class InstallerRunnerTest extends PHPUnit_Framework_TestCase {
+class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 
 	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
-		setup_orchestra_env();
+		parent::setUp();
 
 		$_SESSION['orchestra.installation'] = array();
 
-		Bundle::start('orchestra');
-
 		Orchestra\Installer::$status = false;
-	}
-
-	/**
-	 * Teardown the test environment
-	 */
-	public function tearDown()
-	{
-		teardown_orchestra_env();
 	}
 
 	/**
@@ -33,7 +23,7 @@ class InstallerRunnerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testInstallationGenerateProperConfiguration()
 	{
-		setup_orchestra_fixture();
+		$this->createApplication();
 
 		$this->assertTrue(Orchestra\Installer::installed());
 
@@ -56,7 +46,7 @@ class InstallerRunnerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testAdministratorUserProperlyCreated()
 	{
-		setup_orchestra_fixture();
+		$this->createApplication();
 
 		$user = Orchestra\Model\User::find(1);
 		$this->assertEquals('Orchestra TestRunner', $user->fullname);
@@ -109,7 +99,7 @@ class InstallerRunnerTest extends PHPUnit_Framework_TestCase {
 			$_SESSION['orchestra.installation'][] = 'orchestra.install: user';
 		});
 
-		setup_orchestra_fixture();
+		$this->createApplication();
 
 		$expected = array(
 			'orchestra.install.schema: users',
