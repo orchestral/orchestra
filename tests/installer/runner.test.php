@@ -99,12 +99,18 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 			$_SESSION['orchestra.installation'][] = 'orchestra.install: user';
 		});
 
+		Event::listen('orchestra.install: acl', function()
+		{
+			$_SESSION['orchestra.installation'][] = 'orchestra.install: acl';
+		});
+
 		$this->createApplication();
 
 		$expected = array(
 			'orchestra.install.schema: users',
 			'orchestra.install.schema',
 			'orchestra.install: user',
+			'orchestra.install: acl',
 		);
 
 		$this->assertEquals($expected, $_SESSION['orchestra.installation']);

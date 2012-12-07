@@ -171,25 +171,13 @@ class Runner {
 			$memory->put('email', Config::get('orchestra::email'));
 			$memory->put('email.from', $input['email']);
 
-			// We should also create a basic ACL for Orchestra.
-			$acl = Acl::make('orchestra');
-
-			// attach memory instance, this allow the acl to be saved to
-			// database.
-			$acl->attach($memory);
-
-			$actions = array(
-				'manage orchestra',
-				'manage users',
-			);
-
-			$acl->add_actions($actions);
-
 			Role::create(array('name' => 'Member'));
+			$actions = array('manage orchestra', 'manage users');
 
-			$acl->add_role('Member');
-			$acl->add_role('Administrator');
-
+			// We should also create a basic ACL for Orchestra.
+			$acl = Acl::make('orchestra', $memory);
+			$acl->add_actions($actions);
+			$acl->add_roles(array('Member', 'Administrator'));
 			$acl->allow('Administrator', $actions);
 
 			Event::fire('orchestra.install: acl', array($acl));
