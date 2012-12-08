@@ -19,6 +19,25 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
+	 * Test Request POST (orchestra)/credential/login failed without csrf.
+	 * 
+	 * @test
+	 */
+	public function testPostLoginFailedWithoutCsrf()
+	{
+		$response = $this->call('orchestra::credential@login', array(), 'POST', array(
+			'username' => 'example@test.com',
+			'password' => '123456',
+		));
+
+		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertEquals(500, $response->foundation->getStatusCode());
+
+
+		$this->assertFalse(Auth::check());
+	}
+
+	/**
 	 * Test Request POST (orchestra)/credential/login
 	 * 
 	 * @test
