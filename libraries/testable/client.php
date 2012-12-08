@@ -2,9 +2,21 @@
 
 use \Controller,
 	\Request,
+	\Session,
 	Symfony\Component\HttpFoundation\LaravelRequest;
 
 class Client {
+
+	/**
+	 * Construct a new client
+	 */
+	public function __construct()
+	{
+		Session::$instance = null;
+
+		// load the session.
+		Session::load();
+	}
 
 	/**
 	 * Call a request.

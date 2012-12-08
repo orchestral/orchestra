@@ -48,6 +48,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	public function tearDown()
 	{
 		$this->removeApplication();
+		unset($this->client);
 
 		Config::set('auth.driver', 'eloquent');
 		Config::set('auth.model', 'User');
@@ -57,6 +58,9 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Call a controller.
+	 *
+	 * @access public
+	 * @return mixed
 	 */
 	public function call()
 	{
@@ -65,6 +69,9 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Create a new client.
+	 *
+	 * @access public
+	 * @return Orchestra\Testable\Client
 	 */
 	public function createClient()
 	{
@@ -73,6 +80,12 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Mock login as a user
+	 *
+	 * @access public			
+	 * @param  mixed    $user   Login as a user when $user is instance of 
+	 *                          Orchestra\Model\User
+	 * @param  mixed    $driver
+	 * @return void
 	 */
 	public function be(\Orchestra\Model\User $user = null, $driver = null)
 	{
@@ -87,6 +100,9 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Create application
+	 *
+	 * @access public
+	 * @return void
 	 */
 	public function createApplication()
 	{
@@ -128,7 +144,10 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Remove Application
+	 * Remove Application.
+	 * 
+	 * @access public
+	 * @return void
 	 */
 	public function removeApplication()
 	{
@@ -141,7 +160,10 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Restart Application
+	 * Restart Application.
+	 * 
+	 * @access public
+	 * @return void
 	 */
 	public function restartApplication()
 	{

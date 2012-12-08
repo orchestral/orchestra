@@ -9,6 +9,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 	 * @var Orchestra\Model\User
 	 */
 	private $user = null;
+
 	/**
 	 * Setup the test environment.
 	 */
@@ -33,6 +34,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 
 		unset($this->user);
 		$this->be(null);
+		
 		parent::tearDown();
 	}
 
