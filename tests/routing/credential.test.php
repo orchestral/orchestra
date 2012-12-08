@@ -33,6 +33,9 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 
 		$this->assertInstanceOf('Laravel\Redirect', $response);
 		$this->assertEquals(handles('orchestra'), $response->foundation->headers->get('location'));
+
+		$this->assertTrue(Auth::check());
+		$this->assertEquals(Auth::user(), Orchestra\Model\User::find(1));
 	}
 
 	/**
@@ -46,6 +49,8 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 
 		$this->assertInstanceOf('Laravel\Redirect', $response);
 		$this->assertEquals(handles('orchestra::login'), $response->foundation->headers->get('location'));
+
+		$this->assertFalse(Auth::check());
 	}
 
 	/**
@@ -63,5 +68,7 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 
 		$this->assertInstanceOf('Laravel\Redirect', $response);
 		$this->assertEquals(handles('orchestra::login'), $response->foundation->headers->get('location'));
+
+		$this->assertFalse(Auth::check());
 	}
 }

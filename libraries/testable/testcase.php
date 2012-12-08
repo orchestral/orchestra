@@ -72,6 +72,20 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Mock login as a user
+	 */
+	public function be(\Orchestra\Model\User $user = null, $driver = null)
+	{
+		if (is_null($user))
+		{
+			Auth::driver($driver)->logout();
+			return ;
+		}
+
+		Auth::driver($driver)->login($user->id);
+	}
+
+	/**
 	 * Create application
 	 */
 	public function createApplication()
