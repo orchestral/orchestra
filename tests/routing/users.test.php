@@ -156,6 +156,7 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals('crynobone', $user->fullname);
 		$this->assertTrue(Hash::check('345678', $user->password));
 	}
+	
 	/**
 	 * Test Request POST (orchestra)/users/view/1
 	 *

@@ -23,6 +23,8 @@ class Orchestra_Publisher_Controller extends Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		
+		$this->filter('before', 'orchestra::auth');
 	}
 
 	/**
