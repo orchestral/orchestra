@@ -32,4 +32,28 @@ class RoutingForgotTest extends Orchestra\Testable\TestCase {
 		$this->assertInstanceOf('Laravel\Response', $response);
 		$this->assertEquals(500, $response->foundation->getStatusCode());
 	}
+
+	/**
+	 * Test Request POST (orchestra)/forgot
+	 *
+	 * @test
+	 */
+	public function testPostForgotPage()
+	{
+		$this->markTestIncomplete(
+			"This would require Mockery library to be installed."
+		);
+	}
+
+	/**
+	 * Test Request GET (orchestra)/forgot/reset/(id)/(hash)
+	 *
+	 * @test
+	 */
+	public function testGetResetPasswordPage()
+	{
+		$this->markTestIncomplete(
+			"This would require Mockery library to be installed."
+		);
+	}
 }
