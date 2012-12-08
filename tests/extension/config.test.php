@@ -20,6 +20,10 @@ class ExtensionConfigTest extends Orchestra\Testable\TestCase {
 
 		$this->user = Orchestra\Model\User::find(1);
 		$this->be($this->user);
+
+		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
+		set_path('app', $base_path.'application'.DS);
+		set_path('orchestra.extension', $base_path.'bundles'.DS);
 	}
 
 	/**
@@ -31,5 +35,32 @@ class ExtensionConfigTest extends Orchestra\Testable\TestCase {
 		$this->be(null);
 
 		parent::tearDown();
+
+		set_path('app', path('base').'application'.DS);
+		set_path('orchestra.extension', path('bundle'));
+	}
+
+	/**
+	 * Test map DEFAULT_BUNDLE configuration.
+	 *
+	 * @test
+	 */
+	public function testMapConfiguration()
+	{
+		Config::set('application::foo.bar', 'foobar');
+		$this->restartApplication();
+
+		Orchestra\Extension::detect();
+		Orchestra\Extension::activate(DEFAULT_BUNDLE);
+
+		Orchestra\Extension\Config::map(DEFAULT_BUNDLE, array(
+			'foo' => 'application::foo',
+		));
+
+		$memory = Orchestra\Core::memory();
+
+		$this->assertEquals(Config::get('application::foo'), 
+			$memory->get('extension_application.foo'));
+
 	}
 }
