@@ -27,10 +27,26 @@ class RoutingResourcesTest extends Orchestra\Testable\TestCase {
 	public function tearDown()
 	{
 		unset($this->user);
+		$this->be(null);
 
 		parent::tearDown();
 	}
 	
+	/**
+	 * Test Request GET (orchestra)/resources without auth
+	 *
+	 * @test
+	 */
+	public function testGetResourcesIndexPageWithoutAuth()
+	{
+		$response = $this->call('orchestra::resources@index');
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::login'), 
+			$response->foundation->headers->get('location'));
+	}
+
 	/**
 	 * Test Request GET (orchestra)/resources
 	 *
@@ -38,6 +54,12 @@ class RoutingResourcesTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testGetResourcesIndexPage()
 	{
-		$this->markTestIncomplete("Not completed.");
+		$this->be($this->user);
+
+		$response = $this->call('orchestra::resources@index');
+
+		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertEquals(200, $response->foundation->getStatusCode());
+		$this->assertEquals('orchestra::resources.index', $response->content->view);
 	}
 }
