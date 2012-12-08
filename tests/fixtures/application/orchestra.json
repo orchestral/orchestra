@@ -4,6 +4,8 @@
 	"author"      : "",
 	"url"         : "",
 	"version"     : "0.1.0",
-	"config"      : {},
+	"config"      : {
+		"foo" : "foobar"
+	},
 	"require"     : {}
 }

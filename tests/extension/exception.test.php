@@ -13,9 +13,19 @@ class ExtensionExceptionsTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Test exception can be thrown.
 	 *
+	 * @expectedException Orchestra\Extension\FilePermissionException
+	 */
+	public function testFilePermissionExceptionCanBeThrown()
+	{
+		throw new Orchestra\Extension\FilePermissionException();
+	}
+
+	/**
+	 * Test exception can be thrown.
+	 *
 	 * @expectedException Orchestra\Extension\UnresolvedException
 	 */
-	public function testUnsolvedExceptionCanBeThrown()
+	public function testUnresolvedExceptionCanBeThrown()
 	{
 		throw new Orchestra\Extension\UnresolvedException(array());
 	}
@@ -25,7 +35,7 @@ class ExtensionExceptionsTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testUnsolvedException()
+	public function testUnresolvedException()
 	{
 		$expected = array(
 			'oneauth',

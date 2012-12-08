@@ -48,7 +48,6 @@ class RoutingPagesTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testRequestToPagesFoo()
 	{
-
 		$response = $this->call('orchestra::pages@application.foo');
 
 		$this->assertInstanceOf('Laravel\Response', $response);

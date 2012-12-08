@@ -35,23 +35,49 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 	public function testInvalidExtensionIsNotStarted()
 	{
 		$this->assertFalse(Orchestra\Extension::started('unknownfoo'));
+		$this->assertFalse(Orchestra\Extension::started(DEFAULT_BUNDLE));
 	}
 
 	/**
-	 * Test detect extensions.
+	 * Test using extensions without any dependencies.
 	 *
 	 * @test
 	 */
-	public function testDetectExtension()
+	public function testUsingExtensionWithoutAnyDependencies()
 	{
 		$this->restartApplication();
 
-		$memory = Orchestra\Core::memory();
-
 		Orchestra\Extension::detect();
-		Orchestra\Extension::start(DEFAULT_BUNDLE,
-			$memory->get('extensions.available.'.DEFAULT_BUNDLE.'.config'));
+		Orchestra\Extension::activate(DEFAULT_BUNDLE);
 
 		$this->assertTrue(Orchestra\Extension::started(DEFAULT_BUNDLE));
+		$this->assertTrue(Orchestra\Extension::activated(DEFAULT_BUNDLE));
+
+		$this->assertEquals('foobar', 
+			Orchestra\Extension::option(DEFAULT_BUNDLE, 'foo'));
+
+		Orchestra\Extension::deactivate(DEFAULT_BUNDLE);
+
+		$this->assertFalse(Orchestra\Extension::activated(DEFAULT_BUNDLE));
+	}
+
+	/**
+	 * Test extension unable to be activated when unresolved dependencies.
+	 *
+	 * @test
+	 */
+	public function testActivateExtensionFailedWhenUnresolvedDependencies()
+	{
+		$this->markTestIncomplete('Not completed.');
+	}
+
+	/**
+	 * Test extension unable to be deactivated when unresolved dependencies.
+	 *
+	 * @test
+	 */
+	public function testDeactivateExtensionFailedWhenUnresolvedDependencies()
+	{
+		$this->markTestIncomplete('Not completed.');
 	}
 }

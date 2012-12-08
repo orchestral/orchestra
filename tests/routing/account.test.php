@@ -17,8 +17,6 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 		$this->user = Orchestra\Model\User::find(1);
-
-		$this->be($this->user);
 	}
 
 	/**
@@ -39,17 +37,49 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
+	 * Test Request GET (orchestra)/account when not logged-in
+	 *
+	 * @test
+	 */
+	public function testGetEditProfilePageWithoutAuth()
+	{
+		$response = $this->call('orchestra::account@index', array());
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::login'), 
+			$response->foundation->headers->get('location'));
+	}
+
+	/**
 	 * Test Request GET (orchestra)/account
 	 *
 	 * @test
 	 */
 	public function testGetEditProfilePage()
 	{
+		$this->be($this->user);
+
 		$response = $this->call('orchestra::account@index', array());
 
 		$this->assertInstanceOf('Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::account.index', $response->content->view);
+	}
+
+	/**
+	 * Test Request GET (orchestra)/account/password when not logged-in
+	 *
+	 * @test
+	 */
+	public function testGetEditPasswordPageWithoutAuth()
+	{
+		$response = $this->call('orchestra::account@password', array());
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::login'), 
+			$response->foundation->headers->get('location'));
 	}
 
 	/**
@@ -59,6 +89,8 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testGetEditPasswordPage()
 	{
+		$this->be($this->user);
+
 		$response = $this->call('orchestra::account@password', array());
 
 		$this->assertInstanceOf('Laravel\Response', $response);
@@ -73,6 +105,8 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testPostEditProfilePage()
 	{
+		$this->be($this->user);
+
 		$response = $this->call('orchestra::account@index', array(), 'POST', array(
 			'fullname' => 'Foobar',
 			'email'    => $this->user->email,
@@ -94,6 +128,8 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testPostEditPasswordPage()
 	{
+		$this->be($this->user);
+
 		$response = $this->call('orchestra::account@password', array(), 'POST', array(
 			'current_password' => '123456',
 			'new_password'     => '123',

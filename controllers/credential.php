@@ -87,7 +87,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		// We should now attempt to login the user using Auth class.
 		if (Auth::attempt($attempt))
 		{
-			Event::fire('orchestra.logged.in');
+			Event::fire(array('orchestra.logged.in', 'orchestra.auth: login'));
 
 			$msg->add('success', __('orchestra::response.credential.logged-in'));
 
@@ -117,7 +117,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 
 		Auth::logout();
 
-		Event::fire('orchestra.logged.out');
+		Event::fire(array('orchestra.logged.out', 'orchestra.auth: logout'));
 
 		$msg = Messages::make('success', __('orchestra::response.credential.logged-out'));
 

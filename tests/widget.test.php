@@ -3,6 +3,7 @@
 Bundle::start('orchestra');
 
 class WidgetTest extends PHPUnit_Framework_TestCase {
+	
 	/**
 	 * Stub instance.
 	 *

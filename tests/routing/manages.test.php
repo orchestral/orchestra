@@ -48,7 +48,6 @@ class RoutingManagesTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testRequestToManageFoo()
 	{
-
 		$response = $this->call('orchestra::manages@application.foo');
 
 		$this->assertInstanceOf('Laravel\Response', $response);

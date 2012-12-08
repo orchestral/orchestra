@@ -224,7 +224,7 @@ class Extension {
 		$memory    = Core::memory();
 		$active    = (array) $memory->get('extensions.active', array());
 
-		return (in_array($name, $active));
+		return (in_array($name, array_keys($active)));
 	}
 
 	/**

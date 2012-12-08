@@ -1,6 +1,8 @@
 <?php
 
-class HelpersTest extends PHPUnit_Framework_TestCase {
+Bundle::start('orchestra');
+
+class HelpersTest extends Orchestra\Testable\TestCase {
 
 	/**
 	 * Setup the test environment.
@@ -8,19 +10,8 @@ class HelpersTest extends PHPUnit_Framework_TestCase {
 	public function setUp()
 	{
 		URL::$base = null;
-		Config::set('application.url', 'http://localhost');
-		Config::set('application.index', '');
-
-		Bundle::start('orchestra');
-	}
-
-	/**
-	 * Teardown the test environment.
-	 */
-	public function tearDown()
-	{
-		Config::set('application.url', 'http://localhost');
-		Config::set('application.index', 'index.php');
+		
+		parent::setUp();
 	}
 
 	/**
@@ -28,7 +19,23 @@ class HelpersTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testHandlesReturnProperURL()
 	{
-		$expected = 'http://localhost/home';
-		$this->assertEquals($expected, handles('home'));
+		$this->assertEquals('http://localhost/home', handles('home'));
+	}
+
+	/**
+	 * Test memorize() return proper values
+	 */
+	public function testMemorizeReturnProperValues()
+	{
+		$this->assertEquals('Orchestra', memorize('site.name'));
+		$this->assertEquals('foo', memorize('site.somefoo.value', 'foo'));
+	}
+
+	/**
+	 * Test locate() return proper view path
+	 */
+	public function testLocateReturnProperViewPath()
+	{
+		$this->markTestIncomplete('Not completed.');
 	}
 }

@@ -1,9 +1,7 @@
 <?php
 
-Bundle::start('orchestra');
-
-class RoutingDashboardTest extends Orchestra\Testable\TestCase {
-
+class RoutingSettingsTest extends Orchestra\Testable\TestCase {
+	
 	/**
 	 * User instance.
 	 *
@@ -17,6 +15,7 @@ class RoutingDashboardTest extends Orchestra\Testable\TestCase {
 	public function setUp()
 	{
 		parent::setUp();
+
 		$this->user = Orchestra\Model\User::find(1);
 	}
 
@@ -26,38 +25,48 @@ class RoutingDashboardTest extends Orchestra\Testable\TestCase {
 	public function tearDown()
 	{
 		unset($this->user);
-		$this->be(null);
 
 		parent::tearDown();
 	}
-	
+
 	/**
-	 * Test Request GET (orchestra) without auth
+	 * Test Request GET (orchestra)/settings without auth
 	 *
 	 * @test
 	 */
-	public function testGetDashboardPageWithoutAuth()
+	public function testGetSettingsPageWithoutAuth()
 	{
-		$response = $this->call('orchestra::dashboard@index');
+		$response = $this->call('orchestra::settings@index');
 
 		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
 	}
 
 	/**
-	 * Test Request GET (orchestra)
+	 * Test Request GET (orchestra)/settings
 	 *
 	 * @test
 	 */
-	public function testGetDashboardPage()
+	public function testGetSettingsPage()
 	{
 		$this->be($this->user);
 
-		$response = $this->call('orchestra::dashboard@index');
+		$response = $this->call('orchestra::settings@index');
 
 		$this->assertInstanceOf('Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::dashboard.index', $response->content->view);
-	}	
+		$this->assertEquals('orchestra::settings.index', $response->content->view);
+	}
+
+	/**
+	 * Test Request POST (orchestra)/setting
+	 *
+	 * @test
+	 */
+	public function testPostSettingsPage()
+	{
+		$this->markTestIncomplete("Not completed.");
+	}
 }
