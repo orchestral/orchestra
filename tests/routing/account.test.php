@@ -143,6 +143,5 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 		$user = Orchestra\Model\User::find(1);
 
 		$this->assertTrue(Hash::check('123', $user->password));
-
 	}
 }

@@ -62,5 +62,6 @@ class ExtensionConfigTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals(Config::get('application::foo'), 
 			$memory->get('extension_application.foo'));
 
+		Orchestra\Extension::deactivate(DEFAULT_BUNDLE);
 	}
 }

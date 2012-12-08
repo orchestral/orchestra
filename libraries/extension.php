@@ -1,6 +1,7 @@
 <?php namespace Orchestra;
 
 use \Bundle,
+	\Event,
 	\Exception,
 	\IoC,
 	\stdClass,
@@ -51,6 +52,23 @@ class Extension {
 		}
 
 		static::$extensions[$name] = array_merge($default, $config);
+	}
+
+	/**
+	 * Shutdown Orchestra Extensions.
+	 *
+	 * @static
+	 * @access public
+	 * @return void
+	 */
+	public static function shutdown()
+	{
+		foreach (static::$extensions as $name => $extension)
+		{
+			Event::fire("orchestra.done: {$name}");
+		}
+
+		static::$extensions = array();
 	}
 
 	/**

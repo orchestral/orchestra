@@ -41,6 +41,7 @@ class RoutingDashboardTest extends Orchestra\Testable\TestCase {
 		$response = $this->call('orchestra::dashboard@index');
 
 		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
 	}

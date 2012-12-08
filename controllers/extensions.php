@@ -63,7 +63,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	 */
 	public function get_activate($name = null)
 	{
-		if (is_null($name) or Extension::started($name)) return Event::first('404');
+		if (is_null($name) or Extension::started($name)) return Response::error('404');
 
 		$msg = new Messages;
 
@@ -114,7 +114,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	 */
 	public function get_deactivate($name = null)
 	{
-		if (is_null($name) or ! Extension::started($name)) return Event::first('404');
+		if (is_null($name) or ! Extension::started($name)) return Response::error('404');
 
 		$msg = new Messages;
 
@@ -148,9 +148,9 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	 */
 	public function get_configure($name = null)
 	{
-		if (is_null($name) or ! Extension::started($name)) return Event::first('404');
+		if (is_null($name) or ! Extension::started($name)) return Response::error('404');
 
-		if (Extension::option($name, 'configurable') === false) return Event::first('404');
+		if (Extension::option($name, 'configurable') === false) return Response::error('404');
 
 		// Load configuration from memory.
 		$memory = Core::memory();
@@ -247,7 +247,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	 */
 	public function post_configure($name = null)
 	{
-		if (is_null($name) or ! Extension::started($name)) return Event::first('404');
+		if (is_null($name) or ! Extension::started($name)) return Response::error('404');
 
 		$input  = Input::all();
 		$memory = Core::memory();

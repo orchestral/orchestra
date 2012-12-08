@@ -121,6 +121,8 @@ class Core {
 		static::$initiated = false;
 		static::$cached    = array();
 
+		Extension::shutdown();
+
 		// Orchestra is shutdown, let notify everyone.
 		Event::fire('orchestra.done');
 

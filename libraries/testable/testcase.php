@@ -32,7 +32,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		Config::set('database.default', 'sqlite');
 		Config::set('database.connections.sqlite', array(
 			'driver'   => 'sqlite',
-			'database' => 'orchestra',
+			'database' => ':memory:',
 			'prefix'   => '',
 		));
 		Config::set('application.url', 'http://localhost');
@@ -54,6 +54,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		Config::set('auth.model', 'User');
 		Config::set('application.url', 'http://localhost');
 		Config::set('application.index', 'index.php');
+
+		O\Core::shutdown();
 	}
 
 	/**
@@ -156,7 +158,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		Session::$instance = null;
 		
 		O\Installer::$status = false;
-		File::delete(path('storage').'database'.DS.'orchestra.sqlite');
+		O\Extension::shutdown();
 	}
 
 	/**
