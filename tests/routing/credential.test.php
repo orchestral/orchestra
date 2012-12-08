@@ -16,6 +16,17 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
+	 * Teardown the test environment.
+	 */
+	public function tearDown()
+	{
+		parent::tearDown();
+		
+		unset($_SERVER['orchestra.auth.login']);
+		unset($_SERVER['orchestra.auth.logout']);
+	}
+
+	/**
 	 * Test Request GET (orchestra)/credential/login
 	 * 
 	 * @test
