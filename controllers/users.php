@@ -329,8 +329,11 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		$user = User::find($id);
 		$msg  = new Messages;
 
-		if ($user->id === Auth::user()->id) return Event::fire('404');
-
+		if (is_null($user) or ($user->id === Auth::user()->id))
+		{
+			return Event::fire('404');
+		}
+		
 		try
 		{
 			// References to self.

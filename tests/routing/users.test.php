@@ -101,7 +101,25 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testPostCreateNewUserPage()
 	{
-		$this->markTestIncomplete("Not completed.");
+		$this->be($this->user);
+
+		$response = $this->call('orchestra::users@view', array(), 'POST', array(
+			'email'    => 'crynobone@gmail.com',
+			'fullname' => 'Mior Muhammad Zaki',
+			'password' => '123456',
+			'roles'    => array(2),
+		));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::users'), 
+			$response->foundation->headers->get('location'));
+
+		$user = Orchestra\Model\User::find(2);
+
+		$this->assertEquals('crynobone@gmail.com', $user->email);
+		$this->assertEquals('Mior Muhammad Zaki', $user->fullname);
+		$this->assertTrue(Hash::check('123456', $user->password));
 	}
 
 	/**
@@ -111,7 +129,32 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testPostUpdateUserPage()
 	{
-		$this->markTestIncomplete("Not completed.");
+		$this->be($this->user);
+
+		$this->call('orchestra::users@view', array(), 'POST', array(
+			'email'    => 'crynobone@gmail.com',
+			'fullname' => 'Mior Muhammad Zaki',
+			'password' => '123456',
+			'roles'    => array(2),
+		));
+
+		$response = $this->call('orchestra::users@view', array(2), 'POST', array(
+			'email'    => 'crynobone@gmail.com',
+			'fullname' => 'crynobone',
+			'password' => '345678',
+			'roles'    => array(2),
+		));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::users'), 
+			$response->foundation->headers->get('location'));
+
+		$user = Orchestra\Model\User::find(2);
+
+		$this->assertEquals('crynobone@gmail.com', $user->email);
+		$this->assertEquals('crynobone', $user->fullname);
+		$this->assertTrue(Hash::check('345678', $user->password));
 	}
 	/**
 	 * Test Request POST (orchestra)/users/view/1
@@ -120,6 +163,24 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testPostDeleteUserPage()
 	{
-		$this->markTestIncomplete("Not completed.");
+		$this->be($this->user);
+
+		$this->call('orchestra::users@view', array(), 'POST', array(
+			'email'    => 'crynobone@gmail.com',
+			'fullname' => 'Mior Muhammad Zaki',
+			'password' => '123456',
+			'roles'    => array(2),
+		));
+		
+		$response = $this->call('orchestra::users@delete', array(2));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::users'), 
+			$response->foundation->headers->get('location'));
+
+		$user = Orchestra\Model\User::find(2);
+
+		$this->assertTrue(is_null($user));
 	}
 }
