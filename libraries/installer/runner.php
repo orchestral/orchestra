@@ -175,12 +175,14 @@ class Runner {
 			$actions = array('manage orchestra', 'manage users');
 
 			// We should also create a basic ACL for Orchestra.
-			$acl = Acl::make('orchestra', $memory);
+			$acl = Acl::make('orchestra');
 			$acl->add_actions($actions);
 			$acl->add_roles(array('Member', 'Administrator'));
 			$acl->allow('Administrator', $actions);
 
 			Event::fire('orchestra.install: acl', array($acl));
+
+			$acl->attach($memory);
 
 			// Installation is successful, we should be able to generate
 			// success message to notify the user. Installer route will be

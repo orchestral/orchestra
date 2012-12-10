@@ -118,13 +118,15 @@ class Core {
 	 */
 	public static function shutdown()
 	{
-		static::$initiated = false;
-		static::$cached    = array();
-
 		Extension::shutdown();
+		Memory::shutdown();
+		Acl::shutdown();
 
 		// Orchestra is shutdown, let notify everyone.
 		Event::fire('orchestra.done');
+
+		static::$initiated = false;
+		static::$cached    = array();
 
 		// Only do this on installed application
 		if (false === Installer::$status) return;
