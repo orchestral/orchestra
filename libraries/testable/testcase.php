@@ -5,6 +5,7 @@ use \Auth,
 	\Config,
 	\Cookie,
 	\DB,
+	\File,
 	\Orchestra as O,
 	\PHPUnit_Framework_TestCase,
 	\Request,
@@ -28,10 +29,12 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
 		set_path('storage', $base_path.'storage'.DS);
 
+		DB::$connections = array();
+		
 		Config::set('database.default', 'sqlite');
 		Config::set('database.connections.sqlite', array(
 			'driver'   => 'sqlite',
-			'database' => ':memory:',
+			'database' => 'orchestra',
 			'prefix'   => '',
 		));
 		Config::set('application.url', 'http://localhost');
@@ -113,8 +116,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 
 		Config::set('auth.driver', 'eloquent');
 		Config::set('auth.model', 'Orchestra\Model\User');
-
-		DB::$connections = array();
 		
 		// load the session.
 		Session::load();
@@ -155,8 +156,9 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		Auth::$drivers = null;
 		Cookie::$jar = array();
 		Session::$instance = null;
-		
+
 		O\Installer::$status = false;
+		File::delete(path('storage').'database'.DS.'orchestra.sqlite');
 	}
 
 	/**
