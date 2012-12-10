@@ -52,6 +52,8 @@ class Extension {
 		}
 
 		static::$extensions[$name] = array_merge($default, $config);
+
+		Event::fire("orchestra.started: {$name}");
 	}
 
 	/**
