@@ -9,11 +9,47 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 	 */
 	public function setUp()
 	{
-		$_SERVER['orchestra.installation'] = array();
+		$_SERVER['orchestra.install.schema-users'] = null;
+		$_SERVER['orchestra.install.schema']       = null;
+		$_SERVER['orchestra.install.user']         = null;
+		$_SERVER['orchestra.install.acl']          = null;
+
+		Event::listen('orchestra.install.schema: users', function()
+		{
+			$_SERVER['orchestra.install.schema-users'] = 'foo';
+		});
+
+		Event::listen('orchestra.install.schema', function()
+		{
+			$_SERVER['orchestra.install.schema'] = 'foo';
+		});
+
+		Event::listen('orchestra.install: user', function()
+		{
+			$_SERVER['orchestra.install.user'] = 'foo';
+		});
+
+		Event::listen('orchestra.install: acl', function()
+		{
+			$_SERVER['orchestra.install.acl'] = 'foo';
+		});
 
 		parent::setUp();
-
+		
 		Orchestra\Installer::$status = false;
+	}
+
+	/**
+	 * Teardown the test environment.
+	 */
+	public function tearDown()
+	{
+		unset($_SERVER['orchestra.install.schema-users']);
+		unset($_SERVER['orchestra.install.schema']);
+		unset($_SERVER['orchestra.install.user']);
+		unset($_SERVER['orchestra.install.acl']);
+
+		parent::tearDown();
 	}
 
 	/**
@@ -85,35 +121,16 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testEventProperlyFired()
 	{
-		Event::listen('orchestra.install.schema: users', function()
-		{
-			$_SERVER['orchestra.installation'][] = 'orchestra.install.schema: users';
-		});
-
-		Event::listen('orchestra.install.schema', function()
-		{
-			$_SERVER['orchestra.installation'][] = 'orchestra.install.schema';
-		});
-
-		Event::listen('orchestra.install: user', function()
-		{
-			$_SERVER['orchestra.installation'][] = 'orchestra.install: user';
-		});
-
-		Event::listen('orchestra.install: acl', function()
-		{
-			$_SERVER['orchestra.installation'][] = 'orchestra.install: acl';
-		});
-
-		$this->restartApplication();
-
-		$expected = array(
-			'orchestra.install.schema: users',
+		$lists = array(
+			'orchestra.install.schema-users',
 			'orchestra.install.schema',
-			'orchestra.install: user',
-			'orchestra.install: acl',
+			'orchestra.install.user',
+			'orchestra.install.acl',
 		);
 
-		$this->assertEquals($expected, $_SERVER['orchestra.installation']);
+		foreach ($lists as $list)
+		{
+			$this->assertEquals('foo', $_SERVER[$list]);
+		}
 	}
 }
