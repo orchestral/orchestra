@@ -12,8 +12,5 @@ before_install:
   - cd ./laravel
   - php artisan bundle:install hybrid
   - php artisan bundle:install Messages
-  - pear channel-discover pear.survivethedeepend.com
-  - pear channel-discover hamcrest.googlecode.com/svn/pear
-  - pear install --alldeps deepend/Mockery
 
 script: "php artisan test orchestra"
