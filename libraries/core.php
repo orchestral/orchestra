@@ -119,7 +119,6 @@ class Core {
 	public static function shutdown()
 	{
 		Extension::shutdown();
-		Memory::shutdown();
 		Acl::shutdown();
 
 		// Orchestra is shutdown, let notify everyone.

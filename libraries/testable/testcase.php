@@ -157,7 +157,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		Session::$instance = null;
 		
 		O\Installer::$status = false;
-		O\Extension::shutdown();
 	}
 
 	/**
