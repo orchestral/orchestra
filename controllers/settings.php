@@ -174,7 +174,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 		$memory->put('email.transports.smtp.port', $input['email_smtp_port']);
 		$memory->put('email.transports.smtp.username', $input['email_smtp_username']);
 
-		if ((empty($input['email_smtp_password']) and $input['email_stmp_change_password'] === 'no'))
+		if ((empty($input['email_smtp_password']) and $input['stmp_change_password'] === 'no'))
 		{
 			$input['email_smtp_password'] = $memory->get('email.transports.smtp.password');	
 		}
