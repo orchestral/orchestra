@@ -30,21 +30,12 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
 		set_path('storage', $base_path.'storage'.DS);
 
-		DB::$connections = array();
-		
-		Config::set('database.default', 'sqlite');
-		Config::set('database.connections.sqlite', array(
-			'driver'   => 'sqlite',
-			'database' => 'orchestra',
-			'prefix'   => '',
-		));
-
-		URL::$base = null;
-		Config::set('application.url', 'http://localhost');
-		Config::set('application.index', '');
-
 		$this->client = $this->createClient();
-		$this->createApplication();
+
+		// Since Orchestra is started by default when we run 
+		// Bundle::start('orchestra'), we need to restart everything before 
+		// running any testcases.
+		$this->restartApplication();
 	}
 
 	/**
@@ -55,12 +46,9 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		$this->removeApplication();
 		unset($this->client);
 
-		Config::set('auth.driver', 'eloquent');
-		Config::set('auth.model', 'User');
-		Config::set('application.url', 'http://localhost');
-		Config::set('application.index', 'index.php');
-
 		O\Core::shutdown();
+
+		File::delete(path('storage').'database'.DS.'orchestra.sqlite');
 	}
 
 	/**
@@ -113,19 +101,22 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 */
 	public function createApplication()
 	{
-		Auth::$drivers     = null;
-		Cookie::$jar       = array();
-		Session::$instance = null;
+		Config::set('database.default', 'testdb');
+		Config::set('database.connections.testdb', array(
+			'driver'   => 'sqlite',
+			'database' => 'orchestra',
+			'prefix'   => '',
+		));
 
+		Config::set('application.url', 'http://localhost');
+		Config::set('application.index', '');
 		Config::set('auth.driver', 'eloquent');
 		Config::set('auth.model', 'Orchestra\Model\User');
-		
-		// load the session.
-		Session::load();
 
 		if ( ! O\Installer::installed())
 		{
 			Request::$foundation = LaravelRequest::createFromGlobals();
+			Session::load();
 
 			Request::foundation()->server->add(array(
 				'REQUEST_METHOD' => 'POST',
@@ -141,10 +132,13 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 			));
 
 			O\Core::shutdown();
-			O\Memory::shutdown();
-			O\Acl::shutdown();
 		}
 
+		// Request and Session instance need to be flushed an restarted.
+		Request::$foundation = LaravelRequest::createFromGlobals();
+		Session::$instance   = null;
+
+		Session::load();
 		O\Core::start();
 	}
 
@@ -156,12 +150,17 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 */
 	public function removeApplication()
 	{
-		Auth::$drivers = null;
-		Cookie::$jar = array();
-		Session::$instance = null;
-
+		Auth::$drivers       = null;
+		DB::$connections     = array();
+		Cookie::$jar         = array();
+		Session::$instance   = null;
+		URL::$base           = null;
 		O\Installer::$status = false;
-		File::delete(path('storage').'database'.DS.'orchestra.sqlite');
+
+		Config::set('auth.driver', 'eloquent');
+		Config::set('auth.model', 'User');
+		Config::set('application.url', 'http://localhost');
+		Config::set('application.index', 'index.php');
 	}
 
 	/**
