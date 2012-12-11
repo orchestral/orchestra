@@ -81,7 +81,8 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 
 		$attempt = array(
 			'username' => $input['username'],
-			'password' => $input['password']
+			'password' => $input['password'],
+			'remember' => (isset($input['remember']) and $input['remember'] === 'yes'),
 		);
 
 		// We should now attempt to login the user using Auth class.

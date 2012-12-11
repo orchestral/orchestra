@@ -11,6 +11,7 @@ return array(
 		'configure' => 'Настройки расширения',
 	),
 
+	'remember-me'     => 'Remember Me',
 	'forgot-password' => 'Забыли пароль',
 
 	'home' => array(

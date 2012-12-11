@@ -11,6 +11,7 @@ return array(
 		'configure' => 'Configure Extension',
 	),
 
+	'remember-me'     => 'Remember Me',
 	'forgot-password' => 'Forgot Password',
 
 	'home' => array(
