@@ -37,6 +37,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 			'database' => 'orchestra',
 			'prefix'   => '',
 		));
+
+		URL::$base = null;
 		Config::set('application.url', 'http://localhost');
 		Config::set('application.index', '');
 
