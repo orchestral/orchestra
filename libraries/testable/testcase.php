@@ -10,6 +10,7 @@ use \Auth,
 	\PHPUnit_Framework_TestCase,
 	\Request,
 	\Session,
+	\URL,
 	Symfony\Component\HttpFoundation\LaravelRequest;
 
 abstract class TestCase extends PHPUnit_Framework_TestCase {
