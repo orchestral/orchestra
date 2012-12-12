@@ -8,11 +8,7 @@ use \Auth,
 	\Event,
 	\File,
 	\Orchestra as O,
-	\PHPUnit_Framework_TestCase,
-	\Request,
-	\Session,
-	\URL,
-	Symfony\Component\HttpFoundation\LaravelRequest;
+	\PHPUnit_Framework_TestCase;
 
 abstract class TestCase extends PHPUnit_Framework_TestCase {
 
