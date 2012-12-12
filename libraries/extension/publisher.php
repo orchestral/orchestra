@@ -73,6 +73,18 @@ class Publisher {
 	}
 
 	/**
+	 * Register a third-party publisher driver.
+	 *
+	 * @param  string   $driver
+	 * @param  Closure  $resolver
+	 * @return void
+	 */
+	public static function extend($driver, Closure $resolver)
+	{
+		static::$registrar[$driver] = $resolver;
+	}
+
+	/**
 	 * Add a process to be queue.
 	 *
 	 * @access public
