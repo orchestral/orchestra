@@ -269,11 +269,6 @@ class Core {
 		// Multiple event listener for Backend (administrator panel)
 		Event::listen('orchestra.done: backend', function () use ($acl, $memory, $menu)
 		{
-			// Add basic menu.
-			$menu->add('home')
-				->title(__('orchestra::title.home.list')->get())
-				->link(handles('orchestra'));
-
 			// Add menu when logged-user user has authorization to
 			// `manage users`
 			if ($acl->can('manage-users'))
