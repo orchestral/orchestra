@@ -5,6 +5,7 @@ use \Auth,
 	\Config,
 	\Cookie,
 	\DB,
+	\Event,
 	\File,
 	\Orchestra as O,
 	\PHPUnit_Framework_TestCase,
@@ -30,6 +31,20 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
 		set_path('storage', $base_path.'storage'.DS);
 
+		Event::listen('orchestra.testable: setup-db', function ()
+		{
+			Config::set('database.connections.testdb', array(
+				'driver'   => 'sqlite',
+				'database' => 'orchestra',
+				'prefix'   => '',
+			));
+		});
+
+		Event::listen('orchestra.testable: teardown-db', function ()
+		{
+			File::delete(path('storage').'database'.DS.'orchestra.sqlite');
+		});
+
 		$this->client = $this->createClient();
 
 		// Since Orchestra is started by default when we run 
@@ -47,8 +62,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		unset($this->client);
 
 		O\Core::shutdown();
-
-		File::delete(path('storage').'database'.DS.'orchestra.sqlite');
+		Event::first('orchestra.testable: teardown-db');
 	}
 
 	/**
@@ -102,11 +116,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	public function createApplication()
 	{
 		Config::set('database.default', 'testdb');
-		Config::set('database.connections.testdb', array(
-			'driver'   => 'sqlite',
-			'database' => 'orchestra',
-			'prefix'   => '',
-		));
+		Event::first('orchestra.testable: setup-db');
 
 		Config::set('application.url', 'http://localhost');
 		Config::set('application.index', '');
