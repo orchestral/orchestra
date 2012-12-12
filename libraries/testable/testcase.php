@@ -24,6 +24,13 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	protected $client;
 
 	/**
+	 * The application instance.
+	 *
+	 * @var Orchestra\Testable\Application
+	 */
+	protected $app;
+
+	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
@@ -31,26 +38,28 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
 		set_path('storage', $base_path.'storage'.DS);
 
-		Event::listen('orchestra.testable: setup-db', function ()
+		if ( ! Event::listeners('orchestra.testable: setup-db'))
 		{
-			Config::set('database.connections.testdb', array(
-				'driver'   => 'sqlite',
-				'database' => 'orchestra',
-				'prefix'   => '',
-			));
-		});
+			Event::listen('orchestra.testable: setup-db', function ()
+			{
+				Config::set('database.connections.testdb', array(
+					'driver'   => 'sqlite',
+					'database' => 'orchestra',
+					'prefix'   => '',
+				));
+			});
+		}
 
-		Event::listen('orchestra.testable: teardown-db', function ()
+		if ( ! Event::listeners('orchestra.testable: teardown-db'))
 		{
-			File::delete(path('storage').'database'.DS.'orchestra.sqlite');
-		});
+			Event::listen('orchestra.testable: teardown-db', function ()
+			{
+				File::delete(path('storage').'database'.DS.'orchestra.sqlite');
+			});
+		}
 
-		$this->client = $this->createClient();
-
-		// Since Orchestra is started by default when we run 
-		// Bundle::start('orchestra'), we need to restart everything before 
-		// running any testcases.
-		$this->restartApplication();
+		$this->createClient();
+		$this->createApplication();
 	}
 
 	/**
@@ -84,7 +93,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 */
 	public function createClient()
 	{
-		return new Client;
+		$this->client = new Client;
 	}
 
 	/**
@@ -115,41 +124,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 */
 	public function createApplication()
 	{
-		Config::set('database.default', 'testdb');
-		Event::first('orchestra.testable: setup-db');
-
-		Config::set('application.url', 'http://localhost');
-		Config::set('application.index', '');
-		Config::set('auth.driver', 'eloquent');
-		Config::set('auth.model', 'Orchestra\Model\User');
-
-		if ( ! O\Installer::installed())
-		{
-			Request::$foundation = LaravelRequest::createFromGlobals();
-			Session::load();
-
-			Request::foundation()->server->add(array(
-				'REQUEST_METHOD' => 'POST',
-			));
-
-			O\Installer\Runner::install();
-
-			O\Installer\Runner::create_user(array(
-				'site_name' => 'Orchestra',
-				'email'     => 'example@test.com',
-				'password'  => '123456',
-				'fullname'  => 'Orchestra TestRunner',
-			));
-
-			O\Core::shutdown();
-		}
-
-		// Request and Session instance need to be flushed an restarted.
-		Request::$foundation = LaravelRequest::createFromGlobals();
-		Session::$instance   = null;
-
-		Session::load();
-		O\Core::start();
+		$this->app = new Application;
 	}
 
 	/**
@@ -160,17 +135,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 */
 	public function removeApplication()
 	{
-		Auth::$drivers       = null;
-		DB::$connections     = array();
-		Cookie::$jar         = array();
-		Session::$instance   = null;
-		URL::$base           = null;
-		O\Installer::$status = false;
-
-		Config::set('auth.driver', 'eloquent');
-		Config::set('auth.model', 'User');
-		Config::set('application.url', 'http://localhost');
-		Config::set('application.index', 'index.php');
+		if ($this->app instanceof Application) $this->app->remove();
 	}
 
 	/**
