@@ -59,6 +59,7 @@ return array(
 
 	'users' => array(
 		'email'    => 'E-mail Address',
+		'username' => 'Username',
 		'fullname' => 'Full name',
 		'password' => 'Password',
 		'roles'    => 'Roles',

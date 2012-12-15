@@ -59,6 +59,7 @@ return array(
 
 	'users' => array(
 		'email'    => 'Адрес почты',
+		'username' => 'Username',
 		'fullname' => 'Полное имя',
 		'password' => 'Пароль',
 		'roles'    => 'Уровень доступа',
