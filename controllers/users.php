@@ -182,6 +182,8 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 				'method' => 'POST',
 			));
 
+			$form->hidden('id');
+
 			$form->fieldset(function ($fieldset)
 			{
 				$fieldset->control('input:text', 'email', function ($control)
@@ -252,6 +254,8 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 			'fullname' => array('required'),
 			'roles'    => array('required'),
 		);
+
+		if ($id !== $input['id']) return Response::error('500');
 
 		Event::fire('orchestra.validate: users', array(& $rules));
 		Event::fire('orchestra.validate: user.account', array(& $rules));

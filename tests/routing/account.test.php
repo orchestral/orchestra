@@ -108,6 +108,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 		$this->be($this->user);
 
 		$response = $this->call('orchestra::account@index', array(), 'POST', array(
+			'id'       => $this->user->id,
 			'fullname' => 'Foobar',
 			'email'    => $this->user->email,
 		));

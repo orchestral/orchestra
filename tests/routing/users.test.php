@@ -103,7 +103,8 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 
-		$response = $this->call('orchestra::users@view', array(), 'POST', array(
+		$response = $this->call('orchestra::users@view', array(''), 'POST', array(
+			'id'       => '',
 			'email'    => 'crynobone@gmail.com',
 			'fullname' => 'Mior Muhammad Zaki',
 			'password' => '123456',
@@ -115,11 +116,14 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals(handles('orchestra::users'), 
 			$response->foundation->headers->get('location'));
 
-		$user = Orchestra\Model\User::find(2);
+		$user = Orchestra\Model\User::where_email('crynobone@gmail.com')->first();
 
+		$this->assertGreaterThan(0, $user->id);
 		$this->assertEquals('crynobone@gmail.com', $user->email);
 		$this->assertEquals('Mior Muhammad Zaki', $user->fullname);
 		$this->assertTrue(Hash::check('123456', $user->password));
+
+		$user->delete();
 	}
 
 	/**
@@ -131,14 +135,15 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 
-		$this->call('orchestra::users@view', array(), 'POST', array(
+		$user = Orchestra\Model\User::create(array(
 			'email'    => 'crynobone@gmail.com',
 			'fullname' => 'Mior Muhammad Zaki',
 			'password' => '123456',
-			'roles'    => array(2),
 		));
+		$user->roles()->sync(array(2));
 
-		$response = $this->call('orchestra::users@view', array(2), 'POST', array(
+		$response = $this->call('orchestra::users@view', array($user->id), 'POST', array(
+			'id'       => $user->id,
 			'email'    => 'crynobone@gmail.com',
 			'fullname' => 'crynobone',
 			'password' => '345678',
@@ -150,11 +155,13 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals(handles('orchestra::users'), 
 			$response->foundation->headers->get('location'));
 
-		$user = Orchestra\Model\User::find(2);
+		$updated_user = Orchestra\Model\User::find($user->id);
 
-		$this->assertEquals('crynobone@gmail.com', $user->email);
-		$this->assertEquals('crynobone', $user->fullname);
-		$this->assertTrue(Hash::check('345678', $user->password));
+		$this->assertEquals('crynobone@gmail.com', $updated_user->email);
+		$this->assertEquals('crynobone', $updated_user->fullname);
+		$this->assertTrue(Hash::check('345678', $updated_user->password));
+
+		$updated_user->delete();
 	}
 	
 	/**
@@ -166,21 +173,25 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 
-		$this->call('orchestra::users@view', array(), 'POST', array(
+		$user = Orchestra\Model\User::create(array(
 			'email'    => 'crynobone@gmail.com',
 			'fullname' => 'Mior Muhammad Zaki',
 			'password' => '123456',
-			'roles'    => array(2),
 		));
+		$user->roles()->sync(array(2));
+
+		$this->assertGreaterThan(0, $user->id);
+
+		$user_id = $user->id;
 		
-		$response = $this->call('orchestra::users@delete', array(2));
+		$response = $this->call('orchestra::users@delete', array($user_id));
 
 		$this->assertInstanceOf('Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::users'), 
 			$response->foundation->headers->get('location'));
 
-		$user = Orchestra\Model\User::find(2);
+		$user = Orchestra\Model\User::find($user_id);
 
 		$this->assertTrue(is_null($user));
 	}
