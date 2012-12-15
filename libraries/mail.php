@@ -51,7 +51,8 @@ class Mail {
 		$view         = View::make($view, $data);
 		$this->mailer = IoC::resolve('orchestra.mailer');
 
-		$this->mailer->body($view->render(), 'text/html');
+		$this->mailer->body($view);
+		$this->mailer->html(true);
 
 		call_user_func($callback, $this->mailer);
 	}
