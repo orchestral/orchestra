@@ -284,27 +284,21 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		$user->fullname = $input['fullname'];
 		$user->email    = $input['email'];
 
-		if ( ! empty($input['password']))
-		{
-			$user->password = $input['password'];
-		}
+		if ( ! empty($input['password'])) $user->password = $input['password'];
 
 		try
 		{
-			// References to self.
-			$self = $this;
+			$this->fire_event(($type === 'create' ? 'creating' : 'updating'), $user);
+			$this->fire_event('saving', $user);
 
-			DB::transaction(function () use ($user, $input, $self, $type)
+			DB::transaction(function () use ($user, $input, $type)
 			{
-				$self->fire_event(($type === 'create' ? 'creating' : 'updating'), $user);
-				$self->fire_event('saving', $user);
-
 				$user->save();
 				$user->roles()->sync($input['roles']);
-
-				$self->fire_event(($type === 'create' ? 'created' : 'updated'), $user);
-				$self->fire_event('saved', $user);
 			});
+
+			$this->fire_event(($type === 'create' ? 'created' : 'updated'), $user);
+			$this->fire_event('saved', $user);
 
 			$msg->add('success', __("orchestra::response.users.{$type}"));
 		}
@@ -340,18 +334,15 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		
 		try
 		{
-			// References to self.
-			$self = $this;
+			$this->fire_event('deleting', $user);
 
-			DB::transaction(function () use ($user, $self)
-			{
-				$self->fire_event('deleting', $user);
-
+			DB::transaction(function () use ($user)
+			{				
 				$user->roles()->delete();
 				$user->delete();
-
-				$self->fire_event('deleted', $user);
 			});
+
+			$this->fire_event('deleted', $user);
 
 			$msg->add('success', __('orchestra::response.users.delete'));
 		}

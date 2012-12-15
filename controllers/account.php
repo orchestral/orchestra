@@ -103,20 +103,16 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 
 		try
 		{
-			// Reference to self.
-			$self = $this;
+			$this->fire_event('updating', $user);
+			$this->fire_event('saving', $user);
 
-			DB::transaction(function () use ($user, $self)
+			DB::transaction(function () use ($user)
 			{
-				$self->fire_event('updating', $user);
-				$self->fire_event('saving', $user);
-
 				$user->save();
-
-				$self->fire_event('updated', $user);
-				$self->fire_event('saved', $user);
 			});
 
+			$this->fire_event('updated', $user);
+			$this->fire_event('saved', $user);
 
 			$msg->add('success', __('orchestra::response.account.profile.update'));
 		}
@@ -191,10 +187,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 
 			try
 			{
-				// Reference to self.
-				$self = $this;
-
-				DB::transaction(function () use ($user, $self)
+				DB::transaction(function () use ($user)
 				{
 					$user->save();
 				});
