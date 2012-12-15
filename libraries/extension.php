@@ -53,7 +53,7 @@ class Extension {
 
 		static::$extensions[$name] = array_merge($default, $config);
 
-		Event::fire("orchestra.started: {$name}");
+		Event::fire("extension.started: {$name}");
 	}
 
 	/**
@@ -67,7 +67,7 @@ class Extension {
 	{
 		foreach (static::$extensions as $name => $extension)
 		{
-			Event::fire("orchestra.done: {$name}");
+			Event::fire("extension.done: {$name}");
 		}
 
 		static::$extensions = array();
