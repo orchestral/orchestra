@@ -2,6 +2,8 @@
 
 class Orchestra
 {
+	const VERSION = '1.0.0-b1';
+
 	/**
 	 * Facade for Orchestra\Core.
 	 *
