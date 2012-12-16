@@ -1,14 +1,8 @@
 <?php
 
+Bundle::start('orchestra');
+
 class InstallerTest extends PHPUnit_Framework_TestCase {
-	
-	/**
-	 * Setup the test environment.
-	 */
-	public function setUp()
-	{
-		Bundle::start('orchestra');
-	}
 
 	/**
 	 * Teardown the test environment.

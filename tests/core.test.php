@@ -1,5 +1,7 @@
 <?php
 
+Bundle::start('orchestra');
+
 class CoreTest extends PHPUnit_Framework_TestCase {
 	
 	/**
@@ -7,7 +9,6 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		Bundle::start('orchestra');
 		$_SERVER['test.orchestra.started'] = null;
 		$_SERVER['test.orchestra.done'] = null;
 
@@ -89,7 +90,7 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 		$this->assertInstanceOf('Orchestra\Widget\Driver', Orchestra\Core::menu('app'));
 
 		$this->assertInstanceOf('Hybrid\Memory\Driver', Orchestra\Core::memory());
-		$this->assertInstanceOf('Hybrid\Acl', Orchestra\Core::acl());
+		$this->assertInstanceOf('Hybrid\Acl\Container', Orchestra\Core::acl());
 
 		Orchestra\Core::shutdown();
 	}

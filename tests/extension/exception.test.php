@@ -1,14 +1,8 @@
 <?php
 
-class ExtensionExceptionsTest extends PHPUnit_Framework_TestCase {
+Bundle::start('orchestra');
 
-	/**
-	 * Setup the test environment.
-	 */
-	public function setUp()
-	{
-		Bundle::start('orchestra');
-	}
+class ExtensionExceptionsTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test exception can be thrown.

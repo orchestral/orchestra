@@ -95,7 +95,7 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 
 			$acl = Orchestra\Core::acl();
 
-			$this->assertInstanceOf('Orchestra\Acl', $acl);
+			$this->assertInstanceOf('Hybrid\Acl\Container', $acl);
 
 			if ($acl->can('manage-orchestra'))
 			{

@@ -1,5 +1,7 @@
 <?php
 
+Bundle::start('orchestra');
+
 class ResourcesTest extends PHPUnit_Framework_TestCase {
 
 	/**
@@ -14,8 +16,6 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		Bundle::start('orchestra');
-
 		set_path('app', Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'application'.DS);
 
 		$this->stub = Orchestra\Resources::make('stub', array(

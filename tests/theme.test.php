@@ -1,5 +1,7 @@
 <?php
 
+Bundle::start('orchestra');
+
 class ThemeTest extends PHPUnit_Framework_TestCase {
 
 	/**
@@ -7,8 +9,6 @@ class ThemeTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		Bundle::start('orchestra');
-
 		Orchestra\View::$theme = 'frontend';
 	}
 

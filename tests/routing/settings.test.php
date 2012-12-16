@@ -1,5 +1,7 @@
 <?php
 
+Bundle::start('orchestra');
+
 class RoutingSettingsTest extends Orchestra\Testable\TestCase {
 	
 	/**

@@ -1,5 +1,6 @@
 <?php
 
+Bundle::start('orchestra');
 
 class RoutingAccountTest extends Orchestra\Testable\TestCase {
 

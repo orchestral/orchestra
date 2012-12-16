@@ -1,14 +1,8 @@
 <?php
 
-class HtmlTest extends PHPUnit_Framework_TestCase {
+Bundle::start('orchestra');
 
-	/**
-	 * Setup the test environment.
-	 */
-	public function setUp()
-	{
-		Bundle::start('orchestra');
-	}
+class HtmlTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test instanceof Orchestra\HTML

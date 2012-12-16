@@ -1,14 +1,8 @@
 <?php
 
-class MemoryTest extends PHPUnit_Framework_TestCase {
+Bundle::start('orchestra');
 
-	/**
-	 * Setup the test environment.
-	 */
-	public function setUp()
-	{
-		Bundle::start('orchestra');
-	}
+class MemoryTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test instance of Hybrid\Memory.

@@ -1,14 +1,8 @@
 <?php
 
+Bundle::start('orchestra');
+
 class ResponseTest extends PHPUnit_Framework_TestCase {
-	
-	/**
-	 * Setup the test environment.
-	 */	
-	public function setUp()
-	{
-		Bundle::start('orchestra');
-	}
 
 	/**
 	 * Test Orchestra\Response is an instance of Hybrid\Response

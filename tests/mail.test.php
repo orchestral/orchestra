@@ -1,14 +1,8 @@
 <?php
 
-class MailTest extends PHPUnit_Framework_TestCase {
+Bundle::start('orchestra');
 
-	/**
-	 * Setup the test environment.
-	 */
-	public function setUp()
-	{
-		Bundle::start('orchestra');
-	}
+class MailTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test instance of mailer with invalid view will throw an exception.

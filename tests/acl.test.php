@@ -1,14 +1,8 @@
 <?php
 
-class AclTest extends PHPUnit_Framework_TestCase {
+Bundle::start('orchestra');
 
-	/**
-	 * Setup the test environment.
-	 */
-	public function setUp()
-	{
-		Bundle::start('orchestra');
-	}
+class AclTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test instanceof Hybrid\Acl
@@ -18,6 +12,6 @@ class AclTest extends PHPUnit_Framework_TestCase {
 	public function testInstanceOf()
 	{
 		$acl = Orchestra\Acl::make();
-		$this->assertInstanceOf('Hybrid\Acl', $acl);
+		$this->assertInstanceOf('Hybrid\Acl\Container', $acl);
 	}
 }

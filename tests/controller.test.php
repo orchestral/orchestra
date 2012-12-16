@@ -1,5 +1,7 @@
 <?php
 
+Bundle::start('orchestra');
+
 class ControllerTest extends PHPUnit_Framework_TestCase {
 
 	/**
@@ -7,7 +9,6 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		Bundle::start('orchestra');
 		$_SERVER['test.orchestra.started'] = null;
 		$_SERVER['test.orchestra.done'] = null;
 	}
