@@ -149,7 +149,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		$data = array(
 			'eloquent' => $users,
 			'table'    => $table,
-			'roles'    => Role::pair(),
+			'roles'    => Role::lists('name', 'id'),
 			'_title_'  => 'Users',
 		);
 
@@ -203,7 +203,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 
 				$fieldset->control('select', 'roles[]', function ($control)
 				{
-					$options = Role::pair();
+					$options = Role::lists('name', 'id');
 
 					$control->label   = __('orchestra::label.users.roles');
 					$control->name    = 'roles[]';
