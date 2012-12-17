@@ -47,6 +47,7 @@ set_path('orchestra.extension', path('bundle'));
 
 include_once Bundle::path('orchestra').'helpers'.EXT;
 include_once Bundle::path('orchestra').'includes'.DS.'dependencies'.EXT;
+include_once Bundle::path('orchestra').'includes'.DS.'events'.EXT;
 include_once Bundle::path('orchestra').'includes'.DS.'macros'.EXT;
 
 /*
