@@ -28,6 +28,18 @@ class Orchestra_Toolkit_Task {
 	}
 
 	/**
+	 * Return Orchestra Platform version.
+	 *
+	 * @access public
+	 * @param  array    $args   Arguments passed by CLI
+	 * @return string
+	 */
+	public function version($args)
+	{
+		echo sprintf("Orchestra Platform version %s", Orchestra::VERSION);
+	}
+
+	/**
 	 * Run initiate task for Orchestra Toolkit, this would add the definition
 	 * file as well as start file for Orchestra.
 	 *
