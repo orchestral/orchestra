@@ -101,9 +101,7 @@ Route::filter('orchestra::manage-users', function ()
 	{
 		if (Auth::guest())
 		{
-			$redirect = Input::get('redirect');
-			Session::flash('orchestra.redirect', $redirect);
-
+			Session::flash('orchestra.redirect', Input::get('redirect'));
 			return Redirect::to(handles('orchestra::login'));
 		}
 
@@ -119,7 +117,6 @@ Route::filter('orchestra::manage', function ()
 		if (Auth::guest())
 		{
 			Session::flash('orchestra.redirect', Input::get('redirect'));
-
 			return Redirect::to(handles('orchestra::login'));
 		}
 
