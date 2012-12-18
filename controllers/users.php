@@ -255,7 +255,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 			'roles'    => array('required'),
 		);
 
-		if ($id !== $input['id']) return Response::error('500');
+		if ((int) $id !== (int) $input['id']) return Response::error('500');
 
 		Event::fire('orchestra.validate: users', array(& $rules));
 		Event::fire('orchestra.validate: user.account', array(& $rules));
