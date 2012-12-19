@@ -51,7 +51,7 @@ class Orchestra_Resources_Controller extends Orchestra\Controller {
 		unset($method);
 
 		$action    = array_shift($arguments) ?: 'index';
-		$content   = "";
+		$content   = null;
 		$resources = Resources::all();
 
 		switch (true)
