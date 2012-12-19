@@ -40,6 +40,7 @@ return array(
 
 	'search'    => array(
 		'button'  => 'Поиск',
+		'filter'  => 'Filter',
 		'keyword' => 'Поиск...',
 	),
 	
