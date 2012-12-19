@@ -23,15 +23,15 @@ class Settings {
 				'method' => 'POST',
 			));
 
-			$form->fieldset(function ($fieldset)
+			$form->fieldset('Application', function ($fieldset)
 			{
 				$fieldset->control('input:text', 'site_name', function ($control)
 				{
-					$control->label = __('orchestra::label.site_name');
+					$control->label = __('orchestra::label.name');
 				});
 				$fieldset->control('textarea', 'site_description', function ($control)
 				{
-					$control->label = __('orchestra::label.site_description');
+					$control->label = __('orchestra::label.description');
 					$control->attr  = array('rows' => 3);
 				});
 			});
