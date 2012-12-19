@@ -1,6 +1,6 @@
 <?php
 
-use Orchestra\Presenter\Resources as ResourcesPresenter,
+use Orchestra\Presenter\Resource as ResourcePresenter,
 	Orchestra\Resources,
 	Orchestra\View;
 
@@ -30,7 +30,7 @@ class Orchestra_Resources_Controller extends Orchestra\Controller {
 	private function index_page($resources)
 	{
 		return View::make('orchestra::resources.index', array(
-			'table'         => ResourcesPresenter::table($resources),
+			'table'         => ResourcePresenter::table($resources),
 			'_title_'       => __('orchestra::title.resources.list'),
 			'_description_' => __('orchestra::title.resources.list-detail'),
 		));

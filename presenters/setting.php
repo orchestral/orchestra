@@ -3,7 +3,7 @@
 use Orchestra\Form,
 	Orchestra\HTML;
 
-class Settings {
+class Setting {
 	
 	/**
 	 * Form View Generator for Setting Page.

@@ -4,7 +4,7 @@ use Laravel\Fluent,
 	Orchestra\Core,
 	Orchestra\Extension,
 	Orchestra\Messages,
-	Orchestra\Presenter\Settings as SettingsPresenter,
+	Orchestra\Presenter\Setting as SettingPresenter,
 	Orchestra\View;
 
 class Orchestra_Settings_Controller extends Orchestra\Controller {
@@ -52,7 +52,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 			'email_sendmail_command' => $memory->get('email.transports.sendmail.command', ''),
 		));
 
-		$form = SettingsPresenter::form($settings);
+		$form = SettingPresenter::form($settings);
 
 		Event::fire('orchestra.form: settings', array($settings, $form));
 

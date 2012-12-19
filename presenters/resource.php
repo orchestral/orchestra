@@ -3,7 +3,7 @@
 use Orchestra\HTML, 
 	Orchestra\Table;
 
-class Resources {
+class Resource {
 	
 	/**
 	 * Table View Generator for Orchestra\Resources.
