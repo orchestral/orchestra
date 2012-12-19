@@ -1,8 +1,7 @@
 <?php
 
-use Orchestra\HTML,
+use Orchestra\Presenter\Resource as ResourcePresenter,
 	Orchestra\Resources,
-	Orchestra\Table,
 	Orchestra\View;
 
 class Orchestra_Resources_Controller extends Orchestra\Controller {
@@ -28,30 +27,10 @@ class Orchestra_Resources_Controller extends Orchestra\Controller {
 	 * @param  array    $resources
 	 * @return Response
 	 */
-	private function _index($resources)
+	private function index_page($resources)
 	{
-		$table = Table::of('orchestra.resources: list', function ($table) use ($resources)
-		{
-			$table->empty_message = __('orchestra::label.no-data');
-
-			// Add HTML attributes option for the table.
-			$table->attr('class', 'table table-bordered table-striped');
-
-			// attach the list
-			$table->rows($resources);
-
-			$table->column('name', function ($column)
-			{
-				$column->value = function ($row)
-				{
-					$link = HTML::link(handles("orchestra::resources/{$row->id}"), $row->name);
-					return HTML::create('strong', HTML::raw($link));
-				};
-			});
-		});
-
 		return View::make('orchestra::resources.index', array(
-			'table'         => $table,
+			'table'         => ResourcePresenter::table($resources),
 			'_title_'       => __('orchestra::title.resources.list'),
 			'_description_' => __('orchestra::title.resources.list-detail'),
 		));
@@ -72,13 +51,13 @@ class Orchestra_Resources_Controller extends Orchestra\Controller {
 		unset($method);
 
 		$action    = array_shift($arguments) ?: 'index';
-		$content   = "";
+		$content   = null;
 		$resources = Resources::all();
 
 		switch (true)
 		{
 			case ($name === 'index' and $name === $action) :
-				return $this->_index($resources);
+				return $this->index_page($resources);
 				break;
 			default :
 				$content = Resources::call($name, $action, $arguments);

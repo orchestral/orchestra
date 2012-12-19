@@ -7,6 +7,7 @@ return array(
 		'confirm_password' => 'Confirm Password',
 	),
 
+	'name'        => 'Name',
 	'description' => 'Description',
 
 	'extensions' => array(
@@ -43,9 +44,6 @@ return array(
 		'filter'  => 'Filter',
 		'keyword' => 'Search keyword...',
 	),
-
-	'site_name'        => 'Application Name',
-	'site_description' => 'Application Description',
 
 	'email' => array(
 		'transport'       => 'E-mail Transport',

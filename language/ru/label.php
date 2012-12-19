@@ -7,6 +7,7 @@ return array(
 		'confirm_password' => 'Подтвердите ввод',
 	),
 
+	'name'        => 'Name',
 	'description' => 'Description',
 
 	'extensions' => array(
@@ -43,9 +44,6 @@ return array(
 		'filter'  => 'Filter',
 		'keyword' => 'Поиск...',
 	),
-	
-	'site_name'        => 'Название приложения',
-	'site_description' => 'Применение Описание',
 
 	'email' => array(
 		'transport'       => 'E-mail Transport',
