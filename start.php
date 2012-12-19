@@ -10,8 +10,9 @@
 */
 
 Autoloader::namespaces(array(
-	'Orchestra\Model' => Bundle::path('orchestra').'models'.DS,
-	'Orchestra'       => Bundle::path('orchestra').'libraries'.DS,
+	'Orchestra\Model'     => Bundle::path('orchestra').'models'.DS,
+	'Orchestra\Presenter' => Bundle::path('orchestra').'presenters'.DS,
+	'Orchestra'           => Bundle::path('orchestra').'libraries'.DS,
 ));
 
 Autoloader::map(array(

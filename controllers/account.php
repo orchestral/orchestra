@@ -1,6 +1,6 @@
 <?php
 
-use Orchestra\Form,
+use Orchestra\Presenter\Account as AccountPresenter,
 	Orchestra\Messages,
 	Orchestra\View;
 
@@ -31,30 +31,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 	public function get_index()
 	{
 		$user = Auth::user();
-
-		$form = Form::of('orchestra.account', function ($form) use ($user)
-		{
-			$form->row($user);
-			$form->attr(array(
-				'action' => handles('orchestra::account/index'),
-				'method' => 'POST',
-			));
-
-			$form->hidden('id');
-
-			$form->fieldset(function ($fieldset)
-			{
-				$fieldset->control('input:text', 'email', function ($control)
-				{
-					$control->label = __('orchestra::label.users.email');
-				});
-
-				$fieldset->control('input:text', 'fullname', function ($control)
-				{
-					$control->label = __('orchestra::label.users.fullname');
-				});
-			});
-		});
+		$form = AccountPresenter::form($user, handles('orchestra::account/index'));
 
 		Event::fire('orchestra.form: user.account', array($user, $form));
 
