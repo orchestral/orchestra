@@ -3,7 +3,7 @@
 use Orchestra\Form,
 	Orchestra\HTML,
 	Orchestra\Messages,
-	Orchestra\Table,
+	Orchestra\Presenter\User as UserPresenter,
 	Orchestra\View,
 	Orchestra\Model\Role,
 	Orchestra\Model\User;
@@ -59,92 +59,14 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		$users = $users->paginate(30);
 
 		// Build users table HTML using a schema liked code structure.
-		$table = Table::of('orchestra.users', function ($table) use ($users)
-		{
-			$table->empty_message = __('orchestra::label.no-data');
-
-			// Add HTML attributes option for the table.
-			$table->attr('class', 'table table-bordered table-striped');
-
-			// attach Model and set pagination option to true
-			$table->with($users, true);
-
-			// Add columns
-			$table->column('id');
-
-			$table->column('fullname', function ($column)
-			{
-				$column->label = __('orchestra::label.users.fullname');
-				$column->value = function ($row)
-				{
-					$roles = $row->roles;
-					$value = array();
-
-					foreach ($roles as $role)
-					{
-						$value[] = HTML::create('span', $role->name, array(
-							'class' => 'label label-info',
-						));
-					}
-
-					return implode('', array(
-						HTML::create('strong', $row->fullname),
-						HTML::create('br'),
-						HTML::create('span', HTML::raw(implode(' ', $value)), array(
-							'class' => 'meta',
-						)),
-					));
-				};
-
-			});
-
-			$table->column('email', function ($column)
-			{
-				$column->label = __('orchestra::label.users.email');
-				$column->value = function ($row)
-				{
-					return $row->email;
-				};
-			});
-		});
+		$table = UserPresenter::table($users);
 
 		Event::fire('orchestra.list: users', array($users, $table));
 
 		// Once all event listening to `orchestra.list: users` is executed,
 		// we can add we can now add the final column, edit and delete action
 		// for users
-		$table->extend(function ($table)
-		{
-			$table->column('action', function ($column)
-			{
-				$column->label      = '';
-				$column->label_attr = array('class' => 'th-action');
-				$column->value = function ($row)
-				{
-					$btn = array();
-					$btn[] = HTML::link(
-						handles('orchestra::users/view/'.$row->id),
-						__('orchestra::label.edit'),
-						array('class' => 'btn btn-mini')
-					);
-
-					if (Auth::user()->id !== $row->id)
-					{
-						$btn[] = HTML::link(
-							handles('orchestra::users/delete/'.$row->id),
-							__('orchestra::label.delete'),
-							array('class' => 'btn btn-mini btn-danger')
-						);
-					}
-
-					return HTML::create(
-						'div',
-						HTML::raw(implode('', $btn)),
-						array('class' => 'btn-group')
-					);
-				};
-			});
-		});
+		UserPresenter::table_actions($table);
 
 		$data = array(
 			'eloquent' => $users,
@@ -174,58 +96,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 			$user = new User;
 		}
 
-		$form = Form::of('orchestra.users', function ($form) use ($user)
-		{
-			$form->row($user);
-			$form->attr(array(
-				'action' => handles('orchestra::users/view/'.$user->id),
-				'method' => 'POST',
-			));
-
-			$form->hidden('id');
-
-			$form->fieldset(function ($fieldset)
-			{
-				$fieldset->control('input:text', 'email', function ($control)
-				{
-					$control->label =  __('orchestra::label.users.email');
-				});
-
-				$fieldset->control('input:text', 'fullname', function($control)
-				{
-					$control->label = __('orchestra::label.users.fullname');
-				});
-
-				$fieldset->control('input:password', 'password', function($control)
-				{
-					$control->label = __('orchestra::label.users.password');
-				});
-
-				$fieldset->control('select', 'roles[]', function ($control)
-				{
-					$options = Role::lists('name', 'id');
-
-					$control->label   = __('orchestra::label.users.roles');
-					$control->name    = 'roles[]';
-					$control->options = $options;
-					$control->attr    = array(
-						'multiple' => true,
-					);
-					$control->value   = function ($row, $self) use ($options)
-					{
-						// get all the user roles from objects
-						$roles = array();
-
-						foreach ($row->roles as $row)
-						{
-							$roles[] = $row->id;
-						}
-
-						return $roles;
-					};
-				});
-			});
-		});
+		$form = UserPresenter::form($user);
 
 		Event::fire('orchestra.form: users', array($user, $form));
 		Event::fire('orchestra.form: user.account', array($user, $form));
