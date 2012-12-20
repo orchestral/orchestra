@@ -1,8 +1,21 @@
 <?php namespace Orchestra\Model;
 
-use \Eloquent;
+use \Config,
+	\Eloquent;
 
 class Role extends Eloquent {
+
+	/**
+	 * Get default roles for Orchestra Platform
+	 *
+	 * @static
+	 * @access public
+	 * @return self
+	 */
+	public static function admin()
+	{
+		return static::find(Config::get('orchestra::orchestra.default_role'));
+	}
 
 	/**
 	 * Has Many and Belongs To `users` table using pivot table `user_roles`.
