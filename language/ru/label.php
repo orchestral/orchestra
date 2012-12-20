@@ -25,9 +25,10 @@ return array(
 		),
 		
 		'publisher' => array(
-			'host'     => 'Host',
-			'user'     => 'User',
-			'password' => 'Password',
+			'host'            => 'Host',
+			'user'            => 'User',
+			'password'        => 'Password',
+			'connection-type' => 'Connection Type',
 		),
 	),
 

@@ -34,6 +34,13 @@
 						{{ $errors->first('password', '<p class="help-block">:message</p>') }}
 					</div>
 				</div>
+
+				<div class="control-group">
+					{{ Form::label('connection-type', __('orchestra::label.extensions.publisher.connection-type'), array('class' => 'control-label')) }}
+					<div class="controls">
+						{{ Form::select('connection-type', array('ftp' => 'FTP', 'sftp' => 'SFTP'), 'ftp', array('role' => 'switcher')) }}
+					</div>
+				</div>
 			</fieldset>
 
 			<div class="form-actions">

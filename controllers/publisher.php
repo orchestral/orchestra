@@ -70,6 +70,8 @@ class Orchestra_Publisher_Controller extends Controller {
 		$input = Input::only(array('host', 'user', 'password'));
 		$msg   = new Messages;
 
+		$input['ssl'] = (Input::get('connection-type', 'sftp') === 'sftp');
+
 		// Make an attempt to connect to service first before
 		try
 		{
