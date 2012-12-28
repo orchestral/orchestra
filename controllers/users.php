@@ -193,14 +193,14 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 	 */
 	public function get_delete($id = null)
 	{
-		if (is_null($id)) return Event::fire('404');
+		if (is_null($id)) return Response::error('404');
 
 		$user = User::find($id);
 		$msg  = new Messages;
 
 		if (is_null($user) or ($user->id === Auth::user()->id))
 		{
-			return Event::fire('404');
+			return Response::error('404');
 		}
 		
 		try
