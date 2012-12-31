@@ -20,6 +20,7 @@ return array(
 
 	'login'   => 'Login',
 	'logout'  => 'Logout',
+	'register'=> 'Register',
 
 	'resources' => array(
 		'list'        => 'Resources',
