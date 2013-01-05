@@ -217,6 +217,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 			$msg->add('error', __('orchestra::response.db-failed', array(
 				'error' => $e->getMessage(),
 			)));
+			
 			return Redirect::to(handles('orchestra::register'))
 					->with('message', $msg->serialize());
 		}

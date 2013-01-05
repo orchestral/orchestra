@@ -18,8 +18,9 @@ return array(
 		'list' => 'Главная',
 	),
 
-	'login'   => 'Вход',
-	'logout'  => 'Выход',
+	'login'    => 'Вход',
+	'logout'   => 'Выход',
+	'register' => 'Register',
 
 	'resources' => array(
 		'list'        => 'Pесурсы',
