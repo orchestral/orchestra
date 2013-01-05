@@ -22,5 +22,5 @@ return array(
 	|
 	*/
 
-	'default_member_role' => 2,
+	'member_role' => 2,
 );
