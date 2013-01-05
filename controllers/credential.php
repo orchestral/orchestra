@@ -52,105 +52,6 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 			'username_types'
 		));
 	}
-
-	/**
-	 * Register Page
-	 *
-	 * GET (:bundle)/register
-	 *
-	 * @access public
-	 * @return Response
-	 */
-	public function get_register()
-	{
-		// @TODO should check if Orchestra Platform should allow user registration
-
-		$redirect       = handles('orchestra::login');
-		$username_types = current($this->username_types);
-		$user           = new User;
-		$form           = AccountPresenter::form($user);
-
-		return View::make('orchestra::credential.register', compact(
-			'redirect',
-			'form',
-			'username_types'
-		))->with('eloquent', $user);
-	}
-
-	/**
-	 * POST Register
-	 *
-	 * POST (:bundle)/register
-	 *
-	 * @access public
-	 * @return Response
-	 */
-	public function post_register()
-	{
-		$input = Input::all();
-		$rules = array(
-				'username' => array('required', 'email'),
-				'password' => array('required'),
-		);
-	
-		$msg = new Messages;
-		$val = Validator::make($input, $rules);
-	
-		// Validate user login, if any errors is found redirect it back to
-		// login page with the errors
-		if ($val->fails())
-		{
-			return Redirect::to(handles('orchestra::register'))
-			->with_input()
-			->with_errors($val);
-		}
-	
-		$type = 'update';
-		$user = User::where_email($input['username'])->first();
-
-		if (!is_null($user))
-		{
-			$msg->add('error', __("orchestra::response.users.exists"));
-			return Redirect::to(handles('orchestra::register'))
-					->with('message', $msg->serialize());
-		}
-		
-
-		$user = new User(array(
-				'password' => $input['password'] ?: '',
-		));
-		
-		$user->email    = $input['username'];
-
-		try
-		{
-			$this->fire_event('creating', $user);
-			$this->fire_event('saving', $user);
-
-			DB::transaction(function () use ($user, $input)
-			{
-				$user->save();
-				$user->roles()->sync(array(2)); // register as member
-			});
-
-			$this->fire_event('created', $user);
-			$this->fire_event('saved', $user);
-
-			$msg->add('success', __("orchestra::response.users.create"));
-		}
-		catch (Exception $e)
-		{
-			$msg->add('error', __('orchestra::response.db-failed', array(
-				'error' => $e->getMessage(),
-			)));
-			return Redirect::to(handles('orchestra::register'))
-					->with('message', $msg->serialize());
-		}
-
-		return Redirect::to(handles('orchestra::login'))
-				->with('message', $msg->serialize());
-		
-	}
 	
 	/**
 	 * POST Login
@@ -225,5 +126,114 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 
 		return Redirect::to($redirect)
 				->with('message', $msg->serialize());
+	}
+
+	/**
+	 * Register Page
+	 *
+	 * GET (:bundle)/register
+	 *
+	 * @access public
+	 * @return Response
+	 */
+	public function get_register()
+	{
+		// @TODO should check if Orchestra Platform should allow user registration
+
+		$user = new User;
+		$form = AccountPresenter::form($user, handles('orchestra::register'));
+		
+		$form->extend(function ($form)
+		{
+			$form->hidden('redirect', function ($field)
+			{
+				$field->value = handles('orchestra::login');
+			});
+
+			$form->token = true;
+		});
+		
+		return View::make('orchestra::credential.register', array(
+			'eloquent' => $user,
+			'form'     => $form,
+		));
+	}
+
+	/**
+	 * POST Register
+	 *
+	 * POST (:bundle)/register
+	 *
+	 * @access public
+	 * @return Response
+	 */
+	public function post_register()
+	{
+		$input = Input::all();
+		$rules = array(
+			'email'    => array('required', 'email', 'unique:users,email'),
+			'password' => array('required'),
+		);
+
+		Event::fire('orchestra.validate: user.account', array(& $rules));
+	
+		$msg = new Messages;
+		$val = Validator::make($input, $rules);
+	
+		// Validate user login, if any errors is found redirect it back to
+		// login page with the errors
+		if ($val->fails())
+		{
+			return Redirect::to(handles('orchestra::register'))
+					->with_input()
+					->with_errors($val);
+		}
+
+		$user = new User(array(
+			'email'    => $input['email']
+			'password' => $input['password'] ?: '',
+		));
+
+		try
+		{
+			$this->fire_event('creating', $user);
+			$this->fire_event('saving', $user);
+
+			DB::transaction(function () use ($user, $input)
+			{
+				$user->save();
+				$user->roles()->sync(array(2)); // register as member
+			});
+
+			$this->fire_event('created', $user);
+			$this->fire_event('saved', $user);
+
+			$msg->add('success', __("orchestra::response.users.create"));
+		}
+		catch (Exception $e)
+		{
+			$msg->add('error', __('orchestra::response.db-failed', array(
+				'error' => $e->getMessage(),
+			)));
+			return Redirect::to(handles('orchestra::register'))
+					->with('message', $msg->serialize());
+		}
+
+		return Redirect::to(handles('orchestra::login'))
+				->with('message', $msg->serialize());
+		
+	}
+
+	/**
+	 * Fire Event related to eloquent process
+	 *
+	 * @access private
+	 * @param  string   $type
+	 * @param  Eloquent $user
+	 * @return void
+	 */
+	private function fire_event($type, $user)
+	{
+		Event::fire("orchestra.{$type}: user.account", array($user));
 	}
 }

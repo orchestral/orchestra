@@ -46,6 +46,5 @@ return array(
 		'create' => 'User has been created',
 		'update' => 'User has been updated',
 		'delete' => 'User has been deleted',
-		'exists' => 'User already exists'
 	),
 );
