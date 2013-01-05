@@ -195,4 +195,36 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 
 		$this->assertTrue(is_null($user));
 	}
+
+	/**
+	 * Test Request POST (orchestra)/users/view/1 with multiple roles
+	 *
+	 * @test
+	 */
+	public function testPostDeleteUserPageWithMultipleRoles()
+	{
+		$this->be($this->user);
+
+		$user = Orchestra\Model\User::create(array(
+			'email'    => 'crynobone@gmail.com',
+			'fullname' => 'Mior Muhammad Zaki',
+			'password' => '123456',
+		));
+		$user->roles()->sync(array(2, 1));
+
+		$this->assertGreaterThan(0, $user->id);
+
+		$user_id = $user->id;
+		
+		$response = $this->call('orchestra::users@delete', array($user_id));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::users'), 
+			$response->foundation->headers->get('location'));
+
+		$user = Orchestra\Model\User::find($user_id);
+
+		$this->assertTrue(is_null($user));
+	}
 }
