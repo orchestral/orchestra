@@ -88,6 +88,26 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
+	 * Test Request POST (orchestra)/credential/login
+	 * 
+	 * @test
+	 */
+	public function testPostLoginPageWithInvalidResponse()
+	{
+		$response = $this->call('orchestra::credential@login', array(), 'POST', array(
+			'username'          => 'example@test.com',
+			'password'          => '1234561',
+			Session::csrf_token => Session::token(),
+		));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(handles('orchestra::login'), 
+			$response->foundation->headers->get('location'));
+
+		$this->assertFalse(Auth::check());
+	}
+
+	/**
 	 * Test Request GET (orchestra)/credential/login
 	 * 
 	 * @test
@@ -111,16 +131,51 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals('foobar', $_SERVER['orchestra.auth.logout']);
 	}
 
+
+	/**
+	 * Test Request GET (orchestra)/credential/register
+	 * 
+	 * @test
+	 */
+	public function testGetRegisterPage()
+	{
+		$response = $this->call('orchestra::credential@register', array());
+
+		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertEquals(200, $response->foundation->getStatusCode());
+		$this->assertEquals('orchestra::credential.register', $response->content->view);
+	}
+
+	/**
+	 * Test Request POST (orchestra)/credential/register failed without csrf.
+	 * 
+	 * @test
+	 */
+	public function testPostRegisterPageFailedWithoutCsrf()
+	{
+		$response = $this->call('orchestra::credential@register', array(), 'POST', array(
+			'email'    => 'foobar@register-test.com',
+			'password' => '123456',
+		));
+
+		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertEquals(500, $response->foundation->getStatusCode());
+
+		$user = Orchestra\Model\User::where_email('foobar@register-test.com')->first();
+
+		$this->assertTrue(is_null($user));
+	}
+
 	/**
 	 * Test Request POST (orchestra)/credential/login
 	 * 
 	 * @test
 	 */
-	public function testPostLoginPageWithInvalidResponse()
+	public function testPostRegisterPage()
 	{
-		$response = $this->call('orchestra::credential@login', array(), 'POST', array(
-			'username'          => 'example@test.com',
-			'password'          => '1234561',
+		$response = $this->call('orchestra::credential@register', array(), 'POST', array(
+			'email'             => 'foobar@register-test.com',
+			'password'          => '123456',
 			Session::csrf_token => Session::token(),
 		));
 
@@ -128,6 +183,8 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
 
-		$this->assertFalse(Auth::check());
+		$user = Orchestra\Model\User::where_email('foobar@register-test.com')->first();
+
+		$this->assertFalse(is_null($user));
 	}
 }
