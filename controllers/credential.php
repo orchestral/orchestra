@@ -2,7 +2,8 @@
 
 use Orchestra\Messages,
 	Orchestra\View,
-	Orchestra\Model\User;
+	Orchestra\Model\User,
+	Orchestra\Presenter\Account as AccountPresenter;
 
 class Orchestra_Credential_Controller extends Orchestra\Controller {
 
@@ -62,13 +63,18 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 	 */
 	public function get_register()
 	{
+		// @TODO should check if Orchestra Platform should allow user registration
+
 		$redirect       = handles('orchestra::login');
 		$username_types = current($this->username_types);
+		$user           = new User;
+		$form           = AccountPresenter::form($user);
 
 		return View::make('orchestra::credential.register', compact(
 			'redirect',
+			'form',
 			'username_types'
-		));
+		))->with('eloquent', $user);
 	}
 
 	/**
