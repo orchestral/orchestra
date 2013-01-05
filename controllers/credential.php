@@ -199,10 +199,12 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 			$this->fire_event('creating', $user);
 			$this->fire_event('saving', $user);
 
-			DB::transaction(function () use ($user, $input)
+			DB::transaction(function () use ($user)
 			{
 				$user->save();
-				$user->roles()->sync(array(2)); // register as member
+				$user->roles()->sync(array(
+					Config::get('orchestra::orchestra.member_role', 2)
+				));
 			});
 
 			$this->fire_event('created', $user);
