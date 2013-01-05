@@ -154,14 +154,14 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	public function testPostRegisterPageFailedWithoutCsrf()
 	{
 		$response = $this->call('orchestra::credential@register', array(), 'POST', array(
-			'email'    => 'example@test.com',
+			'email'    => 'foobar@register-test.com',
 			'password' => '123456',
 		));
 
 		$this->assertInstanceOf('Laravel\Response', $response);
 		$this->assertEquals(500, $response->foundation->getStatusCode());
 
-		$user = Orchestra\Model\User::where_email('example@test.com')->first();
+		$user = Orchestra\Model\User::where_email('foobar@register-test.com')->first();
 
 		$this->assertTrue(is_null($user));
 	}
@@ -174,7 +174,7 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	public function testPostRegisterPage()
 	{
 		$response = $this->call('orchestra::credential@register', array(), 'POST', array(
-			'email'             => 'example@test.com',
+			'email'             => 'foobar@register-test.com',
 			'password'          => '123456',
 			Session::csrf_token => Session::token(),
 		));
@@ -182,5 +182,9 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 		$this->assertInstanceOf('Laravel\Redirect', $response);
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
+
+		$user = Orchestra\Model\User::where_email('foobar@register-test.com')->first();
+
+		$this->assertFalse(is_null($user));
 	}
 }
