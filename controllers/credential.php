@@ -190,7 +190,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		}
 
 		$user = new User(array(
-			'email'    => $input['email']
+			'email'    => $input['email'],
 			'password' => $input['password'] ?: '',
 		));
 
