@@ -154,14 +154,6 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 			});
 
 			$form->token = true;
-
-			$form->fieldset(function ($fieldset)
-			{
-				$fieldset->control('input:password', 'password', function($control)
-				{
-					$control->label = __('orchestra::label.users.password');
-				});
-			});
 		});
 		
 		return View::make('orchestra::credential.register', array(
@@ -180,10 +172,10 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 	 */
 	public function post_register()
 	{
-		$input = Input::all();
-		$rules = array(
-			'email'    => array('required', 'email', 'unique:users,email'),
-			'fullname' => array('required'),
+		$input    = Input::all();
+		$password = Str::random(5);
+		$rules    = array(
+			'email'    => array('required', 'email'),
 			'password' => array('required'),
 		);
 
@@ -192,8 +184,8 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		$msg = new Messages;
 		$val = Validator::make($input, $rules);
 	
-		// Validate user login, if any errors is found redirect it back to
-		// login page with the errors
+		// Validate user registration, if any errors is found redirect it 
+		// back to registration page with the errors
 		if ($val->fails())
 		{
 			return Redirect::to(handles('orchestra::register'))
@@ -201,38 +193,44 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 					->with_errors($val);
 		}
 
-		$user = new User(array(
-			'email'    => $input['email'],
-			'fullname' => $input['fullname'],
-			'password' => $input['password'],
-		));
+		$user = User::where_email($input['email'])
+					->first();
 
-		try
+		if (is_null($user))
 		{
-			$this->fire_event('creating', $user);
-			$this->fire_event('saving', $user);
+			$user = new User(array(
+				'email'    => $input['email'],
+				'fullname' => $password,
+				'password' => $input['password'],
+			));
 
-			DB::transaction(function () use ($user)
+			try
 			{
-				$user->save();
-				$user->roles()->sync(array(
-					Config::get('orchestra::orchestra.member_role', 2)
-				));
-			});
+				$this->fire_event('creating', $user);
+				$this->fire_event('saving', $user);
 
-			$this->fire_event('created', $user);
-			$this->fire_event('saved', $user);
+				DB::transaction(function () use ($user)
+				{
+					$user->save();
+					$user->roles()->sync(array(
+						Config::get('orchestra::orchestra.member_role', 2)
+					));
+				});
 
-			$msg->add('success', __("orchestra::response.users.create"));
-		}
-		catch (Exception $e)
-		{
-			$msg->add('error', __('orchestra::response.db-failed', array(
-				'error' => $e->getMessage(),
-			)));
-			
-			return Redirect::to(handles('orchestra::register'))
-					->with('message', $msg->serialize());
+				$this->fire_event('created', $user);
+				$this->fire_event('saved', $user);
+
+				$msg->add('success', __("orchestra::response.users.create"));
+			}
+			catch (Exception $e)
+			{
+				$msg->add('error', __('orchestra::response.db-failed', array(
+					'error' => $e->getMessage(),
+				)));
+				
+				return Redirect::to(handles('orchestra::register'))
+						->with('message', $msg->serialize());
+			}
 		}
 
 		return Redirect::to(handles('orchestra::login'))
