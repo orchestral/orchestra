@@ -1,8 +1,8 @@
 <?php
 
 use Orchestra\Core,
-	Orchestra\HTML,
 	Orchestra\Installer,
+	Orchestra\Installer\Requirement,
 	Orchestra\Installer\Runner,
 	Orchestra\Messages,
 	Orchestra\View;
@@ -37,53 +37,7 @@ class Orchestra_Installer_Controller extends Controller {
 	 */
 	public function action_index()
 	{
-		$publisher   = new Orchestra\Installer\Publisher;
-		$installable = true;
-
-		try
-		{
-			$asset_writable = $publisher->publish();
-		}
-		catch (RuntimeException $e)
-		{
-			$asset_writable = false;
-		}
-
-		$requirements = array(
-			'storage_writable' => array(
-				'is'       => (is_writable(path('storage'))),
-				'should'   => true,
-				'explicit' => false,
-				'data'     => array(
-					'path' => HTML::create('code', 'storage', array('title' => path('storage'))),
-				),
-			),
-			'bundle_writable' => array(
-				'is'       => (is_writable(path('bundle'))),
-				'should'   => true,
-				'explicit' => false,
-				'data'     => array(
-					'path' => HTML::create('code', 'bundles', array('title' => path('bundle'))),
-				),
-			),
-			'asset_writable'  => array(
-				'is'       => ($asset_writable),
-				'should'   => true,
-				'explicit' => true,
-				'data'     => array(
-					'path' => HTML::create('code', 'public'.DS.'bundles', array('title' => path('public').'bundles'.DS)),
-				),
-			),
-		);
-
-		foreach ($requirements as $requirement)
-		{
-			if ($requirement['is'] !== $requirement['should'] 
-				and true === $requirement['explicit'])
-			{
-				$installable = false;
-			}
-		}
+		$requirement = new Requirement;
 
 		Session::flush();
 
@@ -123,8 +77,8 @@ class Orchestra_Installer_Controller extends Controller {
 			'database'     => $database,
 			'auth'         => $auth,
 			'auth_status'  => $auth_status,
-			'installable'  => $installable,
-			'requirements' => $requirements,
+			'installable'  => $requirement->installable(),
+			'requirements' => $requirement->checklist(),
 		);
 
 		return View::make('orchestra::installer.index', $data);
