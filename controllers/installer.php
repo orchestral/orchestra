@@ -41,9 +41,10 @@ class Orchestra_Installer_Controller extends Controller {
 
 		Session::flush();
 
-		$driver   = Config::get('database.default', 'mysql');
-		$database = Config::get("database.connections.{$driver}", array());
-		$auth     = Config::get('auth');
+		$driver      = Config::get('database.default', 'mysql');
+		$database    = Config::get("database.connections.{$driver}", array());
+		$auth        = Config::get('auth');
+		$installable = $requirement->installable();
 
 		// for security, we shouldn't expose database connection to anyone.
 		if (isset($database['password'])
@@ -77,7 +78,7 @@ class Orchestra_Installer_Controller extends Controller {
 			'database'     => $database,
 			'auth'         => $auth,
 			'auth_status'  => $auth_status,
-			'installable'  => $requirement->installable(),
+			'installable'  => $installable,
 			'requirements' => $requirement->checklist(),
 		);
 

@@ -16,7 +16,7 @@ class Requirement {
 	 *
 	 * @var boolean
 	 */
-	protected $installable = false;
+	protected $installable = true;
 	
 	/**
 	 * Construct a new instance.
