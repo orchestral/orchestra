@@ -72,7 +72,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 			'eloquent' => $users,
 			'table'    => $table,
 			'roles'    => Role::lists('name', 'id'),
-			'_title_'  => 'Users',
+			'_title_'  => __('orchestra::title.users.list'),
 		);
 
 		return View::make('orchestra::users.index', $data);

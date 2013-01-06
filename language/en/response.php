@@ -17,6 +17,11 @@ return array(
 		'logged-in'           => 'You has been logged in',
 		'logged-out'          => 'You have been logged out',
 		'unauthorized'        => 'You are not authorized to access this action',
+		'register'            => array(
+			'email-fail'    => 'Unable to send User Registration Confirmation E-mail',
+			'email-send'    => 'User Registration Confirmation E-mail has been sent, please check your inbox',
+			'existing-user' => 'This e-mail address is already associated with another user',
+		),
 	),
 
 	'db-failed' => 'Unable to save to database',
@@ -32,8 +37,8 @@ return array(
 	),
 
 	'forgot' => array(
-		'fail' => 'Unable to send reset password email',
-		'send' => 'Reset password email has been sent, please check your inbox',
+		'email-fail' => 'Unable to send Reset Password E-mail',
+		'email-send' => 'Reset Password E-mail has been sent, please check your inbox',
 	),
 
 	'settings' => array(

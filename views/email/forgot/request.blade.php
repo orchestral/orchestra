@@ -1,4 +1,4 @@
-<p>Hello {{ $fullname }},</p>
+<p>Hello {{ $user->fullname }},</p>
 
 <p>
 	We got a request to reset your password. If this was a mistake, just

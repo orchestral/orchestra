@@ -1,6 +1,7 @@
 <?php
 
-use Orchestra\Messages,
+use Orchestra\Mail,
+	Orchestra\Messages,
 	Orchestra\View,
 	Orchestra\Model\User,
 	Orchestra\Presenter\Account as AccountPresenter;
@@ -93,6 +94,15 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		// We should now attempt to login the user using Auth class.
 		if (Auth::attempt($attempt))
 		{
+			$user = Auth::user();
+
+			// Verify the user account if has not been verified.
+			if ((int) $user->status === User::UNVERIFIED)
+			{
+				$user->status = User::VERIFIED;
+				$user->save();
+			}
+
 			Event::fire(array('orchestra.logged.in', 'orchestra.auth: login'));
 
 			$msg->add('success', __('orchestra::response.credential.logged-in'));
@@ -141,8 +151,6 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 	 */
 	public function get_register()
 	{
-		// @TODO should check if Orchestra Platform should allow user registration
-
 		$user = new User;
 		$form = AccountPresenter::form($user, handles('orchestra::register'));
 		
@@ -154,14 +162,6 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 			});
 
 			$form->token = true;
-
-			$form->fieldset(function ($fieldset)
-			{
-				$fieldset->control('input:password', 'password', function($control)
-				{
-					$control->label = __('orchestra::label.users.password');
-				});
-			});
 		});
 		
 		return View::make('orchestra::credential.register', array(
@@ -180,20 +180,20 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 	 */
 	public function post_register()
 	{
-		$input = Input::all();
-		$rules = array(
+		$input    = Input::all();
+		$password = Str::random(5);
+		$rules    = array(
 			'email'    => array('required', 'email', 'unique:users,email'),
 			'fullname' => array('required'),
-			'password' => array('required'),
 		);
 
 		Event::fire('orchestra.validate: user.account', array(& $rules));
 	
-		$msg = new Messages;
+		$msg  = new Messages;
 		$val = Validator::make($input, $rules);
 	
-		// Validate user login, if any errors is found redirect it back to
-		// login page with the errors
+		// Validate user registration, if any errors is found redirect it 
+		// back to registration page with the errors
 		if ($val->fails())
 		{
 			return Redirect::to(handles('orchestra::register'))
@@ -204,7 +204,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		$user = new User(array(
 			'email'    => $input['email'],
 			'fullname' => $input['fullname'],
-			'password' => $input['password'],
+			'password' => $password,
 		));
 
 		try
@@ -235,9 +235,38 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 					->with('message', $msg->serialize());
 		}
 
+		return $this->send_email($user, $password, $msg);
+	}
+
+	protected function send_email(User $user, $password, Messages $msg)
+	{
+
+		$site     = Orchestra\Core::memory()->get('site.name', 'Orchestra');
+		$data     = array(
+			'password' => $password,
+			'user'     => $user,
+			'site'     => $site,
+		);
+
+		$mailer = Mail::send('orchestra::email.credential.register', $data,
+			function ($mail) use ($data, $user, $site)
+			{
+				$mail->subject(__('orchestra::email.credential.register', compact('site'))->get())
+					->to($user->email, $user->fullname)
+					->send();
+			});
+
+		if( ! $mailer->was_sent($user->email))
+		{
+			$msg->add('error', __('orchestra::response.credential.register.email-fail'));
+		}
+		else
+		{
+			$msg->add('success', __('orchestra::response.credential.register.email-send'));
+		}
+
 		return Redirect::to(handles('orchestra::login'))
 				->with('message', $msg->serialize());
-		
 	}
 
 	/**

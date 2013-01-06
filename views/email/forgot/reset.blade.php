@@ -1,4 +1,4 @@
-<p>Password has been reset for {{ $fullname }}</p>
+<p>Password has been reset for {{ $user->fullname }}</p>
 
 <p>Please login with your temporary password: {{ $password }}</p>
 

@@ -83,7 +83,10 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 			$response->foundation->headers->get('location'));
 
 		$this->assertTrue(Auth::check());
-		$this->assertEquals(Auth::user(), Orchestra\Model\User::find(1));
+		
+		$auth = Auth::user();
+		$this->assertEquals('example@test.com', $auth->email);
+
 		$this->assertEquals('foobar', $_SERVER['orchestra.auth.login']);
 	}
 

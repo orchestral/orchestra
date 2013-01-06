@@ -17,6 +17,11 @@ return array(
 		'logged-in'           => 'Вы успешно вошли',
 		'logged-out'          => 'Вы успешно вышли',
 		'unauthorized'        => 'You are not authorized to access this action',
+		'register'            => array(
+			'email-fail'    => 'Unable to send User Registration Confirmation E-mail',
+			'email-send'    => 'User Registration Confirmation E-mail has been sent, please check your inbox',
+			'existing-user' => 'This e-mail address is already associated with another user',
+		),
 	),
 
 	'db-failed' => 'Невозможно сохранить в базу данных',
@@ -32,8 +37,8 @@ return array(
 	),
 
 	'forgot' => array(
-		'fail' => 'Невозможно отправить письмо с данными для восстановления',
-		'send' => 'Данные для восстановления были высланы, проверьте входящие',
+		'email-fail' => 'Невозможно отправить письмо с данными для восстановления',
+		'email-send' => 'Данные для восстановления были высланы, проверьте входящие',
 	),
 
 	'settings' => array(
