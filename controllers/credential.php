@@ -253,8 +253,8 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 	protected function send_email(User $user, $password, Messages $msg)
 	{
 
-		$site     = Orchestra\Core::memory()->get('site.name', 'Orchestra');
-		$data     = array(
+		$site = Orchestra\Core::memory()->get('site.name', 'Orchestra');
+		$data = array(
 			'password' => $password,
 			'user'     => $user,
 			'site'     => $site,
