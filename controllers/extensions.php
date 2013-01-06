@@ -183,28 +183,6 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 					});
 				}
 
-				if ($name !== DEFAULT_BUNDLE)
-				{
-					/*
-					@todo this require more testing, can't seem to get it
-					to work in some environment.
-					$fieldset->control('select', 'web_upgrade', function ($control) use ($handles)
-					{
-						$control->value = function ($row)
-						{
-							return ($row->web_upgrade ? 'yes' : 'no');
-						};
-
-						$control->label = 'Upgrade via Web';
-						$control->attr = array('role' => 'switcher');
-						$control->options = array(
-							'yes' => 'Yes',
-							'no'  => 'No',
-						);
-					});
-					 */
-				}
-
 				$fieldset->control('input:text', 'migrate', function ($control) use ($handles, $name)
 				{
 					$control->label = __('orchestra::label.extensions.update');
@@ -262,13 +240,6 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 			$loader['handles'] = $input['handles'];
 		}
 
-		// Configure whether extension should be able to be upgraded via web.
-		if (isset($input['web_upgrade']) and ! empty($input['web_upgrade']))
-		{
-			$input['web_upgrade']  = ('yes' === $input['web_upgrade'] ? true : false);
-			$loader['web_upgrade'] = $input['web_upgrade'];
-		}
-
 		$memory->put("extensions.active.{$name}", $loader);
 
 		// In any event where extension need to do some custom handling.
@@ -282,43 +253,6 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 		return Redirect::to(handles('orchestra::extensions'))
 			->with('message', $msg->serialize());
-	}
-
-	/**
-	 * Upgrade an extension
-	 *
-	 * GET (:bundle)/extensions/upgrade/(:name)
-	 *
-	 * @access public
-	 * @param  string   $name name of the extension
-	 * @return Response
-	 */
-	public function get_upgrade($name)
-	{
-		// we should only be able to upgrade extension which is already
-		// started
-		if ( ! Extension::started($name) or $name === DEFAULT_BUNDLE)
-		{
-			return Response::error('404');
-		}
-
-		// we shouldn't upgrade extension which is not allowed to upgrade
-		// using web
-		if (false === Extension::option($name, 'web_upgrade'))
-		{
-			return Response::error('404');
-		}
-
-		$msg = new Messages;
-
-		IoC::resolve('task: orchestra.upgrader', array(array($name)));
-
-		Extension::publish($name);
-
-		$msg->add('success', __('orchestra::response.extensions.upgrade', compact('name')));
-
-		return Redirect::to(handles('orchestra::extensions'))
-				->with('message', $msg->serialize());
 	}
 
 	/**

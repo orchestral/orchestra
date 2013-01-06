@@ -21,7 +21,6 @@ return array(
 			'activate'   => 'Activate',
 			'deactivate' => 'Deactivate',
 			'update'     => 'Migrate and Publish',
-			'upgrade'    => 'Upgrade',
 		),
 		
 		'publisher' => array(
