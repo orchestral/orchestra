@@ -21,3 +21,6 @@
 - Love Laravel 4 new Mail class, We have it too.
 - Allow Memory instance to be defined from IoC, callable through `IoC::resolve('orchestra.memory')`.
 - Easy to use @placeholder with Blade templating.
+- Move `Orchestra\Table` and `Orchestra\Form` usage to presenters.
+- Allow user registration on Orchestra Platform.
+- Add `Orchestra\Installer\Requirement` class, optimize installer controller.
