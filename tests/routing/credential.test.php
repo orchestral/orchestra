@@ -88,11 +88,12 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test Request POST (orchestra)/credential/login
+	 * Test Request POST (orchestra)/credential/login failed when authentication
+	 * is invalid.
 	 * 
 	 * @test
 	 */
-	public function testPostLoginPageWithInvalidResponse()
+	public function testPostLoginPageWithInvalidAuthentication()
 	{
 		$response = $this->call('orchestra::credential@login', array(), 'POST', array(
 			'username'          => 'example@test.com',
@@ -139,6 +140,8 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testGetRegisterPage()
 	{
+		Orchestra\Core::memory()->put('site.users.registration', true);
+
 		$response = $this->call('orchestra::credential@register', array());
 
 		$this->assertInstanceOf('Laravel\Response', $response);
@@ -153,6 +156,8 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testPostRegisterPageFailedWithoutCsrf()
 	{
+		Orchestra\Core::memory()->put('site.users.registration', true);
+		
 		$response = $this->call('orchestra::credential@register', array(), 'POST', array(
 			'email'    => 'foobar@register-test.com',
 			'password' => '123456',
@@ -173,6 +178,8 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testPostRegisterPage()
 	{
+		Orchestra\Core::memory()->put('site.users.registration', true);
+		
 		$response = $this->call('orchestra::credential@register', array(), 'POST', array(
 			'email'             => 'foobar@register-test.com',
 			'password'          => '123456',
