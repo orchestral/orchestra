@@ -105,23 +105,23 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 		);
 
 		$mailer = Mail::send('orchestra::email.forgot.request', $data,
-			function ($mail) use ($data, $user)
+			function ($mail) use ($data, $user, $site)
 			{
-				$mail->subject(__('orchestra::email.forgot.subject', $data)->get())
+				$mail->subject(__('orchestra::email.forgot.request', compact('site'))->get())
 					->to($user->email, $user->fullname)
 					->send();
 			});
 
 		if( ! $mailer->was_sent($user->email))
 		{
-			$msg->add('error', __('orchestra::response.forgot.fail'));
+			$msg->add('error', __('orchestra::response.forgot.email-fail'));
 		}
 		else
 		{
 			$meta->value = $hash;
 			$meta->save();
 
-			$msg->add('success', __('orchestra::response.forgot.send'));
+			$msg->add('success', __('orchestra::response.forgot.email-send'));
 		}
 
 		return Redirect::to(handles('orchestra::forgot'))
@@ -167,16 +167,16 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 		);
 
 		$mailer = Mail::send('orchestra::email.forgot.reset', $data,
-			function ($mail) use ($data, $user)
+			function ($mail) use ($data, $user, $site)
 			{
-				$mail->subject(__('orchestra::email.reset.subject', $data)->get())
+				$mail->subject(__('orchestra::email.forgot.reset', compact('site'))->get())
 					->to($user->email, $user->fullname)
 					->send();
 			});
 
 		if( ! $mailer->was_sent($user->email))
 		{
-			$msg->add('error', __('orchestra::response.forgot.fail'));
+			$msg->add('error', __('orchestra::response.forgot.email-fail'));
 		}
 		else
 		{
@@ -186,7 +186,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 			$user->password = $password;
 			$user->save();
 
-			$msg->add('success', __('orchestra::response.forgot.send'));
+			$msg->add('success', __('orchestra::response.forgot.email-send'));
 		}
 
 		return Redirect::to(handles('orchestra::login'))

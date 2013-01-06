@@ -6,6 +6,12 @@ use \Eloquent,
 class User extends Eloquent {
 
 	/**
+	 * Available user statuses.
+	 */
+	const UNVERIFIED = 0;
+	const VERIFIED   = 1;
+
+	/**
 	 * Has Many relationship to `user_meta` table.
 	 *
 	 * @access public

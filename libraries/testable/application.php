@@ -21,6 +21,11 @@ class Application {
 	 */
 	public function __construct()
 	{
+		IoC::register('orchestra.mailer', function ($from = true)
+		{
+			return Mailer::instance();
+		});
+
 		Config::set('database.default', 'testdb');
 		Event::first('orchestra.testable: setup-db');
 		O\Installer::$status = false;

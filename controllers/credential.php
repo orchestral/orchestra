@@ -1,6 +1,7 @@
 <?php
 
-use Orchestra\Messages,
+use Orchestra\Mail,
+	Orchestra\Messages,
 	Orchestra\View,
 	Orchestra\Model\User,
 	Orchestra\Presenter\Account as AccountPresenter;
@@ -93,6 +94,15 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		// We should now attempt to login the user using Auth class.
 		if (Auth::attempt($attempt))
 		{
+			$user = Auth::user();
+
+			// Verify the user account if has not been verified.
+			if ((int) $user->status === User::UNVERIFIED)
+			{
+				$user->status = User::VERIFIED;
+				$user->save();
+			}
+
 			Event::fire(array('orchestra.logged.in', 'orchestra.auth: login'));
 
 			$msg->add('success', __('orchestra::response.credential.logged-in'));
@@ -141,8 +151,6 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 	 */
 	public function get_register()
 	{
-		// @TODO should check if Orchestra Platform should allow user registration
-
 		$user = new User;
 		$form = AccountPresenter::form($user, handles('orchestra::register'));
 		
@@ -175,13 +183,13 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		$input    = Input::all();
 		$password = Str::random(5);
 		$rules    = array(
-			'email'    => array('required', 'email'),
-			'password' => array('required'),
+			'email'    => array('required', 'email', 'unique:users,email'),
+			'fullname' => array('required'),
 		);
 
 		Event::fire('orchestra.validate: user.account', array(& $rules));
 	
-		$msg = new Messages;
+		$msg  = new Messages;
 		$val = Validator::make($input, $rules);
 	
 		// Validate user registration, if any errors is found redirect it 
@@ -193,49 +201,72 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 					->with_errors($val);
 		}
 
-		$user = User::where_email($input['email'])
-					->first();
+		$user = new User(array(
+			'email'    => $input['email'],
+			'fullname' => $input['fullname'],
+			'password' => $password,
+		));
 
-		if (is_null($user))
+		try
 		{
-			$user = new User(array(
-				'email'    => $input['email'],
-				'fullname' => $password,
-				'password' => $input['password'],
-			));
+			$this->fire_event('creating', $user);
+			$this->fire_event('saving', $user);
 
-			try
+			DB::transaction(function () use ($user)
 			{
-				$this->fire_event('creating', $user);
-				$this->fire_event('saving', $user);
+				$user->save();
+				$user->roles()->sync(array(
+					Config::get('orchestra::orchestra.member_role', 2)
+				));
+			});
 
-				DB::transaction(function () use ($user)
-				{
-					$user->save();
-					$user->roles()->sync(array(
-						Config::get('orchestra::orchestra.member_role', 2)
-					));
-				});
+			$this->fire_event('created', $user);
+			$this->fire_event('saved', $user);
 
-				$this->fire_event('created', $user);
-				$this->fire_event('saved', $user);
+			$msg->add('success', __("orchestra::response.users.create"));
+		}
+		catch (Exception $e)
+		{
+			$msg->add('error', __('orchestra::response.db-failed', array(
+				'error' => $e->getMessage(),
+			)));
+			
+			return Redirect::to(handles('orchestra::register'))
+					->with('message', $msg->serialize());
+		}
 
-				$msg->add('success', __("orchestra::response.users.create"));
-			}
-			catch (Exception $e)
+		return $this->send_email($user, $password, $msg);
+	}
+
+	protected function send_email(User $user, $password, Messages $msg)
+	{
+
+		$site     = Orchestra\Core::memory()->get('site.name', 'Orchestra');
+		$data     = array(
+			'password' => $password,
+			'user'     => $user,
+			'site'     => $site,
+		);
+
+		$mailer = Mail::send('orchestra::email.credential.register', $data,
+			function ($mail) use ($data, $user, $site)
 			{
-				$msg->add('error', __('orchestra::response.db-failed', array(
-					'error' => $e->getMessage(),
-				)));
-				
-				return Redirect::to(handles('orchestra::register'))
-						->with('message', $msg->serialize());
-			}
+				$mail->subject(__('orchestra::email.credential.register', compact('site'))->get())
+					->to($user->email, $user->fullname)
+					->send();
+			});
+
+		if( ! $mailer->was_sent($user->email))
+		{
+			$msg->add('error', __('orchestra::response.credential.register.email-fail'));
+		}
+		else
+		{
+			$msg->add('success', __('orchestra::response.credential.register.email-send'));
 		}
 
 		return Redirect::to(handles('orchestra::login'))
 				->with('message', $msg->serialize());
-		
 	}
 
 	/**
