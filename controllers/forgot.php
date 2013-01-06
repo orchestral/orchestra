@@ -99,9 +99,9 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 		$url    = handles('orchestra::forgot/reset/'.$user->id.'/'.$hash);
 		$site   = $memory->get('site.name', 'Orchestra');
 		$data   = array(
-			'fullname' => $user->fullname,
-			'url'      => $url,
-			'site'     => $site,
+			'user' => $user,
+			'url'  => $url,
+			'site' => $site,
 		);
 
 		$mailer = Mail::send('orchestra::email.forgot.request', $data,
@@ -161,8 +161,8 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 		$password = Str::random(5);
 		$site     = $memory->get('site.name', 'Orchestra');
 		$data     = array(
-			'fullname' => $user->fullname,
 			'password' => $password,
+			'user'     => $user,
 			'site'     => $site,
 		);
 
