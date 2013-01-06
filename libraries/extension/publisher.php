@@ -123,7 +123,7 @@ class Publisher {
 	 * @param  Messages $msg 
 	 * @return Messages
 	 */
-	public static function execute(Messages $msg)
+	public static function execute(& Messages $msg)
 	{
 		$queue = static::queued();
 
