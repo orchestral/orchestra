@@ -90,7 +90,10 @@ class Orchestra_Publisher_Controller extends Controller {
 
 		if (Publisher::connected())
 		{
-			return Publisher::execute();
+			Publisher::execute(& $msg);
 		}
+
+		return Redirect::to(handles('orchestra::publisher/ftp'))
+				->with('message', $msg->serialize());
 	}
 }

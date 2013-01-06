@@ -75,6 +75,8 @@ class Publisher {
 	/**
 	 * Register a third-party publisher driver.
 	 *
+	 * @static
+	 * @access public
 	 * @param  string   $driver
 	 * @param  Closure  $resolver
 	 * @return void
@@ -87,6 +89,7 @@ class Publisher {
 	/**
 	 * Add a process to be queue.
 	 *
+	 * @static
 	 * @access public
 	 * @param  string   $queue
 	 * @return bool
@@ -103,6 +106,7 @@ class Publisher {
 	/**
 	 * Get a current queue.
 	 *
+	 * @static
 	 * @access public
 	 * @return array
 	 */
@@ -114,12 +118,14 @@ class Publisher {
 	/**
 	 * Execute the queue.
 	 * 
-	 * @return void
+	 * @static
+	 * @access public
+	 * @param  Messages $msg 
+	 * @return Messages
 	 */
-	public static function execute()
+	public static function execute(Messages $msg)
 	{
 		$queue = static::queued();
-		$m     = new Messages;
 
 		foreach ($queue as $name)
 		{
@@ -127,21 +133,20 @@ class Publisher {
 			{
 				static::upload($name);
 				
-				$m->add('success', __('orchestra::response.extensions.activate', array(
+				$msg->add('success', __('orchestra::response.extensions.activate', array(
 					'name' => $name,
 				)));
 			}
 			catch (Exception $e)
 			{
 				// this could be anything.
-				$m->add('error', $e->getMessage());
+				$msg->add('error', $e->getMessage());
 			}
 		}
 
 		Session::forget('orchestra.publisher.queue');
 
-		return Redirect::to(handles('orchestra::extensions'))
-				->with('message', $m->serialize());
+		return $msg;
 	}
 
 	/**
