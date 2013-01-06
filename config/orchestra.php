@@ -23,4 +23,5 @@ return array(
 	*/
 
 	'member_role' => 2,
+
 );

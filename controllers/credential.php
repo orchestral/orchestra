@@ -29,6 +29,9 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		$this->filter('before', 'orchestra::not-auth')
 			->only(array('login', 'register'));
 
+		$this->filter('before', 'orchestra::allow-registration')
+			->only(array('register'));
+
 		$this->filter('before', 'orchestra::csrf')
 			->only(array('login', 'register'))
 			->on(array('post'));
@@ -50,7 +53,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		return View::make('orchestra::credential.login', compact(
 			'redirect',
 			'username_types'
-		));
+		))->with('_title_', __('orchestra::title.login'));
 	}
 	
 	/**
@@ -151,12 +154,20 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 			});
 
 			$form->token = true;
+
+			$form->fieldset(function ($fieldset)
+			{
+				$fieldset->control('input:password', 'password', function($control)
+				{
+					$control->label = __('orchestra::label.users.password');
+				});
+			});
 		});
 		
 		return View::make('orchestra::credential.register', array(
 			'eloquent' => $user,
 			'form'     => $form,
-		));
+		))->with('_title_', __('orchestra::title.register'));
 	}
 
 	/**
@@ -172,6 +183,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		$input = Input::all();
 		$rules = array(
 			'email'    => array('required', 'email', 'unique:users,email'),
+			'fullname' => array('required'),
 			'password' => array('required'),
 		);
 
@@ -191,7 +203,8 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 
 		$user = new User(array(
 			'email'    => $input['email'],
-			'password' => $input['password'] ?: '',
+			'fullname' => $input['fullname'],
+			'password' => $input['password'],
 		));
 
 		try

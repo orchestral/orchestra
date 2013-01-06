@@ -41,7 +41,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 		$settings = new Fluent(array(
 			'site_name'              => $memory->get('site.name', ''),
 			'site_description'       => $memory->get('site.description', ''),
-			'site_web_upgrade'       => false,
+			'site_user_registration' => ($memory->get('site.users.registration', false) ? 'yes' : 'no'),
 
 			'email_default'          => $memory->get('email.default', ''),
 			'email_smtp_host'        => $memory->get('email.transports.smtp.host', ''),
@@ -97,7 +97,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 
 		$memory->put('site.name', $input['site_name']);
 		$memory->put('site.description', $input['site_description']);
-		$memory->put('site.web_upgrade', false);
+		$memory->put('site.users.registration', ($input['site_user_registration'] === 'yes'));
 		$memory->put('email.default', $input['email_default']);
 
 		if ((empty($input['email_smtp_password']) and $input['stmp_change_password'] === 'no'))
@@ -115,36 +115,6 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 		Event::fire('orchestra.saved: settings', array($memory, $input));
 
 		$msg = Messages::make('success', __('orchestra::response.settings.update'));
-
-		return Redirect::to(handles('orchestra::settings'))
-				->with('message', $msg->serialize());
-	}
-
-	/**
-	 * Upgrade Orchestra and it's dependencies.
-	 *
-	 * GET (:bundle)/settings/upgrade
-	 *
-	 * @access public
-	 * @return Response
-	 */
-	public function get_upgrade()
-	{
-		$memory      = Core::memory();
-		$msg         = new Messages;
-		$web_upgrade = (bool) $memory->get('site.web_upgrade', false);
-
-		if (false === $web_upgrade) return Response::error('404');
-
-		IoC::resolve('task: orchestra.upgrader', array(array(
-			'orchestra',
-			'hybrid',
-			'messages',
-		)));
-
-		Extension::publish('orchestra');
-
-		$msg->add('success', __('orchestra::response.settings.upgrade'));
 
 		return Redirect::to(handles('orchestra::settings'))
 				->with('message', $msg->serialize());

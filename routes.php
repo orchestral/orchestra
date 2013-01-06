@@ -124,6 +124,17 @@ Route::filter('orchestra::manage', function ()
 	}
 });
 
+Route::filter('orchestra::allow-registration', function ()
+{
+	$memory = Orchestra\Core::memory();
+
+	// Return 404 if registration is not enabled.
+	if ( ! $memory->get('site.users.registration', false)) 
+	{
+		return Response::error('404');
+	}
+});
+
 Route::filter('orchestra::installed', function ()
 {
 	// we should run installer when the system detect it's already running

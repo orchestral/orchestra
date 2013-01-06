@@ -6,11 +6,18 @@
 
 	<div class="span6 offset3">
 
+		<div class="page-header">
+			<h3>{{ ! empty($_title_) ? $_title_ : 'Something Awesome Without A Name' }}
+				@if ( ! empty($_description_))
+				<small>{{ $_description_ ?: '' }}</small>
+				@endif
+			</h3>
+		</div>
+
 		{{ Form::open(handles('orchestra::login'), 'POST', array('class' => 'form-horizontal')) }}
 			{{ Form::hidden('redirect', $redirect) }}
 			{{ Form::token() }}
 			<fieldset>
-				<legend>{{ __('orchestra::title.login') }}</legend>
 
 				<div class="control-group {{ $errors->has('username') ? 'error' : '' }}">
 					{{ Form::label('username', __("orchestra::label.users.{$username_types}"), array('class' => 'control-label')) }}
@@ -43,7 +50,9 @@
 
 			<div class="form-actions clean">
 				<button type="submit" class="btn btn-primary">{{ __('orchestra::title.login') }}</button>
-				{{ HTML::link(handles('orchestra::register'), __('orchestra::title.register')) }}
+				@if(memorize('site.users.registration', false))
+				{{ HTML::link(handles('orchestra::register'), __('orchestra::title.register'), array('class' => 'btn')) }}
+				@endif
 			</div>
 
 			
