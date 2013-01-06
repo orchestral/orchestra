@@ -4,12 +4,19 @@
 
 <div class="row-fluid">
 
-	<div class="span6 offset3">
+	<div class="span6 offset3 guest-form">
+		
+		<div class="page-header">
+			<h3>{{ ! empty($_title_) ? $_title_ : 'Something Awesome Without A Name' }}
+				@if ( ! empty($_description_))
+				<small>{{ $_description_ ?: '' }}</small>
+				@endif
+			</h3>
+		</div>
 
 		{{ Form::open(handles('orchestra::forgot'), 'POST', array('class' => 'form-horizontal')) }}
 			{{ Form::token() }}
 			<fieldset>
-				<legend>{{ __('orchestra::title.forgot-password') }}</legend>
 
 				<div class="control-group {{ $errors->has('email') ? 'error' : '' }}">
 					{{ Form::label('email', __('orchestra::label.users.email'), array('class' => 'control-label')) }}
@@ -21,8 +28,8 @@
 
 			</fieldset>
 
-			<div class="form-actions clean">
-				<button type="submit" class="btn btn-primary">Submit</button>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">{{ $_title_ }}</button>
 			</div>
 
 		{{ Form::close() }}

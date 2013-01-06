@@ -4,7 +4,7 @@
 
 <div class="row-fluid">
 
-	<div class="span6 offset3">
+	<div class="span6 offset3 guest-form">
 
 		<div class="page-header">
 			<h3>{{ ! empty($_title_) ? $_title_ : 'Something Awesome Without A Name' }}
@@ -48,7 +48,7 @@
 
 			</fieldset>
 
-			<div class="form-actions clean">
+			<div class="form-actions">
 				<button type="submit" class="btn btn-primary">{{ __('orchestra::title.login') }}</button>
 				@if(memorize('site.users.registration', false))
 				{{ HTML::link(handles('orchestra::register'), __('orchestra::title.register'), array('class' => 'btn')) }}

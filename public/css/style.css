@@ -4,7 +4,7 @@
 .input-block-level{display:block;width:100%;min-height:30px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 body{background:url('../img/bg.png');}
 section.container,section.container-fluid{padding-top:45px;}
-.form-actions.clean{background-color:transparent;border:0px;}
+.guest-form .form-actions{background-color:transparent;}
 .nav>.dropdown.active>a:hover{color:#333;}
 .navbar.navbar-fixed-top .brand{color:#333;font-weight:bold;height:28px;}
 .navbar .nav>li>a{color:#666;}.navbar .nav>li>a:hover{color:#333;}

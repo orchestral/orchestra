@@ -4,7 +4,7 @@
 
 <div class="row-fluid">
 
-	<div class="span6 offset3">
+	<div class="span6 offset3 guest-form">
 
 		<div class="page-header">
 			<h3>{{ ! empty($_title_) ? $_title_ : 'Something Awesome Without A Name' }}

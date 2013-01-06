@@ -37,7 +37,8 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 	 */
 	public function get_index()
 	{
-		return View::make('orchestra::forgot.index');
+		return View::make('orchestra::forgot.index')
+				->with('_title_', __('orchestra::title.forgot-password'));
 	}
 
 	/**

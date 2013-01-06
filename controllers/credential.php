@@ -151,11 +151,14 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 	 */
 	public function get_register()
 	{
-		$user = new User;
-		$form = AccountPresenter::form($user, handles('orchestra::register'));
+		$user  = new User;
+		$title = 'orchestra::title.register';
+		$form  = AccountPresenter::form($user, handles('orchestra::register'));
 		
-		$form->extend(function ($form)
+		$form->extend(function ($form) use ($title)
 		{
+			$form->submit_button = $title;
+
 			$form->hidden('redirect', function ($field)
 			{
 				$field->value = handles('orchestra::login');
@@ -167,7 +170,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		return View::make('orchestra::credential.register', array(
 			'eloquent' => $user,
 			'form'     => $form,
-		))->with('_title_', __('orchestra::title.register'));
+		))->with('_title_', __($title));
 	}
 
 	/**
