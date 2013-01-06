@@ -29,7 +29,6 @@ return array(
 
 	'settings' => array(
 		'list'    => 'Settings',
-		'upgrade' => 'Upgrade Orchestra',
 	),
 
 	'users' => array(

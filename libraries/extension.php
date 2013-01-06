@@ -30,9 +30,8 @@ class Extension {
 	public static function start($name, $config = array())
 	{
 		$default = array(
-			'handles'     => null,
-			'auto'        => false,
-			'web_upgrade' => false,
+			'handles' => null,
+			'auto'    => false,
 		);
 
 		$name   = $name ?: null;

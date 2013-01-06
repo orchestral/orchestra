@@ -27,7 +27,6 @@ return array(
 		'deactivate'       => 'Расширение :name деактивировано',
 		'configure'        => 'Настройки для расширения :name обновлены',
 		'update'           => 'Extension :name has been updated',
-		'upgrade'          => 'Extension :name has been upgraded',
 		'depends-on'       => 'Extension :name was not activated because depends on :dependencies',
 		'other-depends-on' => 'Extension :name was not deactivated because :dependencies depends on it',
 	),
@@ -39,7 +38,6 @@ return array(
 
 	'settings' => array(
 		'update' => 'Настройки приложения были обновлены',
-		'upgrade' => 'Application has been upgraded',
 	),
 
 	'users' => array(

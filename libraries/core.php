@@ -293,13 +293,6 @@ class Core {
 				$menu->add('settings')
 					->title(__('orchestra::title.settings.list')->get())
 					->link(handles('orchestra::settings'));
-
-				if ($memory->get('site.web_upgrade', false))
-				{
-					$menu->add('settings', 'child_of:settings')
-						->title(__('orchestra::title.settings.upgrade')->get())
-						->link(handles('orchestra::settings/upgrade'));
-				}
 			}
 
 			// If user aren't logged in, we should stop at this point,
