@@ -15,11 +15,19 @@ class Mailer {
 		return new static();
 	}
 
+	public function subject($text) {}
+
 	public function body($text) {}
 
 	public function html($use_html) {}
 
-	public function subject($text) {}
+	public function from($email, $name) {}
+
+	public function to($email, $name) {}
+
+	public function cc($email, $name) {}
+
+	public function bcc($email, $name) {}
 
 	public function send() 
 	{
