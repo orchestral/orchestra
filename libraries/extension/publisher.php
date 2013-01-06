@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Extension;
 
-use \Redirect,
+use \InvalidArgumentException,
+	\Redirect,
 	\Session, 
 	Orchestra\Core,
 	Orchestra\Messages;
@@ -123,8 +124,14 @@ class Publisher {
 	 * @param  Messages $msg 
 	 * @return Messages
 	 */
-	public static function execute(& Messages $msg)
+	public static function execute(& $msg)
 	{
+		if ( ! $msg instanceof Messages)
+		{
+			throw new InvalidArgumentException(
+				'Invalid argument, expect to be instanceof Orchestra\Messages'
+			);
+		}
 		$queue = static::queued();
 
 		foreach ($queue as $name)
