@@ -15,19 +15,40 @@ class Mailer {
 		return new static();
 	}
 
-	public function subject($text) {}
+	public function subject($text) 
+	{
+		return $this;
+	}
 
-	public function body($text) {}
+	public function body($text) 
+	{
+		return $this;
+	}
 
-	public function html($use_html) {}
+	public function html($use_html) 
+	{
+		return $this;
+	}
 
-	public function from($email, $name) {}
+	public function from($email, $name) 
+	{
+		return $this;
+	}
 
-	public function to($email, $name) {}
+	public function to($email, $name) 
+	{
+		return $this;
+	}
 
-	public function cc($email, $name) {}
+	public function cc($email, $name) 
+	{
+		return $this;
+	}
 
-	public function bcc($email, $name) {}
+	public function bcc($email, $name) 
+	{
+		return $this;
+	}
 
 	public function send() 
 	{
