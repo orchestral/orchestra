@@ -91,6 +91,6 @@ class Requirement {
 	 */
 	public function installable()
 	{
-		return $this->installable();
+		return $this->installable;
 	}
 }
