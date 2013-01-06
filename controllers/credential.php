@@ -238,6 +238,15 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		return $this->send_email($user, $password, $msg);
 	}
 
+	/**
+	 * Send new registration e-mail to user.
+	 *
+	 * @access protected
+	 * @param  User     $user
+	 * @param  string   $password
+	 * @param  Messages $msg
+	 * @return Response
+	 */
 	protected function send_email(User $user, $password, Messages $msg)
 	{
 
