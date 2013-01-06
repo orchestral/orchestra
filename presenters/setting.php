@@ -29,10 +29,23 @@ class Setting {
 				{
 					$control->label = __('orchestra::label.name');
 				});
+
 				$fieldset->control('textarea', 'site_description', function ($control)
 				{
 					$control->label = __('orchestra::label.description');
 					$control->attr  = array('rows' => 3);
+				});
+
+				$fieldset->control('select', 'site_user_registration', function ($control)
+				{
+					$control->label   = __('orchestra::label.settings.user-registration');
+					$control->attr    = array(
+						'role' => 'switcher',
+					);
+					$control->options = array(
+						'yes' => 'Yes',
+						'no'  => 'No',
+					);
 				});
 			});
 

@@ -46,6 +46,10 @@ return array(
 		'keyword' => 'Поиск...',
 	),
 
+	'settings' => array(
+		'user-registration' => 'Allow User Registration',
+	),
+
 	'email' => array(
 		'transport'       => 'E-mail Transport',
 		'host'            => 'SMTP Host',
