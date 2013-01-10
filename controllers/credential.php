@@ -151,7 +151,15 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 	 */
 	public function get_register()
 	{
-		$user  = new User;
+		if ( ! IoC::registered('orchestra.user: register'))
+		{
+			IoC::register('orchestra.user: register', function ()
+			{
+				return new User;
+			});
+		}
+
+		$user  = IoC::resolve('orchestra.user: register');
 		$title = 'orchestra::title.register';
 		$form  = AccountPresenter::form($user, handles('orchestra::register'));
 		
