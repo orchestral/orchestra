@@ -108,8 +108,32 @@ class RoutingForgotTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testGetResetPasswordPage()
 	{
-		$this->markTestIncomplete(
-			"This would require Mockery library to be installed."
-		);
+		$response = $this->call('orchestra::forgot@index', array(), 'POST', array(
+			'email'             => 'example@test.com',
+			Session::csrf_token => Session::token(),
+		));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::forgot'), 
+			$response->foundation->headers->get('location'));
+
+		$meta = Orchestra\Model\User\Meta::where('user_id', '=', 1)
+					->where('name', '=', 'reset_password_hash')
+					->first();
+
+		$this->assertNotNull($meta);
+		$this->assertNotNull($meta->value);
+
+		$response = $this->call('orchestra::forgot@reset', array(1, $meta->value));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::login'), 
+			$response->foundation->headers->get('location'));
+
+		$user = Orchestra\Model\User::find(1);
+
+		$this->assertFalse(Hash::check('123456', $user->password));
 	}
 }
