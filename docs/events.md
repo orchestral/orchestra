@@ -31,18 +31,22 @@ Listed below are all the possible events that can be used with Orchestra Platfor
 	- orchestra.creating: users
 	- orchestra.updating: users
 	- orchestra.deleting: users
+	- orchestra.saving: users
 	- orchestra.created: users
 	- orchestra.updated: users
 	- orchestra.deleted: users
+	- orchestra.saved: users
 - User Account Events
 	- orchestra.form: user.account
 	- orchestra.validate: user.account
 	- orchestra.creating: user.account
 	- orchestra.updating: user.account
 	- orchestra.deleting: user.account
+	- orchestra.saving: user.account
 	- orchestra.created: user.account
 	- orchestra.updated: user.account
 	- orchestra.deleted: user.account
+	- orchestra.saved: user.account
 - Setting Events
 	- orchestra.form: settings
 	- orchestra.validate: settings
