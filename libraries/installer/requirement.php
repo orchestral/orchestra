@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Installer;
 
-use Orchestra\HTML;
+use RuntimeException,
+	Orchestra\HTML;
 
 class Requirement {
 
