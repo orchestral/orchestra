@@ -63,7 +63,7 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	 * 
 	 * @test
 	 */
-	public function testPostLoginPage()
+	public function testPostLoginPageIsSuccessful()
 	{
 		Event::listen('orchestra.auth: login', function ()
 		{
@@ -176,11 +176,11 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test Request POST (orchestra)/credential/login
+	 * Test Request POST (orchestra)/credential/register
 	 * 
 	 * @test
 	 */
-	public function testPostRegisterPage()
+	public function testPostRegisterPageIsSuccessful()
 	{
 		Orchestra\Core::memory()->put('site.users.registration', true);
 		

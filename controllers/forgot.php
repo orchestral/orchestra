@@ -83,7 +83,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 					->with('message', $msg->serialize());
 		}
 
-		$meta   = User_Meta::where('user_id', '=', $user->id)
+		$meta = User_Meta::where('user_id', '=', $user->id)
 					->where('name', '=', 'reset_password_hash')
 					->first();
 
