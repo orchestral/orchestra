@@ -12,6 +12,16 @@ class HelpersTest extends Orchestra\Testable\TestCase {
 		URL::$base = null;
 		
 		parent::setUp();
+
+		set_path('public', Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS);
+	}
+
+	/**
+	 * Teardown the test environment.
+	 */
+	public function tearDown()
+	{
+		set_path('public', path('base').'public'.DS);
 	}
 
 	/**
