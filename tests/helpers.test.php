@@ -39,6 +39,8 @@ class HelpersTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testLocateReturnProperViewPath()
 	{
-		$this->markTestIncomplete('Not completed.');
+		$view1 = locate('path: /path/to/somewhere');
+
+		$this->assertEquals('path: /path/to/somewhere', $view1);
 	}
 }
