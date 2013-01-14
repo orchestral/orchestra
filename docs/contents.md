@@ -7,6 +7,7 @@
 	- [Server Requirement](/bundocs/orchestra/install#requirement)
 * [Helpers](/bundocs/orchestra/helpers)
 * [Mail](/bundocs/orchestra/mail)
+* [Role Based Access Control](/bundocs/orchestra/rbac)
 
 ### Extension
 * [Overviews](/bundocs/orchestra/extensions)
