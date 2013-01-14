@@ -64,20 +64,34 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 	/**
 	 * Test extension unable to be activated when unresolved dependencies.
 	 *
-	 * @test
+	 * @expectedException Extension\UnresolvedException
 	 */
 	public function testActivateExtensionFailedWhenUnresolvedDependencies()
 	{
-		$this->markTestIncomplete('Not completed.');
+		$this->restartApplication();
+
+		Orchestra\Extension::detect();
+		Orchestra\Extension::activate('a');
 	}
 
 	/**
 	 * Test extension unable to be deactivated when unresolved dependencies.
 	 *
-	 * @test
+	 * @expectedException Extension\UnresolvedException
 	 */
 	public function testDeactivateExtensionFailedWhenUnresolvedDependencies()
 	{
-		$this->markTestIncomplete('Not completed.');
+		$this->restartApplication();
+
+		Orchestra\Extension::detect();
+		Orchestra\Extension::activate('b');
+		Orchestra\Extension::activate('a');	
+
+		$this->assertTrue(Orchestra\Extension::started('a'));
+		$this->assertTrue(Orchestra\Extension::activated('a'));
+		$this->assertTrue(Orchestra\Extension::started('b'));
+		$this->assertTrue(Orchestra\Extension::activated('b'));
+
+		Orchestra\Extension::deactivate('b');
 	}
 }
