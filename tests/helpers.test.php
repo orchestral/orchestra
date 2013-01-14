@@ -39,8 +39,14 @@ class HelpersTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testLocateReturnProperViewPath()
 	{
+		$theme = Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS.'themes'.DS;
 		$view1 = locate('path: /path/to/somewhere');
+		$view2 = locate('home.index');
+		$view3 = locate('error.404');
 
 		$this->assertEquals('path: /path/to/somewhere', $view1);
+		$this->assertEquals("path: {$theme}default/home/index.blade.php", $view1);
+		$this->assertEquals('error.404', $view3);
+
 	}
 }
