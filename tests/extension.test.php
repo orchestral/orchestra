@@ -64,7 +64,7 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 	/**
 	 * Test extension unable to be activated when unresolved dependencies.
 	 *
-	 * @expectedException Extension\UnresolvedException
+	 * @expectedException Orchestra\Extension\UnresolvedException
 	 */
 	public function testActivateExtensionFailedWhenUnresolvedDependencies()
 	{
@@ -77,7 +77,7 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 	/**
 	 * Test extension unable to be deactivated when unresolved dependencies.
 	 *
-	 * @expectedException Extension\UnresolvedException
+	 * @expectedException Orchestra\Extension\UnresolvedException
 	 */
 	public function testDeactivateExtensionFailedWhenUnresolvedDependencies()
 	{

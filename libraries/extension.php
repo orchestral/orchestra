@@ -275,14 +275,15 @@ class Extension {
 		}
 
 		$available    = $memory->get('extensions.available');
-		$name         = $available[$name]['name'];
+		$title        = $available[$name]['name'];
 		$dependencies = array();
 
 		// we should check that other extensions don't depend on it
 		foreach ($active as $bundle => $extension)
 		{
 			if (isset($available[$bundle]) 
-				and in_array($name, array_keys($available[$bundle]['require'])))
+				and in_array($name, array_keys($available[$bundle]['require']))
+				or in_array($title, array_keys($available[$bundle]['require'])))
 			{
 				$dependencies[] = $available[$bundle]['name'];
 			}
