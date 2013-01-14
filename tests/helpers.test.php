@@ -45,7 +45,7 @@ class HelpersTest extends Orchestra\Testable\TestCase {
 		$view3 = locate('error.404');
 
 		$this->assertEquals('path: /path/to/somewhere', $view1);
-		$this->assertEquals("path: {$theme}default/home/index.blade.php", $view1);
+		$this->assertEquals("path: {$theme}default/home/index.blade.php", $view2);
 		$this->assertEquals('error.404', $view3);
 
 	}
