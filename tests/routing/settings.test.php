@@ -74,6 +74,7 @@ class RoutingSettingsTest extends Orchestra\Testable\TestCase {
 		$response = $this->call('orchestra::settings@index', array(), 'POST', array(
 			'site_name'              => 'Foo',
 			'site_description'       => 'Foobar',
+			'site_user_registration' => 'no',
 
 			'email_default'          => 'mail',
 			'email_smtp_host'        => '',
