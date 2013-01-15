@@ -63,12 +63,54 @@ class RoutingSettingsTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test Request POST (orchestra)/setting
+	 * Test Request POST (orchestra)/settings
 	 *
 	 * @test
 	 */
-	public function testPostSettingsPage()
+	public function testPostSettingsPageIsSuccessful()
 	{
-		$this->markTestIncomplete("Not completed.");
+		$this->be($this->user);
+
+		$response = $this->call('orchestra::settings@index', array(), 'POST', array(
+			'site_name'              => 'Foo',
+			'site_description'       => 'Foobar',
+
+			'email_default'          => 'mail',
+			'email_smtp_host'        => '',
+			'email_smtp_port'        => '',
+			'email_smtp_username'    => '',
+			'email_smtp_password'    => '',
+			'email_smtp_encryption'  => '',
+			'email_sendmail_command' => '',
+		));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::settings'), 
+			$response->foundation->headers->get('location'));
+
+		$this->assertEquals('Foo', memorize('site.name'));
+		$this->assertEquals('Foobar', memorize('site.description'));
+	}
+
+	/**
+	 * Test Request POST (orchestra)/settings failed
+	 *
+	 * @test
+	 */
+	public function testPostSettingsPageFailed()
+	{
+		$this->be($this->user);
+
+		$response = $this->call('orchestra::settings@index', array(), 'POST', array(
+			'site_name' => "Hello"
+		));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::settings'), 
+			$response->foundation->headers->get('location'));
+
+		$this->assertFalse('Hello' === memorize('site.name'));
 	}
 }
