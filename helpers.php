@@ -1,23 +1,5 @@
 <?php
 
-if ( ! function_exists('theme_path'))
-{
-	/**
-	 * Return theme path location
-	 *
-	 *
-	 * @deprecated      Replaced with locate
-	 * @see    locate()
-	 * @see    Orchestra\Theme::path()
-	 * @param  string   $view
-	 * @return string
-	 */
-	function theme_path($view)
-	{
-		return locate($view);
-	}
-}
-
 if ( ! function_exists('locate'))
 {
 	/**
