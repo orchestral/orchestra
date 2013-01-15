@@ -2,7 +2,7 @@
 
 use \Controller as Base_Controller,
 	\Event,
-	\View;
+	\View as V;
 
 class Controller extends Base_Controller {
 
@@ -28,8 +28,8 @@ class Controller extends Base_Controller {
 		// installed.
 		$this->filter('before', 'orchestra::installed');
 
-		View::share('fluent_layout', true);
-		View::share('orchestra_memory', Core::memory());
+		V::share('fluent_layout', true);
+		V::share('orchestra_memory', Core::memory());
 
 		Event::fire('orchestra.started: backend');
 	}
