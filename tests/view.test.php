@@ -21,11 +21,11 @@ class ViewTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test instanceof Orchestra\View
+	 * Test construct a Orchestra\View
 	 *
 	 * @test
 	 */
-	public function testBasicView()
+	public function testConstructAView()
 	{
 		Event::listen('orchestra.started: view', function ()
 		{
@@ -34,7 +34,7 @@ class ViewTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue(is_null($_SERVER['view.started']));
 
-		$view = new Orchestra\View('home.index');
+		$view = new Orchestra\View('orchestra::layout.main');
 
 		$this->assertInstanceOf('Laravel\View', $view);
 		$this->assertEquals('frontend', Orchestra\View::$theme);
@@ -44,6 +44,23 @@ class ViewTest extends PHPUnit_Framework_TestCase {
 		$file = $refl->getProperty('view');
 		$file->setAccessible(true);
 
-		$this->assertEquals('home.index', $file->getValue($view));
+		$this->assertEquals('orchestra::layout.main', $file->getValue($view));
+	}
+
+	/**
+	 * Test Orchestra\View::exists()
+	 *
+	 * @test
+	 */
+	public function testExists()
+	{
+		$result = Orchestra\View::exists('orchestra::layout.main');
+
+		$this->assertTrue(is_bool($result));
+
+		$path = Orchestra\View::exists('orchestra::layout.main', true);
+		$expected = Bundle::path('orchestra').'views'.DS.'layout'.DS.'main.blade.php';
+
+		$this->assertEquals($expected, $path);
 	}
 }
