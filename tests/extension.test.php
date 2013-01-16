@@ -42,11 +42,11 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test using extensions without any dependencies.
+	 * Test activate extensions without any dependencies.
 	 *
 	 * @test
 	 */
-	public function testUsingExtensionWithoutAnyDependencies()
+	public function testActivateExtensionWithoutAnyDependencies()
 	{
 		$this->restartApplication();
 
@@ -78,6 +78,25 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		Orchestra\Extension::shutdown();
 
 		$this->assertEquals('foo', $_SERVER['extension.app.done']);
+	}
+
+	/**
+	 * Test deactivate extensions without any dependencies.
+	 *
+	 * @test
+	 */
+	public function testDeactivateExtensionWithoutAnyDependencies()
+	{
+		$this->restartApplication();
+
+		Orchestra\Extension::detect();
+		Orchestra\Extension::activate(DEFAULT_BUNDLE);
+
+		$this->assertTrue(Orchestra\Extension::activated(DEFAULT_BUNDLE));
+
+		Orchestra\Extension::deactivate(DEFAULT_BUNDLE);
+
+		$this->assertFalse(Orchestra\Extension::activated(DEFAULT_BUNDLE));
 	}
 
 	/**
