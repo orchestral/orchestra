@@ -11,6 +11,9 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
+		$_SERVER['extension.app.started'] = null;
+		$_SERVER['extension.app.done']    = null;
+
 		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
 		set_path('app', $base_path.'application'.DS);
 		set_path('orchestra.extension', $base_path.'bundles'.DS);
@@ -47,8 +50,22 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 	{
 		$this->restartApplication();
 
+		Event::listen('extension.started: '.DEFAULT_BUNDLE, function ()
+		{
+			$_SERVER['extension.app.started'] = 'foo';
+		});
+
+		Event::listen('extension.done: '.DEFAULT_BUNDLE, function ()
+		{
+			$_SERVER['extension.app.done'] = 'foo';
+		});
+
+		$this->assertTrue(is_null($_SERVER['extension.app.started']));
+
 		Orchestra\Extension::detect();
 		Orchestra\Extension::activate(DEFAULT_BUNDLE);
+
+		$this->assertEquals('foo', $_SERVER['extension.app.started']);
 
 		$this->assertTrue(Orchestra\Extension::started(DEFAULT_BUNDLE));
 		$this->assertTrue(Orchestra\Extension::activated(DEFAULT_BUNDLE));
@@ -56,9 +73,11 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals('foobar', 
 			Orchestra\Extension::option(DEFAULT_BUNDLE, 'foo'));
 
-		Orchestra\Extension::deactivate(DEFAULT_BUNDLE);
+		$this->assertTrue(is_null($_SERVER['extension.app.done']));
 
-		$this->assertFalse(Orchestra\Extension::activated(DEFAULT_BUNDLE));
+		Orchestra\Extension::shutdown();
+
+		$this->assertEquals('foo', $_SERVER['extension.app.done']);
 	}
 
 	/**
