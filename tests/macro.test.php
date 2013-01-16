@@ -14,8 +14,10 @@ class MacroTest extends Orchestra\Testable\TestCase {
 		$memory = Orchestra::memory();
 		$memory->put('site.name', 'Orchestra');
 
-		$this->assertEquals('Orchestra', HTML::title());
 		$this->assertEquals('Orchestra', HTML::title(null));
 		$this->assertEquals('Home &mdash; Orchestra', HTML::title('Home'));
+
+		$memory->put('site.format.title', ':page-title at :site-title');
+		$this->assertEquals('Home at Orchestra', HTML::title('Home'));
 	}
 }
