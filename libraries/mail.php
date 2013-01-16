@@ -35,7 +35,14 @@ class Mail {
 	 *
 	 * @var  Object
 	 */
-	private $mailer = null;
+	protected $mailer = null;
+
+	/**
+	 * View instance.
+	 *
+	 * @var  Laravel\View
+	 */
+	protected $view = null;
 
 	/**
 	 * Construct a new instance.
@@ -48,10 +55,10 @@ class Mail {
 	 */
 	public function __construct($view, $data = array(), Closure $callback)
 	{
-		$view         = View::make($view, $data);
+		$this->view   = View::make($view, $data);
 		$this->mailer = IoC::resolve('orchestra.mailer');
 
-		$this->mailer->body($view);
+		$this->mailer->body($this->view);
 		$this->mailer->html(true);
 
 		call_user_func($callback, $this->mailer);
