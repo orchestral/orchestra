@@ -41,7 +41,7 @@ class ViewTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('foo', $_SERVER['view.started']);
 
 		$refl = new \ReflectionObject($view);
-		$file = $ref->getProperty('view');
+		$file = $refl->getProperty('view');
 		$file->setAccessible(true);
 
 		$this->assertEquals('home.index', $file->getValue($view));
