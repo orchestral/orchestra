@@ -21,7 +21,7 @@ Since an ACL metric is defined for each extension, it is best to define ACL acti
 		
 		public function __construct()
 		{
-			if ( ! Orchestra\Installer::status())
+			if ( ! Orchestra\Installer::installed())
 			{
 				throw new Exception(
 					"Orchestra Platform is not installed."
