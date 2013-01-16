@@ -1,7 +1,16 @@
 <?php
 
+Bundle::start('orchestra');
+
 class InstallerRequirementTest extends PHPUnit_Framework_TestCase {
 	
+	/**
+	 * Object stub.
+	 *
+	 * @var Orchestra\Installer\Requirement
+	 */
+	protected $stub = null;
+
 	/**
 	 * Setup the test environment.
 	 */
@@ -10,7 +19,7 @@ class InstallerRequirementTest extends PHPUnit_Framework_TestCase {
 		Session::$instance = null;
 		Session::load();
 
-		Bundle::start('orchestra');
+		$this->stub = new Orchestra\Installer\Requirement;
 	}
 
 	/**
@@ -29,6 +38,26 @@ class InstallerRequirementTest extends PHPUnit_Framework_TestCase {
 	public function testConstructInstance()
 	{
 		$this->assertInstanceOf('Orchestra\Installer\Requirement', 
-			new Orchestra\Installer\Requirement);
+			$this->stub);
+	}
+
+	/**
+	 * Test Orchestra\Installer\Requirement::installable() return a boolean.
+	 *
+	 * @test
+	 */
+	public function testInstallableMethodReturnBoolean()
+	{
+		$this->assertTrue(is_bool($this->stub->installable()));
+	}
+
+	/**
+	 * Test Orchestra\Installer\Requirement::checklist() return an array.
+	 *
+	 * @test
+	 */
+	public function testChecklistMethodReturnArray()
+	{
+		$this->assertTrue(is_array($this->stub->checklist()));
 	}
 }
