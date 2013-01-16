@@ -11,6 +11,9 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
+		$_SERVER['extension.app.started'] = null;
+		$_SERVER['extension.app.done']    = null;
+
 		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
 		set_path('app', $base_path.'application'.DS);
 		set_path('orchestra.extension', $base_path.'bundles'.DS);
@@ -39,22 +42,57 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test using extensions without any dependencies.
+	 * Test activate extensions without any dependencies.
 	 *
 	 * @test
 	 */
-	public function testUsingExtensionWithoutAnyDependencies()
+	public function testActivateExtensionWithoutAnyDependencies()
 	{
 		$this->restartApplication();
 
+		Event::listen('extension.started: '.DEFAULT_BUNDLE, function ()
+		{
+			$_SERVER['extension.app.started'] = 'foo';
+		});
+
+		Event::listen('extension.done: '.DEFAULT_BUNDLE, function ()
+		{
+			$_SERVER['extension.app.done'] = 'foo';
+		});
+
+		$this->assertTrue(is_null($_SERVER['extension.app.started']));
+
 		Orchestra\Extension::detect();
 		Orchestra\Extension::activate(DEFAULT_BUNDLE);
+
+		$this->assertEquals('foo', $_SERVER['extension.app.started']);
 
 		$this->assertTrue(Orchestra\Extension::started(DEFAULT_BUNDLE));
 		$this->assertTrue(Orchestra\Extension::activated(DEFAULT_BUNDLE));
 
 		$this->assertEquals('foobar', 
 			Orchestra\Extension::option(DEFAULT_BUNDLE, 'foo'));
+
+		$this->assertTrue(is_null($_SERVER['extension.app.done']));
+
+		Orchestra\Extension::shutdown();
+
+		$this->assertEquals('foo', $_SERVER['extension.app.done']);
+	}
+
+	/**
+	 * Test deactivate extensions without any dependencies.
+	 *
+	 * @test
+	 */
+	public function testDeactivateExtensionWithoutAnyDependencies()
+	{
+		$this->restartApplication();
+
+		Orchestra\Extension::detect();
+		Orchestra\Extension::activate(DEFAULT_BUNDLE);
+
+		$this->assertTrue(Orchestra\Extension::activated(DEFAULT_BUNDLE));
 
 		Orchestra\Extension::deactivate(DEFAULT_BUNDLE);
 
