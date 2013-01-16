@@ -92,11 +92,13 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 		$resource = Orchestra\Resources::call('stub', 'index', array());
 
 		$this->assertInstanceOf('Laravel\Response', $resource);
+		$this->assertEquals(200, $resource->foundation->getStatusCode());
 		$this->assertEquals('stub', $resource->content);
 
 		$resource = Orchestra\Resources::call('stub', 'redirect', array());
 
 		$this->assertInstanceOf('Laravel\Redirect', $resource);
+		$this->assertEquals(302, $resource->foundation->getStatusCode());
 	}
 
 	/**
