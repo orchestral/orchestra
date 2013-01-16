@@ -11,7 +11,7 @@ class ViewTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testInstanceOf()
 	{
-		$view = new Orchestra\View;
+		$view = new Orchestra\View('home.index');
 
 		$this->assertInstanceOf('Laravel\View', $view);
 		$this->assertEquals('frontend', Orchestra\View::$theme);
