@@ -27,6 +27,8 @@ class InstallerRequirementTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
+		unset($this->stub);
+		
 		Session::$instance = null;
 	}
 
@@ -48,7 +50,13 @@ class InstallerRequirementTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testInstallableMethodReturnBoolean()
 	{
+		$refl = new \ReflectionObject($this->stub);
+		$installable = $refl->getProperty('installable');
+		$installable->setAccessible(true);
+
 		$this->assertTrue(is_bool($this->stub->installable()));
+		$this->assertTrue(is_bool($installable->getValue($this->stub)));
+		$this->assertEquals($installable->getValue($this->stub), $this->stub->installable());
 	}
 
 	/**
@@ -58,6 +66,12 @@ class InstallerRequirementTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testChecklistMethodReturnArray()
 	{
+		$refl = new \ReflectionObject($this->stub);
+		$checklist = $refl->getProperty('checklist');
+		$checklist->setAccessible(true);
+
 		$this->assertTrue(is_array($this->stub->checklist()));
+		$this->assertTrue(is_array($checklist->getValue($this->stub)));
+		$this->assertEquals($checklist->getValue($this->stub), $this->stub->checklist());
 	}
 }
