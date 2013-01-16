@@ -3,6 +3,24 @@
 Bundle::start('orchestra');
 
 class MacroTest extends Orchestra\Testable\TestCase {
+
+	/**
+	 * Setup the test environment.
+	 */
+	public function setUp()
+	{
+		parent::setUp();
+
+		URI::$uri = 'orchestra';
+	}
+
+	/**
+	 * Teardown the test environment.
+	 */
+	public function tearDown()
+	{
+		URI::$uri = null;
+	}
 	
 	/**
 	 * Test HTML::title() macro.
