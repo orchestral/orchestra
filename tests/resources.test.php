@@ -98,4 +98,16 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertInstanceOf('Laravel\Redirect', $resource);
 	}
+
+	/**
+	 * Test Orchestra\Resources::of()
+	 *
+	 * @test
+	 */
+	public function testOfMethod()
+	{
+		$stub = Orchestra\Resources::of('stub');
+
+		$this->assertEquals($this->stub, $stub);
+	}
 }
