@@ -45,11 +45,15 @@ class MailTest extends Orchestra\Testable\TestCase {
 
 		$refl   = new \ReflectionObject($mail);
 		$mailer = $refl->getProperty('mailer');
+		$view   = $refl->getProperty('view');
+
 		$mailer->setAccessible(true);
+		$view->setAccessible(true);
 
 		$this->assertInstanceOf('Orchestra\Mail', $mail);
 		$this->assertInstanceOf('Orchestra\Testable\Mailer', $mailer->getValue($mail));
 		$this->assertTrue($mailer->getValue($mail)->was_sent($user->email));
+		$this->assertInstanceOf('Laravel\View', $view->getValue($mail));
 	}
 
 	/**
@@ -76,8 +80,14 @@ class MailTest extends Orchestra\Testable\TestCase {
 					->send();
 			}
 		);
-		
+
+
+		$refl = new \ReflectionObject($mail);
+		$view = $refl->getProperty('view');
+		$view->setAccessible(true);
+
 		$this->assertInstanceOf('Orchestra\Testable\Mailer', $mail);
 		$this->assertTrue($mail->was_sent($user->email));
+		$this->assertInstanceOf('Laravel\View', $view->getValue($mail));
 	}
 }
