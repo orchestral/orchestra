@@ -60,6 +60,17 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test adding child attribute thrown exception when is reserved
+	 * keywords.
+	 *
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testAddChildThrownException()
+	{
+		$this->stub->map('visible', 'stub.visible');
+	}
+
+	/**
 	 * Test adding child attribute value using setter.
 	 *
 	 * @test
