@@ -35,14 +35,14 @@ class Mail {
 	 *
 	 * @var  Object
 	 */
-	private $mailer = null;
+	protected $mailer = null;
 
 	/**
 	 * View instance.
 	 *
 	 * @var  Laravel\View
 	 */
-	private $view = null;
+	protected $view = null;
 
 	/**
 	 * Construct a new instance.
