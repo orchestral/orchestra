@@ -29,8 +29,17 @@ class Orchestra_Resources_Controller extends Orchestra\Controller {
 	 */
 	private function index_page($resources)
 	{
+		$model = array();
+
+		foreach ($resources as $name => $resource)
+		{
+			if (false === value($resource->visible)) continue;
+			
+			$model[$name] = $resource;
+		}
+
 		return View::make('orchestra::resources.index', array(
-			'table'         => ResourcePresenter::table($resources),
+			'table'         => ResourcePresenter::table($model),
 			'_title_'       => __('orchestra::title.resources.list'),
 			'_description_' => __('orchestra::title.resources.list-detail'),
 		));

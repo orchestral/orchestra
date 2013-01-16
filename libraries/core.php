@@ -311,6 +311,8 @@ class Core {
 
 				foreach ($resources as $name => $resource)
 				{
+					if (false === value($resource->visible)) continue;
+
 					$menu->add($name, 'child_of:resources')
 						->title($resource->name)
 						->link(handles("orchestra::resources/{$name}"));

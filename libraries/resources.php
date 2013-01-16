@@ -28,9 +28,10 @@ class Resources {
 		{
 			$uses       = $controller;
 			$controller = array(
-				'name'   => Str::title($name),
-				'uses'   => $uses,
-				'childs' => array(),
+				'name'    => Str::title($name),
+				'uses'    => $uses,
+				'childs'  => array(),
+				'visible' => true,
 			);
 		}
 
@@ -128,6 +129,13 @@ class Resources {
 	protected $attributes = array();
 
 	/**
+	 * Reserved keywords
+	 *
+	 * @var array
+	 */
+	protected $reserved_keywords = array('visible');
+
+	/**
 	 * Map a child resource attributes
 	 *
 	 * @access public
@@ -137,8 +145,53 @@ class Resources {
 	 */
 	public function map($name, $uses)
 	{
+		if (in_array($name, $this->reserved_keywords))
+		{
+			throw new InvalidArgumentException("Unable to use reserved keyword [{$name}].");
+		}
+
 		$this->attributes['childs'][$name] = $uses;
 
+		return $this;
+	}
+
+	/**
+	 * Set visibility state based on parameter
+	 *
+	 * @access public
+	 * @param  bool     $value
+	 * @return self
+	 */
+	public function visibility($value)
+	{
+		$this->attributes['visible'] = $value;
+
+		return $this;
+	}
+
+	/**
+	 * Set visibility state to show
+	 * 
+	 * @access public
+	 * @return self
+	 */
+	public function show()
+	{
+		$this->attributes['visible'] = true;
+
+		return $this;
+	}
+
+	/**
+	 * Set visibility state to hidden
+	 *
+	 * @access public
+	 * @return self
+	 */
+	public function hide()
+	{
+		$this->attributes['visible'] = false;
+		
 		return $this;
 	}
 
@@ -155,7 +208,7 @@ class Resources {
 	 */
 	public function __set($key, $value)
 	{
-		$this->attributes['childs'][$key] = $value;
+		$this->map($key, $value);
 	}
 
 	/**
