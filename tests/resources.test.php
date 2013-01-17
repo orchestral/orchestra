@@ -159,7 +159,7 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 
 		$attrib     = $attributes->getValue($this->stub);
 
-		$this->assertTrue($attrib['visible']);
+		$this->assertTrue(value($attrib['visible']));
 	}
 
 	/**
