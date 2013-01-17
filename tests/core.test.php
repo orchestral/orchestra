@@ -38,6 +38,8 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 			$_SERVER['test.orchestra.started'] = 'foo';
 		});
 
+		$this->assertTrue(is_null($_SERVER['test.orchestra.started']));
+
 		Orchestra\Core::start();
 
 		$memory = Orchestra\Core::memory();
@@ -65,6 +67,8 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 		{
 			$_SERVER['test.orchestra.done'] = 'foo';
 		});
+
+		$this->assertTrue(is_null($_SERVER['test.orchestra.done']));
 
 		Orchestra\Core::start();
 		Orchestra\Core::shutdown();
@@ -96,15 +100,22 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Roles search is properly configured.
+	 * Test Configuration is properly configured.
 	 *
 	 * @test
 	 */
-	public function testRolesSearchIsProperlyConfigured()
+	public function testConfigurationIsProperlyConfigured()
 	{
 		Orchestra\Core::start();
+
+		$memory = Orchestra\Core::memory();
 		
 		$this->assertTrue(is_callable(Config::get('hybrid::auth.roles')));
+		$this->assertTrue(is_array(Config::get('hybrid::form.fieldset')));
+		$this->assertFalse(is_null($memory->get('site.theme.backend')));
+		$this->assertFalse(is_null($memory->get('site.theme.frontend')));
+		$this->assertTrue(IoC::registered('orchestra.theme: backend'));
+		$this->assertTrue(IoC::registered('orchestra.theme: frontend'));
 
 		Orchestra\Core::shutdown();
 	}

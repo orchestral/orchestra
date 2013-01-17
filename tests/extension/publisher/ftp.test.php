@@ -24,7 +24,6 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	public function setUp()
 	{
 		parent::setUp();
-
 		$this->user = Orchestra\Model\User::find(1);
 		$this->stub = new Orchestra\Extension\Publisher\FTP;
 	}
@@ -46,6 +45,19 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	public function testInstanceOfStub()
 	{
 		$this->assertInstanceOf('Orchestra\Extension\Publisher\Driver', $this->stub);
+		$this->assertFalse($this->stub->connected());
 	}
 
+	/**
+	 * Test Orchestra\Extension\Publisher\FTP::connect()
+	 *
+	 * @test
+	 */
+	public function testConnectUsingFTP()
+	{
+		$this->stub->connect();
+
+		$this->assertEquals($this->stub->connection, $this->stub->connection());
+		$this->assertTrue($this->stub->connected());
+	}
 }

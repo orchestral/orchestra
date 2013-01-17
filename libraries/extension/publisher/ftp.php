@@ -3,7 +3,6 @@
 use \RuntimeException,
 	\IoC,
 	\Session,
-	Hybrid\FTP as F,
 	Orchestra\Extension;
 
 class FTP extends Driver {
@@ -49,7 +48,7 @@ class FTP extends Driver {
 	{
 		try
 		{
-			$this->connection = F::make($config);
+			$this->connection = IoC::resolve('orchestra.ftp', array($config));
 			$this->connection->connect();
 		}
 		catch (RuntimeException $e)

@@ -27,6 +27,11 @@ class Application {
 			return Mailer::instance();
 		});
 
+		IoC::register('orchestra.ftp', function ($config)
+		{
+			return new FTP;
+		});
+
 		Config::set('database.default', 'testdb');
 		Event::first('orchestra.testable: setup-db');
 		O\Installer::$status = false;
