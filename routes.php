@@ -14,7 +14,7 @@ Route::any('(:bundle)/installer/?(:any)?/?(:num)?', function ($action = 'index',
 	// we should disable this routing when the system detect it's already
 	// running/installed.
 	if (Orchestra\Installer::installed()
-		and (!($action === 'steps' && intval($steps) === 2)))
+		and ( ! ($action === 'steps' && intval($steps) === 2)))
 	{
 		return Response::error('404');
 	}
