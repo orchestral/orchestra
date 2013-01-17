@@ -24,16 +24,21 @@ class Resources {
 	 */
 	public static function make($name, $controller)
 	{
+		$schema = array(
+			'childs'  => array(),
+			'visible' => true,
+		);
+
 		if ( ! is_array($controller))
 		{
 			$uses       = $controller;
 			$controller = array(
 				'name'    => Str::title($name),
 				'uses'    => $uses,
-				'childs'  => array(),
-				'visible' => true,
 			);
 		}
+
+		$controller       = array_merge($schema, $controller); 
 
 		$controller['id'] = $name;
 
