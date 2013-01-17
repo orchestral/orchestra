@@ -13,7 +13,7 @@ class FacadeTest extends PHPUnit_Framework_TestCase {
 	{
 		$version = Orchestra::VERSION;
 
-		$this->assertRegExp('/(\d{1,5})\.(\d{1,5})\.(\d{1,5})(\-[a|b][\d{1,5}])?', 
+		$this->assertRegExp('/(\d{1,5})\.(\d{1,5})\.(\d{1,5})(\-[a|b]\d{1,5})?/', 
 			$version);
 	}
 }
