@@ -11,7 +11,7 @@ class Resources {
 	 *
 	 * @var array
 	 */
-	public static $registrar = array();
+	protected static $registrar = array();
 
 	/**
 	 * Register a new resource
