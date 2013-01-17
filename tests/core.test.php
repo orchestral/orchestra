@@ -111,7 +111,7 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 		$memory = Orchestra\Core::memory();
 		
 		$this->assertTrue(is_callable(Config::get('hybrid::auth.roles')));
-		$this->assertTrue(is_array(Config::get('hybrid.form.fieldset')));
+		$this->assertTrue(is_array(Config::get('hybrid::form.fieldset')));
 		$this->assertFalse(is_null($memory->get('site.theme.backend')));
 		$this->assertFalse(is_null($memory->get('site.theme.frontend')));
 		$this->assertTrue(IoC::registered('orchestra.theme: backend'));
