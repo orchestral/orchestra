@@ -45,6 +45,7 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	public function testInstanceOfStub()
 	{
 		$this->assertInstanceOf('Orchestra\Extension\Publisher\Driver', $this->stub);
+		$this->assertFalse($this->stub->connected());
 	}
 
 	/**
@@ -57,7 +58,8 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 		$this->stub->connect();
 
 		$this->assertEquals($this->stub->connection, $this->stub->connection());
-		$this->assertEquals(is_object($this->stub->connection()));
+		$this->assertTrue(is_object($this->stub->connection()));
+		$this->assertTrue($this->stub->connected());
 	}
 
 }
