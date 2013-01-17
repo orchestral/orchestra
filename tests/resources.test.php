@@ -62,6 +62,16 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Resources::make() thrown an exception.
+	 *
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testMakeAResourceThrowAnException()
+	{
+		$stub = Orchestra\Resources::make('stubber', array());
+	}
+
+	/**
 	 * Test adding child attribute thrown exception when is reserved
 	 * keywords.
 	 *
@@ -129,6 +139,27 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 		$attrib     = $attributes->getValue($this->stub);
 
 		$this->assertFalse($attrib['visible']);
+	}
+
+	/**
+	 * Test set visibility using Orchestra\Resources::visibility()
+	 *
+	 * @test
+	 */
+	public function testVisibilityUsingVisibility()
+	{
+		$this->stub->visibility(function ()
+		{
+			return true;
+		});
+
+		$refl       = new \ReflectionObject($this->stub);
+		$attributes = $refl->getProperty('attributes');
+		$attributes->setAccessible(true);
+
+		$attrib     = $attributes->getValue($this->stub);
+
+		$this->assertTrue($attrib['visible']);
 	}
 
 	/**
