@@ -63,6 +63,7 @@ class MessagesTest extends PHPUnit_Framework_TestCase {
 
 		$retrieve = Orchestra\Messages::retrieve();
 
+		$this->assertInstanceOf('Orchestra\Messages', $retrieve);
 		$this->assertEquals($messages, $retrieve);
 		$this->assertEquals(array('Hi World'), $retrieve->get('hello'));
 		$this->assertEquals(array('Goodbye'), $retrieve->get('bye'));
