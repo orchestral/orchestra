@@ -11,7 +11,7 @@ class Resources {
 	 *
 	 * @var array
 	 */
-	public static $registrar = array();
+	protected static $registrar = array();
 
 	/**
 	 * Register a new resource
@@ -24,18 +24,29 @@ class Resources {
 	 */
 	public static function make($name, $controller)
 	{
+		$schema = array(
+			'name'    => '',
+			'uses'    => '',
+			'childs'  => array(),
+			'visible' => true,
+		);
+
 		if ( ! is_array($controller))
 		{
 			$uses       = $controller;
 			$controller = array(
 				'name'    => Str::title($name),
 				'uses'    => $uses,
-				'childs'  => array(),
-				'visible' => true,
 			);
 		}
 
+		$controller       = array_merge($schema, $controller); 
 		$controller['id'] = $name;
+
+		if (empty($controller['name']) or empty($controller['uses']))
+		{
+			throw new InvalidArgumentException("Required `name` and `uses` are missing.");
+		}
 
 		return static::$registrar[$name] = new static($controller);
 	}

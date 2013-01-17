@@ -94,4 +94,18 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 
 		Orchestra\Core::shutdown();
 	}
+
+	/**
+	 * Test Roles search is properly configured.
+	 *
+	 * @test
+	 */
+	public function testRolesSearchIsProperlyConfigured()
+	{
+		Orchestra\Core::start();
+		
+		$this->assertTrue(is_callable(Config::get('hybrid::auth.roles')));
+
+		Orchestra\Core::shutdown();
+	}
 }

@@ -1,5 +1,7 @@
 <?php
 
+Bundle::start('orchestra');
+
 class WidgetPaneTest extends PHPUnit_Framework_TestCase {
 
 	/**
@@ -14,7 +16,6 @@ class WidgetPaneTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		Bundle::start('orchestra');
 		$this->stub = new Orchestra\Widget\Pane('stub');
 	}
 

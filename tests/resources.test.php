@@ -55,8 +55,20 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 		$this->assertInstanceOf('Orchestra\Resources', $foo);
 		$this->assertEquals('Foobar', $foo->name);
 		$this->assertEquals('foo', $foo->uses);
+		$this->assertTrue($foo->visible);
 		$this->assertEquals('Foobar', $foo->name());
 		$this->assertEquals('foo', $foo->uses());
+		$this->assertTrue($foo->visible());
+	}
+
+	/**
+	 * Test Orchestra\Resources::make() thrown an exception.
+	 *
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testMakeAResourceThrowAnException()
+	{
+		$stub = Orchestra\Resources::make('stubber', array());
 	}
 
 	/**
@@ -91,6 +103,63 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals($expected, $this->stub->childs);
 		$this->assertEquals($expected, $this->stub->childs());
+	}
+
+	/**
+	 * Test set visibility using Orchestra\Resources::show()
+	 *
+	 * @test
+	 */
+	public function testVisibilityUsingShow()
+	{
+		$this->stub->show();
+
+		$refl       = new \ReflectionObject($this->stub);
+		$attributes = $refl->getProperty('attributes');
+		$attributes->setAccessible(true);
+
+		$attrib     = $attributes->getValue($this->stub);
+
+		$this->assertTrue($attrib['visible']);
+	}
+
+	/**
+	 * Test set visibility using Orchestra\Resources::hide()
+	 *
+	 * @test
+	 */
+	public function testVisibilityUsingHide()
+	{
+		$this->stub->hide();
+
+		$refl       = new \ReflectionObject($this->stub);
+		$attributes = $refl->getProperty('attributes');
+		$attributes->setAccessible(true);
+
+		$attrib     = $attributes->getValue($this->stub);
+
+		$this->assertFalse($attrib['visible']);
+	}
+
+	/**
+	 * Test set visibility using Orchestra\Resources::visibility()
+	 *
+	 * @test
+	 */
+	public function testVisibilityUsingVisibility()
+	{
+		$this->stub->visibility(function ()
+		{
+			return true;
+		});
+
+		$refl       = new \ReflectionObject($this->stub);
+		$attributes = $refl->getProperty('attributes');
+		$attributes->setAccessible(true);
+
+		$attrib     = $attributes->getValue($this->stub);
+
+		$this->assertTrue(value($attrib['visible']));
 	}
 
 	/**
