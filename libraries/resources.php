@@ -45,7 +45,7 @@ class Resources {
 
 		if (empty($controller['name']) or empty($controller['uses']))
 		{
-			throw new InvalidArgumentException("Required `name` and `uses` are missing.")
+			throw new InvalidArgumentException("Required `name` and `uses` are missing.");
 		}
 
 		return static::$registrar[$name] = new static($controller);
