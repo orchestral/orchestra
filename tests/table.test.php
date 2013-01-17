@@ -13,5 +13,11 @@ class TableTest extends PHPUnit_Framework_TestCase {
 	{
 		$table = Orchestra\Table::make(function () {});
 		$this->assertInstanceOf('Hybrid\Table', $table);
+
+		$refl = new \ReflectionObject($table);
+		$grid = $refl->getProperty('grid');
+		$grid->setAccessible(true);
+
+		$this->assertInstanceOf('Hybrid\Table\Grid', $grid->getValue($table));
 	}
 }
