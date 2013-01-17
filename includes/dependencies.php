@@ -226,3 +226,19 @@ if ( ! IoC::registered('orchestra.memory'))
 		return Orchestra\Memory::make('fluent.orchestra_options');
 	});
 }
+
+/*
+|--------------------------------------------------------------------------
+| Orchestra FTP IoC
+|--------------------------------------------------------------------------
+|
+| Lets Orchestra handle Hybrid\FTP instance using IoC.
+|
+*/
+if ( ! IoC::registered('orchestra.ftp'))
+{
+	IoC::singleton('orchestra.ftp', function ($config)
+	{
+		return Hybrid\FTP::make($config);
+	});
+}
