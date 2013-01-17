@@ -25,6 +25,8 @@ class Resources {
 	public static function make($name, $controller)
 	{
 		$schema = array(
+			'name'    => '',
+			'uses'    => '',
 			'childs'  => array(),
 			'visible' => true,
 		);
@@ -39,8 +41,12 @@ class Resources {
 		}
 
 		$controller       = array_merge($schema, $controller); 
-
 		$controller['id'] = $name;
+
+		if (empty($controller['name']) or empty($controller['uses']))
+		{
+			throw new InvalidArgumentException("Required `name` and `uses` are missing.")
+		}
 
 		return static::$registrar[$name] = new static($controller);
 	}
