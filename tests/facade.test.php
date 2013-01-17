@@ -16,4 +16,16 @@ class FacadeTest extends PHPUnit_Framework_TestCase {
 		$this->assertRegExp('/(\d{1,5})\.(\d{1,5})\.(\d{1,5})(\-[a|b]\d{1,5})?/', 
 			$version);
 	}
+
+	/**
+	 * Test Orchestra Facade.
+	 *
+	 * @test
+	 */
+	public function testOrchestraFacade()
+	{
+		$this->assertEquals(Orchestra\Core::acl(), Orchestra::acl());
+		$this->assertEquals(Orchestra\Core::memory(), Orchestra::memory());
+		$this->assertEquals(Orchestra\Core::menu(), Orchestra::menu());
+	}
 }
