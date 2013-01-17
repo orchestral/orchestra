@@ -38,6 +38,8 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 			$_SERVER['test.orchestra.started'] = 'foo';
 		});
 
+		$this->assertTrue(is_null($_SERVER['test.orchestra.started']));
+
 		Orchestra\Core::start();
 
 		$memory = Orchestra\Core::memory();
@@ -65,6 +67,8 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 		{
 			$_SERVER['test.orchestra.done'] = 'foo';
 		});
+
+		$this->assertTrue(is_null($_SERVER['test.orchestra.done']));
 
 		Orchestra\Core::start();
 		Orchestra\Core::shutdown();

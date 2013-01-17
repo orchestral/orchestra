@@ -10,6 +10,11 @@ class FTP {
 		return $this;
 	}
 
+	public function chmod($path, $mode)
+	{
+		return true;
+	}
+
 	public function connected()
 	{
 		return true;

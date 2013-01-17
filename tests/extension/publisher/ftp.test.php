@@ -60,5 +60,4 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals($this->stub->connection, $this->stub->connection());
 		$this->assertTrue($this->stub->connected());
 	}
-
 }
