@@ -9,4 +9,9 @@ class FTP {
 	{
 		return $this;
 	}
+
+	public function connected()
+	{
+		return true;
+	}
 }
