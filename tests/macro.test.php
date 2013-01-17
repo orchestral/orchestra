@@ -44,7 +44,7 @@ class MacroTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testBladeCompilePlaceholder()
 	{
-		$expected = '<?php foreach (Orchestra\Widget::make("placeholder.foo")->get() as $_placeholder_): echo value($_placeholder_->value ?:""); endforeach; ?>';
+		$expected = '<?php foreach (Orchestra\Widget::make("placeholder."."foo")->get() as $_placeholder_): echo value($_placeholder_->value ?:""); endforeach; ?>';
 		$output   = Blade::compile_string('@placeholder("foo")');
 
 		$this->assertEquals($expected, $output);
