@@ -1,5 +1,7 @@
 <?php
 
+Bundle::start('orchestra');
+
 class InstallerPublisherTest extends PHPUnit_Framework_TestCase {
 	
 	/**
@@ -9,8 +11,6 @@ class InstallerPublisherTest extends PHPUnit_Framework_TestCase {
 	{
 		Session::$instance = null;
 		Session::load();
-
-		Bundle::start('orchestra');
 	}
 
 	/**

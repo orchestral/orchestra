@@ -1,5 +1,7 @@
 <?php
 
+Bundle::start('orchestra');
+
 class ThemeContainerTest extends PHPUnit_Framework_TestCase {
 
 	/**
@@ -17,8 +19,6 @@ class ThemeContainerTest extends PHPUnit_Framework_TestCase {
 		URL::$base = null;
 		Config::set('application.index', '');
 		Config::set('application.url', 'http://localhost/');
-
-		Bundle::start('orchestra');
 
 		set_path('public', Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS);
 

@@ -1,5 +1,7 @@
 <?php
 
+Bundle::start('orchestra');
+
 class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 
 	/**
@@ -14,7 +16,6 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		Bundle::start('orchestra');
 		$this->stub = new Orchestra\Widget\Nesty(array());
 	}
 
