@@ -1,22 +1,18 @@
 Orchestra Platform Bundle for Laravel
 ==============
 
-Provide a solid base off of which to build your new web applications. It's
-not a CMS. Instead, it's a springboard to build off of with many of the tools
-you wish you had on projects but never took the time to build. Orchestra is
-what Bonfire is for CodeIgniter.
+Provide a solid base off of which to build your new web applications. It's not a CMS. Instead, it's a springboard to build off of with many of the tools you wish you had on projects but never took the time to build. 
+Orchestra Platform is what Bonfire is for CodeIgniter.
 
 [![Build Status](https://secure.travis-ci.org/orchestral/orchestra.png?branch=master)](http://travis-ci.org/orchestral/orchestra)
 
 ## Installation
 
-Orchestra Platform is best installed in a clean Laravel environment, due to
-the facts it require to create `users` table and administrator account during
-installation.
+Orchestra Platform is best installed in a clean Laravel environment, due to the facts it require to create `users` table and administrator account during installation.
 
 ### Installation with Laravel Artisan
 
-Orchestra can be downloaded directly from Artisan using the following commands:
+Orchestra Platform can be downloaded directly from Artisan using the following commands:
 
 	php artisan bundle:install orchestra
 
@@ -29,24 +25,19 @@ In the `application/bundles.php` file, add the following entries:
 
 > **Note on Orchestra**, you can change `handles` value to anything unique, such as `admin` for example.
 
-> **Note on Hybrid**, registering Hybrid bundle is optional, but allow you to upgrade Orchestra and Hybrid with just a single `php artisan bundle:upgrade`.
+> **Note on Hybrid**, registering Hybrid bundle is optional, but allow you to upgrade Orchestra Platform and Hybrid Bundle with just a single `php artisan bundle:upgrade`.
 
 #### Publish Bundle Asset
 
-Before running the Setup instruction, run the following from Artisan to
-publish all related assets for Orchestra:
+Before running the Setup instruction, run the following from Artisan to publish all related assets for Orchestra Platform:
 
 	php artisan bundle:publish
 
 ## Setup
 
-Now navigate to your Orchestra handles URL in a web browser, you should see
-an installation page. Do remember to change the URL if you use a different
-handles value.
+Now navigate to your Orchestra Platform handles URL in a web browser, you should see an installation page. Do remember to change the URL if you use a different handles value.
 
-Please ensure that your configuration is correct, Orchestra will utilize
-configuration from `application/config` folder to make the process
-stream-less with your other application (or bundles).
+Please ensure that your configuration is correct, Orchestra Platform will utilize configuration from `application/config` folder to make the process stream-less with your other application (or bundles).
 
 - Create a `User` model, which extends `Orchestra\Model\User` model.
 - Update `application/config/database.php` and ensure your database connection is properly set up.
@@ -56,11 +47,9 @@ stream-less with your other application (or bundles).
 
 Complete the installation wizard, a simple 3 step installation process.
 
-## Orchestra Documentation
+## Orchestra Platform Documentation
 
-Orchestra Bundle come with an offline documentation, to view this please
-download and enable `bundocs` bundle, see
-[Bundocs Bundle](http://bundles.laravel.com/bundle/bundocs) for more detail.
+Orchestra Platform Bundle come with an offline documentation, to view this please download and enable `bundocs` bundle, see [Bundocs Bundle](http://bundles.laravel.com/bundle/bundocs) for more detail.
 
 ## Contributors
 
