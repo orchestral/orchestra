@@ -1,4 +1,4 @@
-f<?php namespace Orchestra\Extension\Publisher;
+<?php namespace Orchestra\Extension\Publisher;
 
 use \IoC,
 	\Session,
@@ -14,18 +14,38 @@ class FTP extends Driver {
 	 * 
 	 * @var Hybrid\FTP
 	 */
-	public $connection = null;
+	protected $connection = null;
 
 	/**
 	 * Construct a new FTP instance.
+	 *
+	 * @access public
+	 * @param  FTPClient    $client
+	 * @return void
 	 */
-	public function __construct()
+	public function __construct(FTPClient $client = null)
 	{
+		if (is_null($client)) $client = new FTPClient();
+
+		$this->attach($client);
+
 		// If FTP credential is stored in the session, we should reuse it 
 		// and connect to FTP server straight away.
 		$config = Session::get('orchestra.ftp', array());
 
 		if ( ! empty($config)) $this->connect($config);
+	}
+
+	/**
+	 * Attach an FTP Connection
+	 *
+	 * @access public
+	 * @param  FTPClient    $client
+	 * @return void
+	 */
+	public function attach(FTPClient $client)
+	{
+		$this->connection = $client;
 	}
 
 	/**
@@ -50,7 +70,7 @@ class FTP extends Driver {
 	{
 		try
 		{
-			$this->connection = new FTPClient($config);
+			$this->connection->setup($config);
 			$this->connection->connect();
 		}
 		catch (ServerException $e)
