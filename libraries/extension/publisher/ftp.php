@@ -1,8 +1,10 @@
-<?php namespace Orchestra\Extension\Publisher;
+f<?php namespace Orchestra\Extension\Publisher;
 
-use \RuntimeException,
-	\IoC,
+use \IoC,
 	\Session,
+	Hybrid\FTP as FTPClient,
+	Hybrid\FTP\RuntimeException,
+	Hybrid\FTP\ServerException,
 	Orchestra\Extension;
 
 class FTP extends Driver {
@@ -48,10 +50,10 @@ class FTP extends Driver {
 	{
 		try
 		{
-			$this->connection = IoC::resolve('orchestra.ftp', array($config));
+			$this->connection = new FTPClient($config);
 			$this->connection->connect();
 		}
-		catch (RuntimeException $e)
+		catch (ServerException $e)
 		{
 			// Connection might failed, but there nothing really to report.
 		}
@@ -90,7 +92,7 @@ class FTP extends Driver {
 			// avoiding infinite loop when we reach a file.
 			if ($lists === array($path)) return true;
 		}
-		catch (Hybrid\RuntimeException $e)
+		catch (RuntimeException $e)
 		{
 			return true;
 		}
@@ -145,7 +147,7 @@ class FTP extends Driver {
 		{
 			($recursively ? $this->recursive_chmod($path, 0777) : $this->chmod($path, 0777));
 		}
-		catch (Hybrid\RuntimeException $e)
+		catch (RuntimeException $e)
 		{
 			// We found an exception with FTP, but it would be hard to say 
 			// extension can't be activated, let's try activating the 
