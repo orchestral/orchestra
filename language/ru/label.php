@@ -55,7 +55,7 @@ return array(
 		'port'            => 'SMTP Port',
 		'username'        => 'SMTP Username',
 		'password'        => 'SMTP Password',
-		'encryption'      => 'STMP Encryption',
+		'encryption'      => 'SMTP Encryption',
 		'command'         => 'Sendmail Command',
 		'change_password' => 'Change Password',
 	),
