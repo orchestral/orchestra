@@ -121,6 +121,10 @@ class RoutingForgotTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals(handles('orchestra::forgot'), 
 			$response->foundation->headers->get('location'));
 
+		// Mimic restarting Orchestra.
+		Orchestra\Core::shutdown();
+		Orchestra\Core::start();
+		
 		$meta = Orchestra\Model\User\Meta::where('user_id', '=', 1)
 					->where('name', '=', 'reset_password_hash')
 					->first();
