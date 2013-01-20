@@ -1,4 +1,4 @@
-<?php namespace Orchestra;
+<?php namespace Orchestra\Repository;
 
 use Hybrid\Memory\Driver,
 	Orchestra\Model\User\Meta as User_Meta;

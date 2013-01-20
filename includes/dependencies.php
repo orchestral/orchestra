@@ -229,5 +229,5 @@ if ( ! IoC::registered('orchestra.memory'))
 
 Orchestra\Memory::extend('user', function()
 {
-	return new Orchestra\User;
+	return new Orchestra\Repository\User;
 });
