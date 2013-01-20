@@ -136,15 +136,15 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 			return Response::error('404');
 		}
 
-		$meta = User_Meta::where('user_id', '=', $user_id)
-					->where('name', '=', 'reset_password_hash')
-					->where('value', '=', $hash)
-					->first();
+		$user = User::find($user_id);
+		$meta = Orchestra\Memory::make('user');
 
-		if (is_null($meta)) return Response::error('404');
+		if ($hash !== $meta->get("reset_password_hash.{$user_id}"))
+		{
+			return Response::error('404');
+		}
 
 		$msg      = new Messages;
-		$user     = $meta->users()->first();
 		$memory   = Core::memory();
 		$hash     = sha1($user->email.Str::random(10));
 		$password = Str::random(5);
@@ -169,8 +169,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 		}
 		else
 		{
-			$meta->value = '';
-			$meta->save();
+			$meta->put("reset_password_hash.{$user_id}", "")
 
 			$user->password = $password;
 			$user->save();
