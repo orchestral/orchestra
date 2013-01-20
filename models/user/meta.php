@@ -30,7 +30,7 @@ class Meta extends Eloquent {
 	 * @param  int      $user_id
 	 * @return Orchestra\Model\User\Meta
 	 */
-	public function user($user_id)
+	public static function user($user_id)
 	{
 		return static::where('user_id', '=', $user_id);
 	}
