@@ -23,3 +23,18 @@ Event::listen('eloquent.deleting: Orchestra\Model\Role', function ($role)
 {
 	Orchestra\Acl::remove_role($role->name);
 });
+
+/*
+|--------------------------------------------------------------------------
+| Event listen to remove timezone Session
+|--------------------------------------------------------------------------
+*/
+
+Event::listen('eloquent.saving: Orchestra\Model\User\Meta', function ($meta)
+{
+	if ($meta->name !== 'timezone') return null;
+
+	$user_id = $meta->user_id;
+
+	Cache::delete("orchestra.user.localtime.{$user_id}");
+});
