@@ -36,27 +36,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 
 		// Get Users (with roles) and limit it to only 30 results for
 		// pagination. Don't you just love it when pagination simply works.
-		$users = User::with('roles')->where_not_null('users.id');
-
-		if ( ! empty($roles))
-		{
-			$users->join('user_roles', function ($join) use ($roles)
-			{
-				$join->on('users.id', '=', 'user_roles.user_id');
-
-			})->where_in('user_roles.role_id', $roles);
-		}
-
-		if ( ! empty($keyword))
-		{
-			$users->where(function ($query) use ($keyword)
-			{
-				$query->where('email', 'LIKE', $keyword)
-					->or_where('fullname', 'LIKE', $keyword);
-			});
-		}
-
-		$users = $users->paginate(30);
+		$users = User::search($keyword, $roles)->paginate(30);
 
 		// Build users table HTML using a schema liked code structure.
 		$table = UserPresenter::table($users);

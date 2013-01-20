@@ -73,6 +73,40 @@ class User extends Eloquent {
 	}
 
 	/**
+	 * Search user based on keyword as roles.
+	 *
+	 * @static
+	 * @access public 	
+	 * @param  string   $keyword
+	 * @param  array    $roles
+	 * @return Orchestra\Model\User
+	 */
+	public static function search($keyword = '', $roles = array())
+	{
+		$users = static::with('roles')->where_not_null('users.id');
+
+		if ( ! empty($roles))
+		{
+			$users->join('user_roles', function ($join) use ($roles)
+			{
+				$join->on('users.id', '=', 'user_roles.user_id');
+
+			})->where_in('user_roles.role_id', $roles);
+		}
+
+		if ( ! empty($keyword))
+		{
+			$users->where(function ($query) use ($keyword)
+			{
+				$query->where('email', 'LIKE', $keyword)
+					->or_where('fullname', 'LIKE', $keyword);
+			});
+		}
+
+		return $users;
+	}
+
+	/**
 	 * Setter for password attributes.
 	 * 
 	 * @access public 
