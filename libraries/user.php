@@ -54,7 +54,39 @@ class User extends Driver {
 			return $user_meta->value;
 		}
 
+		$this->put($key, null);
+
 		return value($default);
+	}
+
+	/**
+	 * Set a value from a key
+	 *
+	 * @access  public
+	 * @param   string  $key        A string of key to add the value.
+	 * @param   mixed   $value      The value.
+	 * @return  mixed
+	 */
+	public function put($key, $value = '')
+	{
+		$key   = str_replace('.', '/user-', $key);
+		$value = value($value);
+		array_set($this->data, $key, $value);
+
+		return $value;
+	}
+
+	/**
+	 * Delete value of a key
+	 *
+	 * @access  public
+	 * @param   string  $key        A string of key to delete.
+	 * @return  bool
+	 */
+	public function forget($key = null)
+	{
+		$key = str_replace('.', '/user-', $key);
+		return array_forget($this->data, $key);
 	}
 
 	/**

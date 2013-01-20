@@ -84,7 +84,6 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 		}
 
 		$meta  = Orchestra\Memory::make('user');
-
 		$memory = Core::memory();
 		$hash   = sha1($user->email.Str::random(10));
 		$url    = handles('orchestra::forgot/reset/'.$user->id.'/'.$hash);
