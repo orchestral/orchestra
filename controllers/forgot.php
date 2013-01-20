@@ -169,7 +169,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 		}
 		else
 		{
-			$meta->put("reset_password_hash.{$user_id}", "")
+			$meta->put("reset_password_hash.{$user_id}", "");
 
 			$user->password = $password;
 			$user->save();
