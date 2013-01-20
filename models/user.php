@@ -46,9 +46,6 @@ class User extends Eloquent {
 	 */
 	public function localtime($datetime)
 	{
-		$user_id          = $this->get_attribute('id');
-		$default_timezone = Config::get('timezone', 'UTC');
-
 		if ( ! ($datetime instanceof DateTime))
 		{
 			$datetime = new DateTime(
@@ -56,20 +53,29 @@ class User extends Eloquent {
 				new DateTimeZone($default_timezone)
 			);
 		}
-		$user_timezone = Cache::get("orchestra.user.localtime.{$user_id}", function() 
-			use ($user_id, $default_timezone)
-		{
-			$user_timezone = User_Meta::name('timezone', $user_id);
 
-			if (is_null($user_timezone)) $user_timezone = $default_timezone;
-			Cache::put("orchestra.user.localtime.{$user_id}", $user_timezone);
-
-			return $user_timezone;
-		});
+		$user_id          = $this->get_attribute('id');
+		$default_timezone = Config::get('timezone', 'UTC');
+		$meta             = Orchestra\Memory::make('user');
+		$user_timezone    = $meta->get("localtime.{$user_id}", $default_timezone);
 
 		$datetime->setTimeZone(new DateTimeZone($user_timezone));
 
 		return $datetime;
+	}
+
+	/**
+	 * Get user timezone.
+	 *
+	 * @access public
+	 * @return string
+	 */
+	public function timezone()
+	{
+		$user_id = $this->get_attribute('id');
+		$meta    = Orchestra\Memory::make('user');
+
+		return $meta->get("localtime.{$user_id}", Config::get('timezone'));
 	}
 
 	/**

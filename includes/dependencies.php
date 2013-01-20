@@ -226,3 +226,8 @@ if ( ! IoC::registered('orchestra.memory'))
 		return Orchestra\Memory::make('fluent.orchestra_options');
 	});
 }
+
+Orchestra\Memory::extend('user', function()
+{
+	return new Orchestra\User;
+});

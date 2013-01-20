@@ -83,15 +83,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 					->with('message', $msg->serialize());
 		}
 
-		$meta = User_Meta::name('reset_password_hash', $user->id);
-
-		if (is_null($meta))
-		{
-			$meta = new User_Meta(array(
-				'user_id' => $user->id,
-				'name'    => 'reset_password_hash',
-			));
-		}
+		$meta  = Orchestra\Memory::make('user');
 
 		$memory = Core::memory();
 		$hash   = sha1($user->email.Str::random(10));
@@ -117,8 +109,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 		}
 		else
 		{
-			$meta->value = $hash;
-			$meta->save();
+			$meta->put("reset_password_hash.{$user->id}", $hash);
 
 			$msg->add('success', __('orchestra::response.forgot.email-send'));
 		}
