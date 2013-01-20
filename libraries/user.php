@@ -123,6 +123,8 @@ class User extends Driver {
 
 			if (true === $is_new and is_null($user_meta))
 			{
+				if (is_null($value)) continue;
+
 				// Insert the new key:value
 				User_Meta::create(array(
 					'name'    => $name,
@@ -132,9 +134,16 @@ class User extends Driver {
 			}
 			else
 			{
-				// Update the key:value
-				$user_meta->value = $value;
-				$user_meta->save();
+				if (is_null($value))
+				{
+					$user_meta->delete();
+				}
+				else
+				{
+					// Update the key:value
+					$user_meta->value = $value;
+					$user_meta->save();
+				}
 			}
 		}
 	}
