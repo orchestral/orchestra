@@ -69,7 +69,7 @@ class User extends Eloquent {
 
 		$datetime->setTimeZone(new DateTimeZone($user_timezone));
 
-		return
+		return $datetime;
 	}
 
 	/**
