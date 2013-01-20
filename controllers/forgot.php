@@ -138,7 +138,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 		$user = User::find($user_id);
 		$meta = Orchestra\Memory::make('user');
 
-		if ($hash !== $meta->get("reset_password_hash.{$user_id}"))
+		if (is_null($user) or $hash !== $meta->get("reset_password_hash.{$user_id}"))
 		{
 			return Response::error('404');
 		}
