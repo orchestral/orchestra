@@ -174,6 +174,8 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 
 			$form->token = true;
 		});
+
+		Event::fire('orchestra.form: user.account', array($user, $form));
 		
 		return View::make('orchestra::credential.register', array(
 			'eloquent' => $user,
@@ -191,6 +193,14 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 	 */
 	public function post_register()
 	{
+		if ( ! IoC::registered('orchestra.user: register'))
+		{
+			IoC::register('orchestra.user: register', function ()
+			{
+				return new User;
+			});
+		}
+
 		$input    = Input::all();
 		$password = Str::random(5);
 		$rules    = array(
@@ -212,7 +222,8 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 					->with_errors($val);
 		}
 
-		$user = new User(array(
+		$user = IoC::resolve('orchestra.user: register');
+		$user->fill(array(
 			'email'    => $input['email'],
 			'fullname' => $input['fullname'],
 			'password' => $password,
@@ -260,7 +271,6 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 	 */
 	protected function send_email(User $user, $password, Messages $msg)
 	{
-
 		$site = Orchestra\Core::memory()->get('site.name', 'Orchestra');
 		$data = array(
 			'password' => $password,
