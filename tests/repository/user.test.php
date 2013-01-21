@@ -68,7 +68,7 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 
 		$foo = $this->stub->get("foobar.1");
 
-		$this->assertTrue(is_null($foo->value));
+		$this->assertTrue(is_null($foo));
 
 		$refl = new \ReflectionObject($this->stub);
 		$data = $refl->getProperty('data');
