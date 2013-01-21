@@ -5,6 +5,7 @@ use \Config,
 	\DateTimeZone,
 	\Eloquent,
 	\Hash,
+	Orchestra\Memory,
 	User\Meta as User_Meta;
 
 class User extends Eloquent {
@@ -47,7 +48,7 @@ class User extends Eloquent {
 	public function localtime($datetime)
 	{
 		$user_id          = $this->get_attribute('id');
-		$meta             = Orchestra\Memory::make('user');
+		$meta             = Memory::make('user');
 		$default_timezone = Config::get('application.timezone', 'UTC');
 
 		if ( ! ($datetime instanceof DateTime))
@@ -74,7 +75,7 @@ class User extends Eloquent {
 	public function timezone()
 	{
 		$user_id = $this->get_attribute('id');
-		$meta    = Orchestra\Memory::make('user');
+		$meta    = Memory::make('user');
 
 		return $meta->get("localtime.{$user_id}", Config::get('application.timezone', 'UTC'));
 	}
