@@ -27,6 +27,8 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 
 		$this->user = Orchestra\Model\User::find(1);
 		$this->stub = Orchestra\Memory::make('user');
+
+		$this->stub->put("foo.1", "foobar");
 	}
 
 	/**
@@ -58,12 +60,6 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testRepositoryUserGet()
 	{
-		Orchestra\Model\User\Meta::create(array(
-			'name'    => 'foo',
-			'value'   => 'foobar',
-			'user_id' => 1,
-		));
-
 		$foo = $this->stub->get("foo.1");
 
 		$this->assertEquals('foobar', $foo->value);
@@ -76,6 +72,24 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 		$data = $refl->getProperty('data');
 		$data->setAccessible(true);
 
-		
+		$this->assertEquals(array('foo/user-1' => 'foobar'), $data->getValue($this->stub));
+	}
+
+	/**
+	 * Test Orchestra\Repository\User::put()
+	 *
+	 * @test
+	 */
+	public function testRepositoryUserPut()
+	{
+		$stub = new Orchestra\Repository\User;
+		$stub->put("hello.1", "Hello World");
+
+		$refl = new \ReflectionObject($stub);
+		$data = $refl->getProperty('data');
+		$data->setAccessible(true);
+
+		$this->assertEquals(array('hello/user-1' => 'Hello World'), $data->getValue($stub));
+		$this->assertEquals('Hello World', $stub->get("hello.1"));
 	}
 }
