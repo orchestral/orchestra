@@ -111,14 +111,14 @@ class User extends Driver {
 
 			$serialize = serialize($value);
 
-			if ($checksum === md5($serialize))
+			if ($checksum === md5($serialize) or empty($user_id))
 			{
 				continue;
 			}
 
 			list($name, $user_id) = explode('/user-', $key);
 
-			$user_meta =  User_Meta::where('name', '=', $name)
+			$user_meta = User_Meta::where('name', '=', $name)
 						->where('user_id', '=', $user_id)->first();
 
 			if (true === $is_new and is_null($user_meta))
