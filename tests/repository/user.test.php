@@ -64,7 +64,7 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 
 		$foo = $this->stub->get("foo.1");
 
-		$this->assertEquals('foobar', $foo->value);
+		$this->assertEquals('foobar', $foo);
 
 		$foo = $this->stub->get("foobar.1");
 
