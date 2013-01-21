@@ -74,7 +74,10 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 		$data = $refl->getProperty('data');
 		$data->setAccessible(true);
 
-		$this->assertEquals(array('foo/user-1' => 'foobar'), $data->getValue($this->stub));
+		$this->assertEquals(array(
+			'foo/user-1'    => 'foobar',
+			'foobar/user-1' => null,
+		), $data->getValue($this->stub));
 	}
 
 	/**
