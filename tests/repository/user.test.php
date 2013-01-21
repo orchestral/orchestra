@@ -51,6 +51,16 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 	{
 		$this->assertInstanceOf('Hybrid\Memory\Driver', $this->stub);
 		$this->assertInstanceOf('Hybrid\Memory\Driver', new Orchestra\Repository\User);
+	
+		$refl    = new \ReflectionObject($this->stub);
+		$storage = $refl->getProperty('storage');
+		$key_map = $refl->getProperty('key_map');
+
+		$storage->setAccessible(true);
+		$key_map->setAccessible(true);
+
+		$this->assertEqual('usermeta', $storage->getValue($this->stub));
+		$this->assertTrue(is_array($key_map->getValue($this->stub)));
 	}
 
 	/**
