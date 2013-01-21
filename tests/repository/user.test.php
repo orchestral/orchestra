@@ -59,7 +59,7 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 		$storage->setAccessible(true);
 		$key_map->setAccessible(true);
 
-		$this->assertEqual('usermeta', $storage->getValue($this->stub));
+		$this->assertEquals('usermeta', $storage->getValue($this->stub));
 		$this->assertTrue(is_array($key_map->getValue($this->stub)));
 	}
 
