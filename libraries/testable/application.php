@@ -30,6 +30,7 @@ class Application {
 		Config::set('database.default', 'testdb');
 		Event::first('orchestra.testable: setup-db');
 		O\Installer::$status = false;
+		URL::$base           = null;
 
 		Config::set('application.url', 'http://localhost');
 		Config::set('application.index', '');
