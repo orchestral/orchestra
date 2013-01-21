@@ -109,14 +109,13 @@ class User extends Driver {
 				extract($this->key_map[$key]);
 			}
 
-			$serialize = serialize($value);
+			$serialize            = serialize($value);
+			list($name, $user_id) = explode('/user-', $key);
 
 			if ($checksum === md5($serialize) or empty($user_id))
 			{
 				continue;
 			}
-
-			list($name, $user_id) = explode('/user-', $key);
 
 			$user_meta = User_Meta::where('name', '=', $name)
 						->where('user_id', '=', $user_id)->first();
