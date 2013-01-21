@@ -27,8 +27,6 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 
 		$this->user = Orchestra\Model\User::find(1);
 		$this->stub = Orchestra\Memory::make('user');
-
-		$this->stub->put("foo.1", "foobar");
 	}
 
 	/**
@@ -37,7 +35,7 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 	public function tearDown()
 	{
 		Orchestra\Core::shutdown();
-		
+
 		unset($this->user);
 		unset($this->stub);
 
@@ -62,6 +60,8 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testRepositoryUserGet()
 	{
+		$this->stub->put("foo.1", "foobar");
+
 		$foo = $this->stub->get("foo.1");
 
 		$this->assertEquals('foobar', $foo->value);
