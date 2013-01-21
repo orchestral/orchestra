@@ -50,4 +50,32 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 		$this->assertInstanceOf('Hybrid\Memory\Driver', $this->stub);
 		$this->assertInstanceOf('Hybrid\Memory\Driver', new Orchestra\Repository\User);
 	}
+
+	/**
+	 * Test Orchestra\Repository\User::get()
+	 *
+	 * @test
+	 */
+	public function testRepositoryUserGet()
+	{
+		Orchestra\Model\User\Meta::create(array(
+			'name'    => 'foo',
+			'value'   => 'foobar',
+			'user_id' => 1,
+		));
+
+		$foo = $this->stub->get("foo.1");
+
+		$this->assertEquals('foobar', $foo->value);
+
+		$foo = $this->stub->get("foobar.1");
+
+		$this->assertTrue(is_null($foo->value));
+
+		$refl = new \ReflectionObject($this->stub);
+		$data = $refl->getProperty('data');
+		$data->setAccessible(true);
+
+		
+	}
 }
