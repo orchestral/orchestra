@@ -48,6 +48,6 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 	public function testInstanceOfStub()
 	{
 		$this->assertInstanceOf('Hybrid\Memory\Driver', $this->stub);
-		$this->assertInstanceOf('Hybrid\Memory\Driver', new Orchestra\Respository\User);
+		$this->assertInstanceOf('Hybrid\Memory\Driver', new Orchestra\Repository\User);
 	}
 }
