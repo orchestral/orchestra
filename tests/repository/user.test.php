@@ -36,6 +36,8 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 	 */
 	public function tearDown()
 	{
+		Orchestra\Core::shutdown();
+		
 		unset($this->user);
 		unset($this->stub);
 
