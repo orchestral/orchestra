@@ -59,7 +59,7 @@ class User extends Eloquent {
 			);
 		}
 
-		$user_timezone = $meta->get("localtime.{$user_id}", $default_timezone);
+		$user_timezone = $meta->get("timezone.{$user_id}", $default_timezone);
 
 		$datetime->setTimeZone(new DateTimeZone($user_timezone));
 
@@ -77,7 +77,7 @@ class User extends Eloquent {
 		$user_id = $this->get_attribute('id');
 		$meta    = Memory::make('user');
 
-		return $meta->get("localtime.{$user_id}", Config::get('application.timezone', 'UTC'));
+		return $meta->get("timezone.{$user_id}", Config::get('application.timezone', 'UTC'));
 	}
 
 	/**
