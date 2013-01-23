@@ -1,5 +1,7 @@
 @layout('orchestra::layout.main')
 
+<?php use Orchestra\Extension; ?>
+
 @section('content')
 
 <div class="row-fluid">
@@ -20,7 +22,10 @@
 			<tr>
 				<td>
 					<strong>
-						@if ( ! ($started = Orchestra\Extension::started($name)))
+						<?php 
+						$active  = Extension::active($name);
+						$started = Extension::started($name); ?>
+						@if ( ! ($started))
 							{{ $extension->name }}
 						@else
 							{{ HTML::link(handles('orchestra::extensions/configure/'.$name), $extension->name) }}
@@ -30,7 +35,7 @@
 						@endforeach
 					</strong>
 					<div class="pull-right btn-group">
-						@if ( ! $started )
+						@if ( ! ($started or $active))
 							@if (empty($extension->unresolved))
 								{{ HTML::link(handles('orchestra::extensions/activate/'.$name), __('orchestra::label.extensions.actions.activate'), array('class' => 'btn btn-primary btn-mini')) }}
 							@else

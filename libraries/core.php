@@ -162,25 +162,19 @@ class Core {
 		));
 
 		// Localize memory variable.
-		$memory = static::$cached['memory'];
+		$memory = static::memory();
 
 		// Define IoC for Theme.
 		IoC::singleton('orchestra.theme: backend', function() use ($memory)
 		{
-			$theme = $memory->get('site.theme.backend', function () use ($memory)
-			{
-				return $memory->put('site.theme.backend', 'default');
-			});
+			$theme = $memory->get('site.theme.backend', 'default');
 
 			return Theme::container('backend', $theme);
 		});
 
 		IoC::singleton('orchestra.theme: frontend', function() use ($memory)
 		{
-			$theme = $memory->get('site.theme.frontend', function () use ($memory)
-			{
-				return $memory->put('site.theme.frontend', 'default');
-			});
+			$theme = $memory->get('site.theme.frontend', 'default');
 
 			return Theme::container('frontend', $theme);
 		});
@@ -231,7 +225,7 @@ class Core {
 	 */
 	protected static function extensions()
 	{
-		if ( !! static::safe_mode_status()) return ;
+		if ( !! static::check_safe_mode()) return ;
 
 		$memory     = Core::memory();
 		$availables = (array) $memory->get('extensions.available', array());
@@ -272,7 +266,6 @@ class Core {
 	{
 		// localize the variable, and ensure it by references.
 		$acl    = static::acl();
-		$memory = static::memory();
 		$menu   = static::menu('orchestra');
 
 		// Add basic menu.
@@ -281,7 +274,7 @@ class Core {
 			->link(handles('orchestra'));
 
 		// Multiple event listener for Backend (administrator panel)
-		Event::listen('orchestra.done: backend', function () use ($acl, $memory, $menu)
+		Event::listen('orchestra.done: backend', function () use ($acl, $menu)
 		{
 			// Add menu when logged-user user has authorization to
 			// `manage users`
@@ -342,7 +335,7 @@ class Core {
 	 * @access protected
 	 * @return boolean
 	 */
-	protected static function safe_mode_status()
+	protected static function check_safe_mode()
 	{
 		if (Input::get('safe_mode') == '0')
 		{
@@ -352,13 +345,10 @@ class Core {
 
 		$session = Session::get('safe_mode', function ()
 		{
-			if (Input::get('safe_mode') == '1')
-			{
-				Session::put('safe_mode', 'Y');
-				return 'Y';
-			}
-
-			return 'N';
+			if (Input::get('safe_mode') != '1') return 'N';
+			
+			Session::put('safe_mode', 'Y');
+			return 'Y';
 		});
 
 		return static::$safe_mode = ($session === 'Y');

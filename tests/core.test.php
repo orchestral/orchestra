@@ -107,8 +107,6 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 	public function testConfigurationIsProperlyConfigured()
 	{
 		Orchestra\Core::start();
-
-		$memory = Orchestra\Core::memory();
 		
 		$this->assertTrue(is_callable(Config::get('hybrid::auth.roles')));
 		$this->assertTrue(is_array(Config::get('hybrid::form.fieldset')));

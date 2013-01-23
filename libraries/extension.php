@@ -66,7 +66,7 @@ class Extension {
 	{
 		foreach (static::$extensions as $name => $extension)
 		{
-			Event::fire("extension.done: {$name}");
+			Event::fire("extension.done: {$name}", array($extension));
 		}
 
 		static::$extensions = array();
@@ -117,8 +117,7 @@ class Extension {
 	 */
 	public static function available($name)
 	{
-		$memory = Core::memory();
-		return (is_array($memory->get("extensions.available.{$name}", null)));
+		return (is_array(Core::memory()->get("extensions.available.{$name}", null)));
 	}
 
 	/**
@@ -131,8 +130,7 @@ class Extension {
 	 */
 	public static function active($name)
 	{
-		$memory = Core::memory();
-		return (is_array($memory->get("extensions.active.{$name}", null)));
+		return (is_array(Core::memory()->get("extensions.active.{$name}", null)));
 	}
 
 	/**
