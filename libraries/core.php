@@ -5,7 +5,9 @@ use \Asset,
 	\Config,
 	\Exception,
 	\Event,
-	\IoC;
+	\IoC,
+	\Input,
+	\Session;
 
 class Core {
 
@@ -17,6 +19,16 @@ class Core {
 	 * @var     boolean
 	 */
 	protected static $initiated = false;
+
+	/**
+	 * Using safe mode?
+	 *
+	 * @static
+	 * @access protected
+	 * @var    boolean
+	 */
+	protected static $safe_mode = false;
+	
 
 	/**
 	 * Cached instances for Orchestra
@@ -219,6 +231,8 @@ class Core {
 	 */
 	protected static function extensions()
 	{
+		if ( !! static::safe_mode_status()) return ;
+
 		$memory     = Core::memory();
 		$availables = (array) $memory->get('extensions.available', array());
 		$actives    = (array) $memory->get('extensions.active', array());
@@ -319,5 +333,34 @@ class Core {
 				}
 			}
 		});
+	}
+
+	/**
+	 * Determine whether current request is in safe mode or not.
+	 *
+	 * @static
+	 * @access protected
+	 * @return boolean
+	 */
+	protected static function safe_mode_status()
+	{
+		if (Str::upper(Input::get('safe_mode', 'n')) === 'N')
+		{
+			Session::forget('safe_mode');
+			return static::$safe_mode = false;
+		}
+
+		$session = Session::get('safe_mode', function ()
+		{
+			if (Str::upper(Input::get('safe_mode', 'n')) === 'Y')
+			{
+				Session::put('safe_mode', 'Y');
+				return 'Y';
+			}
+
+			return 'N';
+		});
+
+		return static::$safe_mode = ($session === 'Y');
 	}
 }
