@@ -344,7 +344,7 @@ class Core {
 	 */
 	protected static function safe_mode_status()
 	{
-		if (Str::upper(Input::get('safe_mode', 'n')) === 'N')
+		if (Input::get('safe_mode') == '0')
 		{
 			Session::forget('safe_mode');
 			return static::$safe_mode = false;
@@ -352,7 +352,7 @@ class Core {
 
 		$session = Session::get('safe_mode', function ()
 		{
-			if (Str::upper(Input::get('safe_mode', 'n')) === 'Y')
+			if (Input::get('safe_mode') == '1')
 			{
 				Session::put('safe_mode', 'Y');
 				return 'Y';

@@ -114,8 +114,11 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	 */
 	public function get_deactivate($name = null)
 	{
-		if (is_null($name) or ! Extension::started($name)) return Response::error('404');
-
+		if (is_null($name) or ( ! Extension::started($name) and ! Extension::available($name))) 
+		{
+			return Response::error('404');
+		}
+		
 		$msg = new Messages;
 
 		try

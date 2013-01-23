@@ -108,6 +108,20 @@ class Extension {
 	}
 
 	/**
+	 * Check whether an extension is available.
+	 *
+	 * @static 
+	 * @access public
+	 * @param  string   $name
+	 * @return boolean
+	 */
+	public static function available($name)
+	{
+		$memory = Core::memory();
+		return (is_array($memory->get("extensions.available.{$name}", null)));
+	}
+
+	/**
 	 * Load extensions for Orchestra (from a list of folders)
 	 *
 	 * @static
