@@ -100,7 +100,6 @@ class User extends Driver {
 		foreach ($this->data as $key => $value)
 		{
 			$is_new   = true;
-			$id       = null;
 			$checksum = '';
 			
 			if (array_key_exists($key, $this->key_map))
