@@ -29,9 +29,10 @@ class HelpersTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testHandlesReturnProperURL()
 	{
+		$orchestra = trim(Bundle::option('orchestra', 'handles'), '/');
 		$this->assertEquals('http://localhost/home', handles('home'));
 		$this->assertEquals('http://localhost/home', handles('application::home'));
-		$this->assertEquals('http://localhost/orchestra/login', handles('orchestra::login'));
+		$this->assertEquals("http://localhost/{$orchestra}/login", handles('orchestra::login'));
 
 	}
 

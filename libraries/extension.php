@@ -122,6 +122,20 @@ class Extension {
 	}
 
 	/**
+	 * Check whether an extension is active.
+	 *
+	 * @static 
+	 * @access public
+	 * @param  string   $name
+	 * @return boolean
+	 */
+	public static function active($name)
+	{
+		$memory = Core::memory();
+		return (is_array($memory->get("extensions.active.{$name}", null)));
+	}
+
+	/**
 	 * Load extensions for Orchestra (from a list of folders)
 	 *
 	 * @static

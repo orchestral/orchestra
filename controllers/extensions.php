@@ -114,7 +114,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	 */
 	public function get_deactivate($name = null)
 	{
-		if (is_null($name) or ( ! Extension::started($name) and ! Extension::available($name))) 
+		if (is_null($name) or ( ! Extension::started($name) and ! Extension::active($name))) 
 		{
 			return Response::error('404');
 		}
