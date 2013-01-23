@@ -265,8 +265,8 @@ class Core {
 	protected static function loader()
 	{
 		// localize the variable, and ensure it by references.
-		$acl    = static::acl();
-		$menu   = static::menu('orchestra');
+		$acl  = static::acl();
+		$menu = static::menu('orchestra');
 
 		// Add basic menu.
 		$menu->add('home')
