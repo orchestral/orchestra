@@ -24,3 +24,6 @@
 - Move `Orchestra\Table` and `Orchestra\Form` usage to presenters.
 - Allow user registration on Orchestra Platform.
 - Add `Orchestra\Installer\Requirement` class, optimize installer controller.
+- Implement `Orchestra\Repository\User` to manage meta data for users.
+- Add safe_mode to allow Orchestra Platform to be loaded without any Extension.
+- Update to Twitter Bootstrap v2.2.2.
