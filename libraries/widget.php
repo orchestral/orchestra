@@ -1,8 +1,16 @@
 <?php namespace Orchestra;
 
-use \InvalidArgumentException;
+use \Closure, 
+	\InvalidArgumentException;
 
 class Widget {
+
+	/**
+	 * The third-party driver registrar.
+	 *
+	 * @var array
+	 */
+	public static $registrar = array();
 
 	/**
 	 * Cache widget instance so we can reuse it
@@ -32,6 +40,13 @@ class Widget {
 
 		if ( ! isset(static::$instances[$driver]))
 		{
+			if (isset(static::$registrar[$type]))
+			{
+				$resolver = static::$registrar[$type];
+
+				return static::$instances[$name] = $resolver($type, $config);
+			}
+
 			switch ($type)
 			{
 				case 'menu' :
@@ -51,6 +66,18 @@ class Widget {
 		}
 
 		return static::$instances[$driver];
+	}
+	
+	/**
+	 * Register a third-party widget driver.
+	 *
+	 * @param  string   $driver
+	 * @param  Closure  $resolver
+	 * @return void
+	 */
+	public static function extend($driver, Closure $resolver)
+	{
+		static::$registrar[$driver] = $resolver;
 	}
 
 	/**
