@@ -17,6 +17,11 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	public function setUp()
 	{
 		$this->stub = new WidgetStub('foobar', array());
+
+		Orchestra\Widget::extend('stub', function ($name, $config)
+		{
+			return new WidgetStub($name, $config);
+		});
 	}
 
 	/**
@@ -85,6 +90,8 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	public function testInstanceOfStub()
 	{
 		$this->assertInstanceOf('Orchestra\Widget\Driver', $this->stub);
+		$this->assertInstanceOf('Orchestra\Widget\Driver', Orchestra\Widget::make('stub'));
+		$this->assertInstanceOf('WidgetStub', Orchestra\Widget::make('stub'));
 	}
 
 	/**
@@ -95,6 +102,8 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	public function testRenderStub()
 	{
 		$this->assertEquals('stub', $this->stub->render());
+		$this->assertEquals('stub', Orchestra\Widget::make('stub')->render());
+
 	}
 
 	/**
@@ -111,7 +120,12 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 			)),
 		);
 
+		$stub = Orchestra\Widget::make('stub');
+		$stub->add('foo')->title('foobar');
+		
 		$this->stub->add('foo')->title('foobar');
+
+		$this->assertEquals($expected, $stub->get());
 		$this->assertEquals($expected, $this->stub->get());
 	}
 }
@@ -143,3 +157,4 @@ class WidgetStub extends Orchestra\Widget\Driver {
 		return $item;
 	}
 }
+
