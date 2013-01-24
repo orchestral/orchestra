@@ -2,6 +2,25 @@
 
 /*
 |--------------------------------------------------------------------------
+| Orchestra Events Listener
+|--------------------------------------------------------------------------
+|
+| Lets listen to when Orchestra bundle is started.
+|
+*/
+
+Event::listen('laravel.done', function ()
+{
+	Orchestra\Core::shutdown();
+});
+
+Event::listen('orchestra.started: backend', function ()
+{
+	Orchestra\View::$theme = 'backend';
+});
+
+/*
+|--------------------------------------------------------------------------
 | Event listen to sync roles
 |--------------------------------------------------------------------------
 */
