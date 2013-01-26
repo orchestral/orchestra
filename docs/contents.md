@@ -36,6 +36,7 @@
 	- [Default Theme](/bundocs/orchestra/themes#default-theme)
 		- [Theme Manager](/bundocs/orchestra/themes#manage-theme)
 	- [Anatomy of A Theme](/bundocs/orchestra/themes#anatomy)
+		- [Definition File](/bundocs/orchestra/themes#definition)
 		- [Assets](/bundocs/orchestra/themes#assets)
 
 ### Widget

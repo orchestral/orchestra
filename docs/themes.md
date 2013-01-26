@@ -44,8 +44,20 @@ The `DEFAULT_BUNDLE` views is accessible from the root path of your theme, while
 
 * `public/themes/default/home/index.blade.php`
 * `public/themes/default/bundles/foo/home.index.blade.php`
-* `public/themes/default/themes.json`
+* `public/themes/default/theme.json`
 * `public/themes/default/screenshot.png`
+
+<a name="definition"></a>
+### Theme Definition File
+
+In order Melody Theme Manager to register and use your theme, please include a `screenshot.png` file with dimension of 300px x 225px and a definition file `theme.json`
+
+	{
+		"name"        : "Default Theme",
+		"description" : "Default Theme",
+		"author"      : "Mior Muhammad Zaki"
+	}
+
 
 <a name="assets"></a>
 ### Assets
