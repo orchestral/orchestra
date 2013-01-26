@@ -39,7 +39,7 @@
 		- [Assets](/bundocs/orchestra/themes#assets)
 
 ### Widget
-* [Overviews](/bundocs/orchestra/widget)
+* [Overviews](/bundocs/orchestra/widgets)
 
 ### Events
 * [Overviews](/bundocs/orchestra/events)
