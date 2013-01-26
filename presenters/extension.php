@@ -35,7 +35,7 @@ class Extension {
 				{
 					$fieldset->control('input:text', 'handles', function ($control) use ($handles)
 					{
-						$control->label('Handle URL');
+						$control->label(__('orchestra::label.extensions.handles'));
 						$control->value($handles);
 					});
 				}

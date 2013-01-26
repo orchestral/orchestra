@@ -16,6 +16,7 @@ return array(
 		'version'      => 'Version :version',
 		'dependencies' => 'Dependencies',
 		'update'       => 'Update',
+		'handles'      => 'Handle URL',
 
 		'actions' => array(
 			'activate'   => 'Activate',
@@ -46,6 +47,8 @@ return array(
 	),
 
 	'settings' => array(
+		'application'       => 'Application',
+		'messages'          => 'E-mail and Messaging',
 		'user-registration' => 'Allow User Registration',
 	),
 

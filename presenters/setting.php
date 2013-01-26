@@ -24,7 +24,7 @@ class Setting {
 				'method' => 'POST',
 			));
 
-			$form->fieldset('Application', function ($fieldset)
+			$form->fieldset(__('orchestra::label.settings.application'), function ($fieldset)
 			{
 				$fieldset->control('input:text', 'site_name', function ($control)
 				{
@@ -48,7 +48,7 @@ class Setting {
 				});
 			});
 
-			$form->fieldset('E-mail and Messaging', function ($fieldset) use ($model)
+			$form->fieldset(__('orchestra::label.settings.messages'), function ($fieldset) use ($model)
 			{
 				$fieldset->control('select', 'email_default', function ($control)
 				{
