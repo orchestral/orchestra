@@ -5,8 +5,8 @@ use Laravel\Fluent,
 	Orchestra\Extension,
 	Orchestra\Extension\Publisher,
 	Orchestra\Form,
-	Orchestra\HTML,
 	Orchestra\Messages,
+	Orchestra\Presenter\Extension as ExtensionPresenter,
 	Orchestra\View;
 
 class Orchestra_Extensions_Controller extends Orchestra\Controller {
@@ -153,8 +153,6 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	{
 		if (is_null($name) or ! Extension::started($name)) return Response::error('404');
 
-		if (Extension::option($name, 'configurable') === false) return Response::error('404');
-
 		// Load configuration from memory.
 		$memory = Core::memory();
 		$config = new Fluent((array) $memory->get("extension_{$name}", array()));
@@ -163,46 +161,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 		// Add basic form, allow extension to add custom configuration field
 		// to this form using events.
-		$form = Form::of("orchestra.extension: {$name}", function ($form) use ($name, $config)
-		{
-			$form->row($config);
-
-			$form->attr(array(
-				'action' => handles("orchestra::extensions/configure/{$name}"),
-				'method' => "POST",
-			));
-
-			$handles = Extension::option($name, 'handles');
-
-			$form->fieldset(function ($fieldset) use ($handles, $name)
-			{
-				// We should only cater for custom URL handles for a route.
-				if ( ! is_null($handles) and Extension::option($name, 'configurable') !== false)
-				{
-					$fieldset->control('input:text', 'handles', function ($control) use ($handles)
-					{
-						$control->label = 'Handle URL';
-						$control->value = $handles;
-					});
-				}
-
-				$fieldset->control('input:text', 'migrate', function ($control) use ($handles, $name)
-				{
-					$control->label = __('orchestra::label.extensions.update');
-
-					$control->field = function($row, $self) use ($name)
-					{
-						return HTML::link(
-							handles('orchestra::extensions/update/'.$name),
-							__('orchestra::label.extensions.actions.update'),
-							array('class' => 'btn btn-info')
-						);
-					};
-
-				});
-
-			});
-		});
+		$form = ExtensionPresenter::form($name, $config);
 
 		// Now lets the extension do their magic.
 		Event::fire("orchestra.form: extension.{$name}", array($config, $form));
