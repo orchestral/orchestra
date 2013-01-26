@@ -25,12 +25,6 @@
 	- [Add Child Resources](/bundocs/orchestra/extensions/resources#register-child)
 	- [Returning Response](/bundocs/orchestra/extensions/resources#returning-response)
 
-### Events
-* [Overviews](/bundocs/orchestra/events)
-	- [General](/bundocs/orchestra/events/general)
-	- [Installation](/bundocs/orchestra/events/install)
-	- [Credential](/bundocs/orchestra/events/credential)
-
 ### Themes
 * [Overviews](/bundocs/orchestra/themes)
 	- [Introduction](/bundocs/orchestra/themes#introduction)
@@ -39,6 +33,15 @@
 		- [Theme Manager](/bundocs/orchestra/themes#manage-theme)
 	- [Anatomy of A Theme](/bundocs/orchestra/themes#anatomy)
 		- [Asset Folder](/bundocs/orchestra/themes#assets)
+
+### Widget
+* [Overviews](/bundocs/orchestra/widget)
+
+### Events
+* [Overviews](/bundocs/orchestra/events)
+	- [General](/bundocs/orchestra/events/general)
+	- [Installation](/bundocs/orchestra/events/install)
+	- [Credential](/bundocs/orchestra/events/credential)
 
 ### IoC
 * [Overviews](/bundocs/orchestra/ioc)
