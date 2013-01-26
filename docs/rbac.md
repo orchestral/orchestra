@@ -48,3 +48,24 @@ Since an ACL metric is defined for each extension, it is best to define ACL acti
 		}
 	
 	}
+
+## Verify the ACL
+
+To verify the created ACL, you can use the following code.
+
+	$acl = Orchestra\Acl::make('foo');
+	
+	if ( ! $acl->can('manage foo')) 
+	{
+		return Redirect::to(handles('orchestra::login'));
+	}
+	
+Or you can create a route filter.
+
+	Route::filter('foo::manage', function ()
+	{
+		if ( ! Orchestra\Acl::make('foo')->can('manage foo'))
+		{
+			return Redirect::to(handles('orchestra::login'));
+		}
+	});
