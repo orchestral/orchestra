@@ -29,12 +29,10 @@ class User {
 			$table->with($model, true);
 
 			// Add columns
-			$table->column('id');
-
 			$table->column('fullname', function ($column)
 			{
-				$column->label = __('orchestra::label.users.fullname');
-				$column->value = function ($row)
+				$column->label(__('orchestra::label.users.fullname'));
+				$column->value(function ($row)
 				{
 					$roles = $row->roles;
 					$value = array();
@@ -53,17 +51,12 @@ class User {
 							'class' => 'meta',
 						)),
 					));
-				};
-
+				});
 			});
 
 			$table->column('email', function ($column)
 			{
-				$column->label = __('orchestra::label.users.email');
-				$column->value = function ($row)
-				{
-					return $row->email;
-				};
+				$column->label(__('orchestra::label.users.email'));
 			});
 		});
 	}
@@ -82,15 +75,15 @@ class User {
 		{
 			$table->column('action', function ($column)
 			{
-				$column->label      = '';
-				$column->label_attr = array('class' => 'th-action');
-				$column->value      = function ($row)
+				$column->label('');
+				$column->label_attr(array('class' => 'th-action'));
+				$column->value(function ($row)
 				{
 					$btn = array();
 					$btn[] = HTML::link(
 						handles('orchestra::users/view/'.$row->id),
 						__('orchestra::label.edit'),
-						array('class' => 'btn btn-mini')
+						array('class' => 'btn btn-mini btn-warning')
 					);
 
 					if (Auth::user()->id !== $row->id)
@@ -107,7 +100,7 @@ class User {
 						HTML::raw(implode('', $btn)),
 						array('class' => 'btn-group')
 					);
-				};
+				});
 			});
 		});
 	}
@@ -136,35 +129,31 @@ class User {
 			{
 				$fieldset->control('input:text', 'email', function ($control)
 				{
-					$control->label =  __('orchestra::label.users.email');
+					$control->label(__('orchestra::label.users.email'));
 				});
 
 				$fieldset->control('input:text', 'fullname', function($control)
 				{
-					$control->label = __('orchestra::label.users.fullname');
+					$control->label(__('orchestra::label.users.fullname'));
 				});
 
 				$fieldset->control('input:password', 'password', function($control)
 				{
-					$control->label = __('orchestra::label.users.password');
+					$control->label(__('orchestra::label.users.password'));
 				});
 
 				$fieldset->control('select', 'roles[]', function ($control)
 				{
-					$options          = Role::lists('name', 'id');
-					$control->label   = __('orchestra::label.users.roles');
-					$control->name    = 'roles[]';
-					$control->options = $options;
-					$control->attr    = array('multiple' => true);
-					$control->value   = function ($row) use ($options)
+					$control->label(__('orchestra::label.users.roles'));
+					$control->options(Role::lists('name', 'id'));
+					$control->attr(array('multiple' => true));
+					$control->value(function ($row)
 					{
 						// get all the user roles from objects
 						$roles = array();
-
 						foreach ($row->roles as $row) $roles[] = $row->id;
-
 						return $roles;
-					};
+					});
 				});
 			});
 		});

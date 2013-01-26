@@ -29,12 +29,12 @@ class Account {
 			{
 				$fieldset->control('input:text', 'email', function ($control)
 				{
-					$control->label = __('orchestra::label.users.email');
+					$control->label(__('orchestra::label.users.email'));
 				});
 
 				$fieldset->control('input:text', 'fullname', function ($control)
 				{
-					$control->label = __('orchestra::label.users.fullname');
+					$control->label(__('orchestra::label.users.fullname'));
 				});
 			});
 		});

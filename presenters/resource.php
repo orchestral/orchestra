@@ -27,11 +27,11 @@ class Resource {
 
 			$table->column('name', function ($column)
 			{
-				$column->value = function ($row)
+				$column->value(function ($row)
 				{
 					$link = HTML::link(handles("orchestra::resources/{$row->id}"), $row->name);
 					return HTML::create('strong', HTML::raw($link));
-				};
+				});
 			});
 		});
 	}
