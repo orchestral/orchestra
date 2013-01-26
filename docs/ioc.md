@@ -24,3 +24,19 @@ By default Orchestra Platform would use Messages bundle, if you find a need to r
 	{
 		return Orchestra\Memory::make('redis.orchestra_options');
 	});
+
+## Themes
+
+`Orchestra\Theme` dependency could also be replace if you need to.
+
+	IoC::singleton('orchestra.theme: backend', function ()
+	{
+		// change your backend theme.
+	});
+	
+	IoC::singleton('orchestra.theme: frontend', function ()
+	{
+		// change your frontend theme.
+	});
+
+	
