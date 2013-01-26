@@ -18,6 +18,18 @@ class Role extends Eloquent {
 	}
 
 	/**
+	 * Get default member roles for Orchestra Platform
+	 *
+	 * @static
+	 * @access public
+	 * @return self
+	 */
+	public static function member()
+	{
+		return static::find(Config::get('orchestra::orchestra.member_role'));
+	}
+
+	/**
 	 * Has Many and Belongs To `users` table using pivot table `user_roles`.
 	 *
 	 * @access public
