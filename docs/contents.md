@@ -1,6 +1,9 @@
 ### General
 * [Overviews](/bundocs/orchestra/home)
 * [Change Logs](/bundocs/orchestra/changes)
+
+### Getting Started
+
 * [Installation & Setup](/bundocs/orchestra/install)
 	- [Download](/bundocs/orchestra/install#download)
 	- [Setup](/bundocs/orchestra/install#setup)
@@ -8,6 +11,7 @@
 * [Helpers](/bundocs/orchestra/helpers)
 * [Mail](/bundocs/orchestra/mail)
 * [Role Based Access Control](/bundocs/orchestra/rbac)
+* [Troubleshooting](/bundocs/orchestra/troubleshoot)
 
 ### Extension
 * [Overviews](/bundocs/orchestra/extensions)
