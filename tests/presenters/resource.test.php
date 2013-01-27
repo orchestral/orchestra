@@ -53,6 +53,7 @@ class PresentersResourceTest extends Orchestra\Testable\TestCase {
 		$grid = $grid->getValue($stub);
 
 		$this->assertInstanceOf('Orchestra\Table', $stub);
+		$this->assertEquals(Orchestra\Table::of('orchestra.resources: list'), $stub);
 		$this->assertInstanceOf('Hybrid\Table\Grid', $grid);
 	}
 

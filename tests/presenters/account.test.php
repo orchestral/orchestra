@@ -22,6 +22,7 @@ class PresentersAccountTest extends Orchestra\Testable\TestCase {
 		$grid = $grid->getValue($stub);
 
 		$this->assertInstanceOf('Orchestra\Form', $stub);
+		$this->assertEquals(Orchestra\Form::of('orchestra.account'), $stub);
 		$this->assertInstanceOf('Hybrid\Form\Grid', $grid);
 	}
 }

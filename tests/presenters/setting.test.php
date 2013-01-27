@@ -61,6 +61,7 @@ class PresentersSettingTest extends Orchestra\Testable\TestCase {
 		$grid = $grid->getValue($stub);
 
 		$this->assertInstanceOf('Orchestra\Form', $stub);
+		$this->assertEquals(Orchestra\Form::of('orchestra.settings'), $stub);
 		$this->assertInstanceOf('Hybrid\Form\Grid', $grid);
 	}
 }
