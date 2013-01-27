@@ -15,8 +15,8 @@ Listed below are all the possible events that can be used with Orchestra Platfor
 	- orchestra.install: user
 	- orchestra.install: acl
 - [Credential Events](/bundocs/orchestra/events/credential)
-	- orchestra.logged.in
-	- orchestra.logged.out
+	- orchestra.auth: login
+	- orchestra.auth: logout
 - Extension Events
 	- orchestra.form: extension.{name}
 	- orchestra.saving: extension.{name}
