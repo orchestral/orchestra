@@ -6,7 +6,7 @@ Using credential events you can add event whenever a user is logged in or logged
 
 Listen to whenever a user logged-in to Orchestra. For example OneAuth use the following:
 
-	Event::listen('orchestra.logged.in', function ()
+	Event::listen('orchestra.auth: login', function ()
 	{
 		Event::fire('oneauth.sync', array(Auth::user()->id));
 	});
@@ -15,7 +15,7 @@ Listen to whenever a user logged-in to Orchestra. For example OneAuth use the fo
 
 Listen to whenever a user logged-out from Orchestra.
 
-	Event::listen('orchestra.logged.out', function ()
+	Event::listen('orchestra.auth: logout', function ()
 	{
 		Session::forget('oneauth');
 	});
