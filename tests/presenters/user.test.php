@@ -20,6 +20,7 @@ class PresentersUserTest extends Orchestra\Testable\TestCase {
 		$grid = $grid->getValue($stub);
 
 		$this->assertInstanceOf('Orchestra\Table', $stub);
+		$this->assertEquals(Orchestra\Table::of('orchestra.users'), $stub);
 		$this->assertInstanceOf('Hybrid\Table\Grid', $grid);
 	}
 
@@ -42,6 +43,7 @@ class PresentersUserTest extends Orchestra\Testable\TestCase {
 		$grid = $grid->getValue($stub);
 
 		$this->assertInstanceOf('Orchestra\Table', $stub);
+		$this->assertEquals(Orchestra\Table::of('orchestra.users'), $stub);
 		$this->assertInstanceOf('Hybrid\Table\Grid', $grid);
 	}
 
@@ -61,6 +63,7 @@ class PresentersUserTest extends Orchestra\Testable\TestCase {
 		$grid = $grid->getValue($stub);
 
 		$this->assertInstanceOf('Orchestra\Form', $stub);
+		$this->assertEquals(Orchestra\Form::of('orchestra.users'), $stub);
 		$this->assertInstanceOf('Hybrid\Form\Grid', $grid);
 	}
 	
