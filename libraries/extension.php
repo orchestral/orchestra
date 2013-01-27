@@ -97,14 +97,12 @@ class Extension {
 	 */
 	public static function option($name, $option, $default = null)
 	{
-		$extension = static::$extensions[$name];
-
-		if (is_null($extension))
+		if ( ! isset(static::$extensions[$name]))
 		{
 			return value($default);
 		}
 
-		return array_get($extension, $option, $default);
+		return array_get(static::$extensions[$name], $option, $default);
 	}
 
 	/**

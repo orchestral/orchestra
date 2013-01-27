@@ -2,10 +2,16 @@
 
 ## Contents
 
-- [Orchestra v1.0.0](#v1.0.0)
+- [v1.0.1](#v1.0.1)
+- [v1.0.0](#v1.0.0)
+
+<a name="v1.0.1"></a>
+## v1.0.1
+
+- Fixed undefined index when trying to get `Orchestra\Extension::option()`.
 
 <a name="v1.0.0"></a>
-## Orchestra v1.0.0
+## v1.0.0
 
 - Add `Orchestra\Theme` and `Orchestra\View` and introduce [Melody Theme Manager](http://bundles.laravel.com/bundle/melody).
 - Multiple event listeners to allow customizable on Orchestra including: installation process, CRUD for extension, users, account and settings configuration.
