@@ -15,6 +15,7 @@
 ## v1.0.1
 
 - Fixed undefined index when trying to get `Orchestra\Extension::option()`.
+- Improvements to unit testing.
 
 <a name="v1.0.0"></a>
 ## v1.0.0

@@ -44,12 +44,15 @@
 
 ### Events
 * [Overviews](/bundocs/orchestra/events)
-	- [General](/bundocs/orchestra/events/general)
-	- [Installation](/bundocs/orchestra/events/install)
-	- [Credential](/bundocs/orchestra/events/credential)
+* [General](/bundocs/orchestra/events/general)
+* [Installation](/bundocs/orchestra/events/install)
+* [Credential](/bundocs/orchestra/events/credential)
 
 ### IoC
 * [Overviews](/bundocs/orchestra/ioc)
+	- [Mailer](/bundocs/orchestra/ioc#mailer)
+	- [Memory](/bundocs/orchestra/ioc#memory)
+	- [Themes](/bundocs/orchestra/ioc#themes)
 
 ### Toolkit
 * [Overviews](/bundocs/orchestra/toolkit)
