@@ -1,0 +1,6 @@
+* text=auto
+
+# Ignore following folder/file.
+CONTRIBUTING.md export-ignore
+.travis.yml     export-ignore
+.gitignore      export-ignore
