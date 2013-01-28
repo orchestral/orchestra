@@ -1,7 +1,6 @@
 # Orchestra Mail
 
-By now, everyone would be loving Laravel 4 Mail class. Why wait when you can 
-have it today with Orchestra Platform.
+By now, everyone would be loving Laravel 4 Mail class. Why wait when you can have it today with Orchestra Platform.
 
 	Orchestra\Mail::send('mail.newsletter', compact('content'), function ($mail)
 	{
@@ -14,8 +13,7 @@ have it today with Orchestra Platform.
 
 ## Alternative Method
 
-Other than using `View` to make the body of an e-mail, you can also use IoC 
-Container.
+Other than using `View` to make the body of an e-mail, you can also use IoC Container.
 
 	$mail = IoC::resolve('orchestra.mailer');
 
