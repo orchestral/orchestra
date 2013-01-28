@@ -1,9 +1,9 @@
 Orchestra Platform
 ==============
 
-Provide a solid base off of which to build your new web applications. It's not a CMS. Instead, it's a springboard to build off of with many of the tools you wish you had on projects but never took the time to build. Orchestra is what Bonfire is for CodeIgniter.
+Provide a solid base off of which to build your new web applications. It's not a CMS. Instead, it's a springboard to build off of with many of the tools you wish you had on projects but never took the time to build. Orchestra Platform is what Bonfire is for CodeIgniter.
 
-## What Makes Orchestra Different?
+## What Makes Orchestra Platform Different?
 
 * **Extensions** are a much needed improvement to bundle implementation in Laravel. With one click activation and upgrade (migration and publish).
 * **Database Based Configuration** for any extensions are a solid replacement of file based configuration, stop telling your non-technical client to edit PHP file for any simple configuration changes. 

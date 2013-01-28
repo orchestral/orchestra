@@ -12,9 +12,7 @@
 <a name="introduction"></a>
 ## Introduction
 
-Extension may contain widget or resources (components) to be added for Orchestra. 
-By principle Extension in Orchestra is a bundle except that Orchestra will manage 
-setup process:
+Extension may contain widget or resources (components) to be added for Orchestra Platform. By principle Extension in Orchestra Platform is a bundle except that Orchestra will manage setup process:
 
 - Migration for bundle
 - Publish asset for bundle
@@ -22,10 +20,7 @@ setup process:
 <a name="convert-to-extension"></a>
 ## Convert a Bundle
 
-The process is simple, an extension is a Bundle except that first it need to have 
-a definition file. The definition file will be stored in `bundles/bundle-name/orchestra.json`, 
-this tell Orchestra Platform to handle the bundle as an extension. Here's an 
-example of Definition File for OneAuth extension.
+The process is simple, an extension is a Bundle except that first it need to have a definition file. The definition file will be stored in `bundles/bundle-name/orchestra.json`, this tell Orchestra Platform to handle the bundle as an extension. Here's an example of Definition File for OneAuth extension.
 
 	{
 		"name"        : "OneAuth",
@@ -44,7 +39,7 @@ example of Definition File for OneAuth extension.
 <a name="enable-extension"></a>
 ## Enabling an Extension
 
-Extensions will be manage by Orchestra Administrator Interface. Login as an 
+Extensions will be manage by Orchestra Platform Administrator Interface. Login as an 
 administrator and go to **Extensions** on the top navigation.
 
 Few things to consider:
@@ -55,12 +50,9 @@ Few things to consider:
 <a name="start-file"></a>
 ## Extension Start File
 
-Extension start file (optional) allow extension to run start script (as 
-Laravel run bundles start.php file). The start file will be stored in 
-`bundles/bundle-name/orchestra.php`. 
+Extension start file (optional) allow extension to run start script (as Laravel run bundles start.php file). The start file will be stored in `bundles/bundle-name/orchestra.php`. 
 
-What inside the file depends on how extension would interact with Orchestra 
-and this can be diverse depending on use cases.
+What inside the file depends on how extension would interact with Orchestra Platform and this can be diverse depending on use cases.
 
 Some examples:
 
@@ -71,20 +63,14 @@ Some examples:
 <a name="configure-extension"></a>
 ## Configuring an Extension
 
-By default, administrator are able to configure any extension based on 
-requirement of the application including `handles` value using Orchestra 
-Administrator Interface. This allow non-technical administrator to take 
-charge of the application without having to understand any of the code.
+By default, administrator are able to configure any extension based on requirement of the application including `handles` value using Orchestra Platform Administrator Interface. This allow non-technical administrator to take charge of the application without having to understand any of the code.
 
-To configure an extension, the extension need to be activated. Once this is 
-done, all extension that allow configuration can be configured. Simply click 
-on the extension name to navigate to the configuration page.
+To configure an extension, the extension need to be activated. Once this is done, all extension that allow configuration can be configured. Simply click on the extension name to navigate to the configuration page.
 
 <a name="disable-configure-extension"></a>
 ### Disable configuration
 
-Extension developer can disable configuration option by adding 
-`"configurable" : false`, To do this edit your definition file.
+Extension developer can disable configuration option by adding `"configurable" : false`, To do this edit your definition file.
 
 	{
 		/* ... */
@@ -95,14 +81,12 @@ Extension developer can disable configuration option by adding
 		}
 	}
 
-By doing so, Orchestra will take extension as it is and will not try to 
-modify any of the configuration.
+By doing so, Orchestra will take extension as it is and will not try to modify any of the configuration.
 
 <a name="dependency-extension"></a>
 ### Dependencies Management with Extension
 
-Managing dependencies has never been easier, extension developer can define 
-and manage dependencies using `"require" : {}`, as you would using composer.
+Managing dependencies has never been easier, extension developer can define and manage dependencies using `"require" : {}`, as you would using composer.
 
 	{
 		/* ... */
@@ -113,9 +97,7 @@ and manage dependencies using `"require" : {}`, as you would using composer.
 		}
 	}
 
-An extension may also depends on certain bundle (which is not registered as 
-an extension), in this case just define the minimum compatible version as 
-`"bundle"` to indicate such dependencies.
+An extension may also depends on certain bundle (which is not registered as an extension), in this case just define the minimum compatible version as `"bundle"` to indicate such dependencies.
 
 > Credit to [@lordcoste](http://github.com/lordcoste) for the feature.
 
