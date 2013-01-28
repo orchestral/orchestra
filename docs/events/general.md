@@ -1,10 +1,10 @@
 # General Events
 
-Basic Events that would be use by Orchestra.
+Basic Events that would be use by Orchestra Platform.
 
 ## orchestra.started
 
-Event fired when Orchestra is loaded by Laravel.
+Event fired when Orchestra Platform is loaded by Laravel.
 
 	Event::listen('orchestra.started', function ()
 	{
@@ -17,7 +17,7 @@ Event fired when Orchestra is loaded by Laravel.
 
 ## orchestra.started: backend
 
-Event fired when user is accessing Orchestra Administrator Interface.
+Event fired when user is accessing Orchestra Platform Administrator Interface.
 
 	Event::listen('orchestra.started: backend', function ()
 	{
@@ -41,8 +41,7 @@ Event fired when a View is from `Orchestra\View`. Which make it possible to use 
 
 ## orchestra.done
 
-Event fire when `laravel.done` execute `Orchestra\Core::shutdown()`. If an extension would need to trigger anything right
-before request is output to end-user this would be a suitable event:
+Event fire when `laravel.done` execute `Orchestra\Core::shutdown()`. If an extension would need to trigger anything right before request is output to end-user this would be a suitable event:
 
 	Event::listen('orchestra.done', function()
 	{
@@ -51,8 +50,7 @@ before request is output to end-user this would be a suitable event:
 
 ## orchestra.done: backend
 
-Event fire after a request is handled by `Orchestra\Controller`, this is being used internally to generate 
-Orchestra Administrator Interface menu.
+Event fire after a request is handled by `Orchestra\Controller`, this is being used internally to generate Orchestra Platform Administrator Interface menu.
 
 	Event::listen('orchestra.done: backend', function()
 	{
