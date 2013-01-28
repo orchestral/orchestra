@@ -2,6 +2,12 @@
 
 Toolkit for Orchestra is a collection of task to assist developer to bootstrap extension development. 
 
+## Version Command
+
+You can get current Orchestra Platform version using the following command.
+
+	$ php artisan orchestra::toolkit version
+
 ## Installer Command
 
 Create `application/orchestra/installer.php` with just a command.
