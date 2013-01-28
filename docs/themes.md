@@ -1,4 +1,4 @@
-# Theme with Orchestra
+# Theme with Orchestra Platform
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -11,10 +11,9 @@
 <a name="introduction"></a>
 ## Introduction
 
-Theme is Orchestra works using a customize or fallback approach, the functionality evolves by modifying how `View` would resolve which file, in event where we find a view in the active theme folder, we would mark it as the intended view, either choose the default view given in the request.
+Theme is Orchestra Platform works using a customize or fallback approach, the functionality evolves by modifying how `View` would resolve which file, in event where we find a view in the active theme folder, we would mark it as the intended view, either choose the default view given in the request.
 
-This would allow extension (or even bundles) to have it's own set of style while developer can maintain a standardise overall 
-design through out the project using a theme.
+This would allow extension (or even bundles) to have it's own set of style while developer can maintain a standardise overall design through out the project using a theme.
 
 <a name="enable-theme"></a>
 ## Enable Theme in Your Application

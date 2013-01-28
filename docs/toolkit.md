@@ -1,6 +1,6 @@
-# Toolkit for Orchestra
+# Toolkit for Orchestra Platform
 
-Toolkit for Orchestra is a collection of task to assist developer to bootstrap extension development. 
+Toolkit for Orchestra Platform is a collection of task to assist developer to bootstrap extension development. 
 
 ## Version Command
 

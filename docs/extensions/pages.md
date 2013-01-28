@@ -8,8 +8,7 @@
 <a name="introduction"></a>
 ## Introduction
 
-Orchestra wouldn't be useful if you can't create a custom page on Orchestra Administrator Panel. For this purpose, we introduce two event listener to add 
-dynamic page for either user and administrator.
+Orchestra Platform wouldn't be useful if you can't create a custom page on Orchestra Platform Administrator Panel. For this purpose, we introduce two event listener to add dynamic page for either user and administrator.
 
 <a name="manage"></a>
 ## Add a Page for Administrators
