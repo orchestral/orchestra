@@ -14,10 +14,7 @@ return array(
 	'remember-me'     => 'Remember Me',
 	'forgot-password' => 'Забыли пароль',
 
-	'home' => array(
-		'list' => 'Главная',
-	),
-
+	'home'     => 'Главная',	
 	'login'    => 'Вход',
 	'logout'   => 'Выход',
 	'register' => 'Register',
