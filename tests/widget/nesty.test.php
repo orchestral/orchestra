@@ -76,6 +76,10 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 						'id'     => 'foobar',
 						'childs' => array(),
 					)),
+					'foo-bar' => new Laravel\Fluent(array(
+						'id'     => 'foo-bar',
+						'childs' => array(),
+					)),
 				),
 			))
 		);
@@ -85,6 +89,7 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 		$this->stub->add('world', 'after:hello');
 		$this->stub->add('bar', 'childof:foo');
 		$this->stub->add('foobar', 'child_of:foo');
+		$this->stub->add('foo-bar', 'child-of:foo');
 
 		$this->assertEquals($expected, $this->stub->get());
 	}
