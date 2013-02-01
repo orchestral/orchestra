@@ -9,7 +9,9 @@
 <a name="v1.1.0"></a>
 ## v1.1.0
 
-- Update vendors; Javie v0.1.1, Backbone.js v0.9.10 and Underscore.js v1.4.3.
+- Update Orchestra Platform vendors:
+	- Backbone.js v0.9.10 
+	- Underscore.js v1.4.3
 
 <a name="v1.0.1"></a>
 ## v1.0.1
