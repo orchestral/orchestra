@@ -16,6 +16,7 @@
 
 - Fixed undefined index when trying to get `Orchestra\Extension::option()`.
 - Improvements to unit testing.
+- Add language detection to fixed a bug where Home menu doesn't follow locale.
 
 <a name="v1.0.0"></a>
 ## v1.0.0
