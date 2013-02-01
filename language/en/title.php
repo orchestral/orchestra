@@ -14,10 +14,7 @@ return array(
 	'remember-me'     => 'Remember Me',
 	'forgot-password' => 'Forgot Password',
 
-	'home' => array(
-		'list' => 'Home',
-	),
-
+	'home'     => 'Home',
 	'login'    => 'Login',
 	'logout'   => 'Logout',
 	'register' => 'Register',
