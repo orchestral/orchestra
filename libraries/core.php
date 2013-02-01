@@ -7,7 +7,8 @@ use \Asset,
 	\Event,
 	\IoC,
 	\Input,
-	\Session;
+	\Session,
+	\URI;
 
 class Core {
 
@@ -264,13 +265,16 @@ class Core {
 	 */
 	protected static function loader()
 	{
+		// Set application language.
+		static::detect_language();
+
 		// localize the variable, and ensure it by references.
 		$acl  = static::acl();
 		$menu = static::menu('orchestra');
 
 		// Add basic menu.
 		$menu->add('home')
-			->title(__('orchestra::title.home')->get())
+			->title(__('orchestra::title.home.list')->get())
 			->link(handles('orchestra'));
 
 		// Multiple event listener for Backend (administrator panel)
@@ -352,5 +356,33 @@ class Core {
 		});
 
 		return static::$safe_mode = ($session === 'Y');
+	}
+
+	/**
+	 * Detect locale from URI
+	 *
+	 * @static
+	 * @access protected
+	 * @return void
+	 */
+	protected static function detect_language()
+	{
+		$uri         = URI::current();
+		$languages   = Config::get('application.languages', array());
+		$languages[] = Config::get('application.language');
+
+		foreach ($languages as $language)
+		{
+			if (preg_match("#^{$language}(?:$|/)#i", $uri))
+			{
+				Config::set('application.language', $language);
+				
+				$uri = trim(substr($uri, strlen($language)), '/'); break;
+			}
+		}
+
+		if ($uri == '') $uri = '/';
+
+		URI::$uri = $uri;
 	}
 }
