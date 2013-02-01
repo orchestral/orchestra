@@ -17,6 +17,8 @@
 - Fixed undefined index when trying to get `Orchestra\Extension::option()`.
 - Improvements to unit testing.
 - Add language detection to fixed a bug where Home menu doesn't follow locale.
+- Allow to use `child-of` in `Orchestra\Widget\Nesty`.
+- Update Javie Client-side JavaScript Library to version 1.0.1.
 
 <a name="v1.0.0"></a>
 ## v1.0.0
