@@ -274,7 +274,7 @@ class Core {
 
 		// Add basic menu.
 		$menu->add('home')
-			->title(__('orchestra::title.home.list')->get())
+			->title(__('orchestra::title.home')->get())
 			->link(handles('orchestra'));
 
 		// Multiple event listener for Backend (administrator panel)
