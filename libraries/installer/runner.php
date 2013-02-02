@@ -91,7 +91,6 @@ class Runner {
 		}
 
 		// We now need to run schema migration for Orchestra.
-		static::install_migrations_schema();
 		static::install_options_schema();
 		static::install_users_schema();
 
@@ -197,46 +196,6 @@ class Runner {
 		static::shutdown();
 
 		return true;
-	}
-
-	/**
-	 * Install migrations table
-	 *
-	 * @static
-	 * @access protected
-	 * @return void
-	 */
-	protected static function install_migrations_schema()
-	{
-		try
-		{
-			// If this query does not return any Exception, we can assume
-			// that migrations is already installed to current application
-			DB::table('orchestra_migrations')->get();
-		}
-		catch (Exception $e)
-		{
-			Schema::table('orchestra_migrations', function ($table)
-			{
-				$table->create();
-
-				// Migrations can be run for a specific extension, so we'll
-				// use the core name and string migration name as an unique
-				// ID for the migrations, allowing us to easily identify
-				// which migrations have been run for each bundle.
-				$table->string('extension', 50);
-
-				$table->string('name', 200);
-
-				// When running a migration command, we will store a batch
-				// ID with each of the rows on the table. This will allow us
-				// to grab all of the migrations that were run for the last
-				// command when performing rollbacks.
-				$table->integer('batch');
-			});
-
-			static::$message->add('success', 'Migration table created');
-		}
 	}
 
 	/**
