@@ -34,6 +34,8 @@ class ThemeTest extends PHPUnit_Framework_TestCase {
 			IoC::resolve('orchestra.theme: frontend'));
 		$this->assertInstanceOf('Orchestra\Theme\Container',
 			IoC::resolve('orchestra.theme: backend'));
+		$this->assertInstanceOf('Orchestra\Theme\Container',
+			Orchestra\Theme::container('frontend', 'default'));
 	}
 
 	/**
