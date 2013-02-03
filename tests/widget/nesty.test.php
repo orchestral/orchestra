@@ -81,8 +81,8 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 					'foobar' => new Laravel\Fluent(array(
 						'id'     => 'foobar',
 						'childs' => array(
-							'hello-world-foobar' => new Laravel\Fluent(array(
-								'id'     => 'hello-world-foobar',
+							'hello-foobar' => new Laravel\Fluent(array(
+								'id'     => 'hello-foobar',
 								'childs' => array(),
 							)),
 						),
@@ -91,8 +91,8 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 						'id'     => 'foo-bar',
 						'childs' => array(),
 					)),
-					'hello-foobar' => new Laravel\Fluent(array(
-						'id'     => 'hello-foobar',
+					'hello-world-foobar' => new Laravel\Fluent(array(
+						'id'     => 'hello-world-foobar',
 						'childs' => array(),
 					)),
 				),
