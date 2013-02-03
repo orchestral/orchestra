@@ -2,13 +2,14 @@
 
 Bundle::start('orchestra');
 
-class ThemeTest extends PHPUnit_Framework_TestCase {
+class ThemeTest extends Orchestra\Testable\TestCase {
 
 	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
+		parent::setUp();
 		Orchestra\View::$theme = 'frontend';
 	}
 
@@ -18,6 +19,7 @@ class ThemeTest extends PHPUnit_Framework_TestCase {
 	public function tearDown()
 	{
 		Orchestra\View::$theme = 'frontend';
+		parent::tearDown();
 	}
 
 	/**
@@ -34,6 +36,8 @@ class ThemeTest extends PHPUnit_Framework_TestCase {
 			IoC::resolve('orchestra.theme: frontend'));
 		$this->assertInstanceOf('Orchestra\Theme\Container',
 			IoC::resolve('orchestra.theme: backend'));
+		$this->assertInstanceOf('Orchestra\Theme\Container',
+			Orchestra\Theme::container('frontend', 'default'));
 	}
 
 	/**
@@ -45,6 +49,7 @@ class ThemeTest extends PHPUnit_Framework_TestCase {
 	{
 		$this->assertEquals(Orchestra\Theme::resolve(),
 			Orchestra\Theme::container(Orchestra\View::$theme));
+		$this->assertTrue(is_array(Orchestra\Theme::$containers));
 	}
 
 	/**
@@ -64,5 +69,18 @@ class ThemeTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue(Orchestra\Theme::resolve() === $backend);
 		$this->assertFalse(Orchestra\Theme::resolve() === $frontend);
+	}
+
+	/**
+	 * Test Orchestra\Theme::__callStatic() passthru method.
+	 *
+	 * @test
+	 */
+	public function testCallStaticPassthruMethod()
+	{
+		$theme = Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS.'themes'.DS;
+		Orchestra\Theme::map(array('foo' => 'error.404'));
+
+		$this->assertEquals('error.404', Orchestra\Theme::path('foo'));
 	}
 }

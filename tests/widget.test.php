@@ -48,6 +48,16 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Memory::__construct() throws an exception.
+	 *
+	 * @expectedException RuntimeException
+	 */
+	public function testConstructThrowsAnException()
+	{
+		$stub = new Orchestra\Widget;
+	}
+
+	/**
 	 * Test Orchestra\Widget::make() with different name return different
 	 * instance.
 	 *
@@ -92,22 +102,33 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 		$this->assertInstanceOf('Orchestra\Widget\Driver', $this->stub);
 		$this->assertInstanceOf('Orchestra\Widget\Driver', Orchestra\Widget::make('stub'));
 		$this->assertInstanceOf('WidgetStub', Orchestra\Widget::make('stub'));
-	}
 
-	/**
-	 * Test Orchestra\Widget\Driver::render() stub return as expected.
-	 *
-	 * @test
-	 */
-	public function testRenderStub()
-	{
-		$this->assertEquals('stub', $this->stub->render());
-		$this->assertEquals('stub', Orchestra\Widget::make('stub')->render());
+		$stub = new WidgetStub('foobar', array());
+		$expected = array(
+			'defaults' => array(
+				'title'   => '',
+				'foobar'  => true,
+			),
+		);
 
+		$refl   = new \ReflectionObject($stub);
+		$config = $refl->getProperty('config');
+		$name   = $refl->getProperty('name');
+		$nesty  = $refl->getProperty('nesty');
+
+		$config->setAccessible(true);
+		$name->setAccessible(true);
+		$nesty->setAccessible(true);
+
+		$this->assertEquals($expected, $config->getValue($stub));
+		$this->assertEquals('foobar', $name->getValue($stub));
+		$this->assertInstanceOf('Orchestra\Widget\Nesty', $nesty->getValue($stub));
 	}
 
 	/**
 	 * Test add an item using stub.
+	 *
+	 * @test
 	 */
 	public function testAddItemUsingStubReturnProperly()
 	{
@@ -115,18 +136,43 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 			'foo' => new Laravel\Fluent(array(
 				'id'     => 'foo',
 				'title'  => 'foobar',
+				'foobar' => false,
+				'childs' => array(),
+			)),
+			'foobar' => new Laravel\Fluent(array(
+				'id'     => 'foobar',
+				'title'  => 'hello world',
 				'foobar' => true,
 				'childs' => array(),
 			)),
 		);
 
 		$stub = Orchestra\Widget::make('stub');
-		$stub->add('foo')->title('foobar');
-		
-		$this->stub->add('foo')->title('foobar');
+
+		$stub->add('foobar', 'parent', function ($item)
+		{
+			$item->title = 'hello world';
+		});
+
+		$stub->add('foo', 'before:foobar', function ($item)
+		{
+			$item->foobar = false;
+		})->title('foobar');
 
 		$this->assertEquals($expected, $stub->get());
-		$this->assertEquals($expected, $this->stub->get());
+		$this->assertEquals($expected, $stub->items);
+	}
+
+	/**
+	 * Test Orchestra\Widget\Driver::__get() throws an exception
+	 *
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testAccessGetThrowsAnException()
+	{
+		$stub = new WidgetStub('foo', array());
+
+		$hello = $stub->hello;
 	}
 }
 
@@ -139,11 +185,6 @@ class WidgetStub extends Orchestra\Widget\Driver {
 			'foobar'  => true,
 		),
 	);
-
-	public function render()
-	{
-		return $this->type;
-	}
 
 	public function add($id, $location = 'parent', $callback = null)
 	{

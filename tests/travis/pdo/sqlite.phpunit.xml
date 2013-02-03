@@ -23,6 +23,10 @@
 			<directory suffix=".php">../../../libraries</directory>
 			<directory suffix=".php">../../../presenters</directory>
 			<directory suffix=".php">../../../models</directory>
+			
+			<exclude>
+				<directory suffix=".php">../../../libraries/testable</directory>
+			</exclude>
 		</whitelist>
 	</filter>
 </phpunit>
