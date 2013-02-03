@@ -14,13 +14,13 @@
 	</php>
 	<testsuites>
 		<testsuite name="Orchestra Platform Test Suite">
-			<directory suffix=".test.php">../</directory>
+			<directory suffix=".test.php">../../</directory>
 		</testsuite>
 	</testsuites>
 	<filter>
 		<whitelist addUncoveredFilesFromWhitelist="false">
-			<directory suffix=".php">../../libraries</directory>
-			<directory suffix=".php">../../models</directory>
+			<directory suffix=".php">../../../libraries</directory>
+			<directory suffix=".php">../../../models</directory>
 		</whitelist>
 	</filter>
 </phpunit>
