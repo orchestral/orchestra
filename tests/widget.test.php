@@ -127,6 +127,8 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test add an item using stub.
+	 *
+	 * @test
 	 */
 	public function testAddItemUsingStubReturnProperly()
 	{
@@ -159,6 +161,18 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals($expected, $stub->get());
 		$this->assertEquals($expected, $stub->items);
+	}
+
+	/**
+	 * Test Orchestra\Widget\Driver::__get() throws an exception
+	 *
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testAccessGetThrowsAnException()
+	{
+		$stub = new WidgetStub('foo', array());
+
+		$hello = $stub->hello;
 	}
 }
 
