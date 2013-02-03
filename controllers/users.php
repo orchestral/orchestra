@@ -129,6 +129,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 			$type = 'create';
 			$user = new User(array(
 				'password' => $input['password'] ?: '',
+				'status'   => User::UNVERIFIED,
 			));
 		}
 
