@@ -48,6 +48,16 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Memory::__construct() throws an exception.
+	 *
+	 * @expectedException RuntimeException
+	 */
+	public function testConstructThrowsAnException()
+	{
+		$stub = new Orchestra\Widget;
+	}
+
+	/**
 	 * Test Orchestra\Widget::make() with different name return different
 	 * instance.
 	 *
