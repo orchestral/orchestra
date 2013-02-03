@@ -4,6 +4,11 @@ php:
   - "5.4"
   - "5.3"
 
+env:
+  - DB=pdo/mysql
+  - DB=pdo/pgsql
+  - DB=pdo/sqlite
+
 notifications:
   irc: "irc.freenode.net#orchestra-platform"
 
@@ -15,5 +20,8 @@ before_install:
   - cd ./laravel
   - php artisan bundle:install hybrid
   - php artisan bundle:install Messages
+  - sh -c "if [ '$DB' = 'pdo/pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS orchestra;' -U postgres; fi"
+  - sh -c "if [ '$DB' = 'pdo/pgsql' ]; then psql -c 'CREATE DATABASE orchestra;' -U postgres; fi"
+  - sh -c "if [ '$DB' = 'pdo/mysql' ]; then mysql -e 'CREATE DATABASE IF NOT EXISTS orchestra;'; fi"
 
-script: "php artisan test orchestra"
+script: "phpunit --coverage-text --configuration bundles/orchestra/tests/travis/$DB.phpunit.xml"
