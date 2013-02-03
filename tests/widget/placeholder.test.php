@@ -54,24 +54,26 @@ class WidgetPlaceholderTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testAddItemIsReturnProperly()
 	{
+		$callback = function ()
+		{
+			return 'hello world';
+		};
+
 		$expected = array(
 			'foo' => new Laravel\Fluent(array(
-				'value'  => '',
+				'value'  => $callback,
 				'id'     => 'foo',
 				'childs' => array(),
 			)),
 			'foobar' => new Laravel\Fluent(array(
-				'value'  => 'hello world',
+				'value'  => $callback,
 				'id'     => 'foobar',
 				'childs' => array(),
 			)),
 		);
 
-		$this->stub->add('foo');
-		$this->stub->add('foobar', 'after:foo', function ()
-		{
-			return 'hello world';
-		});
+		$this->stub->add('foo', $callback);
+		$this->stub->add('foobar', 'after:foo', $callback);
 
 		$this->assertEquals($expected, $this->stub->get());
 	}
