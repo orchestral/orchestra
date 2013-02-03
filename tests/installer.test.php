@@ -33,7 +33,7 @@ class InstallerTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testCheckDatabase()
+	public function testCheckDatabaseSuccessful()
 	{
 		Config::set('database.default', 'sqlite');
 		Config::set('database.connections.sqlite', array(
@@ -43,5 +43,22 @@ class InstallerTest extends PHPUnit_Framework_TestCase {
 		));
 		
 		$this->assertTrue(Orchestra\Installer::check_database());
+	}
+
+	/**
+	 * Test Orchestra\Installer::check_database()
+	 *
+	 * @test
+	 */
+	public function testCheckDatabaseFailed()
+	{
+		Config::set('database.default', 'sqlite');
+		Config::set('database.connections.sqlite', array(
+			'driver'   => 'mysql',
+			'database' => Str::random(30),
+			'prefix'   => '',
+		));
+		
+		$this->assertFalse(Orchestra\Installer::check_database());
 	}
 }
