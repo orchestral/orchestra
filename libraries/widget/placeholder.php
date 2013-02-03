@@ -47,7 +47,7 @@ class Placeholder extends Driver {
 
 		if ($callback instanceof Closure)
 		{
-			$item->value = $callback;
+			$item->value = value($callback);
 		}
 
 		return $item;

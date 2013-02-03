@@ -35,6 +35,16 @@ class WidgetPlaceholderTest extends PHPUnit_Framework_TestCase {
 	public function testInstanceOf()
 	{
 		$this->assertInstanceOf('Orchestra\Widget\Placeholder', $this->stub);
+
+		$refl   = new \ReflectionObject($this->stub);
+		$type   = $refl->getProperty('type');
+		$config = $refl->getProperty('config');
+
+		$type->setAccessible(true);
+		$config->setAccessible(true);
+
+		$this->assertEquals(array('defaults' => array('value' => '')), $config->getValue($this->stub));
+		$this->assertEquals('placeholder', $type->getValue($this->stub));
 	}
 
 	/**
@@ -50,9 +60,18 @@ class WidgetPlaceholderTest extends PHPUnit_Framework_TestCase {
 				'id'     => 'foo',
 				'childs' => array(),
 			)),
+			'foobar' => new Laravel\Fluent(array(
+				'value'  => 'hello world',
+				'id'     => 'foobar',
+				'childs' => array(),
+			)),
 		);
 
 		$this->stub->add('foo');
+		$this->stub->add('foobar', 'after:foo', function ()
+		{
+			return 'hello world';
+		});
 
 		$this->assertEquals($expected, $this->stub->get());
 	}
