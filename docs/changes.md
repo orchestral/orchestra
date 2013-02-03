@@ -3,6 +3,7 @@
 ## Contents
 
 - [v1.1.0](#v1.1.0)
+- [v1.0.2](#v1.0.2)
 - [v1.0.1](#v1.0.1)
 - [v1.0.0](#v1.0.0)
 
@@ -12,6 +13,16 @@
 - Update Orchestra Platform vendors:
 	- Backbone.js v0.9.10 
 	- Underscore.js v1.4.3
+
+<a name="v1.0.2"></a>
+## v1.0.2
+
+- Fixed a bug where User can't be created on Postgres.
+- Improved Travis-CI by testing on multiple database configuration:
+	- MySQL
+	- Postgres
+	- SQLite
+- Add code coverage report on Travis-CI.
 
 <a name="v1.0.1"></a>
 ## v1.0.1
