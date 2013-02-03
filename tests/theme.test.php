@@ -47,6 +47,7 @@ class ThemeTest extends PHPUnit_Framework_TestCase {
 	{
 		$this->assertEquals(Orchestra\Theme::resolve(),
 			Orchestra\Theme::container(Orchestra\View::$theme));
+		$this->assertTrue(is_array(Orchestra\Theme::$containers));
 	}
 
 	/**
