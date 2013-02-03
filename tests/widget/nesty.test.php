@@ -80,10 +80,19 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 					)),
 					'foobar' => new Laravel\Fluent(array(
 						'id'     => 'foobar',
-						'childs' => array(),
+						'childs' => array(
+							'hello-world-foobar' => new Laravel\Fluent(array(
+								'id'     => 'hello-world-foobar',
+								'childs' => array(),
+							)),
+						),
 					)),
 					'foo-bar' => new Laravel\Fluent(array(
 						'id'     => 'foo-bar',
+						'childs' => array(),
+					)),
+					'hello-foobar' => new Laravel\Fluent(array(
+						'id'     => 'hello-foobar',
 						'childs' => array(),
 					)),
 				),
@@ -96,6 +105,8 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 		$this->stub->add('bar', 'childof:foo');
 		$this->stub->add('foobar', 'child_of:foo');
 		$this->stub->add('foo-bar', 'child-of:foo');
+		$this->stub->add('hello-foobar', 'child-of:foo.foobar');
+		$this->stub->add('hello-world-foobar', 'child-of:foo.dummy');
 
 		$this->assertEquals($expected, $this->stub->get());
 	}
