@@ -260,7 +260,7 @@ class Runner {
 				Event::fire('orchestra.install.schema: users', array($table));
 
 				$table->string('fullname', 100)->nullable();
-				$table->integer('status');
+				$table->integer('status')->nullable();
 
 				// add timestamp created_at and updated_at
 				$table->timestamps();

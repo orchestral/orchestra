@@ -32,7 +32,7 @@ class Meta extends Eloquent {
 	 */
 	public static function user($user_id)
 	{
-		return static::where('user_id', '=', $user_id);
+		return static::where('user_id', '=', (int) $user_id);
 	}
 
 	/**
