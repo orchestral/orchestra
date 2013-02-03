@@ -134,18 +134,31 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 			'foo' => new Laravel\Fluent(array(
 				'id'     => 'foo',
 				'title'  => 'foobar',
+				'foobar' => false,
+				'childs' => array(),
+			)),
+			'foobar' => new Laravel\Fluent(array(
+				'id'     => 'foobar',
+				'title'  => 'hello world',
 				'foobar' => true,
 				'childs' => array(),
 			)),
 		);
 
 		$stub = Orchestra\Widget::make('stub');
-		$stub->add('foo')->title('foobar');
-		
-		$this->stub->add('foo')->title('foobar');
+
+		$stub->add('foobar', 'parent', function ($item)
+		{
+			$item->title = 'hello world';
+		});
+
+		$stub->add('foo', 'before:foobar', function ($item)
+		{
+			$item->foobar = false;
+		})->title('foobar');
 
 		$this->assertEquals($expected, $stub->get());
-		$this->assertEquals($expected, $this->stub->get());
+		$this->assertEquals($expected, $stub->items);
 	}
 }
 
