@@ -102,18 +102,27 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 		$this->assertInstanceOf('Orchestra\Widget\Driver', $this->stub);
 		$this->assertInstanceOf('Orchestra\Widget\Driver', Orchestra\Widget::make('stub'));
 		$this->assertInstanceOf('WidgetStub', Orchestra\Widget::make('stub'));
-	}
 
-	/**
-	 * Test Orchestra\Widget\Driver::render() stub return as expected.
-	 *
-	 * @test
-	 */
-	public function testRenderStub()
-	{
-		$this->assertEquals('stub', $this->stub->render());
-		$this->assertEquals('stub', Orchestra\Widget::make('stub')->render());
+		$stub = new WidgetStub('foobar', array());
+		$expected = array(
+			'defaults' => array(
+				'title'   => '',
+				'foobar'  => true,
+			),
+		);
 
+		$refl   = new \ReflectionObject($stub);
+		$config = $refl->getProperty('config');
+		$name   = $refl->getProperty('name');
+		$nesty  = $refl->getProperty('nesty');
+
+		$config->setAccessible(true);
+		$name->setAccessible(true);
+		$nesty->setAccessible(true);
+
+		$this->assertEquals($expected, $config->getValue($stub));
+		$this->assertEquals('foobar', $name->getValue($stub));
+		$this->assertInstanceOf('Orchestra\Widget\Nesty', $nesty->getValue($stub));
 	}
 
 	/**
@@ -149,11 +158,6 @@ class WidgetStub extends Orchestra\Widget\Driver {
 			'foobar'  => true,
 		),
 	);
-
-	public function render()
-	{
-		return $this->type;
-	}
 
 	public function add($id, $location = 'parent', $callback = null)
 	{
