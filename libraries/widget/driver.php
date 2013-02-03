@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Widget;
 
 use \Config,
+	\InvalidArgumentException,
 	Laravel\Fluent;
 
 abstract class Driver {
@@ -54,17 +55,6 @@ abstract class Driver {
 	}
 
 	/**
-	 * Shortcut to render()
-	 *
-	 * @access  public
-	 * @see     self::render()
-	 */
-	public function __toString()
-	{
-		return $this->render();
-	}
-
-	/**
 	 * Add an item to current widget.
 	 *
 	 * @access public
@@ -74,14 +64,6 @@ abstract class Driver {
 	 * @return mixed
 	 */
 	public abstract function add($id, $location = 'parent', $callback = null);
-
-	/**
-	 * Render widget as a view
-	 *
-	 * @access  public
-	 * @return  string
-	 */
-	public abstract function render();
 
 	/**
 	 * Get all items
@@ -96,9 +78,15 @@ abstract class Driver {
 	 *
 	 * @param  string   $key
 	 * @return mixed
+	 * @throws InvalidArgumentException
 	 */
 	public function __get($key)
 	{
-		if ($key === 'items') return $this->get();
+		if ($key !== 'items') 
+		{
+			throw new InvalidArgumentException("Access to [{$key}] is not allowed.");
+		}
+
+		return $this->get();
 	}
 }

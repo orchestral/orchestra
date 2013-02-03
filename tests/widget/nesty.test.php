@@ -35,6 +35,12 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 	public function testInstanceOfStub()
 	{
 		$this->assertInstanceOf('Orchestra\Widget\Nesty', $this->stub);
+
+		$refl   = new \ReflectionObject($this->stub);
+		$config = $refl->getProperty('config');
+		$config->setAccessible(true);
+
+		$this->assertEquals(array(), $config->getValue($this->stub));
 	}
 
 	/**

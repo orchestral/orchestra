@@ -35,6 +35,17 @@ class WidgetMenuTest extends PHPUnit_Framework_TestCase {
 	public function testInstanceOf()
 	{
 		$this->assertInstanceOf('Orchestra\Widget\Menu', $this->stub);
+
+		$refl   = new \ReflectionObject($this->stub);
+		$type   = $refl->getProperty('type');
+		$config = $refl->getProperty('config');
+
+		$type->setAccessible(true);
+		$config->setAccessible(true);
+
+		$this->assertEquals(array('defaults' => array('title' => '', 'link' => '#')), 
+			$config->getValue($this->stub));
+		$this->assertEquals('menu', $type->getValue($this->stub));
 	}
 
 	/**
@@ -46,14 +57,28 @@ class WidgetMenuTest extends PHPUnit_Framework_TestCase {
 	{
 		$expected = array(
 			'foo' => new Laravel\Fluent(array(
-				'title'   => '',
+				'title'   => 'hello world',
 				'link'    => '#',
 				'id'      => 'foo',
 				'childs'  => array(),
 			)),
+			'foobar' => new Laravel\Fluent(array(
+				'title'   => 'hello world 2',
+				'link'    => '#',
+				'id'      => 'foobar',
+				'childs'  => array(),
+			)),
 		);
 
-		$this->stub->add('foo');
+		$this->stub->add('foo', function ($item)
+		{
+			$item->title = 'hello world';
+		});
+
+		$this->stub->add('foobar', 'after:foo', function ($item)
+		{
+			$item->title = 'hello world 2';
+		});
 
 		$this->assertEquals($expected, $this->stub->get());
 	}

@@ -1,7 +1,8 @@
 <?php namespace Orchestra;
 
 use \Closure, 
-	\InvalidArgumentException;
+	\InvalidArgumentException,
+	\RuntimeException;
 
 class Widget {
 
@@ -83,7 +84,11 @@ class Widget {
 	/**
 	 * Orchestra\Widget doesn't support a construct method
 	 *
-	 * @access  protected
+	 * @access  public
+	 * @throws  RuntimeException
 	 */
-	protected function __construct() {}
+	public function __construct() 
+	{
+		throw new RuntimeException("Orchestra\Widget doesn't support a construct method.");
+	}
 }
