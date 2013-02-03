@@ -52,10 +52,12 @@ class InstallerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCheckDatabaseFailed()
 	{
-		Config::set('database.default', 'sqlite');
-		Config::set('database.connections.sqlite', array(
-			'driver'   => 'mysql',
+		Config::set('database.default', 'pgsql');
+		Config::set('database.connections.pgsql', array(
+			'driver'   => 'pgsql',
 			'database' => Str::random(30),
+			'username' => Str::random(30),
+			'password' => Str::random(30),
 			'prefix'   => '',
 		));
 		
