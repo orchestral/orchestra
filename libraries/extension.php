@@ -286,12 +286,6 @@ class Extension {
 
 		foreach ($current as $extension => $config)
 		{
-			if (is_numeric($extension))
-			{
-				$extension = $config;
-				$config    = array();
-			}
-
 			if ($extension !== $name)
 			{
 				$active[$extension] = $config;
