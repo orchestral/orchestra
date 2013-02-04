@@ -63,11 +63,29 @@ class RoutingDashboardTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
+	 * Test Language Locale is set properly.
+	 *
+	 * @test
+	 */
+	public function testInitiateCoreCheckLanguageLocale()
+	{
+		Orchestra\Core::shutdown();
+
+		URI::$uri = 'ru/home';
+		Config::set('application.language', 'en');
+		Config::set('application.languages', array('en', 'ru'));
+
+		Orchestra\Core::start();
+
+		$this->assertEquals('ru', Config::get('application.language'));
+	}	
+
+	/**
 	 * Test Request Corrupted Installation.
 	 *
 	 * @test
 	 */
-	public function testInitiateCoreStartThrowsException()
+	public function testInitiateCoreStartIsCorruptedInstallation()
 	{
 		$this->assertTrue(Orchestra\Installer::$status);
 
@@ -78,5 +96,5 @@ class RoutingDashboardTest extends Orchestra\Testable\TestCase {
 		Orchestra\Core::start();
 
 		$this->assertFalse(Orchestra\Installer::$status);
-	}	
+	}
 }
