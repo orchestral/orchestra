@@ -70,9 +70,6 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		$this->assertTrue(Orchestra\Extension::started(DEFAULT_BUNDLE));
 		$this->assertTrue(Orchestra\Extension::activated(DEFAULT_BUNDLE));
 
-		$this->assertEquals('foobar', 
-			Orchestra\Extension::option(DEFAULT_BUNDLE, 'foo'));
-
 		$this->assertTrue(is_null($_SERVER['extension.app.done']));
 
 		Orchestra\Extension::shutdown();

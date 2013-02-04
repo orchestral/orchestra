@@ -25,7 +25,7 @@ class ViewTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testConstructAView()
+	public function testConstructMethod()
 	{
 		Event::listen('orchestra.started: view', function ()
 		{
@@ -52,15 +52,16 @@ class ViewTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testExists()
+	public function testExistsMethod()
 	{
-		$result = Orchestra\View::exists('orchestra::layout.main');
+		Orchestra\View::name('orchestra::layout.main', 'layout');
 
-		$this->assertTrue(is_bool($result));
-
-		$path = Orchestra\View::exists('orchestra::layout.main', true);
+		$path     = Orchestra\View::exists('orchestra::layout.main', true);
 		$expected = Bundle::path('orchestra').'views'.DS.'layout'.DS.'main.blade.php';
 
+		$this->assertTrue(is_bool(Orchestra\View::exists('orchestra::layout.main')));
+		$this->assertTrue(is_bool(Orchestra\View::exists('name: layout')));
+		$this->assertTrue(is_bool(Orchestra\View::exists("path: {$expected}")));
 		$this->assertEquals($expected, $path);
 	}
 }

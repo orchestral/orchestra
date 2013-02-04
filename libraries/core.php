@@ -234,17 +234,6 @@ class Core {
 
 		foreach ($actives as $extension => $config)
 		{
-			if (is_numeric($extension))
-			{
-				$extension = $config;
-				$config    = array();
-
-				if (isset($availables[$extension]))
-				{
-					$config = (array) $availables[$extension]['config'];
-				}
-			}
-
 			if (isset($availables[$extension]))
 			{
 				Extension::start($extension, $config);

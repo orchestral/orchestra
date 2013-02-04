@@ -191,5 +191,23 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 		$stub = Orchestra\Resources::of('stub');
 
 		$this->assertEquals($this->stub, $stub);
+
+		$laravel        = Orchestra\Resources::of('laravel', 'foo');
+		$laravel->hello = 'stub'; 
+
+		$this->assertInstanceOf('Orchestra\Resources', $laravel);
+		$this->assertInstanceOf('Laravel\Response', 
+			Orchestra\Resources::call('laravel.hello', 'index', array()));
+	}
+
+	/**
+	 * Test Orchestra\Resources::__call() method throws an exception
+	 *
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testCallMethodThrowsAnException()
+	{
+		$stub = Orchestra\Resources::of('stub');
+		$stub->hello('invalid request');
 	}
 }

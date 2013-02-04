@@ -85,36 +85,8 @@ class View extends V {
 		Event::fire('orchestra.started: view');
 		Event::clear('orchestra.started: view');
 
-		$view       = Theme::resolve()->parse($view);
-		$this->view = $view;
-		$this->data = $data;
-
-		// In order to allow developers to load views outside of the normal
-		// loading conventions, we'll allow for a raw path to be given in
-		// place of the typical view name, giving total freedom on view
-		// loading.
-		if (starts_with($view, 'path: '))
-		{
-			$this->path = substr($view, 6);
-		}
-		else
-		{
-			$this->path = $this->path($view);
-		}
-
-		// If a session driver has been specified, we will bind an instance
-		// of the validation error message container to every view. If an
-		// error instance exists in the session, we will use that instance.
-		if ( ! isset($this->data['errors']))
-		{
-			if (Session::started() and Session::has('errors'))
-			{
-				$this->data['errors'] = Session::get('errors');
-			}
-			else
-			{
-				$this->data['errors'] = new Messages;
-			}
-		}
+		$view = Theme::resolve()->parse($view);
+		
+		parent::__construct($view, $data);
 	}
 }
