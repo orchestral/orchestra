@@ -142,6 +142,7 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		$this->restartApplication();
 
 		Orchestra\Extension::detect();
+		Orchestra\Extension::activate('aws');
 		Orchestra\Extension::activate('b');
 		Orchestra\Extension::activate('a');	
 
