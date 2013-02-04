@@ -5,6 +5,13 @@ Bundle::start('orchestra');
 class ExtensionTest extends Orchestra\Testable\TestCase {
 
 	/**
+	 * Fixture path.
+	 *
+	 * @var string
+	 */
+	protected $base_path = '';
+
+	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
@@ -14,9 +21,9 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		$_SERVER['extension.app.started'] = null;
 		$_SERVER['extension.app.done']    = null;
 
-		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
-		set_path('app', $base_path.'application'.DS);
-		set_path('orchestra.extension', $base_path.'bundles'.DS);
+		$this->base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
+		set_path('app', $this->base_path.'application'.DS);
+		set_path('orchestra.extension', $this->base_path.'bundles'.DS);
 	}
 
 	/**
@@ -65,6 +72,7 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		Orchestra\Extension::detect();
 		Orchestra\Extension::activate(DEFAULT_BUNDLE);
 
+		$this->assertTrue(is_bool(Orchestra\Extension::available(DEFAULT_BUNDLE)));
 		$this->assertEquals('foo', $_SERVER['extension.app.started']);
 
 		$this->assertTrue(Orchestra\Extension::started(DEFAULT_BUNDLE));
@@ -110,6 +118,21 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
+	 * Test extension unable to be detect extension when json can't be 
+	 * parsed.
+	 *
+	 * @expectedException RuntimeException
+	 */
+	public function testDetectExtensionCauseThrowsException()
+	{
+		$this->restartApplication();
+
+		Orchestra\Extension::detect(array(
+			'invalidbundle' => $this->base_path.'invalidbundle'.DS,
+		));
+	}
+
+	/**
 	 * Test extension unable to be deactivated when unresolved dependencies.
 	 *
 	 * @expectedException Orchestra\Extension\UnresolvedException
@@ -121,6 +144,8 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		Orchestra\Extension::detect();
 		Orchestra\Extension::activate('b');
 		Orchestra\Extension::activate('a');	
+
+		$this->assertEquals('foobar', Orchestra\Extension::option('a', 'foo'));
 
 		$this->assertTrue(Orchestra\Extension::started('a'));
 		$this->assertTrue(Orchestra\Extension::activated('a'));

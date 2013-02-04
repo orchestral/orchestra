@@ -2,7 +2,7 @@
 
 use \Bundle,
 	\Event,
-	\Exception,
+	\RuntimeException,
 	\IoC,
 	\stdClass,
 	FileSystemIterator as fIterator;
@@ -154,7 +154,7 @@ class Extension {
 				if (is_null($extensions[$name]))
 				{
 					// json_decode couldn't parse, throw an exception
-					throw new Exception(
+					throw new RuntimeException(
 						"Extension [{$name}]: cannot decode orchestra.json file"
 					);
 				}

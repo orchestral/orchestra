@@ -1,0 +1,13 @@
+{
+	"name"        : "Extension A",
+	"description" : "",
+	"author"      : "",
+	"url"         : "",
+	"version"     : "0.1.0",
+	"config"      : {
+		"foo" : "foobar'
+	},
+	"require"     : {
+		"b" : ">=0.2.0"
+	}
+}
