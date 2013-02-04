@@ -74,4 +74,20 @@ class InstallerRequirementTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue(is_array($checklist->getValue($this->stub)));
 		$this->assertEquals($checklist->getValue($this->stub), $this->stub->checklist());
 	}
+
+	/**
+	 * Test Orchestra\Installer\Requirement::checklist() method is not 
+	 * writable.
+	 *
+	 * @test
+	 */
+	public function testChecklistMethodIsNotWritable()
+	{
+		$mock = $this->getMock('Orchestra\Installer\Publisher', array('publish'));
+		$mock->expects($this->any())
+			->method('publish')
+			->will($this->throwException(new \RuntimeException));
+
+		$stub = new Orchestra\Installer\Requirement;
+	}
 }
