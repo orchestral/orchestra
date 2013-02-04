@@ -2,6 +2,7 @@
 
 use Orchestra\Core,
 	Orchestra\Installer,
+	Orchestra\Installer\Publisher,
 	Orchestra\Installer\Requirement,
 	Orchestra\Installer\Runner,
 	Orchestra\Messages,
@@ -37,7 +38,7 @@ class Orchestra_Installer_Controller extends Controller {
 	 */
 	public function action_index()
 	{
-		$requirement = new Requirement;
+		$requirement = new Requirement(new Publisher);
 
 		Session::flush();
 

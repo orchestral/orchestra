@@ -53,7 +53,7 @@ class Runner {
 
 		// Check if DEFAULT_BUNDLE has an instruction for Orchestra
 		// installation, if so include it.
-		if (is_file($file = Bundle::path(DEFAULT_BUNDLE).'orchestra'.DS.'installer'.EXT))
+		if (is_file($file = path('app').'orchestra'.DS.'installer'.EXT))
 		{
 			include_once $file;
 		}
