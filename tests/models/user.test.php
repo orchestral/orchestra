@@ -70,7 +70,8 @@ class ModelsUserTest extends Orchestra\Testable\TestCase {
 		$this->assertInstanceOf('Laravel\Database\Eloquent\Query', $foo);
 		$this->assertTrue(is_null($foo->first()));
 
-		$user = Orchestra\Model\User::search('example@test.com', array(1))->first();
-		$this->assertEquals(Orchestra\Model\User::find(1), $user);
+		$user     = Orchestra\Model\User::search('example@test.com', array(1))->first();
+		$expected = Orchestra\Model\User::find(1);
+		$this->assertEquals($expected->id, $user->id);
 	}
 }
