@@ -22,10 +22,11 @@ class ModelsUserTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testRolesRelationship()
 	{
-		$stub = Orchestra\Model\User::with('roles')->where_id(1)->first();
+		$stub = Orchestra\Model\User::with(array('roles', 'meta'))->where_id(1)->first();
 
 		$this->assertInstanceOf('Orchestra\Model\User', $stub);
 		$this->assertTrue(is_array($stub->roles));
+		$this->assertTrue(is_array($stub->meta));
 		$this->assertInstanceOf('Orchestra\Model\Role', $stub->roles[0]);
 	}
 }
