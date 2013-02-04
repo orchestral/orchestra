@@ -95,6 +95,7 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 			'foo/user-1'    => 'foobar',
 		), $data->getValue($this->stub));
 
+		$this->stub->shutdown();
 	}
 
 	/**
