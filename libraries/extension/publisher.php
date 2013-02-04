@@ -64,8 +64,6 @@ class Publisher {
 
 		switch ($driver)
 		{
-			case 's3' :
-				return new Publisher\S3;
 			case 'ftp' :
 				// pass through.
 			default :
