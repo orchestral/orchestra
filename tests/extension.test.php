@@ -31,10 +31,10 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 	 */
 	public function tearDown()
 	{
-		parent::tearDown();
-
 		set_path('app', path('base').'application'.DS);
 		set_path('orchestra.extension', path('bundle'));
+
+		parent::tearDown();
 	}
 
 	/**
