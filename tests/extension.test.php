@@ -118,6 +118,21 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
+	 * Test extension unable to be activated when unresolved dependencies
+	 * due to version.
+	 *
+	 * @expectedException Orchestra\Extension\UnresolvedException
+	 */
+	public function testActivateExtensionFailedWhenUnresolvedDependenciesByVersion()
+	{
+		$this->restartApplication();
+
+		Orchestra\Extension::detect();
+		Orchestra\Extension::activate('d');
+		Orchestra\Extension::activate('c');
+	}
+
+	/**
 	 * Test extension unable to be detect extension when json can't be 
 	 * parsed.
 	 *
