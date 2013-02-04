@@ -62,13 +62,7 @@ class Publisher {
 			return $resolver();
 		}
 
-		switch ($driver)
-		{
-			case 'ftp' :
-				// pass through.
-			default :
-				return new Publisher\FTP;
-		}
+		return new Publisher\FTP;
 	}
 
 	/**
