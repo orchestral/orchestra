@@ -23,13 +23,14 @@ class Requirement {
 	 * Construct a new instance.
 	 *
 	 * @access public
+	 * @param  Orchestra\Installer\Publisher    $publisher
 	 * @return void
 	 */
-	public function __construct()
+	public function __construct(Publisher $publisher)
 	{
 		try
 		{
-			$asset_writable = with(new Publisher)->publish();
+			$asset_writable = $publisher->publish();
 		}
 		catch (RuntimeException $e)
 		{

@@ -34,6 +34,9 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 			$_SERVER['orchestra.install.acl'] = 'foo';
 		});
 
+		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
+		set_path('app', $base_path.'application'.DS);
+
 		parent::setUp();
 		
 		Orchestra\Installer::$status = false;
@@ -48,6 +51,8 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 		unset($_SERVER['orchestra.install.schema']);
 		unset($_SERVER['orchestra.install.user']);
 		unset($_SERVER['orchestra.install.acl']);
+
+		set_path('app', path('base').'application'.DS);
 
 		parent::tearDown();
 	}

@@ -132,6 +132,10 @@ class RoutingForgotTest extends Orchestra\Testable\TestCase {
 		$this->assertNotNull($meta);
 		$this->assertNotNull($meta->value);
 
+		$user = $meta->users()->first();
+
+		$this->assertEquals(1, $user->id);
+
 		$response = $this->call('orchestra::forgot@reset', array(1, $meta->value));
 
 		$this->assertInstanceOf('Laravel\Redirect', $response);
