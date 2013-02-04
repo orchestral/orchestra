@@ -130,4 +130,29 @@ class RoutingExtensionsTest extends Orchestra\Testable\TestCase {
 
 		$this->assertFalse(Orchestra\Extension::activated(DEFAULT_BUNDLE));
 	}
+
+
+	/**
+	 * Run Orchestra Platform in safe mode.
+	 *
+	 * @test
+	 */
+	public function testRunningInSafeMode()
+	{
+		$_GET['safe_mode'] = '1';
+
+		$this->restartApplication();
+
+		$this->call('orchestra::credential@login', array(), 'GET');
+
+		$this->assertEquals('Y', Session::get('safe_mode'));
+
+		$_GET['safe_mode'] = '0';
+
+		$this->restartApplication();
+
+		$this->call('orchestra::credential@login', array(), 'GET');
+
+		$this->assertNull(Session::get('safe_mode'));
+	}
 }
