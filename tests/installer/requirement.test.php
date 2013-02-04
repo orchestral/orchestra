@@ -19,7 +19,9 @@ class InstallerRequirementTest extends PHPUnit_Framework_TestCase {
 		Session::$instance = null;
 		Session::load();
 
-		$this->stub = new Orchestra\Installer\Requirement;
+		$this->stub = new Orchestra\Installer\Requirement(
+			new Orchestra\Installer\Publisher
+		);
 	}
 
 	/**
@@ -88,6 +90,6 @@ class InstallerRequirementTest extends PHPUnit_Framework_TestCase {
 			->method('publish')
 			->will($this->throwException(new \RuntimeException));
 
-		$stub = new Orchestra\Installer\Requirement;
+		$stub = new Orchestra\Installer\Requirement($mock);
 	}
 }
