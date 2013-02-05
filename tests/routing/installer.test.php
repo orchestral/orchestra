@@ -115,4 +115,4 @@ class RoutingInstallerTest extends Orchestra\Testable\TestCase {
 	}
 }
 
-class DummyRoutingInstallerAuthStub extends Eloquent {}
+class DummyRoutingInstallerAuthStub extends Orchestra\Model\User {}
