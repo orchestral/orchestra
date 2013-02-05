@@ -2,7 +2,7 @@
 
 use \Bundle,
 	\Event,
-	\Exception,
+	\RuntimeException,
 	\IoC,
 	\stdClass,
 	FileSystemIterator as fIterator;
@@ -154,7 +154,7 @@ class Extension {
 				if (is_null($extensions[$name]))
 				{
 					// json_decode couldn't parse, throw an exception
-					throw new Exception(
+					throw new RuntimeException(
 						"Extension [{$name}]: cannot decode orchestra.json file"
 					);
 				}
@@ -286,10 +286,9 @@ class Extension {
 
 		foreach ($current as $extension => $config)
 		{
-			if ($extension !== $name)
-			{
-				$active[$extension] = $config;
-			}
+			if ($extension === $name) continue;
+		
+			$active[$extension] = $config;
 		}
 
 		$available    = $memory->get('extensions.available');
@@ -297,11 +296,13 @@ class Extension {
 		$dependencies = array();
 
 		// we should check that other extensions don't depend on it
-		foreach ($active as $bundle => $extension)
+		foreach ($active as $bundle => $config)
 		{
-			if (isset($available[$bundle]) 
-				and in_array($name, array_keys($available[$bundle]['require']))
-				or in_array($title, array_keys($available[$bundle]['require'])))
+			if (isset($available[$bundle]) and 
+				(
+					array_key_exists($name, $available[$bundle]['require'])
+					or array_key_exists($title, $available[$bundle]['require'])
+				))
 			{
 				$dependencies[] = $available[$bundle]['name'];
 			}

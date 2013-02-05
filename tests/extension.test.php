@@ -5,6 +5,13 @@ Bundle::start('orchestra');
 class ExtensionTest extends Orchestra\Testable\TestCase {
 
 	/**
+	 * Fixture path.
+	 *
+	 * @var string
+	 */
+	protected $base_path = '';
+
+	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
@@ -14,9 +21,9 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		$_SERVER['extension.app.started'] = null;
 		$_SERVER['extension.app.done']    = null;
 
-		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
-		set_path('app', $base_path.'application'.DS);
-		set_path('orchestra.extension', $base_path.'bundles'.DS);
+		$this->base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
+		set_path('app', $this->base_path.'application'.DS);
+		set_path('orchestra.extension', $this->base_path.'bundles'.DS);
 	}
 
 	/**
@@ -24,10 +31,10 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 	 */
 	public function tearDown()
 	{
-		parent::tearDown();
-
 		set_path('app', path('base').'application'.DS);
 		set_path('orchestra.extension', path('bundle'));
+
+		parent::tearDown();
 	}
 
 	/**
@@ -65,6 +72,7 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		Orchestra\Extension::detect();
 		Orchestra\Extension::activate(DEFAULT_BUNDLE);
 
+		$this->assertTrue(is_bool(Orchestra\Extension::available(DEFAULT_BUNDLE)));
 		$this->assertEquals('foo', $_SERVER['extension.app.started']);
 
 		$this->assertTrue(Orchestra\Extension::started(DEFAULT_BUNDLE));
@@ -106,7 +114,53 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		$this->restartApplication();
 
 		Orchestra\Extension::detect();
+		Orchestra\Extension::activate('aws');
 		Orchestra\Extension::activate('a');
+	}
+
+	/**
+	 * Test extension unable to be activated when unresolved dependencies
+	 * due to version.
+	 *
+	 * @expectedException Orchestra\Extension\UnresolvedException
+	 */
+	public function testActivateExtensionFailedWhenUnresolvedDependenciesByVersion()
+	{
+		$this->restartApplication();
+
+		Orchestra\Extension::detect();
+		Orchestra\Extension::activate('d');
+		Orchestra\Extension::activate('c');
+	}
+
+	/**
+	 * Test extension unable to be detect extension when json can't be 
+	 * parsed.
+	 *
+	 * @expectedException RuntimeException
+	 */
+	public function testDetectExtensionCauseThrowsExceptionWithoutValidJson()
+	{
+		$this->restartApplication();
+
+		Orchestra\Extension::detect(array(
+			'invalidbundle' => $this->base_path.'invalidbundle'.DS,
+		));
+	}
+
+	/**
+	 * Test Orchestra\Extension::option() method.
+	 *
+	 * @test
+	 */
+	public function testOptionMethod()
+	{
+		$this->restartApplication();
+
+		Orchestra\Extension::detect();
+		Orchestra\Extension::activate('e');	
+
+		$this->assertEquals('foobar', Orchestra\Extension::option('e', 'foo'));
 	}
 
 	/**
@@ -119,14 +173,38 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		$this->restartApplication();
 
 		Orchestra\Extension::detect();
+		Orchestra\Extension::activate('aws');
 		Orchestra\Extension::activate('b');
-		Orchestra\Extension::activate('a');	
+		Orchestra\Extension::activate('a');
 
-		$this->assertTrue(Orchestra\Extension::started('a'));
-		$this->assertTrue(Orchestra\Extension::activated('a'));
-		$this->assertTrue(Orchestra\Extension::started('b'));
-		$this->assertTrue(Orchestra\Extension::activated('b'));
+		Orchestra\Core::shutdown();
+		Orchestra\Core::start();
+
+		Orchestra\Extension::detect();
 
 		Orchestra\Extension::deactivate('b');
+	}
+
+	/**
+	 * Test extension unable to be deactivated when unresolved dependencies
+	 * by bundle.
+	 *
+	 * @expectedException Orchestra\Extension\UnresolvedException
+	 */
+	public function testDeactivateExtensionFailedWhenUnresolvedDependenciesByBundle()
+	{
+		$this->restartApplication();
+
+		Orchestra\Extension::detect();
+		Orchestra\Extension::activate('aws');
+		Orchestra\Extension::activate('b');
+		Orchestra\Extension::activate('a');
+
+		Orchestra\Core::shutdown();
+		Orchestra\Core::start();
+		
+		Orchestra\Extension::detect();
+		
+		Orchestra\Extension::deactivate('aws');
 	}
 }

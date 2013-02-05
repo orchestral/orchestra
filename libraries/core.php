@@ -113,6 +113,8 @@ class Core {
 			static::$cached['orchestra_menu']->add('install')
 				->title('Install')
 				->link(handles('orchestra::installer'));
+
+			Installer::$status = false;
 		}
 
 		static::appearance();

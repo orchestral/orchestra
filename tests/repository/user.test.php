@@ -88,6 +88,14 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 			'foo/user-1'    => 'foobar',
 			'foobar/user-1' => null,
 		), $data->getValue($this->stub));
+
+		$this->stub->forget('foobar.1');
+
+		$this->assertEquals(array(
+			'foo/user-1'    => 'foobar',
+		), $data->getValue($this->stub));
+
+		$this->stub->shutdown();
 	}
 
 	/**

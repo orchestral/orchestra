@@ -91,5 +91,7 @@ class InstallerRequirementTest extends PHPUnit_Framework_TestCase {
 			->will($this->throwException(new \RuntimeException));
 
 		$stub = new Orchestra\Installer\Requirement($mock);
+
+		$this->assertFalse($stub->installable());
 	}
 }
