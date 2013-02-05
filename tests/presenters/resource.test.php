@@ -10,6 +10,12 @@ class PresentersResourceTest extends Orchestra\Testable\TestCase {
 	 * @var array
 	 */
 	protected $model = null;
+	/**
+	 * User instance.
+	 *
+	 * @var Orchestra\Model\User
+	 */
+	protected $user = null;
 
 	/**
 	 * Setup the test environment.
@@ -26,6 +32,8 @@ class PresentersResourceTest extends Orchestra\Testable\TestCase {
 				'childs'  => array()
 			))
 		);
+
+		$this->user = Orchestra\Model\User::find(1);
 	}
 
 	/**
@@ -34,6 +42,7 @@ class PresentersResourceTest extends Orchestra\Testable\TestCase {
 	public function tearDown()
 	{
 		unset($this->model);
+		unset($this->user);
 
 		parent::tearDown();
 	}
