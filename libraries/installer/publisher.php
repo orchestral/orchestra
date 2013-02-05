@@ -17,7 +17,7 @@ class Publisher {
 	public function publish()
 	{
 		$run_task        = false;
-		$asset_directory = path('public').'bundles/';
+		$asset_directory = path('public').'bundles'.DS;
 
 		// This set of code check whether the application has the right set 
 		// of directory configuration in order to be updated through web. If 

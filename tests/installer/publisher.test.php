@@ -11,6 +11,15 @@ class InstallerPublisherTest extends PHPUnit_Framework_TestCase {
 	{
 		Session::$instance = null;
 		Session::load();
+
+		$_SERVER['bundle.published'] = array();
+
+		IoC::register('task: orchestra.publisher', function($bundle)
+		{
+			$_SERVER['bundle.published'][] = $bundle;
+		});
+
+		set_path('public', Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS);
 	}
 
 	/**
@@ -19,6 +28,9 @@ class InstallerPublisherTest extends PHPUnit_Framework_TestCase {
 	public function tearDown()
 	{
 		Session::$instance = null;
+		unset($_SERVER['bundle.published']);
+
+		set_path('public', path('base').'public'.DS);
 	}
 
 	/**
@@ -28,7 +40,12 @@ class InstallerPublisherTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testConstructInstance()
 	{
-		$this->assertInstanceOf('Orchestra\Installer\Publisher', 
-			new Orchestra\Installer\Publisher);
+		Bundle::$bundles = array('a', 'b'); 
+		$stub            = new Orchestra\Installer\Publisher;
+
+		$this->assertInstanceOf('Orchestra\Installer\Publisher', $stub);
+
+		$this->assertTrue($stub->publish());
+		$this->assertTrue(Bundle::$bundles, $_SERVER['bundle.published']);
 	}
 }
