@@ -297,10 +297,9 @@ class Extension {
 		$dependencies = array();
 
 		// we should check that other extensions don't depend on it
-		foreach ($active as $bundle => $extension)
+		foreach ($active as $bundle => $config)
 		{
-			if (isset($available[$bundle]) 
-				and (
+			if (isset($available[$bundle]) and (
 					in_array($name, array_keys($available[$bundle]['require']))
 					or in_array($title, array_keys($available[$bundle]['require']))
 				))

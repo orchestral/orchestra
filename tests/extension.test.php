@@ -199,4 +199,27 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 
 		Orchestra\Extension::deactivate('b');
 	}
+
+	/**
+	 * Test extension unable to be deactivated when unresolved dependencies
+	 * by bundle.
+	 *
+	 * @expectedException Orchestra\Extension\UnresolvedException
+	 */
+	public function testDeactivateExtensionFailedWhenUnresolvedDependenciesByBundle()
+	{
+		$this->restartApplication();
+
+		Orchestra\Extension::detect();
+		Orchestra\Extension::activate('aws');
+		Orchestra\Extension::activate('b');
+		Orchestra\Extension::activate('a');
+
+		$this->assertTrue(Orchestra\Extension::started('a'));
+		$this->assertTrue(Orchestra\Extension::activated('a'));
+		$this->assertTrue(Orchestra\Extension::started('b'));
+		$this->assertTrue(Orchestra\Extension::activated('b'));
+		
+		Orchestra\Extension::deactivate('aws');
+	}
 }
