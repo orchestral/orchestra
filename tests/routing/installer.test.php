@@ -40,6 +40,9 @@ class RoutingInstallerTest extends Orchestra\Testable\TestCase {
 		$auth      = Config::get('auth');
 		$dummyauth = array_merge($auth, array('model' => 'DummyRoutingInstallerAuthStub'));
 
+		Auth::$drivers   = null;
+		DB::$connections = array();
+
 		Config::set('database.default', 'dummy-mysql');
 		Config::set("database.connections.dummy-mysql", array(
 			'driver'   => 'mysql',
@@ -59,6 +62,9 @@ class RoutingInstallerTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals('orchestra::installer.index', $response->content->view);
 
 		$this->assertFalse(Orchestra\Installer::check_database());
+
+		Auth::$drivers   = null;
+		DB::$connections = array();
 
 		Config::set('database.default', $driver);
 		Config::set("database.connections.{$driver}", $database);
