@@ -71,31 +71,39 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 	public function testRepositoryUserGet()
 	{
 		$this->stub->put("foo.1", "foobar");
+		$this->stub->put("timezone.1", "UTC");
+		$this->stub->put("age.1", 20);
 
-		$foo = $this->stub->get("foo.1");
-
-		$this->assertEquals('foobar', $foo);
-
-		$foo = $this->stub->get("foobar.1");
-
-		$this->assertTrue(is_null($foo));
+		$this->assertEquals('foobar', $this->stub->get("foo.1"));
+		$this->assertNull( $this->stub->get("foobar.1"));
 
 		$refl = new \ReflectionObject($this->stub);
 		$data = $refl->getProperty('data');
 		$data->setAccessible(true);
 
 		$this->assertEquals(array(
-			'foo/user-1'    => 'foobar',
-			'foobar/user-1' => null,
+			'foo/user-1'      => 'foobar',
+			'timezone/user-1' => 'UTC',
+			'age/user-1'      => 20,
+			'foobar/user-1'   => null,
 		), $data->getValue($this->stub));
 
 		$this->stub->forget('foobar.1');
 
 		$this->assertEquals(array(
-			'foo/user-1'    => 'foobar',
+			'foo/user-1'      => 'foobar',
+			'timezone/user-1' => 'UTC',
+			'age/user-1'      => 20,
 		), $data->getValue($this->stub));
 
 		$this->stub->shutdown();
+
+		$stub = new Orchestra\Repository\User;
+		$this->assertEquals('foobar', $stub->get('foo.1'));
+		$stub->put('foo.1', 'hello foobar');
+		$stub->forget('age.1');
+
+		$stub->shutdown();
 	}
 
 	/**
