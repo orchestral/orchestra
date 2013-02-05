@@ -14,7 +14,7 @@ class Extension {
 	 *
 	 * @var array
 	 */
-	protected static $extensions = array();
+	public static $extensions = array();
 
 	/**
 	 * Load an extension by running it's start-up script.
