@@ -98,7 +98,8 @@ class Orchestra_Installer_Controller extends Controller {
 	 */
 	public function action_steps($step)
 	{
-		$data = array(
+		$response = null;
+		$data     = array(
 			'site_name' => 'Orchestra',
 		);
 
@@ -110,7 +111,7 @@ class Orchestra_Installer_Controller extends Controller {
 				// be done at this point.
 				Runner::install();
 
-				return View::make('orchestra::installer.step1', $data);
+				$response = View::make('orchestra::installer.step1', $data);
 				break;
 
 			case 2 :
@@ -120,17 +121,19 @@ class Orchestra_Installer_Controller extends Controller {
 				// current application.
 				if (Runner::create_user(Input::all()))
 				{
-					return View::make('orchestra::installer.step2', $data);
+					$response = View::make('orchestra::installer.step2', $data);
 				}
 				else
 				{
 					$message = new Messages;
 					$message->add('error', 'Unable to create user');
 
-					return Redirect::to(handles('orchestra::installer/steps/1'))
+					$response = Redirect::to(handles('orchestra::installer/steps/1'))
 							->with('message', serialize($message));
 				}
 				break;
 		}
+
+		return $response;
 	}
 }
