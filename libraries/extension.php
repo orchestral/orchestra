@@ -300,9 +300,9 @@ class Extension {
 		{
 			if (isset($available[$bundle]) and 
 				(
-					isset($available[$bundle]['require'][$name])
-					or isset($available[$bundle]['require'][$title]))
-				)
+					array_key_exists($name, $available[$bundle]['require'])
+					or array_key_exists($title, $available[$bundle]['require'])
+				))
 			{
 				$dependencies[] = $available[$bundle]['name'];
 			}

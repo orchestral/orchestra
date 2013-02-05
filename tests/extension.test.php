@@ -180,6 +180,8 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		Orchestra\Core::shutdown();
 		Orchestra\Core::start();
 
+		Orchestra\Extension::detect();
+
 		Orchestra\Extension::deactivate('b');
 	}
 
@@ -200,6 +202,8 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 
 		Orchestra\Core::shutdown();
 		Orchestra\Core::start();
+		
+		Orchestra\Extension::detect();
 		
 		Orchestra\Extension::deactivate('aws');
 	}
