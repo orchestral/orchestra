@@ -18,7 +18,7 @@ class PresentersUserTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
-		$this->user = Orchestra\Model\User::find();
+		$this->user = Orchestra\Model\User::find(1);
 	}
 
 	/**
@@ -39,7 +39,7 @@ class PresentersUserTest extends Orchestra\Testable\TestCase {
 	public function testInstanceOfUserTable()
 	{
 		$this->be($this->user);
-		
+
 		$user = Orchestra\Model\User::paginate(5);
 		$stub = Orchestra\Presenter\User::table($user);
 
