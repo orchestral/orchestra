@@ -27,6 +27,7 @@ class PresentersResourceTest extends Orchestra\Testable\TestCase {
 		$this->model = array(
 			'foo' => new Laravel\Fluent(array(
 				'visible' => true,
+				'id'      => 'foo',
 				'name'    => 'foo',
 				'uses'    => 'orchestra::foo',
 				'childs'  => array()
@@ -54,6 +55,7 @@ class PresentersResourceTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testInstanceOfResourceTable()
 	{
+		$this->be($this->user);
 		$stub = Orchestra\Presenter\Resource::table($this->model);
 
 		$refl = new \ReflectionObject($stub);
@@ -64,6 +66,14 @@ class PresentersResourceTest extends Orchestra\Testable\TestCase {
 		$this->assertInstanceOf('Orchestra\Table', $stub);
 		$this->assertEquals(Orchestra\Table::of('orchestra.resources: list'), $stub);
 		$this->assertInstanceOf('Hybrid\Table\Grid', $grid);
+
+		ob_start();
+		echo $stub->render();
+		$content = ob_get_contents();
+		ob_end_clean();
+
+		$this->assertContains(handles('orchestra::resources/foo'), 
+			$content);
 	}
 
 
