@@ -139,6 +139,36 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @expectedException RuntimeException
 	 */
+	public function testDetectExtensionCauseThrowsExceptionWithoutValidJson()
+	{
+		$this->restartApplication();
+
+		Orchestra\Extension::detect(array(
+			'invalidbundle' => $this->base_path.'invalidbundle'.DS,
+		));
+	}
+
+	/**
+	 * Test Orchestra\Extension::option() method.
+	 *
+	 * @test
+	 */
+	public function testOptionMethod()
+	{
+		$this->restartApplication();
+
+		Orchestra\Extension::detect();
+		Orchestra\Extension::activate('e');	
+
+		$this->assertEquals('foobar', Orchestra\Extension::option('e', 'foo'));
+	}
+
+	/**
+	 * Test extension unable to be detect extension when json can't be 
+	 * parsed.
+	 *
+	 * @expectedException RuntimeException
+	 */
 	public function testDetectExtensionCauseThrowsException()
 	{
 		$this->restartApplication();
@@ -160,9 +190,7 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		Orchestra\Extension::detect();
 		Orchestra\Extension::activate('aws');
 		Orchestra\Extension::activate('b');
-		Orchestra\Extension::activate('a');	
-
-		$this->assertEquals('foobar', Orchestra\Extension::option('a', 'foo'));
+		Orchestra\Extension::activate('a');
 
 		$this->assertTrue(Orchestra\Extension::started('a'));
 		$this->assertTrue(Orchestra\Extension::activated('a'));
