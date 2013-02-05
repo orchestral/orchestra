@@ -51,6 +51,12 @@ class User extends Driver {
 		if ( ! is_null($user_meta))
 		{
 			$this->put($key, $user_meta->value);
+
+			$this->key_map[$key] = array(
+				'id'       => $key,
+				'checksum' => md5($user_meta->value),
+			);
+
 			return $user_meta->value;
 		}
 
@@ -86,7 +92,7 @@ class User extends Driver {
 	public function forget($key = null)
 	{
 		$key = str_replace('.', '/user-', $key);
-		return array_forget($this->data, $key);
+		return array_set($this->data, $key, null);
 	}
 
 	/**
@@ -108,13 +114,9 @@ class User extends Driver {
 				extract($this->key_map[$key]);
 			}
 
-			$serialize            = serialize($value);
 			list($name, $user_id) = explode('/user-', $key);
 
-			if ($checksum === md5($serialize) or empty($user_id))
-			{
-				continue;
-			}
+			if ($checksum === md5($value) or empty($user_id)) continue;
 
 			$user_meta = User_Meta::where('name', '=', $name)
 						->where('user_id', '=', $user_id)->first();

@@ -94,6 +94,7 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 			'foo/user-1'      => 'foobar',
 			'timezone/user-1' => 'UTC',
 			'age/user-1'      => 20,
+			'foobar/user-1'   => null,
 		), $data->getValue($this->stub));
 
 		$this->stub->shutdown();
