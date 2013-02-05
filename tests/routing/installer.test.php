@@ -29,11 +29,48 @@ class RoutingInstallerTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test Request GET (orchestra)/installer/index
+	 * Test Request GET (orchestra)/installer/index failed
 	 *
 	 * @test
 	 */
-	public function testGetInstallerPage()
+	public function testGetInstallerPageFailed()
+	{
+		$driver    = Config::get('database.default', 'mysql');
+		$database  = Config::get("database.connections.{$driver}", array());
+		$auth      = Config::get('auth');
+		$dummyauth = array_merge($auth, array('model' => 'DummyRoutingInstallerAuthStub'));
+
+		Config::set('database.default', 'dummy-mysql');
+		Config::set("database.connections.dummy-mysql", array(
+			'driver'   => 'mysql',
+			'host'     => '127.0.0.1',
+			'database' => Str::random(10),
+			'username' => Str::random(10),
+			'password' => Str::random(10),
+			'charset'  => 'utf8',
+			'prefix'   => '',
+		));
+		Config::set('auth', $dummyauth);
+
+		$response = $this->call('orchestra::installer@index', array());
+
+		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertEquals(200, $response->foundation->getStatusCode());
+		$this->assertEquals('orchestra::installer.index', $response->content->view);
+
+		$this->assertFalse(Orchestra\Installer::check_database());
+
+		Config::set('database.default', $driver);
+		Config::set("database.connections.{$driver}", $database);
+		Config::set('auth', $auth);
+	}
+
+	/**
+	 * Test Request GET (orchestra)/installer/index successful
+	 *
+	 * @test
+	 */
+	public function testGetInstallerPageSuccessful()
 	{
 		$response = $this->call('orchestra::installer@index', array());
 
@@ -71,3 +108,5 @@ class RoutingInstallerTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals('orchestra::installer.step2', $response->content->view);
 	}
 }
+
+class DummyRoutingInstallerAuthStub extends Eloquent {}
