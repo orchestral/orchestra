@@ -119,7 +119,7 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 
 		$this->assertInstanceOf('Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::users/view'), 
+		$this->assertEquals(handles('orchestra::users/view/'), 
 			$response->foundation->headers->get('location'));
 	}
 
