@@ -92,6 +92,35 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 		$this->assertInstanceOf('Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::users.edit', $response->content->view);
+
+		$response = $this->call('orchestra::users@view', array(''));
+		
+		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertEquals(200, $response->foundation->getStatusCode());
+		$this->assertEquals('orchestra::users.edit', $response->content->view);
+	}
+
+	/**
+	 * Test Request POST (orchestra)/users/view fails validation
+	 *
+	 * @test
+	 */
+	public function testPostCreateNewUserPageFailsValidation()
+	{
+		$this->be($this->user);
+
+		$response = $this->call('orchestra::users@view', array(''), 'POST', array(
+			'id'       => '',
+			'email'    => 'crynobone+gmail.com',
+			'fullname' => 'Mior Muhammad Zaki',
+			'password' => '123456',
+			'roles'    => array(2),
+		));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::users/view'), 
+			$response->foundation->headers->get('location'));
 	}
 
 	/**
