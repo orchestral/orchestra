@@ -286,10 +286,9 @@ class Extension {
 
 		foreach ($current as $extension => $config)
 		{
-			if ($extension !== $name)
-			{
-				$active[$extension] = $config;
-			}
+			if ($extension === $name) continue;
+		
+			$active[$extension] = $config;
 		}
 
 		$available    = $memory->get('extensions.available');
@@ -299,10 +298,9 @@ class Extension {
 		// we should check that other extensions don't depend on it
 		foreach ($active as $bundle => $config)
 		{
-			if (isset($available[$bundle]) and (
-					in_array($name, array_keys($available[$bundle]['require']))
+			if (in_array($name, array_keys($available[$bundle]['require']))
 					or in_array($title, array_keys($available[$bundle]['require']))
-				))
+				)
 			{
 				$dependencies[] = $available[$bundle]['name'];
 			}

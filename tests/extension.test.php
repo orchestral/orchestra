@@ -191,11 +191,9 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		Orchestra\Extension::activate('aws');
 		Orchestra\Extension::activate('b');
 		Orchestra\Extension::activate('a');
-
-		$this->assertTrue(Orchestra\Extension::started('a'));
-		$this->assertTrue(Orchestra\Extension::activated('a'));
-		$this->assertTrue(Orchestra\Extension::started('b'));
-		$this->assertTrue(Orchestra\Extension::activated('b'));
+		
+		Orchestra\Core::shutdown();
+		Orchestra\Core::start();
 
 		Orchestra\Extension::deactivate('b');
 	}
@@ -215,10 +213,8 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		Orchestra\Extension::activate('b');
 		Orchestra\Extension::activate('a');
 
-		$this->assertTrue(Orchestra\Extension::started('a'));
-		$this->assertTrue(Orchestra\Extension::activated('a'));
-		$this->assertTrue(Orchestra\Extension::started('b'));
-		$this->assertTrue(Orchestra\Extension::activated('b'));
+		Orchestra\Core::shutdown();
+		Orchestra\Core::start();
 		
 		Orchestra\Extension::deactivate('aws');
 	}
