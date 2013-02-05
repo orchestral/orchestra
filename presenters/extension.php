@@ -26,12 +26,13 @@ class Extension {
 				'method' => "POST",
 			));
 
-			$handles = E::option($name, 'handles');
+			$handles      = isset($config->handles) ? $config->handles : null;
+			$configurable = isset($config->configurable) ? $config->configurable : true;
 
-			$form->fieldset(function ($fieldset) use ($handles, $name)
+			$form->fieldset(function ($fieldset) use ($handles, $name, $configurable)
 			{
 				// We should only cater for custom URL handles for a route.
-				if ( ! is_null($handles) and E::option($name, 'configurable') !== false)
+				if ( ! is_null($handles) and $configurable !== false)
 				{
 					$fieldset->control('input:text', 'handles', function ($control) use ($handles)
 					{
