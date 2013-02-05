@@ -56,7 +56,8 @@ class RoutingInstallerTest extends Orchestra\Testable\TestCase {
 
 		$this->assertInstanceOf('Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::installer.step1', $response->content->view);
+		$this->assertEquals(handles('orchestra::installer/steps/1'), 
+			$response->foundation->headers->get('location'));
 
 		$response = $this->call('orchestra::installer@steps', array(2), 'POST', array(
 			'site_name' => 'Orchestra Test Suite',
