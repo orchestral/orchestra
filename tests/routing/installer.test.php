@@ -14,6 +14,18 @@ class RoutingInstallerTest extends Orchestra\Testable\TestCase {
 		$this->removeApplication();
 
 		Session::load();
+
+		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
+		set_path('app', $base_path.'application'.DS);
+	}
+
+	/**
+	 * Teardown the test environment.
+	 */
+	public function tearDown()
+	{
+		set_path('app', path('base').'application'.DS);
+		parent::tearDown();
 	}
 
 	/**
@@ -36,10 +48,21 @@ class RoutingInstallerTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals('orchestra::installer.step1', $response->content->view);
 
 		$response = $this->call('orchestra::installer@steps', array(2), 'POST', array(
-			'site_name' => 'Orchestra',
-			'email'     => 'example@test.com',
+			'site_name' => 'Orchestra Test Suite',
+			'email'     => 'admin+orchestra.com',
 			'password'  => '123456',
-			'fullname'  => 'Orchestra TestRunner',
+			'fullname'  => 'Test Administrator',
+		));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals('orchestra::installer.step1', $response->content->view);
+
+		$response = $this->call('orchestra::installer@steps', array(2), 'POST', array(
+			'site_name' => 'Orchestra Test Suite',
+			'email'     => 'admin@orchestra.com',
+			'password'  => '123456',
+			'fullname'  => 'Test Administrator',
 		));
 
 		$this->assertInstanceOf('Laravel\Response', $response);

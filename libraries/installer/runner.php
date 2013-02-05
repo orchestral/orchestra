@@ -70,6 +70,7 @@ class Runner {
 	{
 		// Serialize and flash it to session.
 		Session::flash('message', static::$message->serialize());
+		static::$message = null;
 	}
 
 	/**
