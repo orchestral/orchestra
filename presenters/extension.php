@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Presenter;
 
-use Orchestra\Extension as E,
-	Orchestra\Form,
+use Orchestra\Form,
 	Orchestra\HTML;
 
 class Extension {
