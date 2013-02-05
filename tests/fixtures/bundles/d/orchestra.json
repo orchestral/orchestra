@@ -1,0 +1,11 @@
+{
+	"name"        : "Extension D",
+	"description" : "",
+	"author"      : "",
+	"url"         : "",
+	"version"     : "0.2.0",
+	"config"      : {
+		"foo" : "foobar"
+	},
+	"require"     : {}
+}

@@ -62,7 +62,7 @@ class Client {
 	 * @param  array    $data
 	 * @return Response
 	 */
-	public function post($destination,$parameters = array(), $data = array())
+	public function post($destination, $parameters = array(), $data = array())
 	{
 		$this->flush();
 

@@ -60,5 +60,41 @@ class RoutingDashboardTest extends Orchestra\Testable\TestCase {
 		$this->assertInstanceOf('Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::dashboard.index', $response->content->view);
+	}
+
+	/**
+	 * Test Language Locale is set properly.
+	 *
+	 * @test
+	 */
+	public function testInitiateCoreCheckLanguageLocale()
+	{
+		Orchestra\Core::shutdown();
+
+		URI::$uri = 'ru/home';
+		Config::set('application.language', 'en');
+		Config::set('application.languages', array('en', 'ru'));
+
+		Orchestra\Core::start();
+
+		$this->assertEquals('ru', Config::get('application.language'));
 	}	
+
+	/**
+	 * Test Request Corrupted Installation.
+	 *
+	 * @test
+	 */
+	public function testInitiateCoreStartIsCorruptedInstallation()
+	{
+		$this->assertTrue(Orchestra\Installer::$status);
+
+		$memory = Orchestra::memory();
+		$memory->put('site', array());
+
+		Orchestra\Core::shutdown();
+		Orchestra\Core::start();
+
+		$this->assertFalse(Orchestra\Installer::$status);
+	}
 }

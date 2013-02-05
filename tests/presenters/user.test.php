@@ -5,12 +5,41 @@ Bundle::start('orchestra');
 class PresentersUserTest extends Orchestra\Testable\TestCase {
 
 	/**
+	 * User instance.
+	 *
+	 * @var Orchestra\Model\User
+	 */
+	protected $user = null;
+
+	/**
+	 * Setup the test environment.
+	 */
+	public function setUp()
+	{
+		parent::setUp();
+
+		$this->user = Orchestra\Model\User::find(1);
+	}
+
+	/**
+	 * Teardown the test environment.
+	 */
+	public function tearDown()
+	{
+		unset($this->user);
+
+		parent::tearDown();
+	}
+
+	/**
 	 * Test instanceof Orchestra\Presenter\User::table()
 	 *
 	 * @test
 	 */
 	public function testInstanceOfUserTable()
 	{
+		$this->be($this->user);
+
 		$user = Orchestra\Model\User::paginate(5);
 		$stub = Orchestra\Presenter\User::table($user);
 
