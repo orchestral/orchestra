@@ -48,7 +48,7 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	public function testPostLoginPageFailedWithoutCsrf()
 	{
 		$response = $this->call('orchestra::credential@login', array(), 'POST', array(
-			'username' => 'example@test.com',
+			'username' => 'admin@orchestra.com',
 			'password' => '123456',
 		));
 
@@ -73,7 +73,7 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals(null, $_SERVER['orchestra.auth.login']);
 
 		$response = $this->call('orchestra::credential@login', array(), 'POST', array(
-			'username'          => 'example@test.com',
+			'username'          => 'admin@orchestra.com',
 			'password'          => '123456',
 			Session::csrf_token => Session::token(),
 		));
@@ -85,7 +85,7 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 		$this->assertTrue(Auth::check());
 		
 		$auth = Auth::user();
-		$this->assertEquals('example@test.com', $auth->email);
+		$this->assertEquals('admin@orchestra.com', $auth->email);
 
 		$this->assertEquals('foobar', $_SERVER['orchestra.auth.login']);
 	}
@@ -99,7 +99,7 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	public function testPostLoginPageWithInvalidAuthentication()
 	{
 		$response = $this->call('orchestra::credential@login', array(), 'POST', array(
-			'username'          => 'example@test.com',
+			'username'          => 'admin@orchestra.com',
 			'password'          => '1234561',
 			Session::csrf_token => Session::token(),
 		));

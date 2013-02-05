@@ -19,14 +19,6 @@ class PresentersUserTest extends Orchestra\Testable\TestCase {
 		parent::setUp();
 
 		$this->user = Orchestra\Model\User::find(1);
-
-		$foouser = Orchestra\Model\User::create(array(
-			'fullname' => 'Foobar User',
-			'email'    => 'foo@bar.com',
-			'password' => 'helloworld',
-			'status'   => Orchestra\Model\User::VERIFIED,
-		));
-		$foouser->roles()->sync(array(2));
 	}
 
 	/**
@@ -68,7 +60,7 @@ class PresentersUserTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testInstanceOfUserTableAction()
 	{
-		$foouser = Orchestra\Model\User::where_email('foo@bar.com')->first();
+		$foouser = Orchestra\Model\User::where_email('member@orchestra.com')->first();
 
 		$this->be($this->user);
 

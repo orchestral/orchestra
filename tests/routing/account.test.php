@@ -25,12 +25,6 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 	 */
 	public function tearDown()
 	{
-		$this->user->fill(array(
-			'fullname' => 'Orchestra TestRunner',
-			'password' => '123456',
-		));
-		$this->user->save();
-
 		unset($this->user);
 		$this->be(null);
 		
@@ -145,5 +139,9 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 		$user = Orchestra\Model\User::find(1);
 
 		$this->assertTrue(Hash::check('123', $user->password));
+
+		// Revert the changes.
+		$user->password = '123456';
+		$user->save();
 	}
 }
