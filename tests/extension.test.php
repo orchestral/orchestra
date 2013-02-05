@@ -164,21 +164,6 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test extension unable to be detect extension when json can't be 
-	 * parsed.
-	 *
-	 * @expectedException RuntimeException
-	 */
-	public function testDetectExtensionCauseThrowsException()
-	{
-		$this->restartApplication();
-
-		Orchestra\Extension::detect(array(
-			'invalidbundle' => $this->base_path.'invalidbundle'.DS,
-		));
-	}
-
-	/**
 	 * Test extension unable to be deactivated when unresolved dependencies.
 	 *
 	 * @expectedException Orchestra\Extension\UnresolvedException
@@ -191,7 +176,7 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		Orchestra\Extension::activate('aws');
 		Orchestra\Extension::activate('b');
 		Orchestra\Extension::activate('a');
-		
+
 		Orchestra\Core::shutdown();
 		Orchestra\Core::start();
 
