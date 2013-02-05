@@ -78,6 +78,11 @@ class RoutingInstallerTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testGetInstallerPageSuccessful()
 	{
+		$response = $this->call('orchestra::installer@steps', array(100));
+
+		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertEquals(404, $response->foundation->getStatusCode());
+
 		$response = $this->call('orchestra::installer@index', array());
 
 		$this->assertInstanceOf('Laravel\Response', $response);
