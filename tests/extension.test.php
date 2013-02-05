@@ -46,6 +46,8 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 	{
 		$this->assertFalse(Orchestra\Extension::started('unknownfoo'));
 		$this->assertFalse(Orchestra\Extension::started(DEFAULT_BUNDLE));
+
+		$this->assertEquals('invalid', Orchestra\Extension::option('unknownfoo', 'foo', 'invalid'));
 	}
 
 	/**
@@ -114,7 +116,6 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		$this->restartApplication();
 
 		Orchestra\Extension::detect();
-		Orchestra\Extension::activate('aws');
 		Orchestra\Extension::activate('a');
 	}
 
@@ -173,7 +174,10 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		$this->restartApplication();
 
 		Orchestra\Extension::detect();
-		Orchestra\Extension::activate('aws');
+
+		Bundle::register('aws');
+		Bundle::start('aws');
+
 		Orchestra\Extension::activate('b');
 		Orchestra\Extension::activate('a');
 
@@ -186,25 +190,26 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test extension unable to be deactivated when unresolved dependencies
-	 * by bundle.
+	 * Test extension unable to be activated when unresolved dependencies
+	 * due to unavailable extension.
 	 *
-	 * @expectedException Orchestra\Extension\UnresolvedException
+	 * @test
 	 */
-	public function testDeactivateExtensionFailedWhenUnresolvedDependenciesByBundle()
+	public function testDeactivateExtensionFailedWhenUnresolvedDependenciesDueToUnavailableExtension()
 	{
 		$this->restartApplication();
 
 		Orchestra\Extension::detect();
-		Orchestra\Extension::activate('aws');
-		Orchestra\Extension::activate('b');
-		Orchestra\Extension::activate('a');
+		
+		$results  = Orchestra\Extension::unresolved('f', false);
+		$expected = array(
+			array(
+				'name'    => 'some-unknown-and-invalid-extension',
+				'version' => '>0.1.0',
+			),
+		);
 
-		Orchestra\Core::shutdown();
-		Orchestra\Core::start();
-		
-		Orchestra\Extension::detect();
-		
-		Orchestra\Extension::deactivate('aws');
+		$this->assertTrue(is_array($results));
+		$this->assertEquals($expected, $results);
 	}
 }
