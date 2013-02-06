@@ -148,7 +148,7 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		$this->restartApplication();
 
 		Orchestra\Extension::detect(array(
-			'invalidbundle' => $this->base_path.'invalidbundle'.DS,
+			'invalidbundle' => $this->base_path.'invalid-bundle'.DS,
 		));
 	}
 
