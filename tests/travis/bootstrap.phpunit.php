@@ -1,7 +1,21 @@
 <?php
 
-include_once './laravel/cli/tasks/test/phpunit.php';
+/*
+|--------------------------------------------------------------------------
+| Use global bootstrap.phpunit.php
+|--------------------------------------------------------------------------
+*/
 
+include_once '../bootstrap.phpunit.php';
+
+/*
+|--------------------------------------------------------------------------
+| Define database configuration
+|--------------------------------------------------------------------------
+|
+| Ensure that DB_ENV is based from setting provided in .travis.yml
+|
+*/
 if (defined('DB_DRIVER'))
 {
 	switch (DB_DRIVER) 
