@@ -47,10 +47,8 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertNotNull($memory);
 		$this->assertInstanceOf('Hybrid\Memory\Driver', $memory);
-
 		$this->assertNotNull($menu);
 		$this->assertInstanceOf('Orchestra\Widget\Menu', $menu);
-	
 		$this->assertEquals('foo', $_SERVER['test.orchestra.started']);
 
 		Orchestra\Core::shutdown();
@@ -77,22 +75,23 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test validity of Orchestra\Core helpers
+	 * Test validity of Orchestra\Core helper methods.
 	 *
 	 * @test
 	 */
-	public function testValidityOfHelpers()
+	public function testCoreHelperMethods()
 	{
 		Orchestra\Core::start();
 
 		$expected = Orchestra\Widget::make('menu.orchestra');
+		
 		$this->assertEquals($expected, Orchestra\Core::menu());
 		$this->assertInstanceOf('Orchestra\Widget\Driver', Orchestra\Core::menu());
 
 		$expected = Orchestra\Widget::make('menu.application');
+
 		$this->assertEquals($expected, Orchestra\Core::menu('app'));
 		$this->assertInstanceOf('Orchestra\Widget\Driver', Orchestra\Core::menu('app'));
-
 		$this->assertInstanceOf('Hybrid\Memory\Driver', Orchestra\Core::memory());
 		$this->assertInstanceOf('Hybrid\Acl\Container', Orchestra\Core::acl());
 

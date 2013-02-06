@@ -10,7 +10,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 	public function setUp()
 	{
 		$_SERVER['test.orchestra.started'] = null;
-		$_SERVER['test.orchestra.done'] = null;
+		$_SERVER['test.orchestra.done']    = null;
 	}
 
 	/**
@@ -37,7 +37,8 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Controller::__construct() triggers `orchestra.started: backend`
+	 * Test Orchestra\Controller::__construct() triggers 
+	 * `orchestra.started: backend`
 	 *
 	 * @test
 	 */
