@@ -84,13 +84,14 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 		Orchestra\Core::start();
 
 		$expected = Orchestra\Widget::make('menu.orchestra');
+		
 		$this->assertEquals($expected, Orchestra\Core::menu());
 		$this->assertInstanceOf('Orchestra\Widget\Driver', Orchestra\Core::menu());
 
 		$expected = Orchestra\Widget::make('menu.application');
+
 		$this->assertEquals($expected, Orchestra\Core::menu('app'));
 		$this->assertInstanceOf('Orchestra\Widget\Driver', Orchestra\Core::menu('app'));
-
 		$this->assertInstanceOf('Hybrid\Memory\Driver', Orchestra\Core::memory());
 		$this->assertInstanceOf('Hybrid\Acl\Container', Orchestra\Core::acl());
 
