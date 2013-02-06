@@ -1,6 +1,8 @@
 <?php namespace Orchestra\Extension;
 
-use \InvalidArgumentException,
+use \Closure,
+	\Exception,
+	\InvalidArgumentException,
 	\Redirect,
 	\Session, 
 	Orchestra\Core,
@@ -124,6 +126,7 @@ class Publisher {
 				'Invalid argument, expect to be instanceof Orchestra\Messages'
 			);
 		}
+		
 		$queue = static::queued();
 
 		foreach ($queue as $name)
