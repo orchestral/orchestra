@@ -41,6 +41,35 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
+	 * Get FTP Client Mock
+	 *
+	 * @access protected
+	 * @return Hybrid\FTP
+	 */
+	protected function getMockFTP()
+	{
+		$mock = $this->getMock('Hybrid\FTP', array(
+			'setup', 
+			'connect',
+			'chmod',
+		));
+
+		$mock->expects($this->any())
+			->method('setup')
+			->will($this->returnValue(true));
+
+		$mock->expects($this->any())
+			->method('connect')
+			->will($this->returnValue(true));
+
+		$mock->expects($this->any())
+			->method('chmod')
+			->will($this->returnValue(true));
+
+		return $mock;
+	}
+
+	/**
 	 * Test instanceof stub
 	 */
 	public function testInstanceOfFtp()
@@ -50,16 +79,44 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Extension\Publisher\FTP::connect()
+	 * Test Orchestra\Extension\Publisher\FTP::connect() method.
 	 *
 	 * @test
 	 */
 	public function testConnectMethod()
 	{
+		$mock = $this->getMockFTP();
+
+		$this->stub->attach($mock);
+		$this->stub->connect();
+
 		$refl       = new \ReflectionObject($this->stub);
 		$connection = $refl->getProperty('connection');
 		$connection->setAccessible(true);
 
 		$this->assertEquals($connection->getValue($this->stub), $this->stub->connection());
+	}
+
+	/**
+	 * Test Orchestra\Extension\Publisher\FTP::connect() method would 
+	 * throw an exception.
+	 *
+	 * @expectedException Hybrid\FTP\ServerException
+	 */
+	public function testConnectMethodThrowsException()
+	{
+		$mock = $this->getMock('Hybrid\FTP', array(
+			'setup', 
+			'connect',
+		));
+		$mock->expects($this->any())
+			->method('setup')
+			->will($this->returnValue(true));
+		$mock->expects($this->any())
+			->method('connect')
+			->will($this->throwException(new Hybrid\FTP\ServerException));
+
+		$this->stub->attach($mock);
+		$this->stub->connect();
 	}
 }

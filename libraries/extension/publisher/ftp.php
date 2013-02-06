@@ -33,7 +33,14 @@ class FTP extends Driver {
 		// and connect to FTP server straight away.
 		$config = Session::get('orchestra.ftp', array());
 
-		if ( ! empty($config)) $this->connect($config);
+		try
+		{
+			if ( ! empty($config)) $this->connect($config);
+		}
+		catch (ServerException $e)
+		{
+			// Connection might failed, but there nothing really to report.
+		}
 	}
 
 	/**
@@ -64,19 +71,12 @@ class FTP extends Driver {
 	 *
 	 * @access public	
 	 * @param  array    $config
-	 * @return void
+	 * @return bool
 	 */
 	public function connect($config = array())
 	{
-		try
-		{
-			$this->connection->setup($config);
-			$this->connection->connect();
-		}
-		catch (ServerException $e)
-		{
-			// Connection might failed, but there nothing really to report.
-		}
+		$this->connection->setup($config);
+		return $this->connection->connect();
 	}
 
 	/**
