@@ -16,13 +16,11 @@ class Publisher {
 	 */
 	public function publish()
 	{
-		$run_task        = false;
-		$asset_directory = path('public').'bundles'.DS;
-
-		$run_task = with(new Publisher\Directory)->recreate($asset_directory);
+		$directory = path('public').'bundles'.DS;
+		$run_task  = with(new Publisher\Directory)->flush($directory);
 
 		// If it's still unable to be writable, return false.
-		if ( ! is_writable($asset_directory)) return false;
+		if ( ! is_writable($directory)) return false;
 
 		// Avoid web server to run extensive file migration process unless 
 		// necessary (if the folder is remove and re-created). 
