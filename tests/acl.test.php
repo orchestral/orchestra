@@ -9,22 +9,20 @@ class AclTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testInstanceOf()
+	public function testInstanceOfAcl()
 	{
 		$acl = Orchestra\Acl::make();
 		$this->assertInstanceOf('Hybrid\Acl\Container', $acl);
 	}
 
 	/**
-	 * Test adding new role is attached to acl
+	 * Test model CRUD for Orchestra\Model\Role does sync with Orchestra\Acl
 	 *
 	 * @test
 	 */
-	public function testModelRoleIsSyncWithAcl()
+	public function testModelRoleCRUDSyncWithAcl()
 	{
-		$foo = new Orchestra\Model\Role(array('name' => 'foo'));
-		$foo->save();
-
+		$foo = Orchestra\Model\Role::create(array('name' => 'foo'));
 		$acl = Orchestra\Core::acl();
 
 		$this->assertTrue($acl->has_role($foo->name));
