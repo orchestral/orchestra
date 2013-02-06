@@ -68,6 +68,7 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 			'setup', 
 			'connect',
 			'chmod',
+			'ls',
 		));
 
 		$mock->expects($this->any())
@@ -81,6 +82,10 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 		$mock->expects($this->any())
 			->method('chmod')
 			->will($this->returnValue(true));
+
+		$mock->expects($this->any())
+			->method('ls')
+			->will($this->returnValue(array('application', 'sample-1', 'sample-2')));
 
 		return $mock;
 	}
@@ -144,9 +149,6 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	public function testUploadMethod()
 	{
 		$mock = $this->getMockFTP();
-		$mock->expects($this->any())
-			->method('ls')
-			->will($this->returnValue(array('sample-1', 'sample-2')));
 
 		$this->stub->attach($mock);
 		$this->stub->connect();
