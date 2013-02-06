@@ -71,13 +71,13 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 		$memory = Orchestra\Core::memory();
 
 		$this->assertInstanceOf('Hybrid\Memory\Fluent', $memory);
-		$this->assertEquals('Orchestra', $memory->get('site.name'));
+		$this->assertEquals('Orchestra Test Suite', $memory->get('site.name'));
 		$this->assertEquals('', $memory->get('site.description'));
 		$this->assertEquals('default', $memory->get('site.theme.frontend'));
 		$this->assertEquals('default', $memory->get('site.theme.backend'));
 
 		$this->assertEquals('mail', $memory->get('email.default'));
-		$this->assertEquals('example@test.com', $memory->get('email.from'));
+		$this->assertEquals('admin@orchestra.com', $memory->get('email.from'));
 	}
 
 	/**
@@ -90,11 +90,11 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 		$this->restartApplication();
 
 		$user = Orchestra\Model\User::find(1);
-		$this->assertEquals('Orchestra TestRunner', $user->fullname);
-		$this->assertEquals('example@test.com', $user->email);
+		$this->assertEquals('Test Administrator', $user->fullname);
+		$this->assertEquals('admin@orchestra.com', $user->email);
 
 		// Test login the administrator.
-		if (Auth::attempt(array('username' => 'example@test.com', 'password' => '123456')))
+		if (Auth::attempt(array('username' => 'admin@orchestra.com', 'password' => '123456')))
 		{
 			$this->assertTrue(true, 'Able to authenticate');
 

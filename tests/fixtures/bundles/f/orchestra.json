@@ -1,0 +1,13 @@
+{
+	"name"        : "Extension F",
+	"description" : "",
+	"author"      : "",
+	"url"         : "",
+	"version"     : "0.2.0",
+	"config"      : {
+		"foo" : "foobar"
+	},
+	"require"     : {
+		"some-unknown-and-invalid-extension" : ">0.1.0"
+	}
+}

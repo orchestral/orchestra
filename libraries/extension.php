@@ -14,7 +14,7 @@ class Extension {
 	 *
 	 * @var array
 	 */
-	protected static $extensions = array();
+	public static $extensions = array();
 
 	/**
 	 * Load an extension by running it's start-up script.
@@ -414,6 +414,13 @@ class Extension {
 				$reference = $identifier;
 			}
 
+			$incompatible_version = true;
+
+			if (isset($available[$reference]))
+			{
+				$incompatible_version = version_compare($available[$reference]['version'], $version, $op);
+			}
+
 			// Now check for an extension, at the same time will also detect
 			// if the dependencies is updated with a new `require` attributes,
 			// Orchestra can tell the user that this dependency is broken
@@ -421,7 +428,7 @@ class Extension {
 			if (static::started($reference) and ! $is_bundle)
 			{
 				if ( ! isset($available[$reference]) 
-					or  ! version_compare($available[$reference]['version'], $version, $op))
+					or  ! $incompatible_version)
 				{
 					$unresolved[] = array(
 						'name'    => $reference,
@@ -448,8 +455,7 @@ class Extension {
 
 			// final check, verify the dependencies is available (registered),
 			// and compare the version.
-			if ( ! isset($available[$reference])
-				or ! version_compare($available[$reference]['version'], $version, $op))
+			if ( ! isset($available[$reference]) or ! $incompatible_version)
 			{
 				$op           = ($op == '=') ? 'v' : $op;
 				$unresolved[] = array(

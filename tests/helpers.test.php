@@ -41,7 +41,7 @@ class HelpersTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testMemorizeReturnProperValues()
 	{
-		$this->assertEquals('Orchestra', memorize('site.name'));
+		$this->assertEquals('Orchestra Test Suite', memorize('site.name'));
 		$this->assertEquals('foo', memorize('site.somefoo.value', 'foo'));
 	}
 

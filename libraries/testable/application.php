@@ -7,6 +7,7 @@ use \Auth,
 	\Event,
 	\IoC,
 	\Orchestra as O,
+	Orchestra\Model\User as User,
 	\Request,
 	\Session,
 	\URL,
@@ -49,11 +50,27 @@ class Application {
 			O\Installer\Runner::install();
 
 			O\Installer\Runner::create_user(array(
-				'site_name' => 'Orchestra',
-				'email'     => 'example@test.com',
+				'site_name' => 'Orchestra Test Suite',
+				'email'     => 'admin@orchestra.com',
 				'password'  => '123456',
-				'fullname'  => 'Orchestra TestRunner',
+				'fullname'  => 'Test Administrator',
 			));
+
+			$foouser = User::where_email('member@orchestra.com')->first();
+
+			if (is_null($foouser))
+			{
+				$foouser = User::create(array(
+					'fullname' => 'Test User',
+					'email'    => 'member@orchestra.com',
+					'password' => '123456',
+					'status'   => User::VERIFIED,
+				));
+				$foouser->roles()->sync(array(
+					Config::get('orchestra::orchestra.member_role'),
+				));
+			}
+
 
 			O\Core::shutdown();
 		}

@@ -12,6 +12,13 @@ class PresentersExtensionTest extends Orchestra\Testable\TestCase {
 	protected $rows = null;
 
 	/**
+	 * User instance.
+	 *
+	 * @var Orchestra\Model\User
+	 */
+	protected $user = null;
+
+	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
@@ -22,8 +29,10 @@ class PresentersExtensionTest extends Orchestra\Testable\TestCase {
 		// fetch it and convert it to Fluent (to mimick Eloquent properties).
 		$memory     = Orchestra\Core::memory();
 		$this->rows = new Laravel\Fluent(array(
-			'handles' => 'foo'
+			'handles' => 'foohandler'
 		));
+
+		$this->user = Orchestra\Model\User::find(1);
 	}
 
 	/**
@@ -32,6 +41,7 @@ class PresentersExtensionTest extends Orchestra\Testable\TestCase {
 	public function tearDown()
 	{
 		unset($this->rows);
+		unset($this->user);
 
 		parent::tearDown();
 	}
@@ -43,6 +53,8 @@ class PresentersExtensionTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testInstanceOfExtensionForm()
 	{
+		$this->be($this->user);
+
 		$stub = Orchestra\Presenter\Extension::form('foo', $this->rows);
 
 		$refl = new \ReflectionObject($stub);
@@ -53,5 +65,13 @@ class PresentersExtensionTest extends Orchestra\Testable\TestCase {
 		$this->assertInstanceOf('Orchestra\Form', $stub);
 		$this->assertEquals(Orchestra\Form::of('orchestra.extension: foo'), $stub);
 		$this->assertInstanceOf('Hybrid\Form\Grid', $grid);
+
+		ob_start();
+		echo $stub->render();
+		$content = ob_get_contents();
+		ob_end_clean();
+
+		$this->assertContains('foohandler', $content);
+		$this->assertContains(handles("orchestra::extensions/update/foo"), $content);
 	}
 }

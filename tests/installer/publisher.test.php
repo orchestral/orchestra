@@ -28,7 +28,8 @@ class InstallerPublisherTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testConstructInstance()
 	{
-		$this->assertInstanceOf('Orchestra\Installer\Publisher', 
-			new Orchestra\Installer\Publisher);
+		$stub = new Orchestra\Installer\Publisher;
+
+		$this->assertInstanceOf('Orchestra\Installer\Publisher', $stub);
 	}
 }
