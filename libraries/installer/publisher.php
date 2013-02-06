@@ -19,26 +19,7 @@ class Publisher {
 		$run_task        = false;
 		$asset_directory = path('public').'bundles'.DS;
 
-		// This set of code check whether the application has the right set 
-		// of directory configuration in order to be updated through web. If 
-		// such issue exist it would be best to flush the directory and let 
-		// web server file/group permission to create the folder.
-		if ( ! is_dir($asset_directory) or ! is_writable($asset_directory))
-		{
-			// only remove directory if it's exist.
-			is_dir($asset_directory) or File::rmdir($asset_directory);
-
-			// try mkdir, in certain scenario this would be possible if the 
-			// public folder ownership is set correctly.
-			if ( ! @mkdir($asset_directory, 0755, true))
-			{
-				throw new RuntimeException(
-					"Unable to create directory [{$asset_directory}] due to permission issue."
-				);
-			}
-
-			$run_task = true;
-		}
+		$run_task = with(new Publisher\Directory)->recreate($asset_directory);
 
 		// If it's still unable to be writable, return false.
 		if ( ! is_writable($asset_directory)) return false;
@@ -55,4 +36,8 @@ class Publisher {
 
 		return true;
 	}
+
+	/**
+	 * 
+	 */
 }
