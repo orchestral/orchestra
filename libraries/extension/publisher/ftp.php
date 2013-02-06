@@ -139,15 +139,7 @@ class FTP extends Driver {
 	 */
 	public function upload($name, $recursively = false)
 	{
-		$public = path('public');
-
-		// This set of preg_match would filter ftp' user is not accessing 
-		// exact path as path('public'), in most shared hosting ftp' user 
-		// would only gain access to it's /home/username directory.
-		if (preg_match('/^\/(home)\/([a-zA-Z0-9]+)\/(.*)$/', $public, $matches))
-		{
-			$public = DS.ltrim($matches[3], DS);
-		}
+		$public = $this->base_path(path('public'));
 
 		// Start chmod from public/bundles directory, if the extension folder
 		// is yet to be created, it would be created and own by the web server
@@ -181,6 +173,26 @@ class FTP extends Driver {
 		($recursively ? $this->recursive_chmod($path, 0777) : $this->chmod($path, 0777));
 		
 		return true;
+	}
+
+	/**
+	 * Get base path for FTP
+	 *
+	 * @access public
+	 * @param  string   $path
+	 * @return string
+	 */
+	public function base_path($path)
+	{
+		// This set of preg_match would filter ftp' user is not accessing 
+		// exact path as path('public'), in most shared hosting ftp' user 
+		// would only gain access to it's /home/username directory.
+		if (preg_match('/^\/(home)\/([a-zA-Z0-9]+)\/(.*)$/', $path, $matches))
+		{
+			$path = DS.ltrim($matches[3], DS);
+		}
+
+		return $path;
 	}
 
 	/**

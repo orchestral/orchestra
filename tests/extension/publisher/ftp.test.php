@@ -33,6 +33,8 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 		));
 
 		File::mkdir(path('public').'bundles'.DS.DEFAULT_BUNDLE.DS);
+		File::mkdir(path('public').'bundles'.DS.DEFAULT_BUNDLE.DS.'sample-1'.DS);
+		File::mkdir(path('public').'bundles'.DS.DEFAULT_BUNDLE.DS.'sample-2'.DS);
 
 		$this->user = Orchestra\Model\User::find(1);
 		$this->stub = new Orchestra\Extension\Publisher\FTP;
@@ -42,7 +44,9 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	 * Teardown the test environment.
 	 */
 	public function tearDown()
-	{
+	{	
+		File::rmdir(path('public').'bundles'.DS.DEFAULT_BUNDLE.DS.'sample-1'.DS);
+		File::rmdir(path('public').'bundles'.DS.DEFAULT_BUNDLE.DS.'sample-2'.DS);
 		File::rmdir(path('public').'bundles'.DS.DEFAULT_BUNDLE.DS);
 
 		set_path('public', path('base').'public'.DS);
@@ -140,10 +144,15 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	public function testUploadMethod()
 	{
 		$mock = $this->getMockFTP();
+		$mock->expects($this->any())
+			->method('ls')
+			->will($this->returnValue(array('sample-1', 'sample-2')));
 
 		$this->stub->attach($mock);
 		$this->stub->connect();
 
 		$this->assertTrue($this->stub->upload(DEFAULT_BUNDLE));
+		$this->assertEquals('/codenitive.com/public_html', 
+			$this->stub->base_path('/home/crynobone/codenitive.com/public_html'));
 	}
 }
