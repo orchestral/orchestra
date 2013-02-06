@@ -9,7 +9,7 @@ class MemoryTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testInstanceOf()
+	public function testInstanceOfMemory()
 	{
 		$memory  = Orchestra\Memory::make('runtime.orchestra-memory');
 		$refl    = new \ReflectionObject($memory);

@@ -25,7 +25,7 @@ class ViewTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testConstructMethod()
+	public function testConstructView()
 	{
 		Event::listen('orchestra.started: view', function ()
 		{
@@ -48,7 +48,7 @@ class ViewTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\View::exists()
+	 * Test Orchestra\View::exists() method.
 	 *
 	 * @test
 	 */

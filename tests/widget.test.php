@@ -37,7 +37,7 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testInstanceOfUsingMakeMethod()
+	public function testInstanceOfWidget()
 	{
 		$this->assertInstanceOf('Orchestra\Widget\Menu',
 			Orchestra\Widget::make('menu'));
@@ -52,7 +52,7 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @expectedException RuntimeException
 	 */
-	public function testConstructThrowsAnException()
+	public function testConstructThrowsException()
 	{
 		$stub = new Orchestra\Widget;
 	}
@@ -87,7 +87,7 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @expectedException \Exception
 	 */
-	public function testMakeWithInvalidDriverThrowException()
+	public function testMakeWithInvalidDriverThrowsException()
 	{
 		Orchestra\Widget::make('menus');
 	}
@@ -167,7 +167,7 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testAccessGetThrowsAnException()
+	public function testAccessGetThrowsException()
 	{
 		$stub  = new WidgetStub('foo', array());
 		$hello = $stub->hello;
