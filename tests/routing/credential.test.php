@@ -172,7 +172,7 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 
 		$user = Orchestra\Model\User::where_email('foobar@register-test.com')->first();
 
-		$this->assertTrue(is_null($user));
+		$this->assertNull($user);
 	}
 
 	/**

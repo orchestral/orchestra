@@ -72,7 +72,7 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 			$_SERVER['extension.app.done'] = 'foo';
 		});
 
-		$this->assertTrue(is_null($_SERVER['extension.app.started']));
+		$this->assertNull($_SERVER['extension.app.started']);
 
 		Orchestra\Extension::detect();
 		Orchestra\Extension::activate(DEFAULT_BUNDLE);
@@ -83,7 +83,7 @@ class ExtensionTest extends Orchestra\Testable\TestCase {
 		$this->assertTrue(Orchestra\Extension::started(DEFAULT_BUNDLE));
 		$this->assertTrue(Orchestra\Extension::activated(DEFAULT_BUNDLE));
 
-		$this->assertTrue(is_null($_SERVER['extension.app.done']));
+		$this->assertNull($_SERVER['extension.app.done']);
 
 		Orchestra\Extension::shutdown();
 

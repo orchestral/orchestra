@@ -33,11 +33,11 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Widget::make()
+	 * Test Orchestra\Widget::make() method.
 	 *
 	 * @test
 	 */
-	public function testMakeReturnProperInstanceOf()
+	public function testInstanceOfUsingMakeMethod()
 	{
 		$this->assertInstanceOf('Orchestra\Widget\Menu',
 			Orchestra\Widget::make('menu'));
@@ -93,7 +93,7 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test instanceof stub.
+	 * Test instanceof WidgetStub.
 	 *
 	 * @test
 	 */
@@ -103,7 +103,7 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 		$this->assertInstanceOf('Orchestra\Widget\Driver', Orchestra\Widget::make('stub'));
 		$this->assertInstanceOf('WidgetStub', Orchestra\Widget::make('stub'));
 
-		$stub = new WidgetStub('foobar', array());
+		$stub     = new WidgetStub('foobar', array());
 		$expected = array(
 			'defaults' => array(
 				'title'   => '',
@@ -126,12 +126,13 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test add an item using stub.
+	 * Test add an item using stub is valid.
 	 *
 	 * @test
 	 */
-	public function testAddItemUsingStubReturnProperly()
+	public function testAddItemUsingStubIsValid()
 	{
+		$stub     = Orchestra\Widget::make('stub');
 		$expected = array(
 			'foo' => new Laravel\Fluent(array(
 				'id'     => 'foo',
@@ -146,8 +147,6 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 				'childs' => array(),
 			)),
 		);
-
-		$stub = Orchestra\Widget::make('stub');
 
 		$stub->add('foobar', 'parent', function ($item)
 		{
@@ -170,15 +169,14 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testAccessGetThrowsAnException()
 	{
-		$stub = new WidgetStub('foo', array());
-
+		$stub  = new WidgetStub('foo', array());
 		$hello = $stub->hello;
 	}
 }
 
 class WidgetStub extends Orchestra\Widget\Driver {
 
-	protected $type = 'stub';
+	protected $type   = 'stub';
 	protected $config = array(
 		'defaults' => array(
 			'title'   => '',

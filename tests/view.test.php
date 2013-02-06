@@ -32,7 +32,7 @@ class ViewTest extends PHPUnit_Framework_TestCase {
 			$_SERVER['view.started'] = 'foo';
 		});
 
-		$this->assertTrue(is_null($_SERVER['view.started']));
+		$this->assertNull($_SERVER['view.started']);
 
 		$view = new Orchestra\View('orchestra::layout.main');
 

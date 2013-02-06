@@ -49,7 +49,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 			$_SERVER['test.orchestra.started'] = 'foo';
 		});
 
-		$this->assertTrue(is_null($_SERVER['test.orchestra.started']));
+		$this->assertNull($_SERVER['test.orchestra.started']);
 
 		$controller = new Orchestra\Controller;
 
@@ -68,7 +68,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 			$_SERVER['test.orchestra.done'] = 'foo';
 		});
 
-		$this->assertTrue(is_null($_SERVER['test.orchestra.done']));
+		$this->assertNull($_SERVER['test.orchestra.done']);
 
 		$controller = with(new Orchestra\Controller)->after('foobar');
 

@@ -9,15 +9,15 @@ class TableTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testInstanceOf()
+	public function testInstanceOfTable()
 	{
 		$table = Orchestra\Table::make(function () {});
-		$this->assertInstanceOf('Hybrid\Table', $table);
+		$refl  = new \ReflectionObject($table);
+		$grid  = $refl->getProperty('grid');
 
-		$refl = new \ReflectionObject($table);
-		$grid = $refl->getProperty('grid');
 		$grid->setAccessible(true);
 
+		$this->assertInstanceOf('Hybrid\Table', $table);
 		$this->assertInstanceOf('Hybrid\Table\Grid', $grid->getValue($table));
 	}
 }
