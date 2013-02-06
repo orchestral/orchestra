@@ -49,7 +49,7 @@ class AclTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testModelCreateRoleCRUDSyncWithAcl()
+	public function testModelCreateRoleSyncToAcl()
 	{
 		$acl   = Orchestra\Core::acl();
 		$refl  = new \ReflectionObject($acl);
@@ -66,7 +66,7 @@ class AclTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testModelUpdateRoleCRUDSyncWithAcl()
+	public function testModelUpdateRoleSyncToAcl()
 	{
 		$acl   = Orchestra\Core::acl();
 		$refl  = new \ReflectionObject($acl);
@@ -89,7 +89,7 @@ class AclTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testModelDeleteRoleCRUDSyncWithAcl()
+	public function testModelDeleteRoleSyncToAcl()
 	{
 		$acl   = Orchestra\Core::acl();
 		$refl  = new \ReflectionObject($acl);

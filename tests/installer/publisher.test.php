@@ -26,7 +26,7 @@ class InstallerPublisherTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testConstructInstance()
+	public function testConstructPublisher()
 	{
 		$stub = new Orchestra\Installer\Publisher;
 

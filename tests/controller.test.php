@@ -23,26 +23,12 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Controller::__construct()
-	 *
-	 * @test
-	 */
-	public function testFilter()
-	{
-		$controller = new Orchestra\Controller;
-
-		$this->assertTrue(View::$shared['fluent_layout']);
-		$this->assertEquals(Orchestra\Core::memory(),
-			View::$shared['orchestra_memory']);
-	}
-
-	/**
 	 * Test Orchestra\Controller::__construct() triggers 
 	 * `orchestra.started: backend`
 	 *
 	 * @test
 	 */
-	public function testConstructTriggerEvents()
+	public function testConstructController()
 	{
 		Event::listen('orchestra.started: backend', function()
 		{
@@ -54,6 +40,9 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$controller = new Orchestra\Controller;
 
 		$this->assertEquals('foo', $_SERVER['test.orchestra.started']);
+		$this->assertTrue(View::$shared['fluent_layout']);
+		$this->assertEquals(Orchestra\Core::memory(),
+			View::$shared['orchestra_memory']);
 	}
 
 	/**
@@ -61,7 +50,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testAfterTriggerEvent()
+	public function testAfterFilter()
 	{
 		Event::listen('orchestra.done: backend', function()
 		{

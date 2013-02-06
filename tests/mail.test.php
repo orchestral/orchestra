@@ -9,7 +9,7 @@ class MailTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @expectedException \Exception
 	 */
-	public function testIstanceOfMailerWithInvalidViewThrowException()
+	public function testInstanceOfMailerWithInvalidViewThrowsException()
 	{
 		$mailer = new Orchestra\Mail(
 			'orchestra::an.unknown.view',

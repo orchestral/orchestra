@@ -43,7 +43,7 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	/**
 	 * Test instanceof stub
 	 */
-	public function testInstanceOfStub()
+	public function testInstanceOfFtp()
 	{
 		$this->assertInstanceOf('Orchestra\Extension\Publisher\Driver', $this->stub);
 		$this->assertFalse($this->stub->connected());
@@ -54,7 +54,7 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testConnectionInstance()
+	public function testConnectMethod()
 	{
 		$refl       = new \ReflectionObject($this->stub);
 		$connection = $refl->getProperty('connection');

@@ -64,7 +64,7 @@ class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testStubPublisher()
+	public function testInstanceOfPublisher()
 	{
 		$this->assertInstanceOf('Orchestra\Extension\Publisher\Driver',	
 			$this->stub);

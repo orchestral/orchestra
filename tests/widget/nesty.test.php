@@ -32,7 +32,7 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testInstanceOfStub()
+	public function testInstanceOfNesty()
 	{
 		$this->assertInstanceOf('Orchestra\Widget\Nesty', $this->stub);
 
@@ -49,7 +49,7 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testNewInstantiatedInstanceReturnEmptyArray()
+	public function testNewInstanceReturnEmptyArray()
 	{
 		$this->assertEquals(array(),
 			with(new Orchestra\Widget\Nesty(array()))->get());
@@ -60,7 +60,7 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testAddItemIsProperlyReturned()
+	public function testAddMethod()
 	{
 		$expected = array(
 			'hello' => new Laravel\Fluent(array(

@@ -18,7 +18,7 @@ class ModelsUserTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testEloquentConstant()
+	public function testConfiguration()
 	{
 		$this->assertEquals(1, Orchestra\Model\User::VERIFIED);
 		$this->assertEquals(0, Orchestra\Model\User::UNVERIFIED);
@@ -44,7 +44,7 @@ class ModelsUserTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testLocatimeMethod()
+	public function testTimezoneMethod()
 	{
 		Orchestra\Model\User\Meta::create(array(
 			'user_id' => 1,

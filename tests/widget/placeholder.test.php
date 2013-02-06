@@ -32,7 +32,7 @@ class WidgetPlaceholderTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testInstanceOf()
+	public function testInstanceOfPlaceholder()
 	{
 		$this->assertInstanceOf('Orchestra\Widget\Placeholder', $this->stub);
 
@@ -52,7 +52,7 @@ class WidgetPlaceholderTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testAddItemIsReturnProperly()
+	public function testAddMethod()
 	{
 		$callback = function ()
 		{

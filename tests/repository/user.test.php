@@ -47,7 +47,7 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testInstanceOfStub()
+	public function testInstanceOfUserRepository()
 	{
 		$this->assertInstanceOf('Hybrid\Memory\Driver', $this->stub);
 		$this->assertInstanceOf('Hybrid\Memory\Driver', new Orchestra\Repository\User);
@@ -68,7 +68,7 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testRepositoryUserGet()
+	public function testGetMethod()
 	{
 		$this->stub->put("foo.1", "foobar");
 		$this->stub->put("timezone.1", "UTC");
@@ -112,7 +112,7 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testRepositoryUserPut()
+	public function testPutMethod()
 	{
 		$stub = new Orchestra\Repository\User;
 		$stub->put("hello.1", "Hello World");

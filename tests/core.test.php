@@ -31,7 +31,7 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testStartWouldFireEvents()
+	public function testStartMethod()
 	{
 		Event::listen('orchestra.started', function ()
 		{
@@ -59,7 +59,7 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testShutdownTriggerEvents()
+	public function testShutdownMethod()
 	{
 		Event::listen('orchestra.done', function ()
 		{
@@ -79,7 +79,7 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testCoreHelperMethods()
+	public function testHelperMethods()
 	{
 		Orchestra\Core::start();
 

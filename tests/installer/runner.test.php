@@ -85,7 +85,7 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testAdministratorUserProperlyCreated()
+	public function testAdministratorUserIsCreated()
 	{
 		$this->restartApplication();
 
@@ -124,7 +124,7 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testEventProperlyFired()
+	public function testInstallationEventIsFired()
 	{
 		$lists = array(
 			'orchestra.install.schema-users',
