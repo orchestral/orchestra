@@ -25,6 +25,15 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
+		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
+		set_path('public', $base_path.'public'.DS);
+
+		Orchestra\Extension::detect(array(
+			DEFAULT_BUNDLE => "{$base_path}application".DS,
+		));
+
+		File::mkdir(path('public').'bundles'.DS.DEFAULT_BUNDLE.DS);
+
 		$this->user = Orchestra\Model\User::find(1);
 		$this->stub = new Orchestra\Extension\Publisher\FTP;
 	}
@@ -34,6 +43,9 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	 */
 	public function tearDown()
 	{
+		File::rmdir(path('public').'bundles'.DS.DEFAULT_BUNDLE.DS);
+
+		set_path('public', path('base').'public'.DS);
 		unset($this->user);
 		$this->be(null);
 
@@ -118,5 +130,20 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 
 		$this->stub->attach($mock);
 		$this->stub->connect();
+	}
+
+	/**
+	 * Test Orchestra\Extension\Publisher\FTP::upload() method.
+	 *
+	 * @test
+	 */
+	public function testUploadMethod()
+	{
+		$mock = $this->getMockFTP();
+
+		$this->stub->attach($mock);
+		$this->stub->connect();
+
+		$this->assertTrue($this->stub->upload(DEFAULT_BUNDLE));
 	}
 }

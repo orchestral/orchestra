@@ -111,18 +111,18 @@ class FTP extends Driver {
 			// this is to check if return value is just a single file, 
 			// avoiding infinite loop when we reach a file.
 			if ($lists === array($path)) return true;
+
+			foreach ($lists as $dir)
+			{
+				// Not a file or folder, ignore it.
+				if (substr($dir, -3) === '/..' or substr($dir, -2) === '/.') continue;
+				
+				$this->recursive_chmod($dir, $mode);
+			}
 		}
 		catch (RuntimeException $e)
 		{
-			return true;
-		}
-
-		foreach ($lists as $dir)
-		{
-			// Not a file or folder, ignore it.
-			if (substr($dir, -3) === '/..' or substr($dir, -2) === '/.') continue;
-			
-			$this->recursive_chmod($dir, $mode);
+			// Do nothing.
 		}
 
 		return true;
@@ -133,13 +133,13 @@ class FTP extends Driver {
 	 * Upload the file.
 	 *
 	 * @access public
-	 * @param  string   $name   Extension name
+	 * @param  string   $name           Extension name
+	 * @param  bool     $recursively
 	 * @return bool
 	 */
-	public function upload($name)
+	public function upload($name, $recursively = false)
 	{
-		$public      = path('public');
-		$recursively = false;
+		$public = path('public');
 
 		// This set of preg_match would filter ftp' user is not accessing 
 		// exact path as path('public'), in most shared hosting ftp' user 
