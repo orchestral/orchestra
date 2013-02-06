@@ -60,6 +60,10 @@ class PresentersUserTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testInstanceOfUserTableAction()
 	{
+		$foouser = Orchestra\Model\User::where_email('member@orchestra.com')->first();
+
+		$this->be($this->user);
+
 		$user   = Orchestra\Model\User::paginate(5);
 		$stub   = Orchestra\Presenter\User::table($user); 
 		$output = Orchestra\Presenter\User::table_actions($stub);
@@ -74,6 +78,22 @@ class PresentersUserTest extends Orchestra\Testable\TestCase {
 		$this->assertInstanceOf('Orchestra\Table', $stub);
 		$this->assertEquals(Orchestra\Table::of('orchestra.users'), $stub);
 		$this->assertInstanceOf('Hybrid\Table\Grid', $grid);
+
+		ob_start();
+		echo $stub->render();
+		$content = ob_get_contents();
+		ob_end_clean();
+
+		$admin  = Orchestra\Model\Role::admin();
+
+		$this->assertContains($this->user->fullname, $content);
+		$this->assertContains($this->user->email, $content);
+		$this->assertContains('<span class="label label-info">'.$admin->name.'</span>', 
+			$content);
+		$this->assertContains(handles('orchestra::users/view/1'), 
+			$content);
+		$this->assertContains(handles('orchestra::users/view/'.$foouser->id), 
+			$content);
 	}
 
 	/**
@@ -83,8 +103,8 @@ class PresentersUserTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testInstanceOfUserForm()
 	{
-		$user = new Orchestra\Model\User;
-		$stub = Orchestra\Presenter\User::form($user);
+		$this->be($this->user);
+		$stub = Orchestra\Presenter\User::form($this->user);
 
 		$refl = new \ReflectionObject($stub);
 		$grid = $refl->getProperty('grid');
@@ -94,6 +114,19 @@ class PresentersUserTest extends Orchestra\Testable\TestCase {
 		$this->assertInstanceOf('Orchestra\Form', $stub);
 		$this->assertEquals(Orchestra\Form::of('orchestra.users'), $stub);
 		$this->assertInstanceOf('Hybrid\Form\Grid', $grid);
+
+		ob_start();
+		echo $stub->render();
+		$content = ob_get_contents();
+		ob_end_clean();
+
+		$admin  = Orchestra\Model\Role::admin();
+		$member = Orchestra\Model\Role::member();
+
+		$this->assertContains($this->user->fullname, $content);
+		$this->assertContains($this->user->email, $content);
+		$this->assertContains($admin->name, $content);
+		$this->assertContains($member->name, $content);
 	}
 	
 }

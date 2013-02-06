@@ -69,7 +69,7 @@ class RoutingForgotTest extends Orchestra\Testable\TestCase {
 	public function testPostForgotPageFailedInvalidCsrf()
 	{
 		$response = $this->call('orchestra::forgot@index', array(), 'POST', array(
-			'email' => 'example@test.com',
+			'email' => 'admin@orchestra.com',
 		));
 
 		$this->assertInstanceOf('Laravel\Response', $response);
@@ -84,7 +84,7 @@ class RoutingForgotTest extends Orchestra\Testable\TestCase {
 	public function testPostForgotPage()
 	{
 		$response = $this->call('orchestra::forgot@index', array(), 'POST', array(
-			'email'             => 'example@test.com',
+			'email'             => 'admin@orchestra.com',
 			Session::csrf_token => Session::token(),
 		));
 
@@ -112,7 +112,7 @@ class RoutingForgotTest extends Orchestra\Testable\TestCase {
 	public function testGetResetPasswordPage()
 	{
 		$response = $this->call('orchestra::forgot@index', array(), 'POST', array(
-			'email'             => 'example@test.com',
+			'email'             => 'admin@orchestra.com',
 			Session::csrf_token => Session::token(),
 		));
 

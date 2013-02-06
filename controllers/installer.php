@@ -132,5 +132,7 @@ class Orchestra_Installer_Controller extends Controller {
 				}
 				break;
 		}
+
+		return Response::error('404');
 	}
 }
