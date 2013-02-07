@@ -116,6 +116,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 		$user = Orchestra\Model\User::find(1);
 
 		$this->assertEquals('Foobar', $user->fullname);
+		$this->assertEmpty(Session::get('errors'));
 	}
 
 	/**
@@ -137,6 +138,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::account'), 
 			$response->foundation->headers->get('location'));
+		$this->assertTrue(array() !== Session::get('errors', array()));
 	}
 
 	/**
@@ -154,13 +156,13 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 			'confirm_password' => '123',
 		));
 
+		$user = Orchestra\Model\User::find(1);
+
 		$this->assertInstanceOf('Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::account/password'), 
 			$response->foundation->headers->get('location'));
-
-		$user = Orchestra\Model\User::find(1);
-
+		$this->assertEmpty(Session::get('errors'));
 		$this->assertTrue(Hash::check('123', $user->password));
 
 		// Revert the changes.
@@ -169,16 +171,17 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test Request POST (orchestra)/account/password with validation error.
+	 * Test Request POST (orchestra)/account/password with validation error 
+	 * when new password and confirm password is not the same.
 	 *
 	 * @test
 	 */
-	public function testPostEditPasswordPageWithValidationError()
+	public function testPostEditPasswordPageMismatchValidationError()
 	{
 		$this->be($this->user);
 
 		$response = $this->call('orchestra::account@password', array(), 'POST', array(
-			'current_password' => '12346',
+			'current_password' => '123456',
 			'new_password'     => '123',
 			'confirm_password' => '1233',
 		));
@@ -187,5 +190,29 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::account/password'), 
 			$response->foundation->headers->get('location'));
+		$this->assertTrue(array() !== Session::get('errors', array()));
+	}
+
+	/**
+	 * Test Request POST (orchestra)/account/password with validation error 
+	 * when old password is not correct.
+	 *
+	 * @test
+	 */
+	public function testPostEditPasswordPageIncorrectOldPasswordError()
+	{
+		$this->be($this->user);
+
+		$response = $this->call('orchestra::account@password', array(), 'POST', array(
+			'current_password' => '123467',
+			'new_password'     => '123',
+			'confirm_password' => '123',
+		));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::account/password'), 
+			$response->foundation->headers->get('location'));
+		$this->assertTrue(array() !== Session::get('message', array()));
 	}
 }
