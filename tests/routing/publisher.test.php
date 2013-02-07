@@ -59,8 +59,9 @@ class RoutingPublisherTest extends Orchestra\Testable\TestCase {
 
 		$response = $this->call('orchestra::publisher@index');
 
-		$this->assertInstanceOf('Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::publisher.ftp', $response->content->view);
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::publisher/ftp'), 
+			$response->foundation->headers->get('location'));
 	}
 }

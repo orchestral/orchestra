@@ -113,8 +113,10 @@ class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
 		Session::put('orchestra.publisher.queue', array('foo'));
 
 		$result = Orchestra\Extension\Publisher::execute(new Orchestra\Messages);
+		$queue  = Session::get('orchestra.publisher.queue');
 
-		$this->assertNull(Session::get('orchestra.publisher.queue'));
+		$this->assertEmpty($queue);
+		$this->assertTrue(is_array($queue));
 		$this->assertInstanceOf('Orchestra\Messages', $result);
 	}
 
@@ -132,7 +134,7 @@ class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
 
 		$result = Orchestra\Extension\Publisher::execute(new Orchestra\Messages);
 
-		$this->assertNull(Session::get('orchestra.publisher.queue'));
+		$this->assertEquals(array('foo'), Session::get('orchestra.publisher.queue'));
 		$this->assertInstanceOf('Orchestra\Messages', $result);
 		$this->assertEquals(array('Invalid request'), $result->get('error'));
 	}

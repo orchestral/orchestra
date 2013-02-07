@@ -33,13 +33,14 @@ class FTP extends Driver {
 		// and connect to FTP server straight away.
 		$config = Session::get('orchestra.ftp', array());
 
-		try
+		try 
 		{
 			if ( ! empty($config)) $this->connect($config);
 		}
 		catch (ServerException $e)
 		{
 			// Connection might failed, but there nothing really to report.
+			Session::put('orchestra.ftp', array());
 		}
 	}
 
@@ -165,12 +166,13 @@ class FTP extends Driver {
 			// extension can't be activated, let's try activating the 
 			// extension and if it failed, we should actually catching 
 			// those exception instead.
+			throw $e;
 		}
 
 		Extension::activate($name);
 		
 		// Revert chmod back to original state.
-		($recursively ? $this->recursive_chmod($path, 0777) : $this->chmod($path, 0777));
+		($recursively ? $this->recursive_chmod($path, 0755) : $this->chmod($path, 0755));
 		
 		return true;
 	}
