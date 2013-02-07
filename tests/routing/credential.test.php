@@ -126,7 +126,6 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
-
 		$this->assertFalse(Auth::check());
 	}
 
@@ -187,11 +186,10 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 			'password' => '123456',
 		));
 
-		$this->assertInstanceOf('Laravel\Response', $response);
-		$this->assertEquals(500, $response->foundation->getStatusCode());
-
 		$user = Orchestra\Model\User::where_email('foobar@register-test.com')->first();
 
+		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertEquals(500, $response->foundation->getStatusCode());
 		$this->assertNull($user);
 	}
 
@@ -215,12 +213,8 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 
 		$this->assertInstanceOf('Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::login'), 
+		$this->assertEquals(handles('orchestra::register'), 
 			$response->foundation->headers->get('location'));
-
-		$user = Orchestra\Model\User::where_email('foobar@register-test.com')->first();
-
-		$this->assertFalse(is_null($user));
 	}
 
 	/**
