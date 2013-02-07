@@ -222,7 +222,7 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 
 		$user = Orchestra\Model\User::find($user_id);
 
-		$this->assertTrue(is_null($user));
+		$this->assertNull($user);
 	}
 
 	/**
@@ -254,6 +254,6 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 
 		$user = Orchestra\Model\User::find($user_id);
 
-		$this->assertTrue(is_null($user));
+		$this->assertNull($user);
 	}
 }

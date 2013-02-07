@@ -32,7 +32,7 @@ class WidgetMenuTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testInstanceOf()
+	public function testInstanceOfMenu()
 	{
 		$this->assertInstanceOf('Orchestra\Widget\Menu', $this->stub);
 
@@ -53,7 +53,7 @@ class WidgetMenuTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testAddItemIsReturnProperly()
+	public function testAddMethod()
 	{
 		$expected = array(
 			'foo' => new Laravel\Fluent(array(

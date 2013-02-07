@@ -32,7 +32,7 @@ class WidgetPaneTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testInstanceOf()
+	public function testInstanceOfPane()
 	{
 		$expected = array(
 			'defaults' => array(
@@ -61,7 +61,7 @@ class WidgetPaneTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testAddItemIsReturnProperly()
+	public function testAddMethod()
 	{
 		$expected = array(
 			'foo' => new Laravel\Fluent(array(

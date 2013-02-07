@@ -31,7 +31,7 @@ class ModelRoleTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testUsersMethod()
+	public function testUsersRelationship()
 	{
 		$admin    = Orchestra\Model\Role::admin();
 		$user     = $admin->users()->first();

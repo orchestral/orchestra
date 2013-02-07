@@ -26,10 +26,30 @@ class InstallerPublisherTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testConstructInstance()
+	public function testConstructPublisher()
 	{
 		$stub = new Orchestra\Installer\Publisher;
 
 		$this->assertInstanceOf('Orchestra\Installer\Publisher', $stub);
+	}
+
+	/**
+	 * Test Orchestra\Installer\Publisher::publish() method.
+	 *
+	 * @test
+	 */
+	public function testPublishMethod()
+	{
+		File::mkdir(path('storage').'work'.DS.'publisher-mock', 777);
+
+		$mock = $this->getMock('Orchestra\Installer\Publisher\Directory', array('flush'));
+		$mock->expects($this->any())
+			->method('flush')
+			->will($this->returnValue(true));
+		
+		$stub = new Orchestra\Installer\Publisher;
+		$this->assertTrue($stub->publish());
+
+		File::rmdir(path('storage').'work'.DS.'publisher-mock');
 	}
 }

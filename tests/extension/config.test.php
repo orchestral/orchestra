@@ -45,7 +45,7 @@ class ExtensionConfigTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testMapConfiguration()
+	public function testMapMethod()
 	{
 		Config::set('application::foo.bar', 'foobar');
 		$this->restartApplication();

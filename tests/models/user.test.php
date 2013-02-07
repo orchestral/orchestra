@@ -18,7 +18,7 @@ class ModelsUserTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testEloquentConstant()
+	public function testConfiguration()
 	{
 		$this->assertEquals(1, Orchestra\Model\User::VERIFIED);
 		$this->assertEquals(0, Orchestra\Model\User::UNVERIFIED);
@@ -44,7 +44,7 @@ class ModelsUserTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testLocatimeMethod()
+	public function testTimezoneMethod()
 	{
 		Orchestra\Model\User\Meta::create(array(
 			'user_id' => 1,
@@ -68,7 +68,7 @@ class ModelsUserTest extends Orchestra\Testable\TestCase {
 	{
 		$foo = Orchestra\Model\User::search('invalid@dummy-user.com');
 		$this->assertInstanceOf('Laravel\Database\Eloquent\Query', $foo);
-		$this->assertTrue(is_null($foo->first()));
+		$this->assertNull($foo->first());
 
 		$user     = Orchestra\Model\User::search('admin@orchestra.com', array(1))->first();
 		$expected = Orchestra\Model\User::find(1);

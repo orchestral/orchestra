@@ -39,7 +39,7 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testMakeAResource()
+	public function testConstructResource()
 	{
 		$this->assertInstanceOf('Orchestra\Resources', $this->stub);
 		$this->assertEquals('ResourceStub', $this->stub->name);
@@ -66,7 +66,7 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testMakeAResourceThrowAnException()
+	public function testMakeAResourceThrowsException()
 	{
 		$stub = Orchestra\Resources::make('stubber', array());
 	}
@@ -77,7 +77,7 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testAddChildThrownException()
+	public function testAddChildUsingReservedKeywordsThrowsException()
 	{
 		$this->stub->map('visible', 'stub.visible');
 	}
@@ -110,7 +110,7 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testVisibilityUsingShow()
+	public function testDisplayResourceViaShowMethod()
 	{
 		$this->stub->show();
 
@@ -128,7 +128,7 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testVisibilityUsingHide()
+	public function testDisplayResourceViaHideMethod()
 	{
 		$this->stub->hide();
 
@@ -146,7 +146,7 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testVisibilityUsingVisibility()
+	public function testResourceVisibilityViaVisibilityMethod()
 	{
 		$this->stub->visibility(function ()
 		{
@@ -163,11 +163,11 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Resources::call()
+	 * Test Orchestra\Resources::call() method.
 	 *
 	 * @test
 	 */
-	public function testCallAResources()
+	public function testCallMethod()
 	{
 		$resource = Orchestra\Resources::call('stub', 'index', array());
 
@@ -182,7 +182,7 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Resources::of()
+	 * Test Orchestra\Resources::of() method.
 	 *
 	 * @test
 	 */
@@ -201,11 +201,11 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Resources::__call() method throws an exception
+	 * Test Orchestra\Resources::__call() method throws an exception.
 	 *
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testCallMethodThrowsAnException()
+	public function testCallMethodThrowsException()
 	{
 		$stub = Orchestra\Resources::of('stub');
 		$stub->hello('invalid request');

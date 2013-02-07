@@ -25,14 +25,14 @@ class ViewTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testConstructMethod()
+	public function testConstructView()
 	{
 		Event::listen('orchestra.started: view', function ()
 		{
 			$_SERVER['view.started'] = 'foo';
 		});
 
-		$this->assertTrue(is_null($_SERVER['view.started']));
+		$this->assertNull($_SERVER['view.started']);
 
 		$view = new Orchestra\View('orchestra::layout.main');
 
@@ -48,7 +48,7 @@ class ViewTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\View::exists()
+	 * Test Orchestra\View::exists() method.
 	 *
 	 * @test
 	 */
