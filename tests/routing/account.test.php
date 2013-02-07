@@ -109,6 +109,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 		));
 
 		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::account'), 
 			$response->foundation->headers->get('location'));
 
@@ -118,7 +119,30 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test Request POST (orchestra)/account
+	 * Test Request POST (orchestra)/account with validation error.
+	 *
+	 * @test
+	 */
+	public function testPostEditProfilePageWithValidationError()
+	{
+		$this->be($this->user);
+
+		$response = $this->call('orchestra::account@index', array(), 'POST', array(
+			'id'       => $this->user->id,
+			'fullname' => 'Foobar',
+			'email'    => 'foo+bar.com',
+		));
+
+		var_dump($response);
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::account'), 
+			$response->foundation->headers->get('location'));
+	}
+
+	/**
+	 * Test Request POST (orchestra)/account/password
 	 *
 	 * @test
 	 */
@@ -133,6 +157,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 		));
 
 		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::account/password'), 
 			$response->foundation->headers->get('location'));
 
@@ -143,5 +168,26 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 		// Revert the changes.
 		$user->password = '123456';
 		$user->save();
+	}
+
+	/**
+	 * Test Request POST (orchestra)/account/password with validation error.
+	 *
+	 * @test
+	 */
+	public function testPostEditPasswordPageWithValidationError()
+	{
+		$this->be($this->user);
+
+		$response = $this->call('orchestra::account@password', array(), 'POST', array(
+			'current_password' => '12346',
+			'new_password'     => '123',
+			'confirm_password' => '1233',
+		));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::account/password'), 
+			$response->foundation->headers->get('location'));
 	}
 }

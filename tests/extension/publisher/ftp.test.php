@@ -98,6 +98,31 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Extension\Publisher\FTP::__construct() method without
+	 * credential.
+	 *
+	 * @test
+	 */
+	public function testConstructMethodWithoutCredential()
+	{
+		$mock = $this->getMock('Hybrid\FTP', array(
+			'setup', 
+			'connect',
+		));
+		$mock->expects($this->any())
+			->method('setup')
+			->will($this->returnValue(true));
+		$mock->expects($this->any())
+			->method('connect')
+			->will($this->throwException(new Hybrid\FTP\ServerException));
+
+		new Orchestra\Extension\Publisher\FTP($mock);
+
+		$this->assertEmpty(Session::get('orchestra.ftp'));
+		$this->assertTrue(is_array(Session::get('orchestra.ftp')));
+	}
+
+	/**
 	 * Test Orchestra\Extension\Publisher\FTP::connect() method.
 	 *
 	 * @test

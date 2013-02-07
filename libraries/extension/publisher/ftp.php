@@ -35,7 +35,7 @@ class FTP extends Driver {
 
 		try 
 		{
-			if ( ! empty($config)) $this->connect($config);
+			$this->connect($config);
 		}
 		catch (ServerException $e)
 		{
@@ -166,7 +166,6 @@ class FTP extends Driver {
 			// extension can't be activated, let's try activating the 
 			// extension and if it failed, we should actually catching 
 			// those exception instead.
-			throw $e;
 		}
 
 		Extension::activate($name);

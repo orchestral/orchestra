@@ -26,7 +26,10 @@ class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
 		parent::setUp();
 
 		Orchestra\Core::memory()->put('orchestra.publisher.driver', 'stub');
-		Orchestra\Extension\Publisher::$drivers = array();
+
+		Orchestra\Extension\Publisher::$registrar = array();
+		Orchestra\Extension\Publisher::$drivers   = array();
+		
 		Orchestra\Extension\Publisher::extend('stub', function ()
 		{
 			return new PublisherStub;
@@ -69,6 +72,8 @@ class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
 			Orchestra\Extension\Publisher::driver());
 		$this->assertInstanceOf('PublisherStub',	
 			Orchestra\Extension\Publisher::driver());
+		$this->assertInstanceOf('Orchestra\Extension\Publisher\FTP',	
+			Orchestra\Extension\Publisher::driver('ftp'));
 	}
 
 	/**
