@@ -79,7 +79,6 @@ class Orchestra_Publisher_Controller extends Controller {
 		try
 		{
 			Publisher::connect($input);
-			Session::put('orchestra.ftp', $input);
 		}
 		catch(Hybrid\FTP\ServerException $e)
 		{
@@ -91,6 +90,8 @@ class Orchestra_Publisher_Controller extends Controller {
 				->with('message', $msg->serialize())
 				->with_input();
 		}
+
+		Session::put('orchestra.ftp', $input);
 
 		if (Publisher::connected() and ! empty($queues))
 		{

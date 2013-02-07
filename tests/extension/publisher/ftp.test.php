@@ -32,8 +32,6 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 			DEFAULT_BUNDLE => "{$base_path}application".DS,
 		));
 
-		File::mkdir(path('public').'bundles'.DS.DEFAULT_BUNDLE.DS);
-
 		$this->user = Orchestra\Model\User::find(1);
 		$this->stub = new Orchestra\Extension\Publisher\FTP;
 	}
