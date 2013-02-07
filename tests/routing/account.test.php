@@ -109,7 +109,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 		));
 
 		$this->assertInstanceOf('Laravel\Redirect', $response);
-		$this->assertInstanceOf(302, $response->foundation->getStatusCode());
+		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::account'), 
 			$response->foundation->headers->get('location'));
 
@@ -133,10 +133,8 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 			'email'    => 'foo+bar.com',
 		));
 
-		var_dump($response);
-
 		$this->assertInstanceOf('Laravel\Redirect', $response);
-		$this->assertInstanceOf(302, $response->foundation->getStatusCode());
+		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::account'), 
 			$response->foundation->headers->get('location'));
 	}
@@ -157,7 +155,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 		));
 
 		$this->assertInstanceOf('Laravel\Redirect', $response);
-		$this->assertInstanceOf(302, $response->foundation->getStatusCode());
+		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::account/password'), 
 			$response->foundation->headers->get('location'));
 
@@ -186,7 +184,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 		));
 
 		$this->assertInstanceOf('Laravel\Redirect', $response);
-		$this->assertInstanceOf(302, $response->foundation->getStatusCode());
+		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::account/password'), 
 			$response->foundation->headers->get('location'));
 	}
