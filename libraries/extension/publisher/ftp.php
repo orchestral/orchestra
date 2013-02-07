@@ -33,7 +33,14 @@ class FTP extends Driver {
 		// and connect to FTP server straight away.
 		$config = Session::get('orchestra.ftp', array());
 
-		if ( ! empty($config)) $this->connect($config);
+		try
+		{
+			if ( ! empty($config)) $this->connect($config);
+		}
+		catch (ServerException $e)
+		{
+			// Connection might failed, but there nothing really to report.
+		}
 	}
 
 	/**
@@ -64,19 +71,12 @@ class FTP extends Driver {
 	 *
 	 * @access public	
 	 * @param  array    $config
-	 * @return void
+	 * @return bool
 	 */
 	public function connect($config = array())
 	{
-		try
-		{
-			$this->connection->setup($config);
-			$this->connection->connect();
-		}
-		catch (ServerException $e)
-		{
-			// Connection might failed, but there nothing really to report.
-		}
+		$this->connection->setup($config);
+		return $this->connection->connect();
 	}
 
 	/**
@@ -111,18 +111,18 @@ class FTP extends Driver {
 			// this is to check if return value is just a single file, 
 			// avoiding infinite loop when we reach a file.
 			if ($lists === array($path)) return true;
+
+			foreach ($lists as $dir)
+			{
+				// Not a file or folder, ignore it.
+				if (substr($dir, -3) === '/..' or substr($dir, -2) === '/.') continue;
+				
+				$this->recursive_chmod($dir, $mode);
+			}
 		}
 		catch (RuntimeException $e)
 		{
-			return true;
-		}
-
-		foreach ($lists as $dir)
-		{
-			// Not a file or folder, ignore it.
-			if (substr($dir, -3) === '/..' or substr($dir, -2) === '/.') continue;
-			
-			$this->recursive_chmod($dir, $mode);
+			// Do nothing.
 		}
 
 		return true;
@@ -133,21 +133,13 @@ class FTP extends Driver {
 	 * Upload the file.
 	 *
 	 * @access public
-	 * @param  string   $name   Extension name
+	 * @param  string   $name           Extension name
+	 * @param  bool     $recursively
 	 * @return bool
 	 */
-	public function upload($name)
+	public function upload($name, $recursively = false)
 	{
-		$public      = path('public');
-		$recursively = false;
-
-		// This set of preg_match would filter ftp' user is not accessing 
-		// exact path as path('public'), in most shared hosting ftp' user 
-		// would only gain access to it's /home/username directory.
-		if (preg_match('/^\/(home)\/([a-zA-Z0-9]+)\/(.*)$/', $public, $matches))
-		{
-			$public = DS.ltrim($matches[3], DS);
-		}
+		$public = $this->base_path(path('public'));
 
 		// Start chmod from public/bundles directory, if the extension folder
 		// is yet to be created, it would be created and own by the web server
@@ -181,6 +173,26 @@ class FTP extends Driver {
 		($recursively ? $this->recursive_chmod($path, 0777) : $this->chmod($path, 0777));
 		
 		return true;
+	}
+
+	/**
+	 * Get base path for FTP
+	 *
+	 * @access public
+	 * @param  string   $path
+	 * @return string
+	 */
+	public function base_path($path)
+	{
+		// This set of preg_match would filter ftp' user is not accessing 
+		// exact path as path('public'), in most shared hosting ftp' user 
+		// would only gain access to it's /home/username directory.
+		if (preg_match('/^\/(home)\/([a-zA-Z0-9]+)\/(.*)$/', $path, $matches))
+		{
+			$path = DS.ltrim($matches[3], DS);
+		}
+
+		return $path;
 	}
 
 	/**

@@ -27,7 +27,7 @@ class ThemeTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testConstruct()
+	public function testConstructThemeContainer()
 	{
 		$theme = new Orchestra\Theme\Container;
 
@@ -45,7 +45,7 @@ class ThemeTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testContainer()
+	public function testThemeContainer()
 	{
 		$this->assertEquals(Orchestra\Theme::resolve(),
 			Orchestra\Theme::container(Orchestra\View::$theme));
@@ -57,7 +57,7 @@ class ThemeTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @test
 	 */
-	public function testResolver()
+	public function testThemeResolver()
 	{
 		$frontend = IoC::resolve('orchestra.theme: frontend');
 		$backend  = IoC::resolve('orchestra.theme: backend');
@@ -72,11 +72,11 @@ class ThemeTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Theme::__callStatic() passthru method.
+	 * Test Orchestra\Theme::__callStatic() passthru methods.
 	 *
 	 * @test
 	 */
-	public function testCallStaticPassthruMethod()
+	public function testCallStaticPassthruMethods()
 	{
 		$theme = Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS.'themes'.DS;
 		Orchestra\Theme::map(array('foo' => 'error.404'));

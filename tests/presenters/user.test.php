@@ -68,13 +68,12 @@ class PresentersUserTest extends Orchestra\Testable\TestCase {
 		$stub   = Orchestra\Presenter\User::table($user); 
 		$output = Orchestra\Presenter\User::table_actions($stub);
 
-		$this->assertTrue(is_null($output));
-
 		$refl = new \ReflectionObject($stub);
 		$grid = $refl->getProperty('grid');
 		$grid->setAccessible(true);
 		$grid = $grid->getValue($stub);
 
+		$this->assertNull($output);
 		$this->assertInstanceOf('Orchestra\Table', $stub);
 		$this->assertEquals(Orchestra\Table::of('orchestra.users'), $stub);
 		$this->assertInstanceOf('Hybrid\Table\Grid', $grid);

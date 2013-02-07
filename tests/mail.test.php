@@ -9,7 +9,7 @@ class MailTest extends Orchestra\Testable\TestCase {
 	 *
 	 * @expectedException \Exception
 	 */
-	public function testIstanceOfMailerWithInvalidViewThrowException()
+	public function testInstanceOfMailerWithInvalidViewThrowsException()
 	{
 		$mailer = new Orchestra\Mail(
 			'orchestra::an.unknown.view',
@@ -25,8 +25,8 @@ class MailTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testUsingMailer()
 	{
-		$user   = Orchestra\Model\User::find(1);
-		$data   = array(
+		$user = Orchestra\Model\User::find(1);
+		$data = array(
 			'password' => '123456',
 			'user'     => $user,
 			'site'     => 'Orchestra',

@@ -18,11 +18,11 @@ class FacadeTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra Facade.
+	 * Test Orchestra Facades.
 	 *
 	 * @test
 	 */
-	public function testOrchestraFacade()
+	public function testOrchestraFacades()
 	{
 		$this->assertEquals(Orchestra\Core::acl(), Orchestra::acl());
 		$this->assertEquals(Orchestra\Core::memory(), Orchestra::memory());

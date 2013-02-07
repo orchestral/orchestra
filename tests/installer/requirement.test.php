@@ -39,7 +39,7 @@ class InstallerRequirementTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testConstructInstance()
+	public function testConstructRequirement()
 	{
 		$this->assertInstanceOf('Orchestra\Installer\Requirement', 
 			$this->stub);

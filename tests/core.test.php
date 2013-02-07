@@ -27,18 +27,18 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Core::start() is properly done.
+	 * Test Orchestra\Core::start() would fire events.
 	 *
 	 * @test
 	 */
-	public function testStartTriggerEvents()
+	public function testStartMethod()
 	{
 		Event::listen('orchestra.started', function ()
 		{
 			$_SERVER['test.orchestra.started'] = 'foo';
 		});
 
-		$this->assertTrue(is_null($_SERVER['test.orchestra.started']));
+		$this->assertNull($_SERVER['test.orchestra.started']);
 
 		Orchestra\Core::start();
 
@@ -59,14 +59,14 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testShutdownTriggerEvents()
+	public function testShutdownMethod()
 	{
 		Event::listen('orchestra.done', function ()
 		{
 			$_SERVER['test.orchestra.done'] = 'foo';
 		});
 
-		$this->assertTrue(is_null($_SERVER['test.orchestra.done']));
+		$this->assertNull($_SERVER['test.orchestra.done']);
 
 		Orchestra\Core::start();
 		Orchestra\Core::shutdown();
@@ -79,7 +79,7 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testCoreHelperMethods()
+	public function testHelperMethods()
 	{
 		Orchestra\Core::start();
 

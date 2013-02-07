@@ -83,7 +83,7 @@ class RoutingSettingsTest extends Orchestra\Testable\TestCase {
 			'email_smtp_password'    => '',
 			'email_smtp_encryption'  => '',
 			'email_sendmail_command' => '',
-			'stmp_change_password'   => 'yes',
+			'stmp_change_password'   => 'no',
 		));
 
 		$this->assertInstanceOf('Laravel\Redirect', $response);

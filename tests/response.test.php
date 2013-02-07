@@ -9,7 +9,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testInstanceOf()
+	public function testInstanceOfResponse()
 	{
 		$response = new Orchestra\Response('');
 		$this->assertInstanceOf('Hybrid\Response', $response);
