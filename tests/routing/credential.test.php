@@ -207,7 +207,7 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 		Orchestra\Core::memory()->put('site.users.registration', true);
 		
 		$response = $this->call('orchestra::credential@register', array(), 'POST', array(
-			'email'             => 'foobar@register-test.com',
+			'email'             => 'foobar+register-test.com',
 			'fullname'          => 'Test Register Foobar',
 			'password'          => '123456',
 			Session::csrf_token => Session::token(),
