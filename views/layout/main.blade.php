@@ -43,11 +43,11 @@
 
 	<body>
 
-		@include('orchestra::layout.widgets.navigation')
+		@include(locate('orchestra::layout.widgets.navigation'))
 
 		<section class="container{{ isset($fluent_layout) ? '-fluid' : '' }}">
 
-			@include('orchestra::layout.widgets.messages')
+			@include(locate('orchestra::layout.widgets.messages'))
 
 			@yield('content')
 
