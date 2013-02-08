@@ -26,7 +26,10 @@ class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
 		parent::setUp();
 
 		Orchestra\Core::memory()->put('orchestra.publisher.driver', 'stub');
-		Orchestra\Extension\Publisher::$drivers = array();
+
+		Orchestra\Extension\Publisher::$registrar = array();
+		Orchestra\Extension\Publisher::$drivers   = array();
+		
 		Orchestra\Extension\Publisher::extend('stub', function ()
 		{
 			return new PublisherStub;
@@ -69,6 +72,8 @@ class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
 			Orchestra\Extension\Publisher::driver());
 		$this->assertInstanceOf('PublisherStub',	
 			Orchestra\Extension\Publisher::driver());
+		$this->assertInstanceOf('Orchestra\Extension\Publisher\FTP',	
+			Orchestra\Extension\Publisher::driver('ftp'));
 	}
 
 	/**
@@ -113,8 +118,10 @@ class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
 		Session::put('orchestra.publisher.queue', array('foo'));
 
 		$result = Orchestra\Extension\Publisher::execute(new Orchestra\Messages);
+		$queue  = Session::get('orchestra.publisher.queue');
 
-		$this->assertNull(Session::get('orchestra.publisher.queue'));
+		$this->assertEmpty($queue);
+		$this->assertTrue(is_array($queue));
 		$this->assertInstanceOf('Orchestra\Messages', $result);
 	}
 
@@ -132,7 +139,7 @@ class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
 
 		$result = Orchestra\Extension\Publisher::execute(new Orchestra\Messages);
 
-		$this->assertNull(Session::get('orchestra.publisher.queue'));
+		$this->assertEquals(array('foo'), Session::get('orchestra.publisher.queue'));
 		$this->assertInstanceOf('Orchestra\Messages', $result);
 		$this->assertEquals(array('Invalid request'), $result->get('error'));
 	}

@@ -1,4 +1,4 @@
-@layout('orchestra::layout.main')
+@layout(locate('orchestra::layout.main'))
 
 @section('content')
 
@@ -54,7 +54,6 @@
 				{{ HTML::link(handles('orchestra::register'), __('orchestra::title.register'), array('class' => 'btn')) }}
 				@endif
 			</div>
-
 			
 		{{ Form::close() }}
 
