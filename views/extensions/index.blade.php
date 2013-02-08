@@ -1,4 +1,4 @@
-@layout('orchestra::layout.main')
+@layout(locate('orchestra::layout.main'))
 
 <?php use Orchestra\Extension; ?>
 
