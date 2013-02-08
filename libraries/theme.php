@@ -63,6 +63,6 @@ class Theme {
 	 */
 	public static function __callStatic($method, $parameters)
 	{
-		return call_user_func_array(array(static::container(), $method), $parameters);
+		return call_user_func_array(array(static::resolve(), $method), $parameters);
 	}
 }
