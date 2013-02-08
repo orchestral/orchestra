@@ -126,18 +126,20 @@ class Publisher {
 				'Invalid argument, expect to be instanceof Orchestra\Messages'
 			);
 		}
-		
-		$queue = static::queued();
 
-		foreach ($queue as $name)
+		$queues = static::queued();
+
+		foreach ($queues as $key => $queue)
 		{
 			try
 			{
-				static::upload($name);
+				static::upload($queue);
 				
 				$msg->add('success', __('orchestra::response.extensions.activate', array(
-					'name' => $name,
+					'name' => $queue,
 				)));
+
+				unset($queues[$key]);
 			}
 			catch (Exception $e)
 			{
@@ -146,7 +148,7 @@ class Publisher {
 			}
 		}
 
-		Session::forget('orchestra.publisher.queue');
+		Session::put('orchestra.publisher.queue', $queues);
 
 		return $msg;
 	}

@@ -14,7 +14,7 @@
 				<div class="control-group {{ $errors->has('host') ? 'error' : '' }}">
 					{{ Form::label('host', __('orchestra::label.extensions.publisher.host'), array('class' => 'control-label')) }}
 					<div class="controls">
-						{{ Form::text('host', '', array('class' => 'input-xxlarge')) }}
+						{{ Form::text('host', Input::old('host'), array('class' => 'input-xxlarge')) }}
 						{{ $errors->first('host', '<p class="help-block">:message</p>') }}
 					</div>
 				</div>
@@ -22,7 +22,7 @@
 				<div class="control-group {{ $errors->has('user') ? 'error' : '' }}">
 					{{ Form::label('user', __('orchestra::label.extensions.publisher.user'), array('class' => 'control-label')) }}
 					<div class="controls">
-						{{ Form::text('user', '', array('class' => 'input-xxlarge')) }}
+						{{ Form::text('user', Input::old('user'), array('class' => 'input-xxlarge')) }}
 						{{ $errors->first('user', '<p class="help-block">:message</p>') }}
 					</div>
 				</div>
@@ -38,7 +38,7 @@
 				<div class="control-group">
 					{{ Form::label('connection-type', __('orchestra::label.extensions.publisher.connection-type'), array('class' => 'control-label')) }}
 					<div class="controls">
-						{{ Form::select('connection-type', array('ftp' => 'FTP', 'sftp' => 'SFTP'), 'ftp', array('role' => 'switcher')) }}
+						{{ Form::select('connection-type', array('ftp' => 'FTP', 'sftp' => 'SFTP'), Input::old('connection-type', 'ftp'), array('role' => 'switcher')) }}
 					</div>
 				</div>
 			</fieldset>

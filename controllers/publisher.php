@@ -36,8 +36,15 @@ class Orchestra_Publisher_Controller extends Controller {
 	public function get_index()
 	{
 		$driver = Core::memory()->get('orchestra.publisher.driver', 'ftp');
+		$msg    = new Messages;
 
-		return $this->{"get_{$driver}"}();
+		if (Publisher::connected()) 
+		{
+			Publisher::execute($msg);
+		}
+
+		return Redirect::to(handles('orchestra::publisher/ftp'))
+				->with('message', $msg->serialize());
 	}
 	
 
@@ -49,11 +56,6 @@ class Orchestra_Publisher_Controller extends Controller {
 	 */
 	public function get_ftp()
 	{
-		if (Publisher::connected()) 
-		{
-			return Publisher::execute();
-		}
-	
 		return View::make('orchestra::publisher.ftp');
 	}
 
@@ -67,8 +69,9 @@ class Orchestra_Publisher_Controller extends Controller {
 	 */
 	public function post_ftp()
 	{
-		$input = Input::only(array('host', 'user', 'password'));
-		$msg   = new Messages;
+		$input  = Input::only(array('host', 'user', 'password'));
+		$msg    = new Messages;
+		$queues = Publisher::queued();
 
 		$input['ssl'] = (Input::get('connection-type', 'sftp') === 'sftp');
 
@@ -76,7 +79,6 @@ class Orchestra_Publisher_Controller extends Controller {
 		try
 		{
 			Publisher::connect($input);
-			Session::put('orchestra.ftp', $input);
 		}
 		catch(Hybrid\FTP\ServerException $e)
 		{
@@ -85,10 +87,13 @@ class Orchestra_Publisher_Controller extends Controller {
 			$msg->add('error', $e->getMessage());
 
 			return Redirect::to(handles('orchestra::publisher/ftp'))
-				->with('message', $msg->serialize());
+				->with('message', $msg->serialize())
+				->with_input();
 		}
 
-		if (Publisher::connected())
+		Session::put('orchestra.ftp', $input);
+
+		if (Publisher::connected() and ! empty($queues))
 		{
 			Publisher::execute($msg);
 		}

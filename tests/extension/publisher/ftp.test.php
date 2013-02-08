@@ -32,6 +32,8 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 			DEFAULT_BUNDLE => "{$base_path}application".DS,
 		));
 
+		// Default bundle is added so we can do recursive chmod instead 
+		// just normal chmod.
 		File::mkdir(path('public').'bundles'.DS.DEFAULT_BUNDLE.DS);
 
 		$this->user = Orchestra\Model\User::find(1);
@@ -93,6 +95,31 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	{
 		$this->assertInstanceOf('Orchestra\Extension\Publisher\Driver', $this->stub);
 		$this->assertFalse($this->stub->connected());
+	}
+
+	/**
+	 * Test Orchestra\Extension\Publisher\FTP::__construct() method without
+	 * credential.
+	 *
+	 * @test
+	 */
+	public function testConstructMethodWithoutCredential()
+	{
+		$mock = $this->getMock('Hybrid\FTP', array(
+			'setup', 
+			'connect',
+		));
+		$mock->expects($this->any())
+			->method('setup')
+			->will($this->returnValue(true));
+		$mock->expects($this->any())
+			->method('connect')
+			->will($this->throwException(new Hybrid\FTP\ServerException));
+
+		new Orchestra\Extension\Publisher\FTP($mock);
+
+		$this->assertEmpty(Session::get('orchestra.ftp'));
+		$this->assertTrue(is_array(Session::get('orchestra.ftp')));
 	}
 
 	/**
