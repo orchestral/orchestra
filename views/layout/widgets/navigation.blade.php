@@ -12,7 +12,7 @@
 
 			<div id="mainnav" class="collapse nav-collapse">
 					
-				{{ render('orchestra::layout.widgets.menu', array('menu' => Orchestra\Core::menu())) }}
+				{{ render(locate('orchestra::layout.widgets.menu'), array('menu' => Orchestra\Core::menu())) }}
 				
 				@if (Config::get('orchestra::navigation.show-user-box', true))
 				<ul class="nav pull-right">
