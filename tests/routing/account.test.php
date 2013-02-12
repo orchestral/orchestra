@@ -142,6 +142,37 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
+	 * Test Request POST (orchestra)/account with database error.
+	 *
+	 * @test
+	 */
+	public function testPostEditProfilePageDatabaseError()
+	{
+		$this->be($this->user);
+
+		$events = Event::$events;
+
+		Event::listen('eloquent.saving: Orchestra\Model\User', function ($model)
+		{
+			throw new Exception();
+		});
+
+		$response = $this->call('orchestra::account@index', array(), 'POST', array(
+			'id'       => $this->user->id,
+			'fullname' => 'Foobar',
+			'email'    => $this->user->email,
+		));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::account'), 
+			$response->foundation->headers->get('location'));
+		$this->assertTrue(is_string(Session::get('message')));
+
+		Event::$events = $events;
+	}
+
+	/**
 	 * Test Request POST (orchestra)/account/password
 	 *
 	 * @test
@@ -168,6 +199,37 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 		// Revert the changes.
 		$user->password = '123456';
 		$user->save();
+	}
+
+	/**
+	 * Test Request POST (orchestra)/account/password with database error.
+	 *
+	 * @test
+	 */
+	public function testPostEditPasswordPageDatabaseError()
+	{
+		$this->be($this->user);
+
+		$events = Event::$events;
+
+		Event::listen('eloquent.saving: Orchestra\Model\User', function($model)
+		{
+			throw new Exception();
+		});
+
+		$response = $this->call('orchestra::account@password', array(), 'POST', array(
+			'current_password' => '123456',
+			'new_password'     => '123',
+			'confirm_password' => '123',
+		));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::account/password'),
+			$response->foundation->headers->get('location'));
+		$this->assertTrue(is_string(Session::get('message')));
+
+		Event::$events = $events;
 	}
 
 	/**

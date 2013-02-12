@@ -30,6 +30,25 @@ class RoutingForgotTest extends Orchestra\Testable\TestCase {
 		
 		parent::tearDown();
 	}
+
+	/**
+	 * Get Mailer Mock
+	 *
+	 * @test
+	 */
+	public function getMailerMock()
+	{
+		$mock = $this->getMock('Orchestra\Testable\Mailer', array('was_sent'));
+		$mock->expects($this->any())
+			->method('was_sent')
+			->will($this->returnValue(false));
+
+		IoC::register('orchestra.mailer', function ($from = true) use ($mock)
+		{
+			return $mock;
+		});
+	}
+
 	/**
 	 * Test Request GET (orchestra)/forgot
 	 *
@@ -105,14 +124,14 @@ class RoutingForgotTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test Request GET (orchestra)/forgot/reset/(id)/(hash)
+	 * Test Request POST (orchestra)/forgot with validation error.
 	 *
 	 * @test
 	 */
-	public function testGetResetPasswordPage()
+	public function testPostForgotPageValidationError()
 	{
 		$response = $this->call('orchestra::forgot@index', array(), 'POST', array(
-			'email'             => 'admin@orchestra.com',
+			'email'             => 'admin+orchestra.com',
 			Session::csrf_token => Session::token(),
 		));
 
@@ -120,23 +139,62 @@ class RoutingForgotTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::forgot'), 
 			$response->foundation->headers->get('location'));
+		$this->assertInstanceOf('Laravel\Messages', Session::get('errors'));
+	}
 
-		// Mimic restarting Orchestra.
-		Orchestra\Core::shutdown();
-		Orchestra\Core::start();
-		
-		$meta = Orchestra\Model\User\Meta::where('user_id', '=', 1)
-					->where('name', '=', 'reset_password_hash')
-					->first();
+	/**
+	 * Test Request POST (orchestra)/forgot with user not found error.
+	 *
+	 * @test
+	 */
+	public function testPostForgotPageUserNotFoundError()
+	{
+		$hash     = Str::random(10);
+		$response = $this->call('orchestra::forgot@index', array(), 'POST', array(
+			'email'             => "{$hash}@{$hash}.com",
+			Session::csrf_token => Session::token(),
+		));
 
-		$this->assertNotNull($meta);
-		$this->assertNotNull($meta->value);
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::forgot'), 
+			$response->foundation->headers->get('location'));
+		$this->assertTrue(is_string(Session::get('message')));
+	}
 
-		$user = $meta->users()->first();
+	/**
+	 * Test Request POST (orchestra)/forgot with email wasn't sent error.
+	 *
+	 * @test
+	 */
+	public function testPostForgotPageEmailWasNotSentError()
+	{
+		$this->getMailerMock();
 
-		$this->assertEquals(1, $user->id);
+		$response = $this->call('orchestra::forgot@index', array(), 'POST', array(
+			'email'             => "admin@orchestra.com",
+			Session::csrf_token => Session::token(),
+		));
 
-		$response = $this->call('orchestra::forgot@reset', array(1, $meta->value));
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::forgot'), 
+			$response->foundation->headers->get('location'));
+		$this->assertTrue(is_string(Session::get('message')));
+	}
+
+	/**
+	 * Test Request GET (orchestra)/forgot/reset/(id)/(hash)
+	 *
+	 * @test
+	 */
+	public function testGetResetPasswordPage()
+	{
+		$meta = Orchestra\Memory::make('user');
+		$hash = Str::random(32);
+		$meta->put('reset_password_hash.1', $hash);
+
+		$response = $this->call('orchestra::forgot@reset', array(1, $hash));
 
 		$this->assertInstanceOf('Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
@@ -146,5 +204,60 @@ class RoutingForgotTest extends Orchestra\Testable\TestCase {
 		$user = Orchestra\Model\User::find(1);
 
 		$this->assertFalse(Hash::check('123456', $user->password));
+	}
+
+	/**
+	 * Test Request GET (orchestra)/forgot/reset/(id)/(hash) with invalid 
+	 * argument error.
+	 *
+	 * @test
+	 */
+	public function testGetResetPasswordPageInvalidArgumentError()
+	{
+		$response = $this->call('orchestra::forgot@reset', array('hello world', ''));
+
+		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertEquals(404, $response->foundation->getStatusCode());
+	}
+
+	/**
+	 * Test Request GET (orchestra)/forgot/reset/(id)/(hash) with invalid 
+	 * hash error.
+	 *
+	 * @test
+	 */
+	public function testGetResetPasswordPageInvalidHashError()
+	{
+		$meta = Orchestra\Memory::make('user');
+		$hash = Str::random(32);
+		$meta->put('reset_password_hash.1', $hash);
+
+		$response = $this->call('orchestra::forgot@reset', array(1, Str::random(30)));
+
+		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertEquals(404, $response->foundation->getStatusCode());
+	}
+
+	/**
+	 * Test Request GET (orchestra)/forgot/reset/(id)/(hash) email wasn't 
+	 * sent error.
+	 *
+	 * @test
+	 */
+	public function testGetResetPasswordPageEmailWasNotSentError()
+	{
+		$meta = Orchestra\Memory::make('user');
+		$hash = Str::random(32);
+		$meta->put('reset_password_hash.1', $hash);
+
+		$this->getMailerMock();
+
+		$response = $this->call('orchestra::forgot@reset', array(1, $hash));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::login'), 
+			$response->foundation->headers->get('location'));
+		$this->assertTrue(is_string(Session::get('message')));
 	}
 }

@@ -101,11 +101,11 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test Request POST (orchestra)/users/view fails validation
+	 * Test Request POST (orchestra)/users/view with validation error.
 	 *
 	 * @test
 	 */
-	public function testPostCreateNewUserPageFailsValidation()
+	public function testPostUserPageValidationError()
 	{
 		$this->be($this->user);
 
@@ -156,7 +156,44 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test Request POST (orchestra)/users/view/1
+	 * Test Request POST (orchestra)/users/view on create or edit have 
+	 * database error.
+	 *
+	 * @test
+	 */
+	public function testPostUserPageDatabaseError()
+	{
+		$this->be($this->user);
+
+		$events = Event::$events;
+
+		Event::listen('eloquent.saving: Orchestra\Model\User', function ($model)
+		{
+			throw new Exception();
+		});
+
+		$response = $this->call('orchestra::users@view', array(''), 'POST', array(
+			'id'       => '',
+			'email'    => 'crynobone@gmail.com',
+			'fullname' => 'Mior Muhammad Zaki',
+			'password' => '123456',
+			'roles'    => array(2),
+		));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::users'), 
+			$response->foundation->headers->get('location'));
+
+		$user = Orchestra\Model\User::where_email('crynobone@gmail.com')->first();
+
+		$this->assertNull($user);
+
+		Event::$events = $events;
+	}
+
+	/**
+	 * Test Request POST (orchestra)/users/view/(:num) on update.
 	 *
 	 * @test
 	 */
@@ -255,5 +292,58 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 		$user = Orchestra\Model\User::find($user_id);
 
 		$this->assertNull($user);
+	}
+
+	/**
+	 * Test Request POST (orchestra)/users/view/1 with id or user data error.
+	 *
+	 * @test
+	 */
+	public function testPostDeleteUserPageIdError()
+	{
+		$this->be($this->user);
+
+		
+		$response = $this->call('orchestra::users@delete', array(20000));
+
+		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertEquals(404, $response->foundation->getStatusCode());
+	}
+
+	/**
+	 * Test Request POST (orchestra)/users/view/1 with database error.
+	 *
+	 * @test
+	 */
+	public function testPostDeleteUserDatabaseError()
+	{
+		$this->be($this->user);
+
+		$events = Event::$events;
+
+		$user = Orchestra\Model\User::create(array(
+			'email'    => 'crynobone@gmail.com',
+			'fullname' => 'Mior Muhammad Zaki',
+			'password' => '123456',
+		));
+		$user->roles()->sync(array(2, 1));
+
+		$this->assertGreaterThan(0, $user->id);
+
+		Event::listen('eloquent.deleting: Orchestra\Model\User', function ($model)
+		{
+			throw new Exception();
+		});
+
+		$user_id = $user->id;
+		
+		$response = $this->call('orchestra::users@delete', array($user_id));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::users'), 
+			$response->foundation->headers->get('location'));
+
+		Event::$events = $events;
 	}
 }
