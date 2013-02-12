@@ -231,3 +231,17 @@ Orchestra\Memory::extend('user', function()
 {
 	return new Orchestra\Repository\User;
 });
+
+/*
+|--------------------------------------------------------------------------
+| Orchestra View IoC for Hybrid Bundle
+|--------------------------------------------------------------------------
+|
+| Lets Orchestra handle View instance using IoC for Hybrid Bundle.
+|
+*/
+
+IoC::register('hybrid.view', function ($view)
+{
+	return Orchestra\View::make($view);
+});
