@@ -129,7 +129,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 */
 	public function removeApplication()
 	{
-		if ($this->app instanceof Application) $this->app->remove($shutdown);
+		if ($this->app instanceof Application) $this->app->remove();
 	}
 
 	/**
