@@ -43,7 +43,7 @@
 		ev.listen('setting.changed: email.default', function listenToEmailDefaultChange(e, self) {
 			var value = self.value ? self.value : '';
 
-			$('input[name^="email_smtp"], input[name^="email_sendmail"]')
+			$('input[name^="email_smtp"], input[name^="email_sendmail"], input[name^="email_from"]')
 				.parent().parent().hide();
 
 			switch (value) {
@@ -52,6 +52,10 @@
 					break;
 				case 'sendmail' :
 					$('input[name^="email_sendmail"]').parent().parent().show();
+					$('input[name^="email_from"]').parent().parent().show();
+					break;
+				default :
+					$('input[name^="email_from"]').parent().parent().show();
 					break;
 			}
 		});

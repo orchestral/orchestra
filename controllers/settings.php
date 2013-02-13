@@ -44,7 +44,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 			'site_user_registration' => ($memory->get('site.users.registration', false) ? 'yes' : 'no'),
 
 			'email_default'          => $memory->get('email.default', ''),
-			'email_email'            => $memory->get('email.email', ''),
+			'email_from'            => $memory->get('email.from', ''),
 			'email_smtp_host'        => $memory->get('email.transports.smtp.host', ''),
 			'email_smtp_port'        => $memory->get('email.transports.smtp.port', ''),
 			'email_smtp_username'    => $memory->get('email.transports.smtp.username', ''),
@@ -80,9 +80,24 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 		$rules = array(
 			'site_name'       => array('required'),
 			'email_default'   => array('required'),
-			'email_from'      => array('required', 'email'),
 			'email_smtp_port' => array('numeric'),
 		);
+
+
+		switch ($input['email_default'])
+		{
+			case 'smtp' :
+				$input['email_from']          = $input['email_smtp_username'];
+				$rules['email_smtp_username'] = array('required', 'email');
+				$rules['email_smtp_host']     = array('required');
+				break;
+
+			case 'sendmail' :
+				$rules['email_sendmail_command'] = array('required');
+			default :
+				$rules['email_from'] = array('required', 'email');
+				break;
+		}
 
 		Event::fire('orchestra.validate: settings', array(& $rules));
 
@@ -101,8 +116,8 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 		$memory->put('site.description', $input['site_description']);
 		$memory->put('site.users.registration', ($input['site_user_registration'] === 'yes'));
 		$memory->put('email.default', $input['email_default']);
-		$memory->put('email.from', $input['email_from']);
 
+		$memory->put('email.from', $input['email_from']);
 
 		if ((empty($input['email_smtp_password']) and $input['stmp_change_password'] === 'no'))
 		{

@@ -203,12 +203,6 @@ if ( ! IoC::registered('orchestra.mailer'))
 
 		if ($from === true)
 		{
-
-			if ($driver === 'smtp' or empty($email))
-			{
-				$email = $transports['smtp']['username'];
-			}
-
 			$mailer->from($email, $memory->get('site.name', 'Orchestra'));
 		}
 

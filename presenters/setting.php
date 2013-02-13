@@ -59,11 +59,6 @@ class Setting {
 						'sendmail' => 'Sendmail',
 					));
 				});
-				
-				$fieldset->control('input:text', 'email_from', function ($control)
-				{
-					$control->label(__('orchestra::label.email.from'));
-				});
 
 				$fieldset->control('input:text', 'email_smtp_host', function ($control)
 				{
@@ -73,6 +68,11 @@ class Setting {
 				$fieldset->control('input:text', 'email_smtp_port', function ($control)
 				{
 					$control->label(__('orchestra::label.email.port'));
+				});
+				
+				$fieldset->control('input:text', 'email_from', function ($control)
+				{
+					$control->label(__('orchestra::label.email.from'));
 				});
 
 				$fieldset->control('input:text', 'email_smtp_username', function ($control)

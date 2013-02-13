@@ -77,6 +77,7 @@ class RoutingSettingsTest extends Orchestra\Testable\TestCase {
 			'site_user_registration' => 'no',
 
 			'email_default'          => 'mail',
+			'email_from'             => 'admin@codenitive.com',
 			'email_smtp_host'        => '',
 			'email_smtp_port'        => '',
 			'email_smtp_username'    => '',
