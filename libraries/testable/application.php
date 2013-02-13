@@ -71,7 +71,6 @@ class Application {
 				));
 			}
 
-
 			O\Core::shutdown();
 		}
 
@@ -87,10 +86,13 @@ class Application {
 	 * Remove application.
 	 *
 	 * @access public
+	 * @param  boolean  $shutdown
 	 * @return void
 	 */
-	public function remove()
+	public function remove($shutdown = true)
 	{
+		if ($shutdown === true) O\Core::shutdown();
+
 		Auth::$drivers       = null;
 		DB::$connections     = array();
 		Cookie::$jar         = array();
