@@ -36,7 +36,7 @@ class WidgetPaneTest extends PHPUnit_Framework_TestCase {
 	{
 		$expected = array(
 			'defaults' => array(
-				'attr'    => array(),
+				'markup'  => array(),
 				'title'   => '',
 				'content' => '',
 				'html'    => '',
@@ -65,7 +65,7 @@ class WidgetPaneTest extends PHPUnit_Framework_TestCase {
 	{
 		$expected = array(
 			'foo' => new Laravel\Fluent(array(
-				'attr'    => array(),
+				'markup'  => array(),
 				'title'   => '',
 				'content' => 'hello world',
 				'html'    => '',
@@ -73,7 +73,7 @@ class WidgetPaneTest extends PHPUnit_Framework_TestCase {
 				'childs'  => array(),
 			)),
 			'foobar' => new Laravel\Fluent(array(
-				'attr'    => array(),
+				'markup'  => array(),
 				'title'   => 'hello world',
 				'content' => '',
 				'html'    => '',
