@@ -23,7 +23,7 @@ class User {
 			$table->empty_message = __('orchestra::label.no-data');
 
 			// Add HTML attributes option for the table.
-			$table->attr('class', 'table table-bordered table-striped');
+			$table->markup('class', 'table table-bordered table-striped');
 
 			// attach Model and set pagination option to true
 			$table->with($model, true);
@@ -76,7 +76,7 @@ class User {
 			$table->column('action', function ($column)
 			{
 				$column->label('');
-				$column->label_attr(array('class' => 'th-action'));
+				$column->label_markup(array('class' => 'th-action'));
 				$column->value(function ($row)
 				{
 					$btn = array();
@@ -118,7 +118,7 @@ class User {
 		return Form::of('orchestra.users', function ($form) use ($model)
 		{
 			$form->row($model);
-			$form->attr(array(
+			$form->markup(array(
 				'action' => handles("orchestra::users/view/{$model->id}"),
 				'method' => 'POST',
 			));
@@ -146,7 +146,7 @@ class User {
 				{
 					$control->label(__('orchestra::label.users.roles'));
 					$control->options(Role::lists('name', 'id'));
-					$control->attr(array('multiple' => true));
+					$control->markup(array('multiple' => true));
 					$control->value(function ($row)
 					{
 						// get all the user roles from objects

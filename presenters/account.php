@@ -18,7 +18,7 @@ class Account {
 		return Form::of('orchestra.account', function ($form) use ($model, $action)
 		{
 			$form->row($model);
-			$form->attr(array(
+			$form->markup(array(
 				'action' => $action,
 				'method' => 'POST',
 			));
