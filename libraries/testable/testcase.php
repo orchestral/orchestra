@@ -63,7 +63,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
-		$this->removeApplication();
+		$this->shutdownApplication();
 		unset($this->client);
 		Event::first('orchestra.testable: teardown-db');
 	}
@@ -125,12 +125,22 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 * Remove Application.
 	 * 
 	 * @access public
-	 * @param  boolean  $shutdown
 	 * @return void
 	 */
-	public function removeApplication($shutdown = true)
+	public function removeApplication()
 	{
 		if ($this->app instanceof Application) $this->app->remove($shutdown);
+	}
+
+	/**
+	 * Shutdown Application.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function shutdownApplication()
+	{
+		if ($this->app instanceof Application) $this->app->shutdown();
 	}
 
 	/**
@@ -141,7 +151,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 */
 	public function restartApplication()
 	{
-		$this->removeApplication(false);
+		$this->removeApplication();
 		$this->createApplication();
 	}
 }

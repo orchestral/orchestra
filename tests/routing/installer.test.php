@@ -11,7 +11,7 @@ class RoutingInstallerTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
-		$this->removeApplication(false);
+		$this->removeApplication();
 
 		Session::load();
 

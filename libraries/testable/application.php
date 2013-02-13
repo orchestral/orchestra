@@ -83,16 +83,25 @@ class Application {
 	}
 
 	/**
+	 * Shutdown application.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function shutdown()
+	{
+		O\Core::shutdown();
+		$this->remove();
+	}
+
+	/**
 	 * Remove application.
 	 *
 	 * @access public
-	 * @param  boolean  $shutdown
 	 * @return void
 	 */
-	public function remove($shutdown = true)
+	public function remove()
 	{
-		if ($shutdown === true) O\Core::shutdown();
-
 		Auth::$drivers       = null;
 		DB::$connections     = array();
 		Cookie::$jar         = array();
