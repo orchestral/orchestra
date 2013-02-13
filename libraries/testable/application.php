@@ -71,7 +71,6 @@ class Application {
 				));
 			}
 
-
 			O\Core::shutdown();
 		}
 
@@ -91,6 +90,8 @@ class Application {
 	 */
 	public function remove()
 	{
+		O\Core::shutdown();
+
 		Auth::$drivers       = null;
 		DB::$connections     = array();
 		Cookie::$jar         = array();

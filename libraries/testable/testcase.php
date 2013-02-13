@@ -7,7 +7,6 @@ use \Auth,
 	\DB,
 	\Event,
 	\File,
-	\Orchestra\Core as O,
 	\PHPUnit_Framework_TestCase;
 
 abstract class TestCase extends PHPUnit_Framework_TestCase {
@@ -63,7 +62,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
-		O::shutdown();
 		$this->removeApplication();
 		unset($this->client);
 		Event::first('orchestra.testable: teardown-db');
