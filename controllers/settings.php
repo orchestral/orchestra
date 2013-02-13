@@ -79,9 +79,11 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 		$input = Input::all();
 		$rules = array(
 			'site_name'       => array('required'),
-			'email_default'   => array('required'),
+			'email_default'   => array('required', 'in:mail,smtp,sendmail'),
 			'email_smtp_port' => array('numeric'),
 		);
+
+		isset($input['email_default']) or $input['email_default'] = 'mail';
 
 
 		switch ($input['email_default'])
