@@ -95,6 +95,8 @@ class RoutingSettingsTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals('Foo', memorize('site.name'));
 		$this->assertEquals('Foobar', memorize('site.description'));
 
+
+		$response = $this->call('orchestra::settings@index', array(), 'POST', array(
 			'site_name'              => 'Foobar',
 			'site_description'       => 'Foo',
 			'site_user_registration' => 'no',
