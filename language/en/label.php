@@ -54,6 +54,7 @@ return array(
 
 	'email' => array(
 		'transport'       => 'E-mail Transport',
+		'from'            => 'From E-mail Address',
 		'host'            => 'SMTP Host',
 		'port'            => 'SMTP Port',
 		'username'        => 'SMTP Username',

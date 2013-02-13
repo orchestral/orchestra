@@ -76,13 +76,14 @@ class RoutingSettingsTest extends Orchestra\Testable\TestCase {
 			'site_description'       => 'Foobar',
 			'site_user_registration' => 'no',
 
-			'email_default'          => 'mail',
+			'email_default'          => 'sendmail',
+			'email_from'             => 'admin@codenitive.com',
 			'email_smtp_host'        => '',
 			'email_smtp_port'        => '',
 			'email_smtp_username'    => '',
 			'email_smtp_password'    => '',
 			'email_smtp_encryption'  => '',
-			'email_sendmail_command' => '',
+			'email_sendmail_command' => '/usr/sbin/sendmail -bs',
 			'stmp_change_password'   => 'no',
 		));
 
@@ -93,6 +94,31 @@ class RoutingSettingsTest extends Orchestra\Testable\TestCase {
 
 		$this->assertEquals('Foo', memorize('site.name'));
 		$this->assertEquals('Foobar', memorize('site.description'));
+
+
+		$response = $this->call('orchestra::settings@index', array(), 'POST', array(
+			'site_name'              => 'Foobar',
+			'site_description'       => 'Foo',
+			'site_user_registration' => 'no',
+
+			'email_default'          => 'smtp',
+			'email_from'             => 'admin@codenitive.com',
+			'email_smtp_host'        => 'smtp.codenitive.com',
+			'email_smtp_port'        => '25',
+			'email_smtp_username'    => 'admin@codenitive.com',
+			'email_smtp_password'    => 'whatpassword?',
+			'email_smtp_encryption'  => 'ssl',
+			'email_sendmail_command' => '',
+			'stmp_change_password'   => 'no',
+		));
+
+		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::settings'), 
+			$response->foundation->headers->get('location'));
+
+		$this->assertEquals('Foobar', memorize('site.name'));
+		$this->assertEquals('Foo', memorize('site.description'));
 	}
 
 	/**
