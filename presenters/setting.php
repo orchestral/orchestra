@@ -19,7 +19,7 @@ class Setting {
 		return Form::of('orchestra.settings', function ($form) use ($model)
 		{
 			$form->row($model);
-			$form->attr(array(
+			$form->markup(array(
 				'action' => handles('orchestra::settings'),
 				'method' => 'POST',
 			));
@@ -34,13 +34,13 @@ class Setting {
 				$fieldset->control('textarea', 'site_description', function ($control)
 				{
 					$control->label(__('orchestra::label.description'));
-					$control->attr(array('rows' => 3));
+					$control->markup(array('rows' => 3));
 				});
 
 				$fieldset->control('select', 'site_user_registration', function ($control)
 				{
 					$control->label(__('orchestra::label.settings.user-registration'));
-					$control->attr(array('role' => 'switcher'));
+					$control->markup(array('role' => 'switcher'));
 					$control->options(array(
 						'yes' => 'Yes',
 						'no'  => 'No',

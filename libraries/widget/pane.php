@@ -20,7 +20,7 @@ class Pane extends Driver {
 	 */
 	protected $config = array(
 		'defaults' => array(
-			'attr'    => array(),
+			'markup'  => array(),
 			'title'   => '',
 			'content' => '',
 			'html'    => '',

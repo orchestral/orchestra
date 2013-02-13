@@ -4,7 +4,7 @@
 
 <div class="row-fluid">
 	@forelse ($panes as $id => $pane) 
-		<div{{ HTML::attributes($pane->attr) }}>
+		<div{{ HTML::attributes($pane->markup) }}>
 		@if ( ! empty($pane->html))
 			{{ $pane->html }}
 		@else
