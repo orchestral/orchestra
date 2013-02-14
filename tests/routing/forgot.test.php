@@ -140,7 +140,7 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::forgot'), 
 			$response->foundation->headers->get('location'));
-		$this->assertInstanceOf('\Laravel\Messages', Session::get('errors'));
+		$this->assertInstanceOf('\Laravel\Messages', \Session::get('errors'));
 	}
 
 	/**
