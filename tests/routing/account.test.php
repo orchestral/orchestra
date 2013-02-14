@@ -17,6 +17,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 	public function setUp()
 	{
 		parent::setUp();
+
 		$this->user = Orchestra\Model\User::find(1);
 	}
 
@@ -182,6 +183,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 		$this->be($this->user);
 
 		$response = $this->call('orchestra::account@password', array(), 'POST', array(
+			'id'               => $this->user->id,
 			'current_password' => '123456',
 			'new_password'     => '123',
 			'confirm_password' => '123',
@@ -218,6 +220,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 		});
 
 		$response = $this->call('orchestra::account@password', array(), 'POST', array(
+			'id'               => $this->user->id,
 			'current_password' => '123456',
 			'new_password'     => '123',
 			'confirm_password' => '123',
@@ -243,6 +246,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 		$this->be($this->user);
 
 		$response = $this->call('orchestra::account@password', array(), 'POST', array(
+			'id'               => $this->user->id,
 			'current_password' => '123456',
 			'new_password'     => '123',
 			'confirm_password' => '1233',
@@ -266,6 +270,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 		$this->be($this->user);
 
 		$response = $this->call('orchestra::account@password', array(), 'POST', array(
+			'id'               => $this->user->id,
 			'current_password' => '123467',
 			'new_password'     => '123',
 			'confirm_password' => '123',
