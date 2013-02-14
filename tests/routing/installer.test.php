@@ -63,7 +63,7 @@ class InstallerTest extends \Orchestra\Testable\TestCase {
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::installer.index', $response->content->view);
 
-		$this->assertFalse(Orchestra\Installer::check_database());
+		$this->assertFalse(\Orchestra\Installer::check_database());
 
 		\Auth::$drivers   = null;
 		\DB::$connections = array();
