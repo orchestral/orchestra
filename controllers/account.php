@@ -114,8 +114,11 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 	 */
 	public function get_password()
 	{
+		$user = Auth::user();
+		$form = AccountPresenter::form_password($user);
 		$data = array(
-			'eloquent' => Auth::user(),
+			'eloquent' => $user,
+			'form'     => $form,
 			'_title_'  => __("orchestra::title.account.password"),
 		);
 
@@ -145,6 +148,8 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 				'same:new_password',
 			),
 		);
+
+		if (Auth::user()->id !== $input['id']) return Response::error('500');
 
 		$val = Validator::make($input, $rules);
 
