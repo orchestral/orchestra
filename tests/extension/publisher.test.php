@@ -118,7 +118,9 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 	{
 		\Session::put('orchestra.publisher.queue', array('foo'));
 
-		$result = \Orchestra\Extension\Publisher::execute(new Orchestra\Messages);
+		$result = \Orchestra\Extension\Publisher::execute(
+			new \Orchestra\Messages
+		);
 		$queue  = \Session::get('orchestra.publisher.queue');
 
 		$this->assertEmpty($queue);
