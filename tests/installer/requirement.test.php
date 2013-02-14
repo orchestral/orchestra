@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Installer;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class InstallerRequirementTest extends PHPUnit_Framework_TestCase {
+class RequirementTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Object stub.
@@ -16,11 +16,11 @@ class InstallerRequirementTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		Session::$instance = null;
-		Session::load();
+		\Session::$instance = null;
+		\Session::load();
 
-		$this->stub = new Orchestra\Installer\Requirement(
-			new Orchestra\Installer\Publisher
+		$this->stub = new \Orchestra\Installer\Requirement(
+			new \Orchestra\Installer\Publisher
 		);
 	}
 
@@ -31,7 +31,7 @@ class InstallerRequirementTest extends PHPUnit_Framework_TestCase {
 	{
 		unset($this->stub);
 		
-		Session::$instance = null;
+		\Session::$instance = null;
 	}
 
 	/**
@@ -41,7 +41,7 @@ class InstallerRequirementTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testConstructRequirement()
 	{
-		$this->assertInstanceOf('Orchestra\Installer\Requirement', 
+		$this->assertInstanceOf('\Orchestra\Installer\Requirement', 
 			$this->stub);
 	}
 
@@ -85,12 +85,12 @@ class InstallerRequirementTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testChecklistMethodIsNotWritable()
 	{
-		$mock = $this->getMock('Orchestra\Installer\Publisher', array('publish'));
+		$mock = $this->getMock('\Orchestra\Installer\Publisher', array('publish'));
 		$mock->expects($this->any())
 			->method('publish')
 			->will($this->throwException(new \RuntimeException));
 
-		$stub = new Orchestra\Installer\Requirement($mock);
+		$stub = new \Orchestra\Installer\Requirement($mock);
 
 		$this->assertFalse($stub->installable());
 	}
