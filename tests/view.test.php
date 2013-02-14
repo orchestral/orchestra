@@ -37,7 +37,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
 		$view = new \Orchestra\View('orchestra::layout.main');
 
 		$this->assertInstanceOf('\Laravel\View', $view);
-		$this->assertEquals('frontend', Orchestra\View::$theme);
+		$this->assertEquals('frontend', \Orchestra\View::$theme);
 		$this->assertEquals('foo', $_SERVER['view.started']);
 
 		$refl = new \ReflectionObject($view);
