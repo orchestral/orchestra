@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Widget;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class WidgetPaneTest extends PHPUnit_Framework_TestCase {
+class PaneTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Stub instance.
@@ -16,7 +16,7 @@ class WidgetPaneTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		$this->stub = new Orchestra\Widget\Pane('stub');
+		$this->stub = new \Orchestra\Widget\Pane('stub');
 	}
 
 	/**
@@ -43,7 +43,7 @@ class WidgetPaneTest extends PHPUnit_Framework_TestCase {
 			),
 		);
 
-		$this->assertInstanceOf('Orchestra\Widget\Pane', $this->stub);
+		$this->assertInstanceOf('\Orchestra\Widget\Pane', $this->stub);
 
 		$refl   = new \ReflectionObject($this->stub);
 		$type   = $refl->getProperty('type');
@@ -64,7 +64,7 @@ class WidgetPaneTest extends PHPUnit_Framework_TestCase {
 	public function testAddMethod()
 	{
 		$expected = array(
-			'foo' => new Laravel\Fluent(array(
+			'foo' => new \Laravel\Fluent(array(
 				'markup'  => array(),
 				'title'   => '',
 				'content' => 'hello world',
@@ -72,7 +72,7 @@ class WidgetPaneTest extends PHPUnit_Framework_TestCase {
 				'id'      => 'foo',
 				'childs'  => array(),
 			)),
-			'foobar' => new Laravel\Fluent(array(
+			'foobar' => new \Laravel\Fluent(array(
 				'markup'  => array(),
 				'title'   => 'hello world',
 				'content' => '',

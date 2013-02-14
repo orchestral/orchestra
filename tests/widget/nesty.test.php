@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Widget;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class WidgetNestyTest extends PHPUnit_Framework_TestCase {
+class NestyTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Stub instance.
@@ -16,7 +16,7 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		$this->stub = new Orchestra\Widget\Nesty(array());
+		$this->stub = new \Orchestra\Widget\Nesty(array());
 	}
 
 	/**
@@ -34,7 +34,7 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testInstanceOfNesty()
 	{
-		$this->assertInstanceOf('Orchestra\Widget\Nesty', $this->stub);
+		$this->assertInstanceOf('\Orchestra\Widget\Nesty', $this->stub);
 
 		$refl   = new \ReflectionObject($this->stub);
 		$config = $refl->getProperty('config');
@@ -52,7 +52,7 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 	public function testNewInstanceReturnEmptyArray()
 	{
 		$this->assertEquals(array(),
-			with(new Orchestra\Widget\Nesty(array()))->get());
+			with(new \Orchestra\Widget\Nesty(array()))->get());
 	}
 
 	/**
@@ -63,35 +63,35 @@ class WidgetNestyTest extends PHPUnit_Framework_TestCase {
 	public function testAddMethod()
 	{
 		$expected = array(
-			'hello' => new Laravel\Fluent(array(
+			'hello' => new \Laravel\Fluent(array(
 				'id'     => 'hello',
 				'childs' => array(),
 			)),
-			'world' => new Laravel\Fluent(array(
+			'world' => new \Laravel\Fluent(array(
 				'id'     => 'world',
 				'childs' => array(),
 			)),
-			'foo' => new Laravel\Fluent(array(
+			'foo' => new \Laravel\Fluent(array(
 				'id'     => 'foo',
 				'childs' => array(
-					'bar' => new Laravel\Fluent(array(
+					'bar' => new \Laravel\Fluent(array(
 						'id'     => 'bar',
 						'childs' => array(),
 					)),
-					'foobar' => new Laravel\Fluent(array(
+					'foobar' => new \Laravel\Fluent(array(
 						'id'     => 'foobar',
 						'childs' => array(
-							'hello-foobar' => new Laravel\Fluent(array(
+							'hello-foobar' => new \Laravel\Fluent(array(
 								'id'     => 'hello-foobar',
 								'childs' => array(),
 							)),
 						),
 					)),
-					'foo-bar' => new Laravel\Fluent(array(
+					'foo-bar' => new \Laravel\Fluent(array(
 						'id'     => 'foo-bar',
 						'childs' => array(),
 					)),
-					'hello-world-foobar' => new Laravel\Fluent(array(
+					'hello-world-foobar' => new \Laravel\Fluent(array(
 						'id'     => 'hello-world-foobar',
 						'childs' => array(),
 					)),
