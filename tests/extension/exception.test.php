@@ -1,27 +1,27 @@
-<?php
+<?php namespace Orchestra\Tests\Extension;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class ExtensionExceptionsTest extends PHPUnit_Framework_TestCase {
+class ExceptionsTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test exception can be thrown.
 	 *
-	 * @expectedException Orchestra\Extension\FilePermissionException
+	 * @expectedException \Orchestra\Extension\FilePermissionException
 	 */
 	public function testFilePermissionExceptionCanBeThrown()
 	{
-		throw new Orchestra\Extension\FilePermissionException();
+		throw new \Orchestra\Extension\FilePermissionException();
 	}
 
 	/**
 	 * Test exception can be thrown.
 	 *
-	 * @expectedException Orchestra\Extension\UnresolvedException
+	 * @expectedException \Orchestra\Extension\UnresolvedException
 	 */
 	public function testUnresolvedExceptionCanBeThrown()
 	{
-		throw new Orchestra\Extension\UnresolvedException(array());
+		throw new \Orchestra\Extension\UnresolvedException(array());
 	}
 
 	/**
@@ -38,9 +38,9 @@ class ExtensionExceptionsTest extends PHPUnit_Framework_TestCase {
 
 		try
 		{
-			throw new Orchestra\Extension\UnresolvedException($expected);
+			throw new \Orchestra\Extension\UnresolvedException($expected);
 		}
-		catch (Orchestra\Extension\UnresolvedException $e)
+		catch (\Orchestra\Extension\UnresolvedException $e)
 		{
 			$this->assertEquals("Unable to resolve dependencies", $e->getMessage());
 			$this->assertEquals($expected, $e->getDependencies());

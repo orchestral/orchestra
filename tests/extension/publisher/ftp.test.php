@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Extension\Publisher;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
+class FTPTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * User instance.
@@ -25,19 +25,19 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
-		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
+		$base_path = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
 		set_path('public', $base_path.'public'.DS);
 
-		Orchestra\Extension::detect(array(
+		\Orchestra\Extension::detect(array(
 			DEFAULT_BUNDLE => "{$base_path}application".DS,
 		));
 
 		// Default bundle is added so we can do recursive chmod instead 
 		// just normal chmod.
-		File::mkdir(path('public').'bundles'.DS.DEFAULT_BUNDLE.DS);
+		\File::mkdir(path('public').'bundles'.DS.DEFAULT_BUNDLE.DS);
 
-		$this->user = Orchestra\Model\User::find(1);
-		$this->stub = new Orchestra\Extension\Publisher\FTP;
+		$this->user = \Orchestra\Model\User::find(1);
+		$this->stub = new \Orchestra\Extension\Publisher\FTP;
 	}
 
 	/**
@@ -45,7 +45,7 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	 */
 	public function tearDown()
 	{
-		File::rmdir(path('public').'bundles'.DS.DEFAULT_BUNDLE.DS);
+		\File::rmdir(path('public').'bundles'.DS.DEFAULT_BUNDLE.DS);
 
 		set_path('public', path('base').'public'.DS);
 		unset($this->user);
@@ -62,7 +62,7 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	 */
 	protected function getMockFTP()
 	{
-		$mock = $this->getMock('Hybrid\FTP', array(
+		$mock = $this->getMock('\Hybrid\FTP', array(
 			'setup', 
 			'connect',
 			'chmod',
@@ -90,10 +90,12 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 
 	/**
 	 * Test instanceof stub
+	 *
+	 * @test
 	 */
 	public function testInstanceOfFtp()
 	{
-		$this->assertInstanceOf('Orchestra\Extension\Publisher\Driver', $this->stub);
+		$this->assertInstanceOf('\Orchestra\Extension\Publisher\Driver', $this->stub);
 		$this->assertFalse($this->stub->connected());
 	}
 
@@ -105,7 +107,7 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testConstructMethodWithoutCredential()
 	{
-		$mock = $this->getMock('Hybrid\FTP', array(
+		$mock = $this->getMock('\Hybrid\FTP', array(
 			'setup', 
 			'connect',
 		));
@@ -114,12 +116,12 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 			->will($this->returnValue(true));
 		$mock->expects($this->any())
 			->method('connect')
-			->will($this->throwException(new Hybrid\FTP\ServerException));
+			->will($this->throwException(new \Hybrid\FTP\ServerException));
 
-		new Orchestra\Extension\Publisher\FTP($mock);
+		new \Orchestra\Extension\Publisher\FTP($mock);
 
-		$this->assertEmpty(Session::get('orchestra.ftp'));
-		$this->assertTrue(is_array(Session::get('orchestra.ftp')));
+		$this->assertEmpty(\Session::get('orchestra.ftp'));
+		$this->assertTrue(is_array(\Session::get('orchestra.ftp')));
 	}
 
 	/**
@@ -145,11 +147,11 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 	 * Test Orchestra\Extension\Publisher\FTP::connect() method would 
 	 * throw an exception.
 	 *
-	 * @expectedException Hybrid\FTP\ServerException
+	 * @expectedException \Hybrid\FTP\ServerException
 	 */
 	public function testConnectMethodThrowsException()
 	{
-		$mock = $this->getMock('Hybrid\FTP', array(
+		$mock = $this->getMock('\Hybrid\FTP', array(
 			'setup', 
 			'connect',
 		));
@@ -158,7 +160,7 @@ class ExtensionPublisherFTPTest extends Orchestra\Testable\TestCase {
 			->will($this->returnValue(true));
 		$mock->expects($this->any())
 			->method('connect')
-			->will($this->throwException(new Hybrid\FTP\ServerException));
+			->will($this->throwException(new \Hybrid\FTP\ServerException));
 
 		$this->stub->attach($mock);
 		$this->stub->connect();
