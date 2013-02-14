@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Models;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class ModelUserMetaTest extends Orchestra\Testable\TestCase {
+class UserMetaTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * Test Orchestra\Model\User\Meta configuration.
@@ -11,7 +11,7 @@ class ModelUserMetaTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testConfiguration()
 	{
-		$this->assertEquals('user_meta', Orchestra\Model\User\Meta::$table);
+		$this->assertEquals('user_meta', \Orchestra\Model\User\Meta::$table);
 	}
 
 	/**
@@ -21,16 +21,16 @@ class ModelUserMetaTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testUsersRelationship()
 	{
-		$meta = Orchestra\Memory::make('user');
+		$meta = \Orchestra\Memory::make('user');
 		$meta->put('timezone.2', 'Asia/Singapore');
 
-		Orchestra\Core::shutdown();
-		Orchestra\Core::start();
+		\Orchestra\Core::shutdown();
+		\Orchestra\Core::start();
 
-		$meta = Orchestra\Model\User\Meta::name('timezone', 2);
+		$meta = \Orchestra\Model\User\Meta::name('timezone', 2);
 		$user = $meta->users()->first();
 
-		$this->assertInstanceOf('Orchestra\Model\User', $user);
+		$this->assertInstanceOf('\Orchestra\Model\User', $user);
 
 	}
 }
