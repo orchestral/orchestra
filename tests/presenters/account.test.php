@@ -5,6 +5,33 @@ Bundle::start('orchestra');
 class PresentersAccountTest extends Orchestra\Testable\TestCase {
 
 	/**
+	 * User instance.
+	 *
+	 * @var  Orchestra\Model\User
+	 */
+	protected $user = null;
+
+	/**
+	 * Setup the test environment.
+	 */
+	public function setUp()
+	{
+		parent::setUp();
+
+		$this->user = Orchestra\Model\User::find(1);
+	}
+
+	/**
+	 * Teardown the test environment.
+	 */
+	public function tearDown()
+	{
+		unset($this->user);
+
+		parent::tearDown();
+	}
+
+	/**
 	 * Test Orchestra\Presenter\Account::form().
 	 *
 	 * @test
@@ -33,12 +60,10 @@ class PresentersAccountTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testInstanceOfEditPasswordForm()
 	{
-		$user = Orchestra\Model\User::find(1);
-
-		$this->be($user);
+		$this->be($this->user);
 
 		$stub = Orchestra\Presenter\Account::form_password(
-			$user,
+			$this->user,
 			handles('orchestra::account')
 		);
 
