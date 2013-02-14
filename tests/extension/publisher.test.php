@@ -71,7 +71,7 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 	{
 		$this->assertInstanceOf('\Orchestra\Extension\Publisher\Driver',	
 			\Orchestra\Extension\Publisher::driver());
-		$this->assertInstanceOf('PublisherStub',	
+		$this->assertInstanceOf('\Orchestra\Tests\Extension\PublisherStub',	
 			\Orchestra\Extension\Publisher::driver());
 		$this->assertInstanceOf('\Orchestra\Extension\Publisher\FTP',	
 			\Orchestra\Extension\Publisher::driver('ftp'));
