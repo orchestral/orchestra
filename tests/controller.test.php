@@ -42,7 +42,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('foo', $_SERVER['test.orchestra.started']);
 		$this->assertTrue(\View::$shared['fluent_layout']);
 		$this->assertEquals(\Orchestra\Core::memory(),
-			View::$shared['orchestra_memory']);
+			\View::$shared['orchestra_memory']);
 	}
 
 	/**
