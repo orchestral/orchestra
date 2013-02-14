@@ -138,10 +138,12 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 		
 		\Session::put('orchestra.publisher.queue', array('foo'));
 
-		$result = \Orchestra\Extension\Publisher::execute(new \Orchestra\Messages);
+		$result = \Orchestra\Extension\Publisher::execute(
+			new \Orchestra\Messages
+		);
 
 		$this->assertEquals(array('foo'), \Session::get('orchestra.publisher.queue'));
-		$this->assertInstanceOf('Orchestra\Messages', $result);
+		$this->assertInstanceOf('\Orchestra\Messages', $result);
 		$this->assertEquals(array('Invalid request'), $result->get('error'));
 	}
 
@@ -153,7 +155,7 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testExecuteMethodThrowsInvalidArgumentException()
 	{
-		\Orchestra\Extension\Publisher::execute(new Laravel\Fluent);
+		\Orchestra\Extension\Publisher::execute(new \Laravel\Fluent);
 	}
 }
 
@@ -238,7 +240,7 @@ class ExceptionalPublisherStub extends \Orchestra\Extension\Publisher\Driver {
 	 */
 	public function upload($name)
 	{
-		throw new Exception('Invalid request');
+		throw new \Exception('Invalid request');
 	}
 
 	/**
