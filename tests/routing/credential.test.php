@@ -72,7 +72,7 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 
 		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(500, $response->foundation->getStatusCode());
-		$this->assertFalse(Auth::check());
+		$this->assertFalse(\Auth::check());
 	}
 
 	/**

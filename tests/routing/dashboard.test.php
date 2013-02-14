@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Routing;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class RoutingDashboardTest extends Orchestra\Testable\TestCase {
+class DashboardTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * User instance.
@@ -17,7 +17,8 @@ class RoutingDashboardTest extends Orchestra\Testable\TestCase {
 	public function setUp()
 	{
 		parent::setUp();
-		$this->user = Orchestra\Model\User::find(1);
+
+		$this->user = \Orchestra\Model\User::find(1);
 	}
 
 	/**
@@ -40,7 +41,7 @@ class RoutingDashboardTest extends Orchestra\Testable\TestCase {
 	{
 		$response = $this->call('orchestra::dashboard@index');
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
@@ -57,7 +58,7 @@ class RoutingDashboardTest extends Orchestra\Testable\TestCase {
 
 		$response = $this->call('orchestra::dashboard@index');
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::dashboard.index', $response->content->view);
 	}
@@ -69,15 +70,15 @@ class RoutingDashboardTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testInitiateCoreCheckLanguageLocale()
 	{
-		Orchestra\Core::shutdown();
+		\Orchestra\Core::shutdown();
 
-		URI::$uri = 'ru/home';
-		Config::set('application.language', 'en');
-		Config::set('application.languages', array('en', 'ru'));
+		\URI::$uri = 'ru/home';
+		\Config::set('application.language', 'en');
+		\Config::set('application.languages', array('en', 'ru'));
 
-		Orchestra\Core::start();
+		\Orchestra\Core::start();
 
-		$this->assertEquals('ru', Config::get('application.language'));
+		$this->assertEquals('ru', \Config::get('application.language'));
 	}	
 
 	/**
@@ -87,14 +88,14 @@ class RoutingDashboardTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testInitiateCoreStartIsCorruptedInstallation()
 	{
-		$this->assertTrue(Orchestra\Installer::$status);
+		$this->assertTrue(\Orchestra\Installer::$status);
 
-		$memory = Orchestra::memory();
+		$memory = \Orchestra\Core::memory();
 		$memory->put('site', array());
 
-		Orchestra\Core::shutdown();
-		Orchestra\Core::start();
+		\Orchestra\Core::shutdown();
+		\Orchestra\Core::start();
 
-		$this->assertFalse(Orchestra\Installer::$status);
+		$this->assertFalse(\Orchestra\Installer::$status);
 	}
 }
