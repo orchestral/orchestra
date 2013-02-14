@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Presenters;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class PresentersAccountTest extends Orchestra\Testable\TestCase {
+class AccountTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * User instance.
@@ -18,7 +18,7 @@ class PresentersAccountTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
-		$this->user = Orchestra\Model\User::find(1);
+		$this->user = \Orchestra\Model\User::find(1);
 	}
 
 	/**
@@ -38,8 +38,8 @@ class PresentersAccountTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testInstanceOfAccountForm()
 	{
-		$stub = Orchestra\Presenter\Account::form(
-			new Orchestra\Model\User,
+		$stub = \Orchestra\Presenter\Account::form(
+			new \Orchestra\Model\User,
 			handles('orchestra::account')
 		);
 
@@ -48,9 +48,9 @@ class PresentersAccountTest extends Orchestra\Testable\TestCase {
 		$grid->setAccessible(true);
 		$grid = $grid->getValue($stub);
 
-		$this->assertInstanceOf('Orchestra\Form', $stub);
-		$this->assertEquals(Orchestra\Form::of('orchestra.account'), $stub);
-		$this->assertInstanceOf('Hybrid\Form\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Form', $stub);
+		$this->assertEquals(\Orchestra\Form::of('orchestra.account'), $stub);
+		$this->assertInstanceOf('\Hybrid\Form\Grid', $grid);
 	}
 
 	/**
@@ -62,7 +62,7 @@ class PresentersAccountTest extends Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 
-		$stub = Orchestra\Presenter\Account::form_password(
+		$stub = \Orchestra\Presenter\Account::form_password(
 			$this->user,
 			handles('orchestra::account')
 		);
@@ -72,8 +72,8 @@ class PresentersAccountTest extends Orchestra\Testable\TestCase {
 		$grid->setAccessible(true);
 		$grid = $grid->getValue($stub);
 
-		$this->assertInstanceOf('Orchestra\Form', $stub);
-		$this->assertEquals(Orchestra\Form::of('orchestra.account: password'), $stub);
-		$this->assertInstanceOf('Hybrid\Form\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Form', $stub);
+		$this->assertEquals(\Orchestra\Form::of('orchestra.account: password'), $stub);
+		$this->assertInstanceOf('\Hybrid\Form\Grid', $grid);
 	}
 }
