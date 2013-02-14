@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class CoreTest extends PHPUnit_Framework_TestCase {
+class CoreTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Setup the test environment.
@@ -14,7 +14,7 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 
 		// before we can manually test Orchestra\Core::start()
 		// we need to shutdown Orchestra first.
-		Orchestra\Core::shutdown();
+		\Orchestra\Core::shutdown();
 	}
 
 	/**
@@ -33,25 +33,25 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testStartMethod()
 	{
-		Event::listen('orchestra.started', function ()
+		\Event::listen('orchestra.started', function ()
 		{
 			$_SERVER['test.orchestra.started'] = 'foo';
 		});
 
 		$this->assertNull($_SERVER['test.orchestra.started']);
 
-		Orchestra\Core::start();
+		\Orchestra\Core::start();
 
-		$memory = Orchestra\Core::memory();
-		$menu   = Orchestra\Core::menu();
+		$memory = \Orchestra\Core::memory();
+		$menu   = \Orchestra\Core::menu();
 
 		$this->assertNotNull($memory);
-		$this->assertInstanceOf('Hybrid\Memory\Driver', $memory);
+		$this->assertInstanceOf('\Hybrid\Memory\Driver', $memory);
 		$this->assertNotNull($menu);
-		$this->assertInstanceOf('Orchestra\Widget\Menu', $menu);
+		$this->assertInstanceOf('\Orchestra\Widget\Menu', $menu);
 		$this->assertEquals('foo', $_SERVER['test.orchestra.started']);
 
-		Orchestra\Core::shutdown();
+		\Orchestra\Core::shutdown();
 	}
 
 	/**
@@ -61,15 +61,15 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testShutdownMethod()
 	{
-		Event::listen('orchestra.done', function ()
+		\Event::listen('orchestra.done', function ()
 		{
 			$_SERVER['test.orchestra.done'] = 'foo';
 		});
 
 		$this->assertNull($_SERVER['test.orchestra.done']);
 
-		Orchestra\Core::start();
-		Orchestra\Core::shutdown();
+		\Orchestra\Core::start();
+		\Orchestra\Core::shutdown();
 
 		$this->assertEquals('foo', $_SERVER['test.orchestra.done']);
 	}
@@ -81,21 +81,25 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testHelperMethods()
 	{
-		Orchestra\Core::start();
+		\Orchestra\Core::start();
 
-		$expected = Orchestra\Widget::make('menu.orchestra');
+		$expected = \Orchestra\Widget::make('menu.orchestra');
 		
-		$this->assertEquals($expected, Orchestra\Core::menu());
-		$this->assertInstanceOf('Orchestra\Widget\Driver', Orchestra\Core::menu());
+		$this->assertEquals($expected, \Orchestra\Core::menu());
+		$this->assertInstanceOf('\Orchestra\Widget\Driver', 
+			\Orchestra\Core::menu());
 
-		$expected = Orchestra\Widget::make('menu.application');
+		$expected = \Orchestra\Widget::make('menu.application');
 
-		$this->assertEquals($expected, Orchestra\Core::menu('app'));
-		$this->assertInstanceOf('Orchestra\Widget\Driver', Orchestra\Core::menu('app'));
-		$this->assertInstanceOf('Hybrid\Memory\Driver', Orchestra\Core::memory());
-		$this->assertInstanceOf('Hybrid\Acl\Container', Orchestra\Core::acl());
+		$this->assertEquals($expected, \Orchestra\Core::menu('app'));
+		$this->assertInstanceOf('\Orchestra\Widget\Driver', 
+			\Orchestra\Core::menu('app'));
+		$this->assertInstanceOf('\Hybrid\Memory\Driver', 
+			\Orchestra\Core::memory());
+		$this->assertInstanceOf('Hybrid\Acl\Container', 
+			\Orchestra\Core::acl());
 
-		Orchestra\Core::shutdown();
+		\Orchestra\Core::shutdown();
 	}
 
 	/**
@@ -105,13 +109,13 @@ class CoreTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testConfigurationIsProperlyConfigured()
 	{
-		Orchestra\Core::start();
+		\Orchestra\Core::start();
 		
-		$this->assertTrue(is_callable(Config::get('hybrid::auth.roles')));
-		$this->assertTrue(is_array(Config::get('hybrid::form.fieldset')));
-		$this->assertTrue(IoC::registered('orchestra.theme: backend'));
-		$this->assertTrue(IoC::registered('orchestra.theme: frontend'));
+		$this->assertTrue(is_callable(\Config::get('hybrid::auth.roles')));
+		$this->assertTrue(is_array(\Config::get('hybrid::form.fieldset')));
+		$this->assertTrue(\IoC::registered('orchestra.theme: backend'));
+		$this->assertTrue(\IoC::registered('orchestra.theme: frontend'));
 
-		Orchestra\Core::shutdown();
+		\Orchestra\Core::shutdown();
 	}
 }

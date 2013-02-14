@@ -1,19 +1,19 @@
-<?php
+<?php namespace Orchestra\Tests;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class HelpersTest extends Orchestra\Testable\TestCase {
+class HelpersTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
-		URL::$base = null;
+		\URL::$base = null;
 		
 		parent::setUp();
 
-		set_path('public', Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS);
+		set_path('public', \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS);
 	}
 
 	/**
@@ -25,11 +25,13 @@ class HelpersTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test handles() return proper URL
+	 * Test handles() return proper URL.
+	 *
+	 * @test
 	 */
 	public function testHandlesReturnProperURL()
 	{
-		$orchestra = trim(Bundle::option('orchestra', 'handles'), '/');
+		$orchestra = trim(\Bundle::option('orchestra', 'handles'), '/');
 		$this->assertEquals('http://localhost/home', handles('home'));
 		$this->assertEquals('http://localhost/home', handles('application::home'));
 		$this->assertEquals("http://localhost/{$orchestra}/login", handles('orchestra::login'));
@@ -37,7 +39,9 @@ class HelpersTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test memorize() return proper values
+	 * Test memorize() return proper values.
+	 *
+	 * @test
 	 */
 	public function testMemorizeReturnProperValues()
 	{
@@ -46,11 +50,13 @@ class HelpersTest extends Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test locate() return proper view path
+	 * Test locate() return proper view path.
+	 *
+	 * @test
 	 */
 	public function testLocateReturnProperViewPath()
 	{
-		$theme = Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS.'themes'.DS;
+		$theme = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS.'themes'.DS;
 		$view1 = locate('path: /path/to/somewhere');
 		$view2 = locate('home.index');
 		$view3 = locate('home.dashboard');

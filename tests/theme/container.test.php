@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Theme;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class ThemeContainerTest extends PHPUnit_Framework_TestCase {
+class ContainerTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Stub instance.
@@ -16,13 +16,13 @@ class ThemeContainerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		URL::$base = null;
-		Config::set('application.index', '');
-		Config::set('application.url', 'http://localhost/');
+		\URL::$base = null;
+		\Config::set('application.index', '');
+		\Config::set('application.url', 'http://localhost/');
 
-		set_path('public', Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS);
+		set_path('public', \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS);
 
-		$this->stub = new Orchestra\Theme\Container('default');
+		$this->stub = new \Orchestra\Theme\Container('default');
 	}
 
 	/**
@@ -32,8 +32,8 @@ class ThemeContainerTest extends PHPUnit_Framework_TestCase {
 	{
 		unset($this->stub);
 
-		Config::set('application.index', 'index.php');
-		Config::set('application.url', '');
+		\Config::set('application.index', 'index.php');
+		\Config::set('application.url', '');
 
 		set_path('public', path('base').'public'.DS);
 	}
@@ -45,10 +45,10 @@ class ThemeContainerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testConstructThemeContainer()
 	{
-		$this->assertInstanceOf('Orchestra\Theme\Container', $this->stub);
+		$this->assertInstanceOf('\Orchestra\Theme\Container', $this->stub);
 
-		$theme = Orchestra\Theme::container('frontend', 'default');
-		$this->assertInstanceOf('Orchestra\Theme\Container', $theme);
+		$theme = \Orchestra\Theme::container('frontend', 'default');
+		$this->assertInstanceOf('\Orchestra\Theme\Container', $theme);
 	}
 
 	/**
@@ -72,7 +72,7 @@ class ThemeContainerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testParseFileFromTheme()
 	{
-		$theme    = Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS.'themes'.DS;
+		$theme    = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS.'themes'.DS;
 		$expected = "path: {$theme}default/home/index.blade.php";
 
 		$this->assertEquals($expected, $this->stub->parse('home.index'));
@@ -91,7 +91,7 @@ class ThemeContainerTest extends PHPUnit_Framework_TestCase {
 			'foo.index' => 'home.index',
 		));
 
-		$theme    = Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS.'themes'.DS;
+		$theme    = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS.'themes'.DS;
 		$expected = "path: {$theme}default/home/index.blade.php";
 
 		$this->assertEquals($expected, $this->stub->parse('foo.index'));

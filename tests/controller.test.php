@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class ControllerTest extends PHPUnit_Framework_TestCase {
+class ControllerTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Setup the test environment.
@@ -30,19 +30,19 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testConstructController()
 	{
-		Event::listen('orchestra.started: backend', function()
+		\Event::listen('orchestra.started: backend', function()
 		{
 			$_SERVER['test.orchestra.started'] = 'foo';
 		});
 
 		$this->assertNull($_SERVER['test.orchestra.started']);
 
-		$controller = new Orchestra\Controller;
+		$controller = new \Orchestra\Controller;
 
 		$this->assertEquals('foo', $_SERVER['test.orchestra.started']);
-		$this->assertTrue(View::$shared['fluent_layout']);
-		$this->assertEquals(Orchestra\Core::memory(),
-			View::$shared['orchestra_memory']);
+		$this->assertTrue(\View::$shared['fluent_layout']);
+		$this->assertEquals(\Orchestra\Core::memory(),
+			\View::$shared['orchestra_memory']);
 	}
 
 	/**
@@ -52,14 +52,14 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testAfterFilter()
 	{
-		Event::listen('orchestra.done: backend', function()
+		\Event::listen('orchestra.done: backend', function()
 		{
 			$_SERVER['test.orchestra.done'] = 'foo';
 		});
 
 		$this->assertNull($_SERVER['test.orchestra.done']);
 
-		$controller = with(new Orchestra\Controller)->after('foobar');
+		$controller = with(new \Orchestra\Controller)->after('foobar');
 
 		$this->assertEquals('foo', $_SERVER['test.orchestra.done']);
 	}

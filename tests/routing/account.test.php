@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Routing;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class RoutingAccountTest extends Orchestra\Testable\TestCase {
+class AccountTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * User instance
@@ -18,7 +18,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
-		$this->user = Orchestra\Model\User::find(1);
+		$this->user = \Orchestra\Model\User::find(1);
 	}
 
 	/**
@@ -41,7 +41,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 	{
 		$response = $this->call('orchestra::account@index', array());
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
@@ -58,7 +58,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 
 		$response = $this->call('orchestra::account@index', array());
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::account.index', $response->content->view);
 	}
@@ -72,7 +72,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 	{
 		$response = $this->call('orchestra::account@password', array());
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
@@ -89,7 +89,7 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 
 		$response = $this->call('orchestra::account@password', array());
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::account.password', $response->content->view);
 	}
@@ -109,15 +109,15 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 			'email'    => $this->user->email,
 		));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::account'), 
 			$response->foundation->headers->get('location'));
 
-		$user = Orchestra\Model\User::find(1);
+		$user = \Orchestra\Model\User::find(1);
 
 		$this->assertEquals('Foobar', $user->fullname);
-		$this->assertEmpty(Session::get('errors'));
+		$this->assertEmpty(\Session::get('errors'));
 	}
 
 	/**
@@ -135,11 +135,11 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 			'email'    => 'foo+bar.com',
 		));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::account'), 
 			$response->foundation->headers->get('location'));
-		$this->assertTrue(array() !== Session::get('errors', array()));
+		$this->assertTrue(array() !== \Session::get('errors', array()));
 	}
 
 	/**
@@ -151,11 +151,11 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 
-		$events = Event::$events;
+		$events = \Event::$events;
 
-		Event::listen('eloquent.saving: Orchestra\Model\User', function ($model)
+		\Event::listen('eloquent.saving: Orchestra\Model\User', function ($model)
 		{
-			throw new Exception();
+			throw new \Exception();
 		});
 
 		$response = $this->call('orchestra::account@index', array(), 'POST', array(
@@ -164,13 +164,13 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 			'email'    => $this->user->email,
 		));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::account'), 
 			$response->foundation->headers->get('location'));
-		$this->assertTrue(is_string(Session::get('message')));
+		$this->assertTrue(is_string(\Session::get('message')));
 
-		Event::$events = $events;
+		\Event::$events = $events;
 	}
 
 	/**
@@ -189,14 +189,14 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 			'confirm_password' => '123',
 		));
 
-		$user = Orchestra\Model\User::find(1);
+		$user = \Orchestra\Model\User::find(1);
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::account/password'), 
 			$response->foundation->headers->get('location'));
-		$this->assertEmpty(Session::get('errors'));
-		$this->assertTrue(Hash::check('123', $user->password));
+		$this->assertEmpty(\Session::get('errors'));
+		$this->assertTrue(\Hash::check('123', $user->password));
 
 		// Revert the changes.
 		$user->password = '123456';
@@ -212,11 +212,11 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 
-		$events = Event::$events;
+		$events = \Event::$events;
 
-		Event::listen('eloquent.saving: Orchestra\Model\User', function($model)
+		\Event::listen('eloquent.saving: Orchestra\Model\User', function($model)
 		{
-			throw new Exception();
+			throw new \Exception();
 		});
 
 		$response = $this->call('orchestra::account@password', array(), 'POST', array(
@@ -226,13 +226,13 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 			'confirm_password' => '123',
 		));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::account/password'),
 			$response->foundation->headers->get('location'));
-		$this->assertTrue(is_string(Session::get('message')));
+		$this->assertTrue(is_string(\Session::get('message')));
 
-		Event::$events = $events;
+		\Event::$events = $events;
 	}
 
 	/**
@@ -252,11 +252,11 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 			'confirm_password' => '1233',
 		));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::account/password'), 
 			$response->foundation->headers->get('location'));
-		$this->assertTrue(array() !== Session::get('errors', array()));
+		$this->assertTrue(array() !== \Session::get('errors', array()));
 	}
 
 	/**
@@ -276,10 +276,10 @@ class RoutingAccountTest extends Orchestra\Testable\TestCase {
 			'confirm_password' => '123',
 		));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::account/password'), 
 			$response->foundation->headers->get('location'));
-		$this->assertTrue(array() !== Session::get('message', array()));
+		$this->assertTrue(array() !== \Session::get('message', array()));
 	}
 }

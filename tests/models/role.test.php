@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Models;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class ModelRoleTest extends Orchestra\Testable\TestCase {
+class RoleTest extends \Orchestra\Testable\TestCase {
 	
 	/**
 	 * Test Orchestra\Model\Role::admin() method.
@@ -11,8 +11,9 @@ class ModelRoleTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testAdminMethod()
 	{
-		$admin = Orchestra\Model\Role::admin();
-		$this->assertEquals(Config::get('orchestra::orchestra.default_role'), $admin->id);
+		$admin = \Orchestra\Model\Role::admin();
+		$this->assertEquals(\Config::get('orchestra::orchestra.default_role'), 
+			$admin->id);
 	}
 
 	/**
@@ -22,8 +23,9 @@ class ModelRoleTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testMemberMethod()
 	{
-		$member = Orchestra\Model\Role::member();
-		$this->assertEquals(Config::get('orchestra::orchestra.member_role'), $member->id);
+		$member = \Orchestra\Model\Role::member();
+		$this->assertEquals(\Config::get('orchestra::orchestra.member_role'), 
+			$member->id);
 	}
 
 	/**
@@ -33,9 +35,10 @@ class ModelRoleTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testUsersRelationship()
 	{
-		$admin    = Orchestra\Model\Role::admin();
+		$admin    = \Orchestra\Model\Role::admin();
 		$user     = $admin->users()->first();
-		$expected = Orchestra\Model\User::find(1);
+		$expected = \Orchestra\Model\User::find(1);
+
 		$this->assertEquals($expected->id, $user->id);
 	}
 }

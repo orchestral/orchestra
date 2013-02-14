@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Extension;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
+class PublisherTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * Stub instance.
@@ -25,22 +25,23 @@ class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
-		Orchestra\Core::memory()->put('orchestra.publisher.driver', 'stub');
+		\Orchestra\Core::memory()->put('orchestra.publisher.driver', 'stub');
 
-		Orchestra\Extension\Publisher::$registrar = array();
-		Orchestra\Extension\Publisher::$drivers   = array();
+		\Orchestra\Extension\Publisher::$registrar = array();
+		\Orchestra\Extension\Publisher::$drivers   = array();
 		
-		Orchestra\Extension\Publisher::extend('stub', function ()
+		\Orchestra\Extension\Publisher::extend('stub', function ()
 		{
 			return new PublisherStub;
 		});
-		Orchestra\Extension\Publisher::extend('exceptional-stub', function ()
+		
+		\Orchestra\Extension\Publisher::extend('exceptional-stub', function ()
 		{
 			return new ExceptionalPublisherStub;
 		});
 
 		$this->stub = new PublisherStub;
-		$this->user = Orchestra\Model\User::find(1);
+		$this->user = \Orchestra\Model\User::find(1);
 
 		$this->be($this->user);
 	}
@@ -50,8 +51,8 @@ class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
 	 */
 	public function tearDown()
 	{
-		Orchestra\Core::memory()->put('orchestra.publisher.driver', 'ftp');
-		Orchestra\Extension\Publisher::$drivers = array();
+		\Orchestra\Core::memory()->put('orchestra.publisher.driver', 'ftp');
+		\Orchestra\Extension\Publisher::$drivers = array();
 
 		unset($this->stub);
 		unset($this->user);
@@ -68,12 +69,12 @@ class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testInstanceOfDefaultDriver()
 	{
-		$this->assertInstanceOf('Orchestra\Extension\Publisher\Driver',	
-			Orchestra\Extension\Publisher::driver());
-		$this->assertInstanceOf('PublisherStub',	
-			Orchestra\Extension\Publisher::driver());
-		$this->assertInstanceOf('Orchestra\Extension\Publisher\FTP',	
-			Orchestra\Extension\Publisher::driver('ftp'));
+		$this->assertInstanceOf('\Orchestra\Extension\Publisher\Driver',	
+			\Orchestra\Extension\Publisher::driver());
+		$this->assertInstanceOf('\Orchestra\Tests\Extension\PublisherStub',	
+			\Orchestra\Extension\Publisher::driver());
+		$this->assertInstanceOf('\Orchestra\Extension\Publisher\FTP',	
+			\Orchestra\Extension\Publisher::driver('ftp'));
 	}
 
 	/**
@@ -83,10 +84,10 @@ class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testInstanceOfPublisher()
 	{
-		$this->assertInstanceOf('Orchestra\Extension\Publisher\Driver',	
+		$this->assertInstanceOf('\Orchestra\Extension\Publisher\Driver',	
 			$this->stub);
-		$this->assertInstanceOf('Orchestra\Extension\Publisher\Driver', 
-			Orchestra\Extension\Publisher::driver('stub'));
+		$this->assertInstanceOf('\Orchestra\Extension\Publisher\Driver', 
+			\Orchestra\Extension\Publisher::driver('stub'));
 
 		$this->assertTrue($this->stub->upload(DEFAULT_BUNDLE));
 		$this->assertTrue($this->stub->connected());
@@ -99,13 +100,13 @@ class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testQueueMethod()
 	{
-		Session::put('orchestra.publisher.queue', array());
+		\Session::put('orchestra.publisher.queue', array());
 		$expected = array('foo');
 
-		Orchestra\Extension\Publisher::queue($expected);
+		\Orchestra\Extension\Publisher::queue($expected);
 
-		$this->assertEquals($expected, Session::get('orchestra.publisher.queue'));
-		$this->assertEquals($expected, Orchestra\Extension\Publisher::queued());
+		$this->assertEquals($expected, \Session::get('orchestra.publisher.queue'));
+		$this->assertEquals($expected, \Orchestra\Extension\Publisher::queued());
 	}
 
 	/**
@@ -115,14 +116,16 @@ class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testExecuteMethodSuccessful()
 	{
-		Session::put('orchestra.publisher.queue', array('foo'));
+		\Session::put('orchestra.publisher.queue', array('foo'));
 
-		$result = Orchestra\Extension\Publisher::execute(new Orchestra\Messages);
-		$queue  = Session::get('orchestra.publisher.queue');
+		$result = \Orchestra\Extension\Publisher::execute(
+			new \Orchestra\Messages
+		);
+		$queue  = \Session::get('orchestra.publisher.queue');
 
 		$this->assertEmpty($queue);
 		$this->assertTrue(is_array($queue));
-		$this->assertInstanceOf('Orchestra\Messages', $result);
+		$this->assertInstanceOf('\Orchestra\Messages', $result);
 	}
 
 	/**
@@ -132,15 +135,17 @@ class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testExecuteMethodFail()
 	{
-		Orchestra\Core::memory()->put('orchestra.publisher.driver', 'exceptional-stub');
-		Orchestra\Extension\Publisher::$drivers = array();
+		\Orchestra\Core::memory()->put('orchestra.publisher.driver', 'exceptional-stub');
+		\Orchestra\Extension\Publisher::$drivers = array();
 		
-		Session::put('orchestra.publisher.queue', array('foo'));
+		\Session::put('orchestra.publisher.queue', array('foo'));
 
-		$result = Orchestra\Extension\Publisher::execute(new Orchestra\Messages);
+		$result = \Orchestra\Extension\Publisher::execute(
+			new \Orchestra\Messages
+		);
 
-		$this->assertEquals(array('foo'), Session::get('orchestra.publisher.queue'));
-		$this->assertInstanceOf('Orchestra\Messages', $result);
+		$this->assertEquals(array('foo'), \Session::get('orchestra.publisher.queue'));
+		$this->assertInstanceOf('\Orchestra\Messages', $result);
 		$this->assertEquals(array('Invalid request'), $result->get('error'));
 	}
 
@@ -148,15 +153,15 @@ class ExtensionPublisherTest extends Orchestra\Testable\TestCase {
 	 * Test Orchestra\Extension\Publisher::execute() method throws an 
 	 * exception when not injecting Orchestra\Messages.
 	 *
-	 * @expectedException InvalidArgumentException
+	 * @expectedException \InvalidArgumentException
 	 */
 	public function testExecuteMethodThrowsInvalidArgumentException()
 	{
-		Orchestra\Extension\Publisher::execute(new Laravel\Fluent);
+		\Orchestra\Extension\Publisher::execute(new \Laravel\Fluent);
 	}
 }
 
-class PublisherStub extends Orchestra\Extension\Publisher\Driver {
+class PublisherStub extends \Orchestra\Extension\Publisher\Driver {
 	/**
 	 * Get service connection instance.
 	 *
@@ -204,7 +209,7 @@ class PublisherStub extends Orchestra\Extension\Publisher\Driver {
 	}
 }
 
-class ExceptionalPublisherStub extends Orchestra\Extension\Publisher\Driver {
+class ExceptionalPublisherStub extends \Orchestra\Extension\Publisher\Driver {
 	/**
 	 * Get service connection instance.
 	 *
@@ -237,7 +242,7 @@ class ExceptionalPublisherStub extends Orchestra\Extension\Publisher\Driver {
 	 */
 	public function upload($name)
 	{
-		throw new Exception('Invalid request');
+		throw new \Exception('Invalid request');
 	}
 
 	/**

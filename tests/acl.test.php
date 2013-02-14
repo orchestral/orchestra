@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class AclTest extends Orchestra\Testable\TestCase {
+class AclTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * Role instance.
@@ -18,7 +18,7 @@ class AclTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
-		$this->role = Orchestra\Model\Role::create(array(
+		$this->role = \Orchestra\Model\Role::create(array(
 			'name' => 'foo',
 		));
 	}
@@ -40,8 +40,8 @@ class AclTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testInstanceOfAcl()
 	{
-		$acl = Orchestra\Acl::make();
-		$this->assertInstanceOf('Hybrid\Acl\Container', $acl);
+		$acl = \Orchestra\Acl::make();
+		$this->assertInstanceOf('\Hybrid\Acl\Container', $acl);
 	}
 
 	/**
@@ -51,7 +51,8 @@ class AclTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testModelCreateRoleSyncToAcl()
 	{
-		$acl   = Orchestra\Core::acl();
+		$acl   = \Orchestra\Core::acl();
+		
 		$refl  = new \ReflectionObject($acl);
 		$roles = $refl->getProperty('roles');
 		$roles->setAccessible(true);
@@ -68,7 +69,7 @@ class AclTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testModelUpdateRoleSyncToAcl()
 	{
-		$acl   = Orchestra\Core::acl();
+		$acl   = \Orchestra\Core::acl();
 		$refl  = new \ReflectionObject($acl);
 		$roles = $refl->getProperty('roles');
 		$roles->setAccessible(true);
@@ -91,12 +92,12 @@ class AclTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testModelDeleteRoleSyncToAcl()
 	{
-		$acl   = Orchestra\Core::acl();
+		$acl   = \Orchestra\Core::acl();
 		$refl  = new \ReflectionObject($acl);
 		$roles = $refl->getProperty('roles');
 		$roles->setAccessible(true);
 
-		$editor = Orchestra\Model\Role::create(array('name' => 'editor'));
+		$editor = \Orchestra\Model\Role::create(array('name' => 'editor'));
 
 		$this->assertTrue($acl->has_role($editor->name));
 		$this->assertEquals(array('guest', 'member', 'administrator', 'foo', 'editor'),

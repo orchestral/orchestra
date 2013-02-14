@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Repository;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class RepositoryUserTest extends Orchestra\Testable\TestCase {
+class UserTest extends \Orchestra\Testable\TestCase {
 	
 	/**
 	 * User instance.
@@ -25,8 +25,8 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
-		$this->user = Orchestra\Model\User::find(1);
-		$this->stub = Orchestra\Memory::make('user');
+		$this->user = \Orchestra\Model\User::find(1);
+		$this->stub = \Orchestra\Memory::make('user');
 	}
 
 	/**
@@ -34,7 +34,7 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 	 */
 	public function tearDown()
 	{
-		Orchestra\Core::shutdown();
+		\Orchestra\Core::shutdown();
 
 		unset($this->user);
 		unset($this->stub);
@@ -49,8 +49,8 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testInstanceOfUserRepository()
 	{
-		$this->assertInstanceOf('Hybrid\Memory\Driver', $this->stub);
-		$this->assertInstanceOf('Hybrid\Memory\Driver', new Orchestra\Repository\User);
+		$this->assertInstanceOf('\Hybrid\Memory\Driver', $this->stub);
+		$this->assertInstanceOf('\Hybrid\Memory\Driver', new \Orchestra\Repository\User);
 	
 		$refl    = new \ReflectionObject($this->stub);
 		$storage = $refl->getProperty('storage');
@@ -99,7 +99,7 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 
 		$this->stub->shutdown();
 
-		$stub = new Orchestra\Repository\User;
+		$stub = new \Orchestra\Repository\User;
 		$this->assertEquals('foobar', $stub->get('foo.1'));
 		$stub->put('foo.1', 'hello foobar');
 		$stub->forget('age.1');
@@ -114,7 +114,7 @@ class RepositoryUserTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testPutMethod()
 	{
-		$stub = new Orchestra\Repository\User;
+		$stub = new \Orchestra\Repository\User;
 		$stub->put("hello.1", "Hello World");
 
 		$refl = new \ReflectionObject($stub);

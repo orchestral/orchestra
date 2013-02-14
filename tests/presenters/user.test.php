@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Presenters;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class PresentersUserTest extends Orchestra\Testable\TestCase {
+class UserTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * User instance.
@@ -18,7 +18,7 @@ class PresentersUserTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
-		$this->user = Orchestra\Model\User::find(1);
+		$this->user = \Orchestra\Model\User::find(1);
 	}
 
 	/**
@@ -40,17 +40,17 @@ class PresentersUserTest extends Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 
-		$user = Orchestra\Model\User::paginate(5);
-		$stub = Orchestra\Presenter\User::table($user);
+		$user = \Orchestra\Model\User::paginate(5);
+		$stub = \Orchestra\Presenter\User::table($user);
 
 		$refl = new \ReflectionObject($stub);
 		$grid = $refl->getProperty('grid');
 		$grid->setAccessible(true);
 		$grid = $grid->getValue($stub);
 
-		$this->assertInstanceOf('Orchestra\Table', $stub);
-		$this->assertEquals(Orchestra\Table::of('orchestra.users'), $stub);
-		$this->assertInstanceOf('Hybrid\Table\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Table', $stub);
+		$this->assertEquals(\Orchestra\Table::of('orchestra.users'), $stub);
+		$this->assertInstanceOf('\Hybrid\Table\Grid', $grid);
 	}
 
 	/**
@@ -60,13 +60,13 @@ class PresentersUserTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testInstanceOfUserTableAction()
 	{
-		$foouser = Orchestra\Model\User::where_email('member@orchestra.com')->first();
+		$foouser = \Orchestra\Model\User::where_email('member@orchestra.com')->first();
 
 		$this->be($this->user);
 
-		$user   = Orchestra\Model\User::paginate(5);
-		$stub   = Orchestra\Presenter\User::table($user); 
-		$output = Orchestra\Presenter\User::table_actions($stub);
+		$user   = \Orchestra\Model\User::paginate(5);
+		$stub   = \Orchestra\Presenter\User::table($user); 
+		$output = \Orchestra\Presenter\User::table_actions($stub);
 
 		$refl = new \ReflectionObject($stub);
 		$grid = $refl->getProperty('grid');
@@ -74,16 +74,16 @@ class PresentersUserTest extends Orchestra\Testable\TestCase {
 		$grid = $grid->getValue($stub);
 
 		$this->assertNull($output);
-		$this->assertInstanceOf('Orchestra\Table', $stub);
-		$this->assertEquals(Orchestra\Table::of('orchestra.users'), $stub);
-		$this->assertInstanceOf('Hybrid\Table\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Table', $stub);
+		$this->assertEquals(\Orchestra\Table::of('orchestra.users'), $stub);
+		$this->assertInstanceOf('\Hybrid\Table\Grid', $grid);
 
 		ob_start();
 		echo $stub->render();
 		$content = ob_get_contents();
 		ob_end_clean();
 
-		$admin  = Orchestra\Model\Role::admin();
+		$admin  = \Orchestra\Model\Role::admin();
 
 		$this->assertContains($this->user->fullname, $content);
 		$this->assertContains($this->user->email, $content);
@@ -103,29 +103,28 @@ class PresentersUserTest extends Orchestra\Testable\TestCase {
 	public function testInstanceOfUserForm()
 	{
 		$this->be($this->user);
-		$stub = Orchestra\Presenter\User::form($this->user);
+		$stub = \Orchestra\Presenter\User::form($this->user);
 
 		$refl = new \ReflectionObject($stub);
 		$grid = $refl->getProperty('grid');
 		$grid->setAccessible(true);
 		$grid = $grid->getValue($stub);
 
-		$this->assertInstanceOf('Orchestra\Form', $stub);
-		$this->assertEquals(Orchestra\Form::of('orchestra.users'), $stub);
-		$this->assertInstanceOf('Hybrid\Form\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Form', $stub);
+		$this->assertEquals(\Orchestra\Form::of('orchestra.users'), $stub);
+		$this->assertInstanceOf('\Hybrid\Form\Grid', $grid);
 
 		ob_start();
 		echo $stub->render();
 		$content = ob_get_contents();
 		ob_end_clean();
 
-		$admin  = Orchestra\Model\Role::admin();
-		$member = Orchestra\Model\Role::member();
+		$admin  = \Orchestra\Model\Role::admin();
+		$member = \Orchestra\Model\Role::member();
 
 		$this->assertContains($this->user->fullname, $content);
 		$this->assertContains($this->user->email, $content);
 		$this->assertContains($admin->name, $content);
 		$this->assertContains($member->name, $content);
 	}
-	
 }

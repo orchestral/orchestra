@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Presenters;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class PresentersSettingTest extends Orchestra\Testable\TestCase {
+class SettingTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * Setting instance.
@@ -20,13 +20,14 @@ class PresentersSettingTest extends Orchestra\Testable\TestCase {
 
 		// Orchestra settings are stored using Orchestra\Memory, we need to
 		// fetch it and convert it to Fluent (to mimick Eloquent properties).
-		$memory     = Orchestra\Core::memory();
-		$this->rows = new Laravel\Fluent(array(
+		$memory     = \Orchestra\Core::memory();
+		$this->rows = new \Laravel\Fluent(array(
 			'site_name'              => $memory->get('site.name', ''),
 			'site_description'       => $memory->get('site.description', ''),
 			'site_user_registration' => ($memory->get('site.users.registration', false) ? 'yes' : 'no'),
 
 			'email_default'          => $memory->get('email.default', ''),
+			'email_from'             => $memory->get('email.from', ''),
 			'email_smtp_host'        => $memory->get('email.transports.smtp.host', ''),
 			'email_smtp_port'        => $memory->get('email.transports.smtp.port', ''),
 			'email_smtp_username'    => $memory->get('email.transports.smtp.username', ''),
@@ -53,15 +54,15 @@ class PresentersSettingTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testInstanceOfSettingForm()
 	{
-		$stub = Orchestra\Presenter\Setting::form($this->rows);
+		$stub = \Orchestra\Presenter\Setting::form($this->rows);
 
 		$refl = new \ReflectionObject($stub);
 		$grid = $refl->getProperty('grid');
 		$grid->setAccessible(true);
 		$grid = $grid->getValue($stub);
 
-		$this->assertInstanceOf('Orchestra\Form', $stub);
-		$this->assertEquals(Orchestra\Form::of('orchestra.settings'), $stub);
-		$this->assertInstanceOf('Hybrid\Form\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Form', $stub);
+		$this->assertEquals(\Orchestra\Form::of('orchestra.settings'), $stub);
+		$this->assertInstanceOf('\Hybrid\Form\Grid', $grid);
 	}
 }

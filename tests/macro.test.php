@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class MacroTest extends Orchestra\Testable\TestCase {
+class MacroTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * Setup the test environment.
@@ -11,7 +11,7 @@ class MacroTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
-		URI::$uri = 'orchestra';
+		\URI::$uri = 'orchestra';
 	}
 
 	/**
@@ -19,7 +19,7 @@ class MacroTest extends Orchestra\Testable\TestCase {
 	 */
 	public function tearDown()
 	{
-		URI::$uri = null;
+		\URI::$uri = null;
 	}
 	
 	/**
@@ -29,14 +29,14 @@ class MacroTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testHTMLTitleMacro()
 	{
-		$memory = Orchestra::memory();
+		$memory = \Orchestra::memory();
 		$memory->put('site.name', 'Orchestra Test Suite');
 
-		$this->assertEquals('Orchestra Test Suite', HTML::title(null));
-		$this->assertEquals('Home &mdash; Orchestra Test Suite', HTML::title('Home'));
+		$this->assertEquals('Orchestra Test Suite', \HTML::title(null));
+		$this->assertEquals('Home &mdash; Orchestra Test Suite', \HTML::title('Home'));
 
 		$memory->put('site.format.title', ':page-title at :site-title');
-		$this->assertEquals('Home at Orchestra Test Suite', HTML::title('Home'));
+		$this->assertEquals('Home at Orchestra Test Suite', \HTML::title('Home'));
 	}
 
 	/**
@@ -45,7 +45,7 @@ class MacroTest extends Orchestra\Testable\TestCase {
 	public function testBladeCompilePlaceholder()
 	{
 		$expected = '<?php foreach (Orchestra\Widget::make("placeholder."."foo")->get() as $_placeholder_): echo value($_placeholder_->value ?:""); endforeach; ?>';
-		$output   = Blade::compile_string('@placeholder("foo")');
+		$output   = \Blade::compile_string('@placeholder("foo")');
 
 		$this->assertEquals($expected, $output);
 	}

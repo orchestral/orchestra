@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class ResourcesTest extends PHPUnit_Framework_TestCase {
+class ResourcesTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Stub instance.
@@ -16,9 +16,9 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		set_path('app', Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'application'.DS);
+		set_path('app', \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'application'.DS);
 
-		$this->stub = Orchestra\Resources::make('stub', array(
+		$this->stub = \Orchestra\Resources::make('stub', array(
 			'name' => 'ResourceStub',
 			'uses' => 'stub',
 		));
@@ -41,18 +41,18 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testConstructResource()
 	{
-		$this->assertInstanceOf('Orchestra\Resources', $this->stub);
+		$this->assertInstanceOf('\Orchestra\Resources', $this->stub);
 		$this->assertEquals('ResourceStub', $this->stub->name);
 		$this->assertEquals('stub', $this->stub->uses);
 		$this->assertEquals('ResourceStub', $this->stub->name());
 		$this->assertEquals('stub', $this->stub->uses());
 
-		$foo = Orchestra\Resources::make('foo', array(
+		$foo = \Orchestra\Resources::make('foo', array(
 			'name' => 'Foobar',
 			'uses' => 'foo',
 		));
 
-		$this->assertInstanceOf('Orchestra\Resources', $foo);
+		$this->assertInstanceOf('\Orchestra\Resources', $foo);
 		$this->assertEquals('Foobar', $foo->name);
 		$this->assertEquals('foo', $foo->uses);
 		$this->assertTrue($foo->visible);
@@ -64,18 +64,18 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Test Orchestra\Resources::make() thrown an exception.
 	 *
-	 * @expectedException InvalidArgumentException
+	 * @expectedException \InvalidArgumentException
 	 */
 	public function testMakeAResourceThrowsException()
 	{
-		$stub = Orchestra\Resources::make('stubber', array());
+		$stub = \Orchestra\Resources::make('stubber', array());
 	}
 
 	/**
 	 * Test adding child attribute thrown exception when is reserved
 	 * keywords.
 	 *
-	 * @expectedException InvalidArgumentException
+	 * @expectedException \InvalidArgumentException
 	 */
 	public function testAddChildUsingReservedKeywordsThrowsException()
 	{
@@ -169,15 +169,15 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCallMethod()
 	{
-		$resource = Orchestra\Resources::call('stub', 'index', array());
+		$resource = \Orchestra\Resources::call('stub', 'index', array());
 
-		$this->assertInstanceOf('Laravel\Response', $resource);
+		$this->assertInstanceOf('\Laravel\Response', $resource);
 		$this->assertEquals(200, $resource->foundation->getStatusCode());
 		$this->assertEquals('stub', $resource->content);
 
-		$resource = Orchestra\Resources::call('stub', 'redirect', array());
+		$resource = \Orchestra\Resources::call('stub', 'redirect', array());
 
-		$this->assertInstanceOf('Laravel\Redirect', $resource);
+		$this->assertInstanceOf('\Laravel\Redirect', $resource);
 		$this->assertEquals(302, $resource->foundation->getStatusCode());
 	}
 
@@ -188,26 +188,26 @@ class ResourcesTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testOfMethod()
 	{
-		$stub = Orchestra\Resources::of('stub');
+		$stub = \Orchestra\Resources::of('stub');
 
 		$this->assertEquals($this->stub, $stub);
 
-		$laravel        = Orchestra\Resources::of('laravel', 'foo');
+		$laravel        = \Orchestra\Resources::of('laravel', 'foo');
 		$laravel->hello = 'stub'; 
 
-		$this->assertInstanceOf('Orchestra\Resources', $laravel);
-		$this->assertInstanceOf('Laravel\Response', 
-			Orchestra\Resources::call('laravel.hello', 'index', array()));
+		$this->assertInstanceOf('\Orchestra\Resources', $laravel);
+		$this->assertInstanceOf('\Laravel\Response', 
+			\Orchestra\Resources::call('laravel.hello', 'index', array()));
 	}
 
 	/**
 	 * Test Orchestra\Resources::__call() method throws an exception.
 	 *
-	 * @expectedException InvalidArgumentException
+	 * @expectedException \InvalidArgumentException
 	 */
 	public function testCallMethodThrowsException()
 	{
-		$stub = Orchestra\Resources::of('stub');
+		$stub = \Orchestra\Resources::of('stub');
 		$stub->hello('invalid request');
 	}
 }

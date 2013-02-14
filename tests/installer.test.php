@@ -1,15 +1,15 @@
-<?php
+<?php namespace Orchestra\Tests;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class InstallerTest extends PHPUnit_Framework_TestCase {
+class InstallerTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Teardown the test environment.
 	 */
 	public function tearDown()
 	{
-		Orchestra\Installer::$status = false;
+		\Orchestra\Installer::$status = false;
 	}
 
 	/**
@@ -19,13 +19,14 @@ class InstallerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testInstallationStatus()
 	{
-		Orchestra\Installer::$status = false;
+		\Orchestra\Installer::$status = false;
 
-		$this->assertFalse(Orchestra\Installer::installed());
+		$this->assertFalse(\Orchestra\Installer::installed());
 
-		Orchestra\Installer::$status = true;
+		
+		\Orchestra\Installer::$status = true;
 
-		$this->assertTrue(Orchestra\Installer::installed());
+		$this->assertTrue(\Orchestra\Installer::installed());
 	}
 
 	/**
@@ -35,14 +36,14 @@ class InstallerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCheckDatabaseSuccessful()
 	{
-		Config::set('database.default', 'sqlite');
-		Config::set('database.connections.sqlite', array(
+		\Config::set('database.default', 'sqlite');
+		\Config::set('database.connections.sqlite', array(
 			'driver'   => 'sqlite',
 			'database' => ':memory:',
 			'prefix'   => '',
 		));
 		
-		$this->assertTrue(Orchestra\Installer::check_database());
+		$this->assertTrue(\Orchestra\Installer::check_database());
 	}
 
 	/**
@@ -52,15 +53,15 @@ class InstallerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCheckDatabaseFailed()
 	{
-		Config::set('database.default', 'pgsql');
-		Config::set('database.connections.pgsql', array(
+		\Config::set('database.default', 'pgsql');
+		\Config::set('database.connections.pgsql', array(
 			'driver'   => 'pgsql',
-			'database' => Str::random(30),
-			'username' => Str::random(30),
-			'password' => Str::random(30),
+			'database' => \Str::random(30),
+			'username' => \Str::random(30),
+			'password' => \Str::random(30),
 			'prefix'   => '',
 		));
 		
-		$this->assertFalse(Orchestra\Installer::check_database());
+		$this->assertFalse(\Orchestra\Installer::check_database());
 	}
 }

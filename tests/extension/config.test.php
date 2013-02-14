@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Extension;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class ExtensionConfigTest extends Orchestra\Testable\TestCase {
+class ConfigTest extends \Orchestra\Testable\TestCase {
 	
 	/**
 	 * User instance.
@@ -18,10 +18,10 @@ class ExtensionConfigTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
-		$this->user = Orchestra\Model\User::find(1);
+		$this->user = \Orchestra\Model\User::find(1);
 		$this->be($this->user);
 
-		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
+		$base_path = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
 		set_path('app', $base_path.'application'.DS);
 		set_path('orchestra.extension', $base_path.'bundles'.DS);
 	}
@@ -47,21 +47,21 @@ class ExtensionConfigTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testMapMethod()
 	{
-		Config::set('application::foo.bar', 'foobar');
+		\Config::set('application::foo.bar', 'foobar');
 		$this->restartApplication();
 
-		Orchestra\Extension::detect();
-		Orchestra\Extension::activate(DEFAULT_BUNDLE);
+		\Orchestra\Extension::detect();
+		\Orchestra\Extension::activate(DEFAULT_BUNDLE);
 
-		Orchestra\Extension\Config::map(DEFAULT_BUNDLE, array(
+		\Orchestra\Extension\Config::map(DEFAULT_BUNDLE, array(
 			'foo' => 'application::foo',
 		));
 
-		$memory = Orchestra\Core::memory();
+		$memory = \Orchestra\Core::memory();
 
-		$this->assertEquals(Config::get('application::foo'), 
+		$this->assertEquals(\Config::get('application::foo'), 
 			$memory->get('extension_application.foo'));
 
-		Orchestra\Extension::deactivate(DEFAULT_BUNDLE);
+		\Orchestra\Extension::deactivate(DEFAULT_BUNDLE);
 	}
 }

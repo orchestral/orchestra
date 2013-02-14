@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Routing;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class RoutingInstallerTest extends Orchestra\Testable\TestCase {
+class InstallerTest extends \Orchestra\Testable\TestCase {
 	
 	/**
 	 * Setup the test environment.
@@ -13,9 +13,9 @@ class RoutingInstallerTest extends Orchestra\Testable\TestCase {
 
 		$this->removeApplication();
 
-		Session::load();
+		\Session::load();
 
-		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
+		$base_path = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
 		set_path('app', $base_path.'application'.DS);
 	}
 
@@ -35,40 +35,42 @@ class RoutingInstallerTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testGetInstallerPageFailed()
 	{
-		$driver    = Config::get('database.default', 'mysql');
-		$database  = Config::get("database.connections.{$driver}", array());
-		$auth      = Config::get('auth');
-		$dummyauth = array_merge($auth, array('model' => 'DummyRoutingInstallerAuthStub'));
+		$driver    = \Config::get('database.default', 'mysql');
+		$database  = \Config::get("database.connections.{$driver}", array());
+		$auth      = \Config::get('auth');
+		$dummyauth = array_merge($auth, array(
+			'model' => 'Orchestra\Tests\Routing\InstallerAuthStub',
+		));
 
-		Auth::$drivers   = null;
-		DB::$connections = array();
+		\Auth::$drivers   = null;
+		\DB::$connections = array();
 
-		Config::set('database.default', 'dummy-mysql');
-		Config::set("database.connections.dummy-mysql", array(
+		\Config::set('database.default', 'dummy-mysql');
+		\Config::set("database.connections.dummy-mysql", array(
 			'driver'   => 'mysql',
 			'host'     => '127.0.0.1',
-			'database' => Str::random(10),
-			'username' => Str::random(10),
-			'password' => Str::random(10),
+			'database' => \Str::random(10),
+			'username' => \Str::random(10),
+			'password' => \Str::random(10),
 			'charset'  => 'utf8',
 			'prefix'   => '',
 		));
-		Config::set('auth', $dummyauth);
+		\Config::set('auth', $dummyauth);
 
 		$response = $this->call('orchestra::installer@index', array());
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::installer.index', $response->content->view);
 
-		$this->assertFalse(Orchestra\Installer::check_database());
+		$this->assertFalse(\Orchestra\Installer::check_database());
 
-		Auth::$drivers   = null;
-		DB::$connections = array();
+		\Auth::$drivers   = null;
+		\DB::$connections = array();
 
-		Config::set('database.default', $driver);
-		Config::set("database.connections.{$driver}", $database);
-		Config::set('auth', $auth);
+		\Config::set('database.default', $driver);
+		\Config::set("database.connections.{$driver}", $database);
+		\Config::set('auth', $auth);
 	}
 
 	/**
@@ -80,18 +82,18 @@ class RoutingInstallerTest extends Orchestra\Testable\TestCase {
 	{
 		$response = $this->call('orchestra::installer@steps', array(100));
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(404, $response->foundation->getStatusCode());
 
 		$response = $this->call('orchestra::installer@index', array());
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::installer.index', $response->content->view);
 
 		$response = $this->call('orchestra::installer@steps', array(1));
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::installer.step1', $response->content->view);
 
@@ -102,7 +104,7 @@ class RoutingInstallerTest extends Orchestra\Testable\TestCase {
 			'fullname'  => 'Test Administrator',
 		));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::installer/steps/1'), 
 			$response->foundation->headers->get('location'));
@@ -114,10 +116,10 @@ class RoutingInstallerTest extends Orchestra\Testable\TestCase {
 			'fullname'  => 'Test Administrator',
 		));
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::installer.step2', $response->content->view);
 	}
 }
 
-class DummyRoutingInstallerAuthStub extends Orchestra\Model\User {}
+class InstallerAuthStub extends \Orchestra\Model\User {}

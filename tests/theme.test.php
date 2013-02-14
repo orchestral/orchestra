@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class ThemeTest extends Orchestra\Testable\TestCase {
+class ThemeTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * Setup the test environment.
@@ -10,7 +10,7 @@ class ThemeTest extends Orchestra\Testable\TestCase {
 	public function setUp()
 	{
 		parent::setUp();
-		Orchestra\View::$theme = 'frontend';
+		\Orchestra\View::$theme = 'frontend';
 	}
 
 	/**
@@ -18,7 +18,7 @@ class ThemeTest extends Orchestra\Testable\TestCase {
 	 */
 	public function tearDown()
 	{
-		Orchestra\View::$theme = 'frontend';
+		\Orchestra\View::$theme = 'frontend';
 		parent::tearDown();
 	}
 
@@ -29,15 +29,15 @@ class ThemeTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testConstructThemeContainer()
 	{
-		$theme = new Orchestra\Theme\Container;
+		$theme = new \Orchestra\Theme\Container;
 
-		$this->assertInstanceOf('Orchestra\Theme\Container', $theme);
-		$this->assertInstanceOf('Orchestra\Theme\Container',
-			IoC::resolve('orchestra.theme: frontend'));
-		$this->assertInstanceOf('Orchestra\Theme\Container',
-			IoC::resolve('orchestra.theme: backend'));
-		$this->assertInstanceOf('Orchestra\Theme\Container',
-			Orchestra\Theme::container('frontend', 'default'));
+		$this->assertInstanceOf('\Orchestra\Theme\Container', $theme);
+		$this->assertInstanceOf('\Orchestra\Theme\Container',
+			\IoC::resolve('orchestra.theme: frontend'));
+		$this->assertInstanceOf('\Orchestra\Theme\Container',
+			\IoC::resolve('orchestra.theme: backend'));
+		$this->assertInstanceOf('\Orchestra\Theme\Container',
+			\Orchestra\Theme::container('frontend', 'default'));
 	}
 
 	/**
@@ -47,9 +47,9 @@ class ThemeTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testThemeContainer()
 	{
-		$this->assertEquals(Orchestra\Theme::resolve(),
-			Orchestra\Theme::container(Orchestra\View::$theme));
-		$this->assertTrue(is_array(Orchestra\Theme::$containers));
+		$this->assertEquals(\Orchestra\Theme::resolve(),
+			\Orchestra\Theme::container(\Orchestra\View::$theme));
+		$this->assertTrue(is_array(\Orchestra\Theme::$containers));
 	}
 
 	/**
@@ -59,16 +59,16 @@ class ThemeTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testThemeResolver()
 	{
-		$frontend = IoC::resolve('orchestra.theme: frontend');
-		$backend  = IoC::resolve('orchestra.theme: backend');
+		$frontend = \IoC::resolve('orchestra.theme: frontend');
+		$backend  = \IoC::resolve('orchestra.theme: backend');
 
-		$this->assertFalse(Orchestra\Theme::resolve() === $backend);
-		$this->assertTrue(Orchestra\Theme::resolve() === $frontend);
+		$this->assertFalse(\Orchestra\Theme::resolve() === $backend);
+		$this->assertTrue(\Orchestra\Theme::resolve() === $frontend);
 
-		Event::fire('orchestra.started: backend');
+		\Event::fire('orchestra.started: backend');
 
-		$this->assertTrue(Orchestra\Theme::resolve() === $backend);
-		$this->assertFalse(Orchestra\Theme::resolve() === $frontend);
+		$this->assertTrue(\Orchestra\Theme::resolve() === $backend);
+		$this->assertFalse(\Orchestra\Theme::resolve() === $frontend);
 	}
 
 	/**
@@ -78,9 +78,10 @@ class ThemeTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testCallStaticPassthruMethods()
 	{
-		$theme = Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS.'themes'.DS;
-		Orchestra\Theme::map(array('foo' => 'error.404'));
+		$theme = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS.'themes'.DS;
+		
+		\Orchestra\Theme::map(array('foo' => 'error.404'));
 
-		$this->assertEquals('error.404', Orchestra\Theme::path('foo'));
+		$this->assertEquals('error.404', \Orchestra\Theme::path('foo'));
 	}
 }

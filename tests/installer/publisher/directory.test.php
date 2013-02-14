@@ -1,16 +1,16 @@
-<?php
+<?php namespace Orchestra\Tests\Installer\Publisher;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class InstallerPublisherDirectoryTest extends PHPUnit_Framework_TestCase {
+class DirectoryTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
-		Session::$instance = null;
-		Session::load();
+		\Session::$instance = null;
+		\Session::load();
 	}
 
 	/**
@@ -18,8 +18,8 @@ class InstallerPublisherDirectoryTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
-		Session::$instance = null;
-		File::rmdir(path('storage').'work'.DS.'publisher-directory-mock');
+		\Session::$instance = null;
+		\File::rmdir(path('storage').'work'.DS.'publisher-directory-mock');
 	}
 
 	/**
@@ -29,9 +29,8 @@ class InstallerPublisherDirectoryTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testConstructDirectory()
 	{
-		$stub = new Orchestra\Installer\Publisher\Directory;
-
-		$this->assertInstanceOf('Orchestra\Installer\Publisher\Directory', $stub);
+		$this->assertInstanceOf('\Orchestra\Installer\Publisher\Directory', 
+			new \Orchestra\Installer\Publisher\Directory);
 	}
 
 	/**
@@ -42,27 +41,27 @@ class InstallerPublisherDirectoryTest extends PHPUnit_Framework_TestCase {
 	public function testFlushMethod()
 	{
 		$directory = path('storage').'work'.DS.'publisher-directory-mock';
-		$stub      = new Orchestra\Installer\Publisher\Directory;
+		$stub      = new \Orchestra\Installer\Publisher\Directory;
 
 		$this->assertTrue($stub->flush($directory));
 
-		File::rmdir(path('storage').'work'.DS.'publisher-directory-mock');
+		\File::rmdir(path('storage').'work'.DS.'publisher-directory-mock');
 	}
 
 	/**
 	 * Test Orchestra\Installer\Publisher\Directory::create() method 
 	 * throw an exception.
 	 *
-	 * @expectedException RuntimeException
+	 * @expectedException \RuntimeException
 	 */
 	public function testCreateMethodThrowsException()
 	{
 		$directory = path('storage').'work'.DS.'publisher-directory-mock';
-		$stub      = new Orchestra\Installer\Publisher\Directory;
+		$stub      = new \Orchestra\Installer\Publisher\Directory;
 		
 		$this->assertTrue($stub->flush($directory));
 		$stub->create($directory);
 
-		File::rmdir(path('storage').'work'.DS.'publisher-directory-mock');
+		\File::rmdir(path('storage').'work'.DS.'publisher-directory-mock');
 	}
 }

@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Presenters;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class PresentersExtensionTest extends Orchestra\Testable\TestCase {
+class ExtensionTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * Setting instance.
@@ -27,12 +27,12 @@ class PresentersExtensionTest extends Orchestra\Testable\TestCase {
 
 		// Orchestra settings are stored using Orchestra\Memory, we need to
 		// fetch it and convert it to Fluent (to mimick Eloquent properties).
-		$memory     = Orchestra\Core::memory();
-		$this->rows = new Laravel\Fluent(array(
+		$memory     = \Orchestra\Core::memory();
+		$this->rows = new \Laravel\Fluent(array(
 			'handles' => 'foohandler'
 		));
 
-		$this->user = Orchestra\Model\User::find(1);
+		$this->user = \Orchestra\Model\User::find(1);
 	}
 
 	/**
@@ -55,16 +55,16 @@ class PresentersExtensionTest extends Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 
-		$stub = Orchestra\Presenter\Extension::form('foo', $this->rows);
+		$stub = \Orchestra\Presenter\Extension::form('foo', $this->rows);
 
 		$refl = new \ReflectionObject($stub);
 		$grid = $refl->getProperty('grid');
 		$grid->setAccessible(true);
 		$grid = $grid->getValue($stub);
 
-		$this->assertInstanceOf('Orchestra\Form', $stub);
-		$this->assertEquals(Orchestra\Form::of('orchestra.extension: foo'), $stub);
-		$this->assertInstanceOf('Hybrid\Form\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Form', $stub);
+		$this->assertEquals(\Orchestra\Form::of('orchestra.extension: foo'), $stub);
+		$this->assertInstanceOf('\Hybrid\Form\Grid', $grid);
 
 		ob_start();
 		echo $stub->render();
