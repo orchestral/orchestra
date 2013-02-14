@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Routing;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class RoutingUsersTest extends Orchestra\Testable\TestCase {
+class UsersTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * User instance
@@ -18,7 +18,7 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
-		$this->user = Orchestra\Model\User::find(1);
+		$this->user = \Orchestra\Model\User::find(1);
 	}
 
 	/**
@@ -41,7 +41,7 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 	{
 		$response = $this->call('orchestra::users@index');
 		
-		$this->assertInstanceOf('Laravel\Redirect', $response);	
+		$this->assertInstanceOf('\Laravel\Redirect', $response);	
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
@@ -58,7 +58,7 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 
 		$response = $this->call('orchestra::users@index');
 		
-		$this->assertInstanceOf('Laravel\Response', $response);	
+		$this->assertInstanceOf('\Laravel\Response', $response);	
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::users.index', $response->content->view);
 	}
@@ -72,7 +72,7 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 	{
 		$response = $this->call('orchestra::users@view', array(1));
 		
-		$this->assertInstanceOf('Laravel\Redirect', $response);	
+		$this->assertInstanceOf('\Laravel\Redirect', $response);	
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
@@ -89,13 +89,13 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 
 		$response = $this->call('orchestra::users@view', array(1));
 		
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::users.edit', $response->content->view);
 
 		$response = $this->call('orchestra::users@view', array(''));
 		
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::users.edit', $response->content->view);
 	}
@@ -117,7 +117,7 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 			'roles'    => array(2),
 		));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::users/view/'), 
 			$response->foundation->headers->get('location'));
@@ -140,17 +140,17 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 			'roles'    => array(2),
 		));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::users'), 
 			$response->foundation->headers->get('location'));
 
-		$user = Orchestra\Model\User::where_email('crynobone@gmail.com')->first();
+		$user = \Orchestra\Model\User::where_email('crynobone@gmail.com')->first();
 
 		$this->assertGreaterThan(0, $user->id);
 		$this->assertEquals('crynobone@gmail.com', $user->email);
 		$this->assertEquals('Mior Muhammad Zaki', $user->fullname);
-		$this->assertTrue(Hash::check('123456', $user->password));
+		$this->assertTrue(\Hash::check('123456', $user->password));
 
 		$user->delete();
 	}
@@ -165,11 +165,11 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 
-		$events = Event::$events;
+		$events = \Event::$events;
 
-		Event::listen('eloquent.saving: Orchestra\Model\User', function ($model)
+		\Event::listen('eloquent.saving: Orchestra\Model\User', function ($model)
 		{
-			throw new Exception();
+			throw new \Exception();
 		});
 
 		$response = $this->call('orchestra::users@view', array(''), 'POST', array(
@@ -180,16 +180,16 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 			'roles'    => array(2),
 		));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::users'), 
 			$response->foundation->headers->get('location'));
 
-		$user = Orchestra\Model\User::where_email('crynobone@gmail.com')->first();
+		$user = \Orchestra\Model\User::where_email('crynobone@gmail.com')->first();
 
 		$this->assertNull($user);
 
-		Event::$events = $events;
+		\Event::$events = $events;
 	}
 
 	/**
@@ -201,7 +201,7 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 
-		$user = Orchestra\Model\User::create(array(
+		$user = \Orchestra\Model\User::create(array(
 			'email'    => 'crynobone@gmail.com',
 			'fullname' => 'Mior Muhammad Zaki',
 			'password' => '123456',
@@ -216,16 +216,16 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 			'roles'    => array(2),
 		));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::users'), 
 			$response->foundation->headers->get('location'));
 
-		$updated_user = Orchestra\Model\User::find($user->id);
+		$updated_user = \Orchestra\Model\User::find($user->id);
 
 		$this->assertEquals('crynobone@gmail.com', $updated_user->email);
 		$this->assertEquals('crynobone', $updated_user->fullname);
-		$this->assertTrue(Hash::check('345678', $updated_user->password));
+		$this->assertTrue(\Hash::check('345678', $updated_user->password));
 
 		$updated_user->delete();
 	}
@@ -239,7 +239,7 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 
-		$user = Orchestra\Model\User::create(array(
+		$user = \Orchestra\Model\User::create(array(
 			'email'    => 'crynobone@gmail.com',
 			'fullname' => 'Mior Muhammad Zaki',
 			'password' => '123456',
@@ -252,12 +252,12 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 		
 		$response = $this->call('orchestra::users@delete', array($user_id));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::users'), 
 			$response->foundation->headers->get('location'));
 
-		$user = Orchestra\Model\User::find($user_id);
+		$user = \Orchestra\Model\User::find($user_id);
 
 		$this->assertNull($user);
 	}
@@ -271,7 +271,7 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 
-		$user = Orchestra\Model\User::create(array(
+		$user = \Orchestra\Model\User::create(array(
 			'email'    => 'crynobone@gmail.com',
 			'fullname' => 'Mior Muhammad Zaki',
 			'password' => '123456',
@@ -284,12 +284,12 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 		
 		$response = $this->call('orchestra::users@delete', array($user_id));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::users'), 
 			$response->foundation->headers->get('location'));
 
-		$user = Orchestra\Model\User::find($user_id);
+		$user = \Orchestra\Model\User::find($user_id);
 
 		$this->assertNull($user);
 	}
@@ -306,7 +306,7 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 		
 		$response = $this->call('orchestra::users@delete', array(20000));
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(404, $response->foundation->getStatusCode());
 	}
 
@@ -319,9 +319,7 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 
-		$events = Event::$events;
-
-		$user = Orchestra\Model\User::create(array(
+		$user = \Orchestra\Model\User::create(array(
 			'email'    => 'crynobone@gmail.com',
 			'fullname' => 'Mior Muhammad Zaki',
 			'password' => '123456',
@@ -330,20 +328,21 @@ class RoutingUsersTest extends Orchestra\Testable\TestCase {
 
 		$this->assertGreaterThan(0, $user->id);
 
-		Event::listen('eloquent.deleting: Orchestra\Model\User', function ($model)
+		$events = \Event::$events;
+		\Event::listen('eloquent.deleting: Orchestra\Model\User', function ($model)
 		{
-			throw new Exception();
+			throw new \Exception();
 		});
 
 		$user_id = $user->id;
 		
 		$response = $this->call('orchestra::users@delete', array($user_id));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::users'), 
 			$response->foundation->headers->get('location'));
 
-		Event::$events = $events;
+		\Event::$events = $events;
 	}
 }
