@@ -219,7 +219,7 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostRegisterPageWithValidationError()
 	{
-		unset(IoC::$registry['orchestra.user: register']);
+		unset(\IoC::$registry['orchestra.user: register']);
 		\Orchestra\Core::memory()->put('site.users.registration', true);
 		
 		$response = $this->call('orchestra::credential@register', array(), 'POST', array(
