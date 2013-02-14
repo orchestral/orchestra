@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Widget;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class WidgetPlaceholderTest extends PHPUnit_Framework_TestCase {
+class WidgetPlaceholderTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Stub instance.
@@ -16,7 +16,7 @@ class WidgetPlaceholderTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		$this->stub = new Orchestra\Widget\Placeholder('stub');
+		$this->stub = new \Orchestra\Widget\Placeholder('stub');
 	}
 
 	/**
@@ -34,7 +34,7 @@ class WidgetPlaceholderTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testInstanceOfPlaceholder()
 	{
-		$this->assertInstanceOf('Orchestra\Widget\Placeholder', $this->stub);
+		$this->assertInstanceOf('\Orchestra\Widget\Placeholder', $this->stub);
 
 		$refl   = new \ReflectionObject($this->stub);
 		$type   = $refl->getProperty('type');
@@ -60,12 +60,12 @@ class WidgetPlaceholderTest extends PHPUnit_Framework_TestCase {
 		};
 
 		$expected = array(
-			'foo' => new Laravel\Fluent(array(
+			'foo' => new \Laravel\Fluent(array(
 				'value'  => $callback,
 				'id'     => 'foo',
 				'childs' => array(),
 			)),
-			'foobar' => new Laravel\Fluent(array(
+			'foobar' => new \Laravel\Fluent(array(
 				'value'  => $callback,
 				'id'     => 'foobar',
 				'childs' => array(),

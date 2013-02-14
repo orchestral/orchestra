@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Widget;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class WidgetMenuTest extends PHPUnit_Framework_TestCase {
+class MenuTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Stub instance.
@@ -16,7 +16,7 @@ class WidgetMenuTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		$this->stub = new Orchestra\Widget\Menu('stub');
+		$this->stub = new \Orchestra\Widget\Menu('stub');
 	}
 
 	/**
@@ -34,7 +34,7 @@ class WidgetMenuTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testInstanceOfMenu()
 	{
-		$this->assertInstanceOf('Orchestra\Widget\Menu', $this->stub);
+		$this->assertInstanceOf('\Orchestra\Widget\Menu', $this->stub);
 
 		$refl   = new \ReflectionObject($this->stub);
 		$type   = $refl->getProperty('type');
@@ -56,13 +56,13 @@ class WidgetMenuTest extends PHPUnit_Framework_TestCase {
 	public function testAddMethod()
 	{
 		$expected = array(
-			'foo' => new Laravel\Fluent(array(
+			'foo' => new \Laravel\Fluent(array(
 				'title'   => 'hello world',
 				'link'    => '#',
 				'id'      => 'foo',
 				'childs'  => array(),
 			)),
-			'foobar' => new Laravel\Fluent(array(
+			'foobar' => new \Laravel\Fluent(array(
 				'title'   => 'hello world 2',
 				'link'    => '#',
 				'id'      => 'foobar',

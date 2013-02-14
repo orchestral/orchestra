@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Routing;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class RoutingExtensionsTest extends Orchestra\Testable\TestCase {
+class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	
 	/**
 	 * User instance.
@@ -18,9 +18,9 @@ class RoutingExtensionsTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
-		$this->user = Orchestra\Model\User::find(1);
+		$this->user = \Orchestra\Model\User::find(1);
 
-		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
+		$base_path = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
 		set_path('app', $base_path.'application'.DS);
 		set_path('orchestra.extension', $base_path.'bundles'.DS);
 	}
@@ -33,10 +33,10 @@ class RoutingExtensionsTest extends Orchestra\Testable\TestCase {
 		unset($this->user);
 		$this->be(null);
 
-		parent::tearDown();
-
 		set_path('app', path('base').'application'.DS);
 		set_path('orchestra.extension', path('bundle'));
+
+		parent::tearDown();
 	}
 	
 	/**
@@ -50,7 +50,7 @@ class RoutingExtensionsTest extends Orchestra\Testable\TestCase {
 
 		$response = $this->call('orchestra::extensions@index');
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::extensions.index', $response->content->view);
 	}
@@ -67,18 +67,20 @@ class RoutingExtensionsTest extends Orchestra\Testable\TestCase {
 		$this->be($this->user);
 
 		$response = $this->call('orchestra::extensions@activate');
-		$this->assertInstanceOf('Laravel\Response', $response);
+
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(404, $response->foundation->getStatusCode());
 		$this->assertEquals('error.404', $response->content->view);
 
-		Orchestra\Extension::activate(DEFAULT_BUNDLE);
+		\Orchestra\Extension::activate(DEFAULT_BUNDLE);
 
 		$response = $this->call('orchestra::extensions@activate', array(DEFAULT_BUNDLE));
-		$this->assertInstanceOf('Laravel\Response', $response);
+		
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(404, $response->foundation->getStatusCode());
 		$this->assertEquals('error.404', $response->content->view);
 
-		Orchestra\Extension::deactivate(DEFAULT_BUNDLE);
+		\Orchestra\Extension::deactivate(DEFAULT_BUNDLE);
 	}
 
 	/**
@@ -93,12 +95,14 @@ class RoutingExtensionsTest extends Orchestra\Testable\TestCase {
 		$this->be($this->user);
 
 		$response = $this->call('orchestra::extensions@deactivate');
-		$this->assertInstanceOf('Laravel\Response', $response);
+		
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(404, $response->foundation->getStatusCode());
 		$this->assertEquals('error.404', $response->content->view);
 
 		$response = $this->call('orchestra::extensions@deactivate', array(DEFAULT_BUNDLE));
-		$this->assertInstanceOf('Laravel\Response', $response);
+		
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(404, $response->foundation->getStatusCode());
 		$this->assertEquals('error.404', $response->content->view);
 	}
@@ -115,20 +119,22 @@ class RoutingExtensionsTest extends Orchestra\Testable\TestCase {
 		$this->be($this->user);
 
 		$response = $this->call('orchestra::extensions@activate', array(DEFAULT_BUNDLE));
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::extensions'), 
 			$response->foundation->headers->get('location'));
 
-		$this->assertTrue(Orchestra\Extension::activated(DEFAULT_BUNDLE));
+		$this->assertTrue(\Orchestra\Extension::activated(DEFAULT_BUNDLE));
 
 		$response = $this->call('orchestra::extensions@deactivate', array(DEFAULT_BUNDLE));
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::extensions'), 
 			$response->foundation->headers->get('location'));
 
-		$this->assertFalse(Orchestra\Extension::activated(DEFAULT_BUNDLE));
+		$this->assertFalse(\Orchestra\Extension::activated(DEFAULT_BUNDLE));
 	}
 
 
@@ -145,7 +151,7 @@ class RoutingExtensionsTest extends Orchestra\Testable\TestCase {
 
 		$this->call('orchestra::credential@login', array(), 'GET');
 
-		$this->assertEquals('Y', Session::get('safe_mode'));
+		$this->assertEquals('Y', \Session::get('safe_mode'));
 
 		$_GET['safe_mode'] = '0';
 
@@ -153,6 +159,6 @@ class RoutingExtensionsTest extends Orchestra\Testable\TestCase {
 
 		$this->call('orchestra::credential@login', array(), 'GET');
 
-		$this->assertNull(Session::get('safe_mode'));
+		$this->assertNull(\Session::get('safe_mode'));
 	}
 }

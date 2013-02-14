@@ -1,16 +1,16 @@
-<?php
+<?php namespace Orchestra\Tests\Installer;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class InstallerPublisherTest extends PHPUnit_Framework_TestCase {
+class PublisherTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
-		Session::$instance = null;
-		Session::load();
+		\Session::$instance = null;
+		\Session::load();
 	}
 
 	/**
@@ -18,7 +18,7 @@ class InstallerPublisherTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
-		Session::$instance = null;
+		\Session::$instance = null;
 	}
 
 	/**
@@ -28,9 +28,9 @@ class InstallerPublisherTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testConstructPublisher()
 	{
-		$stub = new Orchestra\Installer\Publisher;
+		$stub = new \Orchestra\Installer\Publisher;
 
-		$this->assertInstanceOf('Orchestra\Installer\Publisher', $stub);
+		$this->assertInstanceOf('\Orchestra\Installer\Publisher', $stub);
 	}
 
 	/**
@@ -40,16 +40,16 @@ class InstallerPublisherTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testPublishMethod()
 	{
-		File::mkdir(path('storage').'work'.DS.'publisher-mock', 777);
+		\File::mkdir(path('storage').'work'.DS.'publisher-mock', 777);
 
-		$mock = $this->getMock('Orchestra\Installer\Publisher\Directory', array('flush'));
+		$mock = $this->getMock('\Orchestra\Installer\Publisher\Directory', array('flush'));
 		$mock->expects($this->any())
 			->method('flush')
 			->will($this->returnValue(true));
 		
-		$stub = new Orchestra\Installer\Publisher;
+		$stub = new \Orchestra\Installer\Publisher;
 		$this->assertTrue($stub->publish());
 
-		File::rmdir(path('storage').'work'.DS.'publisher-mock');
+		\File::rmdir(path('storage').'work'.DS.'publisher-mock');
 	}
 }

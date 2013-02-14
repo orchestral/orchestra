@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Routing;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class RoutingPublisherTest extends Orchestra\Testable\TestCase {
+class PublisherTest extends \Orchestra\Testable\TestCase {
 	
 	/**
 	 * User instance.
@@ -18,14 +18,14 @@ class RoutingPublisherTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
-		$base_path =  Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
+		$base_path = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
 		set_path('public', $base_path.'public'.DS);
 
-		Orchestra\Extension::detect(array(
+		\Orchestra\Extension::detect(array(
 			DEFAULT_BUNDLE => "{$base_path}application".DS,
 		));
 
-		$this->user = Orchestra\Model\User::find(1);
+		$this->user = \Orchestra\Model\User::find(1);
 	}
 
 	/**
@@ -33,7 +33,7 @@ class RoutingPublisherTest extends Orchestra\Testable\TestCase {
 	 */
 	public function tearDown()
 	{
-		File::rmdir(path('public').'bundles'.DS.DEFAULT_BUNDLE.DS);
+		\File::rmdir(path('public').'bundles'.DS.DEFAULT_BUNDLE.DS);
 
 		set_path('public', path('base').'public'.DS);
 		unset($this->user);
@@ -49,7 +49,7 @@ class RoutingPublisherTest extends Orchestra\Testable\TestCase {
 	 */
 	protected function getMockPublisherFTP()
 	{
-		$mock = $this->getMock('Orchestra\Extension\Publisher\FTP', array(
+		$mock = $this->getMock('\Orchestra\Extension\Publisher\FTP', array(
 			'connect',
 			'connected',
 			'execute',
@@ -81,7 +81,7 @@ class RoutingPublisherTest extends Orchestra\Testable\TestCase {
 	{
 		$response = $this->call('orchestra::publisher@index');
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
@@ -98,19 +98,19 @@ class RoutingPublisherTest extends Orchestra\Testable\TestCase {
 
 		$mock = $this->getMockPublisherFTP();
 
-		Orchestra\Extension\Publisher::$registrar = array();
-		Orchestra\Extension\Publisher::$drivers   = array();
+		\Orchestra\Extension\Publisher::$registrar = array();
+		\Orchestra\Extension\Publisher::$drivers   = array();
 
-		Orchestra\Core::memory()->put('orchestra.publisher.driver', 'sftp');
+		\Orchestra\Core::memory()->put('orchestra.publisher.driver', 'sftp');
 
-		Orchestra\Extension\Publisher::extend('sftp', function () use ($mock)
+		\Orchestra\Extension\Publisher::extend('sftp', function () use ($mock)
 		{
 			return $mock;
 		});
 
 		$response = $this->call('orchestra::publisher@index');
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::publisher/ftp'), 
 			$response->foundation->headers->get('location'));
@@ -127,7 +127,7 @@ class RoutingPublisherTest extends Orchestra\Testable\TestCase {
 
 		$response = $this->call('orchestra::publisher@ftp');
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
@@ -144,7 +144,7 @@ class RoutingPublisherTest extends Orchestra\Testable\TestCase {
 
 		$response = $this->call('orchestra::publisher@ftp');
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::publisher.ftp', $response->content->view);
 	}
@@ -160,7 +160,7 @@ class RoutingPublisherTest extends Orchestra\Testable\TestCase {
 
 		$response = $this->call('orchestra::publisher@ftp');
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
@@ -176,21 +176,21 @@ class RoutingPublisherTest extends Orchestra\Testable\TestCase {
 		$this->be($this->user);
 		$mock = $this->getMockPublisherFTP();
 
-		Orchestra\Extension\Publisher::queue(DEFAULT_BUNDLE);
+		\Orchestra\Extension\Publisher::queue(DEFAULT_BUNDLE);
 
-		Orchestra\Extension\Publisher::$registrar = array();
-		Orchestra\Extension\Publisher::$drivers   = array();
+		\Orchestra\Extension\Publisher::$registrar = array();
+		\Orchestra\Extension\Publisher::$drivers   = array();
 
-		Orchestra\Core::memory()->put('orchestra.publisher.driver', 'sftp');
+		\Orchestra\Core::memory()->put('orchestra.publisher.driver', 'sftp');
 
-		Orchestra\Extension\Publisher::extend('sftp', function () use ($mock)
+		\Orchestra\Extension\Publisher::extend('sftp', function () use ($mock)
 		{
 			return $mock;
 		});
 
 		$response = $this->call('orchestra::publisher@ftp', array(), 'POST', array());
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::publisher/ftp'), 
 			$response->foundation->headers->get('location'));
@@ -206,29 +206,30 @@ class RoutingPublisherTest extends Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 		
-		$mock = $this->getMock('Orchestra\Extension\Publisher\FTP', array(
+		$mock = $this->getMock('\Orchestra\Extension\Publisher\FTP', array(
 			'connect',
 		));
+
 		$mock->expects($this->any())
 			->method('connect')
-			->will($this->throwException(new Hybrid\FTP\ServerException));
+			->will($this->throwException(new \Hybrid\FTP\ServerException));
 
-		Orchestra\Extension\Publisher::$registrar = array();
-		Orchestra\Extension\Publisher::$drivers   = array();
+		\Orchestra\Extension\Publisher::$registrar = array();
+		\Orchestra\Extension\Publisher::$drivers   = array();
 
-		Orchestra\Core::memory()->put('orchestra.publisher.driver', 'iftp');
+		\Orchestra\Core::memory()->put('orchestra.publisher.driver', 'iftp');
 
-		Orchestra\Extension\Publisher::extend('iftp', function () use ($mock)
+		\Orchestra\Extension\Publisher::extend('iftp', function () use ($mock)
 		{
 			return $mock;
 		});
 
 		$response = $this->call('orchestra::publisher@ftp', array(), 'POST', array());
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::publisher/ftp'), 
 			$response->foundation->headers->get('location'));
-		$this->assertNull(Session::get('orchestra.ftp'));
+		$this->assertNull(\Session::get('orchestra.ftp'));
 	}
 }

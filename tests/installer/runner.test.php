@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Installer;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class InstallerRunnerTest extends Orchestra\Testable\TestCase {
+class RunnerTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * Setup the test environment.
@@ -14,32 +14,32 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 		$_SERVER['orchestra.install.user']         = null;
 		$_SERVER['orchestra.install.acl']          = null;
 
-		Event::listen('orchestra.install.schema: users', function()
+		\Event::listen('orchestra.install.schema: users', function()
 		{
 			$_SERVER['orchestra.install.schema-users'] = 'foo';
 		});
 
-		Event::listen('orchestra.install.schema', function()
+		\Event::listen('orchestra.install.schema', function()
 		{
 			$_SERVER['orchestra.install.schema'] = 'foo';
 		});
 
-		Event::listen('orchestra.install: user', function()
+		\Event::listen('orchestra.install: user', function()
 		{
 			$_SERVER['orchestra.install.user'] = 'foo';
 		});
 
-		Event::listen('orchestra.install: acl', function()
+		\Event::listen('orchestra.install: acl', function()
 		{
 			$_SERVER['orchestra.install.acl'] = 'foo';
 		});
 
-		$base_path = Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
+		$base_path = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
 		set_path('app', $base_path.'application'.DS);
 
 		parent::setUp();
 		
-		Orchestra\Installer::$status = false;
+		\Orchestra\Installer::$status = false;
 	}
 
 	/**
@@ -66,11 +66,11 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 	{
 		$this->restartApplication();
 
-		$this->assertTrue(Orchestra\Installer::installed());
+		$this->assertTrue(\Orchestra\Installer::installed());
 
-		$memory = Orchestra\Core::memory();
+		$memory = \Orchestra\Core::memory();
 
-		$this->assertInstanceOf('Hybrid\Memory\Fluent', $memory);
+		$this->assertInstanceOf('\Hybrid\Memory\Fluent', $memory);
 		$this->assertEquals('Orchestra Test Suite', $memory->get('site.name'));
 		$this->assertEquals('', $memory->get('site.description'));
 		$this->assertEquals('default', $memory->get('site.theme.frontend'));
@@ -89,18 +89,18 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 	{
 		$this->restartApplication();
 
-		$user = Orchestra\Model\User::find(1);
+		$user = \Orchestra\Model\User::find(1);
 		$this->assertEquals('Test Administrator', $user->fullname);
 		$this->assertEquals('admin@orchestra.com', $user->email);
 
 		// Test login the administrator.
-		if (Auth::attempt(array('username' => 'admin@orchestra.com', 'password' => '123456')))
+		if (\Auth::attempt(array('username' => 'admin@orchestra.com', 'password' => '123456')))
 		{
 			$this->assertTrue(true, 'Able to authenticate');
 
-			$acl = Orchestra\Core::acl();
+			$acl = \Orchestra\Core::acl();
 
-			$this->assertInstanceOf('Hybrid\Acl\Container', $acl);
+			$this->assertInstanceOf('\Hybrid\Acl\Container', $acl);
 
 			if ($acl->can('manage-orchestra'))
 			{
@@ -116,7 +116,7 @@ class InstallerRunnerTest extends Orchestra\Testable\TestCase {
 			$this->assertTrue(false, 'If unable to authenticate');
 		}
 
-		Auth::logout();
+		\Auth::logout();
 	}
 
 	/**

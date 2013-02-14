@@ -1,16 +1,16 @@
-<?php
+<?php namespace Orchestra\Tests;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class MessagesTest extends PHPUnit_Framework_TestCase {
+class MessagesTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
-		Session::$instance = null;
-		Session::load();
+		\Session::$instance = null;
+		\Session::load();
 	}
 
 	/**
@@ -18,7 +18,7 @@ class MessagesTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
-		Session::$instance = null;
+		\Session::$instance = null;
 	}
 
 	/**
@@ -26,11 +26,11 @@ class MessagesTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @test
 	 */
-	public function testMake()
+	public function testMakeInstance()
 	{
-		$messages = Orchestra\Messages::make('welcome', 'Hello world');
+		$messages = \Orchestra\Messages::make('welcome', 'Hello world');
 
-		$this->assertInstanceOf('Orchestra\Messages', $messages);
+		$this->assertInstanceOf('\Orchestra\Messages', $messages);
 		$this->assertEquals(array('Hello world'), $messages->get('welcome'));
 
 		$messages->add('welcome', 'Hi Foobar');
@@ -45,7 +45,7 @@ class MessagesTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testSerializeAndRetrieve()
 	{
-		$messages = new Orchestra\Messages;
+		$messages = new \Orchestra\Messages;
 		$messages->add('hello', 'Hi World');
 		$messages->add('bye', 'Goodbye');
 
@@ -57,13 +57,13 @@ class MessagesTest extends PHPUnit_Framework_TestCase {
 		$this->assertContains('bye', $serialize);
 		$this->assertContains('Goodbye', $serialize);
 
-		Session::flash('message', $serialize);
+		\Session::flash('message', $serialize);
 
-		$this->assertTrue(Session::has('message'));
+		$this->assertTrue(\Session::has('message'));
 
-		$retrieve = Orchestra\Messages::retrieve();
+		$retrieve = \Orchestra\Messages::retrieve();
 
-		$this->assertInstanceOf('Orchestra\Messages', $retrieve);
+		$this->assertInstanceOf('\Orchestra\Messages', $retrieve);
 		$this->assertEquals($messages, $retrieve);
 		$this->assertEquals(array('Hi World'), $retrieve->get('hello'));
 		$this->assertEquals(array('Goodbye'), $retrieve->get('bye'));
