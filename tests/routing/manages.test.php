@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Routing;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class RoutingManagesTest extends Orchestra\Testable\TestCase {
+class ManagesTest extends \Orchestra\Testable\TestCase {
 	
 	/**
 	 * User instance.
@@ -18,16 +18,16 @@ class RoutingManagesTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
-		Event::listen('orchestra.manages: application.foo', function ()
+		\Event::listen('orchestra.manages: application.foo', function ()
 		{
 			return 'foobar';
 		});
 
-		$this->user = Orchestra\Model\User::find(1);
+		$this->user = \Orchestra\Model\User::find(1);
 
 		$this->be($this->user);
 
-		Orchestra\Extension::start(DEFAULT_BUNDLE);
+		\Orchestra\Extension::start(DEFAULT_BUNDLE);
 	}
 
 	/**
@@ -50,7 +50,7 @@ class RoutingManagesTest extends Orchestra\Testable\TestCase {
 	{
 		$response = $this->call('orchestra::manages@application.foo');
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::resources.pages', $response->content->view);
 		$this->assertEquals('foobar', $response->content->data['content']);
@@ -65,7 +65,7 @@ class RoutingManagesTest extends Orchestra\Testable\TestCase {
 	{
 		$response = $this->call('orchestra::manages@application.foobar');
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::resources.pages', $response->content->view);
 		$this->assertFalse($response->content->data['content']);
