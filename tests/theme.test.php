@@ -48,7 +48,7 @@ class ThemeTest extends \Orchestra\Testable\TestCase {
 	public function testThemeContainer()
 	{
 		$this->assertEquals(\Orchestra\Theme::resolve(),
-			\Orchestra\Theme::container(Orchestra\View::$theme));
+			\Orchestra\Theme::container(\Orchestra\View::$theme));
 		$this->assertTrue(is_array(\Orchestra\Theme::$containers));
 	}
 
