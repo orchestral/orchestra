@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Routing;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class RoutingSettingsTest extends Orchestra\Testable\TestCase {
+class SettingsTest extends \Orchestra\Testable\TestCase {
 	
 	/**
 	 * User instance.
@@ -18,7 +18,7 @@ class RoutingSettingsTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
-		$this->user = Orchestra\Model\User::find(1);
+		$this->user = \Orchestra\Model\User::find(1);
 	}
 
 	/**
@@ -40,7 +40,7 @@ class RoutingSettingsTest extends Orchestra\Testable\TestCase {
 	{
 		$response = $this->call('orchestra::settings@index');
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
@@ -57,7 +57,7 @@ class RoutingSettingsTest extends Orchestra\Testable\TestCase {
 
 		$response = $this->call('orchestra::settings@index');
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::settings.index', $response->content->view);
 	}
@@ -87,7 +87,7 @@ class RoutingSettingsTest extends Orchestra\Testable\TestCase {
 			'stmp_change_password'   => 'no',
 		));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::settings'), 
 			$response->foundation->headers->get('location'));
@@ -112,7 +112,7 @@ class RoutingSettingsTest extends Orchestra\Testable\TestCase {
 			'stmp_change_password'   => 'no',
 		));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::settings'), 
 			$response->foundation->headers->get('location'));
@@ -134,7 +134,7 @@ class RoutingSettingsTest extends Orchestra\Testable\TestCase {
 			'site_name' => "Hello"
 		));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::settings'), 
 			$response->foundation->headers->get('location'));
