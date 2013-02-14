@@ -14,6 +14,7 @@
 - 90% code coverage.
 - Add `IoC::register('hybrid.view')` to allow `Orchestra\View` to manage `Hybrid\Form` and `Hybrid\Table` rendering.
 - Allow to edit `email.from` configuration, and use SMTP username as email address to avoid email send out from Orchestra Platform to be caught as spam.
+- Edit Password to use `Orchestra\Presenter` and `Orchestra\Form`.
 
 <a name="v1.0.2"></a>
 ## v1.0.2
