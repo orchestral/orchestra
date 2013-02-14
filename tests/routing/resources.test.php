@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Routing;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class RoutingResourcesTest extends Orchestra\Testable\TestCase {
+class ResourcesTest extends \Orchestra\Testable\TestCase {
 	
 	/**
 	 * User instance.
@@ -18,7 +18,7 @@ class RoutingResourcesTest extends Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
-		$this->user = Orchestra\Model\User::find(1);
+		$this->user = \Orchestra\Model\User::find(1);
 	}
 
 	/**
@@ -41,7 +41,7 @@ class RoutingResourcesTest extends Orchestra\Testable\TestCase {
 	{
 		$response = $this->call('orchestra::resources@index');
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
@@ -58,7 +58,7 @@ class RoutingResourcesTest extends Orchestra\Testable\TestCase {
 
 		$response = $this->call('orchestra::resources@index');
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::resources.index', $response->content->view);
 	}
