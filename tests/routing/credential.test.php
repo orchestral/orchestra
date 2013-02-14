@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests\Routing;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class RoutingCredentialTest extends Orchestra\Testable\TestCase {
+class CredentialTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * Setup the test environment.
@@ -33,12 +33,12 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	 */
 	public function getMailerMock()
 	{
-		$mock = $this->getMock('Orchestra\Testable\Mailer', array('was_sent'));
+		$mock = $this->getMock('\Orchestra\Testable\Mailer', array('was_sent'));
 		$mock->expects($this->any())
 			->method('was_sent')
 			->will($this->returnValue(false));
 
-		IoC::register('orchestra.mailer', function ($from = true) use ($mock)
+		\IoC::register('orchestra.mailer', function ($from = true) use ($mock)
 		{
 			return $mock;
 		});
@@ -53,7 +53,7 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	{
 		$response = $this->call('orchestra::credential@login', array());
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::credential.login', $response->content->view);
 	}
@@ -70,7 +70,7 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 			'password' => '123456',
 		));
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(500, $response->foundation->getStatusCode());
 		$this->assertFalse(Auth::check());
 	}
@@ -83,15 +83,15 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	public function testPostLoginPageWithValidationError()
 	{
 		$response = $this->call('orchestra::credential@login', array(), 'POST', array(
-			'username' => 'admin+orchestra.com',
-			Session::csrf_token => Session::token(),
+			'username'           => 'admin+orchestra.com',
+			\Session::csrf_token => \Session::token(),
 		));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
-		$this->assertFalse(Auth::check());
+		$this->assertFalse(\Auth::check());
 	}
 
 	/**
@@ -101,7 +101,7 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testPostLoginPageIsSuccessful()
 	{
-		Event::listen('orchestra.auth: login', function ()
+		\Event::listen('orchestra.auth: login', function ()
 		{
 			$_SERVER['orchestra.auth.login'] = 'foobar';
 		});
@@ -109,19 +109,19 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 		$this->assertEquals(null, $_SERVER['orchestra.auth.login']);
 
 		$response = $this->call('orchestra::credential@login', array(), 'POST', array(
-			'username'          => 'admin@orchestra.com',
-			'password'          => '123456',
-			Session::csrf_token => Session::token(),
+			'username'           => 'admin@orchestra.com',
+			'password'           => '123456',
+			\Session::csrf_token => \Session::token(),
 		));
 
 		
-		$auth = Auth::user();
+		$auth = \Auth::user();
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra'), 
 			$response->foundation->headers->get('location'));
-		$this->assertTrue(Auth::check());
+		$this->assertTrue(\Auth::check());
 		$this->assertEquals('admin@orchestra.com', $auth->email);
 		$this->assertEquals('foobar', $_SERVER['orchestra.auth.login']);
 	}
@@ -135,16 +135,16 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	public function testPostLoginPageWithInvalidAuthentication()
 	{
 		$response = $this->call('orchestra::credential@login', array(), 'POST', array(
-			'username'          => 'admin@orchestra.com',
-			'password'          => '1234561',
-			Session::csrf_token => Session::token(),
+			'username'           => 'admin@orchestra.com',
+			'password'           => '1234561',
+			\Session::csrf_token => \Session::token(),
 		));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
-		$this->assertFalse(Auth::check());
+		$this->assertFalse(\Auth::check());
 	}
 
 	/**
@@ -156,19 +156,19 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	{
 		$this->assertEquals(null, $_SERVER['orchestra.auth.logout']);
 
-		Event::listen('orchestra.auth: logout', function ()
+		\Event::listen('orchestra.auth: logout', function ()
 		{
 			$_SERVER['orchestra.auth.logout'] = 'foobar';
 		});
 
 		$response = $this->call('orchestra::credential@logout', array());
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
 
-		$this->assertFalse(Auth::check());
+		$this->assertFalse(\Auth::check());
 		$this->assertEquals('foobar', $_SERVER['orchestra.auth.logout']);
 	}
 
@@ -180,11 +180,11 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testGetRegisterPage()
 	{
-		Orchestra\Core::memory()->put('site.users.registration', true);
+		\Orchestra\Core::memory()->put('site.users.registration', true);
 
 		$response = $this->call('orchestra::credential@register', array());
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::credential.register', $response->content->view);
 	}
@@ -196,7 +196,7 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testPostRegisterPageFailedWithoutCsrf()
 	{
-		Orchestra\Core::memory()->put('site.users.registration', true);
+		\Orchestra\Core::memory()->put('site.users.registration', true);
 		
 		$response = $this->call('orchestra::credential@register', array(), 'POST', array(
 			'email'    => 'foobar@register-test.com',
@@ -204,9 +204,9 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 			'password' => '123456',
 		));
 
-		$user = Orchestra\Model\User::where_email('foobar@register-test.com')->first();
+		$user = \Orchestra\Model\User::where_email('foobar@register-test.com')->first();
 
-		$this->assertInstanceOf('Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(500, $response->foundation->getStatusCode());
 		$this->assertNull($user);
 	}
@@ -220,16 +220,16 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	public function testPostRegisterPageWithValidationError()
 	{
 		unset(IoC::$registry['orchestra.user: register']);
-		Orchestra\Core::memory()->put('site.users.registration', true);
+		\Orchestra\Core::memory()->put('site.users.registration', true);
 		
 		$response = $this->call('orchestra::credential@register', array(), 'POST', array(
-			'email'             => 'foobar+register-test.com',
-			'fullname'          => 'Test Register Foobar',
-			'password'          => '123456',
-			Session::csrf_token => Session::token(),
+			'email'              => 'foobar+register-test.com',
+			'fullname'           => 'Test Register Foobar',
+			'password'           => '123456',
+			\Session::csrf_token => \Session::token(),
 		));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::register'), 
 			$response->foundation->headers->get('location'));
@@ -242,29 +242,29 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testPostRegisterPageWithDatabaseError()
 	{
-		unset(IoC::$registry['orchestra.user: register']);
-		Orchestra\Core::memory()->put('site.users.registration', true);
+		unset(\IoC::$registry['orchestra.user: register']);
+		\Orchestra\Core::memory()->put('site.users.registration', true);
 
-		$events   = Event::$events;
-		Event::listen('eloquent.saving: Orchestra\Model\User', function($model)
+		$events = \Event::$events;
+		\Event::listen('eloquent.saving: Orchestra\Model\User', function($model)
 		{
-			throw new Exception();
+			throw new \Exception();
 		});
 		
 		$response = $this->call('orchestra::credential@register', array(), 'POST', array(
-			'email'             => 'foobar@register-test.com',
-			'fullname'          => 'Test Register Foobar',
-			'password'          => '123456',
-			Session::csrf_token => Session::token(),
+			'email'              => 'foobar@register-test.com',
+			'fullname'           => 'Test Register Foobar',
+			'password'           => '123456',
+			\Session::csrf_token => \Session::token(),
 		));
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::register'), 
 			$response->foundation->headers->get('location'));
-		$this->assertTrue(is_string(Session::get('message')));
+		$this->assertTrue(is_string(\Session::get('message')));
 
-		Event::$events = $events;
+		\Event::$events = $events;
 	}
 
 	/**
@@ -274,24 +274,24 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testPostRegisterPageIsSuccessful()
 	{
-		unset(IoC::$registry['orchestra.user: register']);
-		Orchestra\Core::memory()->put('site.users.registration', true);
+		unset(\IoC::$registry['orchestra.user: register']);
+		\Orchestra\Core::memory()->put('site.users.registration', true);
 		
 		$response = $this->call('orchestra::credential@register', array(), 'POST', array(
-			'email'             => 'foobar@register-test.com',
-			'fullname'          => 'Test Register Foobar',
-			'password'          => '123456',
-			Session::csrf_token => Session::token(),
+			'email'              => 'foobar@register-test.com',
+			'fullname'           => 'Test Register Foobar',
+			'password'           => '123456',
+			\Session::csrf_token => \Session::token(),
 		));
 
-		$user = Orchestra\Model\User::where_email('foobar@register-test.com')->first();
+		$user = \Orchestra\Model\User::where_email('foobar@register-test.com')->first();
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
-		$this->assertInstanceOf('Orchestra\Model\User', 
-			IoC::resolve('orchestra.user: register'));
+		$this->assertInstanceOf('\Orchestra\Model\User', 
+			\IoC::resolve('orchestra.user: register'));
 		$this->assertFalse(is_null($user));
 	}
 
@@ -302,26 +302,26 @@ class RoutingCredentialTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testPostRegisterPageEmailWasNotSent()
 	{
-		unset(IoC::$registry['orchestra.user: register']);
-		Orchestra\Core::memory()->put('site.users.registration', true);
+		unset(\IoC::$registry['orchestra.user: register']);
+		\Orchestra\Core::memory()->put('site.users.registration', true);
 
 		$this->getMailerMock();
 		
 		$response = $this->call('orchestra::credential@register', array(), 'POST', array(
-			'email'             => 'foobar@register-test.com',
-			'fullname'          => 'Test Register Foobar',
-			'password'          => '123456',
-			Session::csrf_token => Session::token(),
+			'email'              => 'foobar@register-test.com',
+			'fullname'           => 'Test Register Foobar',
+			'password'           => '123456',
+			\Session::csrf_token => \Session::token(),
 		));
 
-		$user = Orchestra\Model\User::where_email('foobar@register-test.com')->first();
+		$user = \Orchestra\Model\User::where_email('foobar@register-test.com')->first();
 
-		$this->assertInstanceOf('Laravel\Redirect', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::login'), 
 			$response->foundation->headers->get('location'));
-		$this->assertInstanceOf('Orchestra\Model\User', 
-			IoC::resolve('orchestra.user: register'));
+		$this->assertInstanceOf('\Orchestra\Model\User', 
+			\IoC::resolve('orchestra.user: register'));
 		$this->assertFalse(is_null($user));
 	}
 }
