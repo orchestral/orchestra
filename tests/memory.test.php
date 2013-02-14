@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class MemoryTest extends PHPUnit_Framework_TestCase {
+class MemoryTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test instance of Hybrid\Memory.
@@ -11,7 +11,7 @@ class MemoryTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testInstanceOfMemory()
 	{
-		$memory  = Orchestra\Memory::make('runtime.orchestra-memory');
+		$memory  = \Orchestra\Memory::make('runtime.orchestra-memory');
 		$refl    = new \ReflectionObject($memory);
 		$name    = $refl->getProperty('name');
 		$storage = $refl->getProperty('storage');
@@ -19,7 +19,7 @@ class MemoryTest extends PHPUnit_Framework_TestCase {
 		$name->setAccessible(true);
 		$storage->setAccessible(true);
 
-		$this->assertInstanceOf('Hybrid\Memory\Driver', $memory);
+		$this->assertInstanceOf('\Hybrid\Memory\Driver', $memory);
 		$this->assertEquals('runtime', $storage->getValue($memory));
 		$this->assertEquals('orchestra-memory', $name->getValue($memory));
 	}

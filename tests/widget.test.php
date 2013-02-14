@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class WidgetTest extends PHPUnit_Framework_TestCase {
+class WidgetTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Stub instance.
@@ -18,7 +18,7 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	{
 		$this->stub = new WidgetStub('foobar', array());
 
-		Orchestra\Widget::extend('stub', function ($name, $config)
+		\Orchestra\Widget::extend('stub', function ($name, $config)
 		{
 			return new WidgetStub($name, $config);
 		});
@@ -39,22 +39,22 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testInstanceOfWidget()
 	{
-		$this->assertInstanceOf('Orchestra\Widget\Menu',
-			Orchestra\Widget::make('menu'));
-		$this->assertInstanceOf('Orchestra\Widget\Pane',
-			Orchestra\Widget::make('pane'));
-		$this->assertInstanceOf('Orchestra\Widget\Placeholder',
-			Orchestra\Widget::make('placeholder'));
+		$this->assertInstanceOf('\Orchestra\Widget\Menu',
+			\Orchestra\Widget::make('menu'));
+		$this->assertInstanceOf('\Orchestra\Widget\Pane',
+			\Orchestra\Widget::make('pane'));
+		$this->assertInstanceOf('\Orchestra\Widget\Placeholder',
+			\Orchestra\Widget::make('placeholder'));
 	}
 
 	/**
 	 * Test Orchestra\Memory::__construct() throws an exception.
 	 *
-	 * @expectedException RuntimeException
+	 * @expectedException \RuntimeException
 	 */
 	public function testConstructThrowsException()
 	{
-		$stub = new Orchestra\Widget;
+		$stub = new \Orchestra\Widget;
 	}
 
 	/**
@@ -65,8 +65,8 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testMakeDifferentNameReturnDifferentInstance()
 	{
-		$this->assertNotEquals(Orchestra\Widget::make('menu.a'),
-			Orchestra\Widget::make('menu.b'));
+		$this->assertNotEquals(\Orchestra\Widget::make('menu.a'),
+			\Orchestra\Widget::make('menu.b'));
 	}
 
 	/**
@@ -77,8 +77,8 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testMakeSameNameReturnSameInstance()
 	{
-		$this->assertEquals(Orchestra\Widget::make('menu.a'),
-			Orchestra\Widget::make('menu.a'));
+		$this->assertEquals(\Orchestra\Widget::make('menu.a'),
+			\Orchestra\Widget::make('menu.a'));
 	}
 
 	/**
@@ -89,7 +89,7 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testMakeWithInvalidDriverThrowsException()
 	{
-		Orchestra\Widget::make('menus');
+		\Orchestra\Widget::make('menus');
 	}
 
 	/**
@@ -99,9 +99,12 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testInstanceOfStub()
 	{
-		$this->assertInstanceOf('Orchestra\Widget\Driver', $this->stub);
-		$this->assertInstanceOf('Orchestra\Widget\Driver', Orchestra\Widget::make('stub'));
-		$this->assertInstanceOf('WidgetStub', Orchestra\Widget::make('stub'));
+		$this->assertInstanceOf('\Orchestra\Widget\Driver', 
+			$this->stub);
+		$this->assertInstanceOf('\Orchestra\Widget\Driver', 
+			\Orchestra\Widget::make('stub'));
+		$this->assertInstanceOf('\Orchestra\Tests\WidgetStub', 
+			\Orchestra\Widget::make('stub'));
 
 		$stub     = new WidgetStub('foobar', array());
 		$expected = array(
@@ -122,7 +125,7 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals($expected, $config->getValue($stub));
 		$this->assertEquals('foobar', $name->getValue($stub));
-		$this->assertInstanceOf('Orchestra\Widget\Nesty', $nesty->getValue($stub));
+		$this->assertInstanceOf('\Orchestra\Widget\Nesty', $nesty->getValue($stub));
 	}
 
 	/**
@@ -132,15 +135,15 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testAddItemUsingStubIsValid()
 	{
-		$stub     = Orchestra\Widget::make('stub');
+		$stub     = \Orchestra\Widget::make('stub');
 		$expected = array(
-			'foo' => new Laravel\Fluent(array(
+			'foo' => new \Laravel\Fluent(array(
 				'id'     => 'foo',
 				'title'  => 'foobar',
 				'foobar' => false,
 				'childs' => array(),
 			)),
-			'foobar' => new Laravel\Fluent(array(
+			'foobar' => new \Laravel\Fluent(array(
 				'id'     => 'foobar',
 				'title'  => 'hello world',
 				'foobar' => true,
@@ -165,7 +168,7 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Test Orchestra\Widget\Driver::__get() throws an exception
 	 *
-	 * @expectedException InvalidArgumentException
+	 * @expectedException \InvalidArgumentException
 	 */
 	public function testAccessGetThrowsException()
 	{
@@ -174,7 +177,7 @@ class WidgetTest extends PHPUnit_Framework_TestCase {
 	}
 }
 
-class WidgetStub extends Orchestra\Widget\Driver {
+class WidgetStub extends \Orchestra\Widget\Driver {
 
 	protected $type   = 'stub';
 	protected $config = array(
@@ -188,7 +191,7 @@ class WidgetStub extends Orchestra\Widget\Driver {
 	{
 		$item = $this->nesty->add($id, $location ?: 'parent');
 
-		if ($callback instanceof Closure)
+		if ($callback instanceof \Closure)
 		{
 			call_user_func($callback, $item);
 		}

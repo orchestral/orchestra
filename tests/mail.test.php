@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class MailTest extends Orchestra\Testable\TestCase {
+class MailTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * Test instance of mailer with invalid view will throw an exception.
@@ -11,7 +11,7 @@ class MailTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testInstanceOfMailerWithInvalidViewThrowsException()
 	{
-		$mailer = new Orchestra\Mail(
+		$mailer = new \Orchestra\Mail(
 			'orchestra::an.unknown.view',
 			array(),
 			function ($mail) {}
@@ -25,14 +25,14 @@ class MailTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testUsingMailer()
 	{
-		$user = Orchestra\Model\User::find(1);
+		$user = \Orchestra\Model\User::find(1);
 		$data = array(
 			'password' => '123456',
 			'user'     => $user,
 			'site'     => 'Orchestra',
 		);
 
-		$mail = new Orchestra\Mail(
+		$mail = new \Orchestra\Mail(
 			'orchestra::email.credential.register', 
 			$data, 
 			function ($mail) use ($data, $user)
@@ -50,10 +50,10 @@ class MailTest extends Orchestra\Testable\TestCase {
 		$mailer->setAccessible(true);
 		$view->setAccessible(true);
 
-		$this->assertInstanceOf('Orchestra\Mail', $mail);
-		$this->assertInstanceOf('Orchestra\Testable\Mailer', $mailer->getValue($mail));
+		$this->assertInstanceOf('\Orchestra\Mail', $mail);
+		$this->assertInstanceOf('\Orchestra\Testable\Mailer', $mailer->getValue($mail));
 		$this->assertTrue($mailer->getValue($mail)->was_sent($user->email));
-		$this->assertInstanceOf('Laravel\View', $view->getValue($mail));
+		$this->assertInstanceOf('\Laravel\View', $view->getValue($mail));
 	}
 
 	/**
@@ -63,14 +63,14 @@ class MailTest extends Orchestra\Testable\TestCase {
 	 */
 	public function testUsingMailSend()
 	{
-		$user   = Orchestra\Model\User::find(1);
-		$data   = array(
+		$user = \Orchestra\Model\User::find(1);
+		$data = array(
 			'password' => '123456',
 			'user'     => $user,
 			'site'     => 'Orchestra',
 		);
 
-		$mail = Orchestra\Mail::send(
+		$mail = \Orchestra\Mail::send(
 			'orchestra::email.credential.register', 
 			$data, 
 			function ($mail) use ($data, $user)
@@ -81,7 +81,7 @@ class MailTest extends Orchestra\Testable\TestCase {
 			}
 		);
 
-		$this->assertInstanceOf('Orchestra\Testable\Mailer', $mail);
+		$this->assertInstanceOf('\Orchestra\Testable\Mailer', $mail);
 		$this->assertTrue($mail->was_sent($user->email));
 	}
 }

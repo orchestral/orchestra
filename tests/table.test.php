@@ -1,8 +1,8 @@
-<?php
+<?php namespace Orchestra\Tests;
 
-Bundle::start('orchestra');
+\Bundle::start('orchestra');
 
-class TableTest extends PHPUnit_Framework_TestCase {
+class TableTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Test Orchestra\Table is an instance of Hybrid\Table
@@ -11,13 +11,13 @@ class TableTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testInstanceOfTable()
 	{
-		$table = Orchestra\Table::make(function () {});
+		$table = \Orchestra\Table::make(function () {});
 		$refl  = new \ReflectionObject($table);
 		$grid  = $refl->getProperty('grid');
 
 		$grid->setAccessible(true);
 
-		$this->assertInstanceOf('Hybrid\Table', $table);
-		$this->assertInstanceOf('Hybrid\Table\Grid', $grid->getValue($table));
+		$this->assertInstanceOf('\Hybrid\Table', $table);
+		$this->assertInstanceOf('\Hybrid\Table\Grid', $grid->getValue($table));
 	}
 }
