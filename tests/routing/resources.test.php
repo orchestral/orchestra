@@ -19,6 +19,18 @@ class ResourcesTest extends \Orchestra\Testable\TestCase {
 		parent::setUp();
 
 		$this->user = \Orchestra\Model\User::find(1);
+	
+		$base_path = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
+		set_path('app', $base_path.'application'.DS);
+		set_path('orchestra.extension', $base_path.'bundles'.DS);
+	
+		\Orchestra\Extension::detect();
+		\Orchestra\Extension::activate(DEFAULT_BUNDLE);
+
+		$this->stub = \Orchestra\Resources::make('foobar', array(
+			'name' => 'Foobar',
+			'uses' => 'stub',
+		));
 	}
 
 	/**
@@ -28,6 +40,11 @@ class ResourcesTest extends \Orchestra\Testable\TestCase {
 	{
 		unset($this->user);
 		$this->be(null);
+
+		\Orchestra\Extension::deactivate(DEFAULT_BUNDLE);
+		
+		set_path('app', path('base').'application'.DS);
+		set_path('orchestra.extension', path('bundle'));
 
 		parent::tearDown();
 	}
@@ -61,5 +78,21 @@ class ResourcesTest extends \Orchestra\Testable\TestCase {
 		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::resources.index', $response->content->view);
+	}
+
+	/**
+	 * Test Request GET (orchestra)/resources/foobar
+	 *
+	 * @test
+	 */
+	public function testGetResourcesFoobarPage()
+	{
+		$this->be($this->user);
+
+		$response = $this->call('orchestra::resources@foobar');
+
+		$this->assertInstanceOf('\Laravel\Response', $response);
+		$this->assertEquals(200, $response->foundation->getStatusCode());
+		$this->assertEquals('orchestra::resources.resources', $response->content->view);
 	}
 }
