@@ -46,7 +46,7 @@ class Orchestra_Manages_Controller extends Orchestra\Controller {
 				$action = $fragment;
 				$name   = DEFAULT_BUNDLE;
 			}
-			elseif (Extension::started(DEFAULT_BUNDLE))
+			elseif (Extension::started(DEFAULT_BUNDLE) and is_null($action))
 			{
 				$action = array_shift($arguments);
 				$name   = DEFAULT_BUNDLE;
