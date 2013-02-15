@@ -63,7 +63,7 @@ class ManagesTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testRequestToManageInvalidFoobar()
 	{
-		$response = $this->call('orchestra::manages@application.foobar');
+		$response = $this->call('orchestra::manages@foobar');
 
 		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(404, $response->foundation->getStatusCode());

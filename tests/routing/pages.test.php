@@ -63,7 +63,7 @@ class PagesTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testRequestToPagesInvalidFoobar()
 	{
-		$response = $this->call('orchestra::pages@application.foobar');
+		$response = $this->call('orchestra::pages@foobar');
 
 		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(404, $response->foundation->getStatusCode());
