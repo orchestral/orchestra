@@ -41,12 +41,12 @@ class Orchestra_Manages_Controller extends Orchestra\Controller {
 		// consider it's pointing to 'application'
 		if ( ! Extension::started($name))
 		{
-			if ( ! Extension::started($fragment))
+			if ( ! Extension::started($fragment) and is_null($action))
 			{
 				$action = $fragment;
 				$name   = DEFAULT_BUNDLE;
 			}
-			elseif (Extension::started(DEFAULT_BUNDLE) and is_null($action))
+			elseif (Extension::started(DEFAULT_BUNDLE))
 			{
 				$action = array_shift($arguments);
 				$name   = DEFAULT_BUNDLE;
