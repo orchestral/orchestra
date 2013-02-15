@@ -48,7 +48,7 @@ class Orchestra_Manages_Controller extends Orchestra\Controller {
 			}
 		}
 
-		if (is_null($action) and count($arguments) > 0)
+		if (empty($action) and count($arguments) > 0)
 		{
 			$action = array_shift($arguments);
 		}
