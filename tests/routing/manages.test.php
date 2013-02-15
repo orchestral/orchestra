@@ -27,7 +27,7 @@ class ManagesTest extends \Orchestra\Testable\TestCase {
 			return 'foobar';
 		});
 
-		\Orchestra\Extension::$extension = array();
+		\Orchestra\Extension::$extensions = array();
 		\Orchestra\Extension::detect();
 
 		$this->user = \Orchestra\Model\User::find(1);
@@ -48,7 +48,7 @@ class ManagesTest extends \Orchestra\Testable\TestCase {
 		set_path('app', path('base').'application'.DS);
 		set_path('orchestra.extension', path('bundle'));
 
-		\Orchestra\Extension::$extension = array();
+		\Orchestra\Extension::$extensions = array();
 		
 		parent::tearDown();
 	}
