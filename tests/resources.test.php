@@ -210,4 +210,84 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 		$stub = \Orchestra\Resources::of('stub');
 		$stub->hello('invalid request');
 	}
+
+	/**
+	 * Test Orchestra\Resources::response() method when $content 
+	 * is string.
+	 *
+	 * @test
+	 */
+	public function testResponseMethodWhenIsString()
+	{
+		$response = \Orchestra\Resources::response('login');
+		
+		$this->assertEquals('login', $response);
+	}
+
+	/**
+	 * Test Orchestra\Resources::response() method when $content 
+	 * is null.
+	 *
+	 * @test
+	 */
+	public function testResponseMethodWhenIsFalse()
+	{
+		$response = \Orchestra\Resources::response(false);
+
+		$this->assertInstanceOf('\Laravel\Response', $response);
+		$this->assertEquals(404, $response->foundation->getStatusCode());
+	}
+
+	/**
+	 * Test Orchestra\Resources::response() method when $content 
+	 * is instanceof Laravel\Redirect.
+	 *
+	 * @test
+	 */
+	public function testResponseMethodWhenIsRedirect()
+	{
+		$response = \Orchestra\Resources::response(
+			\Laravel\Redirect::to(handles('login'))
+		);
+
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('login'), 
+			$response->foundation->headers->get('location'));
+	}
+
+	/**
+	 * Test Orchestra\Resources::response() method when $content 
+	 * is instanceof Laravel\Response.
+	 *
+	 * @test
+	 */
+	public function testResponseMethodWhenIsResponse()
+	{
+		$response = \Orchestra\Resources::response(
+			\Laravel\Response::make('not found', 404)
+		);
+
+		$this->assertInstanceOf('\Laravel\Response', $response);
+		$this->assertEquals(404, $response->foundation->getStatusCode());
+	}
+
+	/**
+	 * Test Orchestra\Resources::response() method when $content 
+	 * is instanceof Closure.
+	 *
+	 * @test
+	 */
+	public function testResponseMethodWhenIsClosure()
+	{
+		$response = \Orchestra\Resources::response('login', function ($content)
+		{
+			return \Laravel\Redirect::to(handles($content));
+		});
+
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('login'), 
+			$response->foundation->headers->get('location'));
+	}
 }
