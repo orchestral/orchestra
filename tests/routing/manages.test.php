@@ -74,7 +74,7 @@ class ManagesTest extends \Orchestra\Testable\TestCase {
 		$this->assertEquals('orchestra::resources.pages', $response->content->view);
 		$this->assertEquals('foobar', $response->content->data['content']);
 
-		$response = $this->call('orchestra::manages@application/foo');
+		$response = $this->call('orchestra::manages@application', array('foo'));
 
 		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(200, $response->foundation->getStatusCode());
