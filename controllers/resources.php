@@ -73,21 +73,12 @@ class Orchestra_Resources_Controller extends Orchestra\Controller {
 				break;
 		}
 
-		if ( ! $content) return Response::error('404');
-		elseif ($content instanceof Redirect) return $content;
-		elseif ($content instanceof Response)
+		return Resources::response($content, function ($content) use ($resources)
 		{
-			$status_code = $content->foundation->getStatusCode();
-
-			if ( ! $content->foundation->isSuccessful())
-			{
-				return Response::error($status_code);
-			}
-		}
-
-		return View::make('orchestra::resources.resources', array(
-			'content'        => $content,
-			'resources_list' => $resources,
-		));
+			return View::make('orchestra::resources.resources', array(
+				'content'        => $content,
+				'resources_list' => $resources,
+			));
+		});
 	}
 }

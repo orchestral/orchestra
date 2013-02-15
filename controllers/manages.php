@@ -1,6 +1,7 @@
 <?php
 
 use Orchestra\Extension,
+	Orchestra\Resources,
 	Orchestra\View;
 
 class Orchestra_Manages_Controller extends Orchestra\Controller {
@@ -62,20 +63,9 @@ class Orchestra_Manages_Controller extends Orchestra\Controller {
 		// Let get the first event associated to the requested keyword.
 		$content = Event::first("orchestra.manages: {$name}.{$action}", $arguments);
 
-		if ($content instanceof Redirect)
+		return Resources::response($content, function ($content)
 		{
-			return $content;
-		}
-		elseif ($content instanceof Response)
-		{
-			$status_code = $content->foundation->getStatusCode();
-
-			if ( ! $content->foundation->isSuccessful())
-			{
-				return Response::error($status_code);
-			}
-		}
-
-		return View::make('orchestra::resources.pages', compact('content'));
+			return View::make('orchestra::resources.pages', compact('content'));
+		});
 	}
 }
