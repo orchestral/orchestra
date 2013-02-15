@@ -105,16 +105,24 @@ class Resources {
 	 */
 	public static function response($content, Closure $default = null)
 	{
-		if ( ! $content) return Response::error('404');
-		elseif ($content instanceof Redirect) return $content;
-		elseif ($content instanceof Response)
+		switch (true)
 		{
-			$status_code = $content->foundation->getStatusCode();
+			case ( ! $content) :
+				return Response::error('404');
+			
+			case ($content instanceof Redirect) :
+				return $content;
+		
+			case ($content instanceof Response) :
 
-			if ( ! $content->foundation->isSuccessful())
-			{
-				return Response::error($status_code);
-			}
+				$status_code = $content->foundation->getStatusCode();
+
+				if ( ! $content->foundation->isSuccessful())
+				{
+					return Response::error($status_code);
+				}
+				
+				break;
 		}
 
 		if ($default instanceof Closure)
