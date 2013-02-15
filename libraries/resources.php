@@ -1,8 +1,11 @@
 <?php namespace Orchestra;
 
-use \Exception,
+use \Closure,
+	\Exception,
 	\InvalidArgumentException,
-	Laravel\Str;
+	Laravel\Redirect,
+	Laravel\Response,
+	\Str;
 
 class Resources {
 
@@ -89,6 +92,45 @@ class Resources {
 		if (is_null($controller)) return false;
 
 		return Controller::call("{$controller}@{$action}", $arguments);
+	}
+
+	/**
+	 * Handle response from resources.
+	 *
+	 * @static
+	 * @access public
+	 * @param  mixed    $content
+	 * @param  Closure  $default
+	 * @return Response
+	 */
+	public static function response($content, Closure $default = null)
+	{
+		switch (true)
+		{
+			case ( ! $content) :
+				return Response::error('404');
+			
+			case ($content instanceof Redirect) :
+				return $content;
+		
+			case ($content instanceof Response) :
+
+				$status_code = $content->foundation->getStatusCode();
+
+				if ( ! $content->foundation->isSuccessful())
+				{
+					return Response::error($status_code);
+				}
+
+				break;
+		}
+
+		if ($default instanceof Closure)
+		{
+			$content = call_user_func($default, $content);
+		}
+
+		return $content;
 	}
 
 	/**
