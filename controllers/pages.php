@@ -40,16 +40,16 @@ class Orchestra_Pages_Controller extends Orchestra\Controller {
 		// consider it's pointing to 'application'
 		if ( ! Extension::started($name))
 		{
-			if ( ! Extension::started($fragment) and is_null($action))
+			if ( ! Extension::started($fragment))
 			{
 				$action = $fragment;
 				$name   = DEFAULT_BUNDLE;
 			}
-			elseif (Extension::started(DEFAULT_BUNDLE))
-			{
-				$action = array_shift($arguments);
-				$name   = DEFAULT_BUNDLE;
-			}
+		}
+
+		if (is_null($action) and count($arguments) > 0)
+		{
+			$action = array_shift($arguments);
 		}
 
 		// We shouldn't handle any event that is not associated with a valid
