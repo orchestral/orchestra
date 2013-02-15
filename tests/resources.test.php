@@ -270,6 +270,13 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(404, $response->foundation->getStatusCode());
+
+		$response = \Orchestra\Resources::response(
+			\Laravel\Response::make('server error', 500)
+		);
+
+		$this->assertInstanceOf('\Laravel\Response', $response);
+		$this->assertEquals(500, $response->foundation->getStatusCode());
 	}
 
 	/**
