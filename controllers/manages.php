@@ -31,7 +31,8 @@ class Orchestra_Manages_Controller extends Orchestra\Controller {
 	 */
 	public function __call($request, $arguments)
 	{
-		$name = $action = null;
+		$name   = DEFAULT_BUNDLE;
+		$action = null;
 
 		list($method, $fragment) = explode('_', $request, 2);
 
