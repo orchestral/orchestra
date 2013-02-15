@@ -46,12 +46,12 @@ class Orchestra_Manages_Controller extends Orchestra\Controller {
 		else
 		{
 			$name = $fragment;
+		}
 
-			if ( ! Extension::started($fragment))
-			{
-				$action = $fragment;
-				$name   = DEFAULT_BUNDLE;
-			}
+		if ( ! Extension::started($name))
+		{
+			$action = $fragment;
+			$name   = DEFAULT_BUNDLE;
 		}
 
 		if (empty($action) and count($arguments) > 0)
