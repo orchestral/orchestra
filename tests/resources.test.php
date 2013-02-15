@@ -247,7 +247,7 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	public function testResponseMethodWhenIsRedirect()
 	{
 		$response = \Orchestra\Resources::response(
-			\Laravel\Redirect::to(handles('login'))
+			\Redirect::to(handles('login'))
 		);
 
 		$this->assertInstanceOf('\Laravel\Redirect', $response);
