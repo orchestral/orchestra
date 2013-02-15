@@ -265,11 +265,11 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	public function testResponseMethodWhenIsResponse()
 	{
 		$response = \Orchestra\Resources::response(
-			\Response::make('not found', 404)
+			\Response::make('found', 200)
 		);
 
 		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(404, $response->foundation->getStatusCode());
+		$this->assertEquals(200, $response->foundation->getStatusCode());
 
 		$response = \Orchestra\Resources::response(
 			\Response::make('server error', 500)
