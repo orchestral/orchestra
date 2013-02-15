@@ -3,8 +3,8 @@
 use \Closure,
 	\Exception,
 	\InvalidArgumentException,
-	\Redirect,
-	\Response,
+	Laravel\Redirect,
+	Laravel\Response,
 	\Str;
 
 class Resources {

@@ -265,14 +265,14 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	public function testResponseMethodWhenIsResponse()
 	{
 		$response = \Orchestra\Resources::response(
-			\Laravel\Response::make('not found', 404)
+			\Response::make('not found', 404)
 		);
 
 		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(404, $response->foundation->getStatusCode());
 
 		$response = \Orchestra\Resources::response(
-			\Laravel\Response::make('server error', 500)
+			\Response::make('server error', 500)
 		);
 
 		$this->assertInstanceOf('\Laravel\Response', $response);
@@ -289,7 +289,7 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	{
 		$response = \Orchestra\Resources::response('login', function ($content)
 		{
-			return \Laravel\Redirect::to(handles($content));
+			return \Redirect::to(handles($content));
 		});
 
 		$this->assertInstanceOf('\Laravel\Redirect', $response);
