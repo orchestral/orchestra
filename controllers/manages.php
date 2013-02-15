@@ -31,17 +31,22 @@ class Orchestra_Manages_Controller extends Orchestra\Controller {
 	 */
 	public function __call($request, $arguments)
 	{
-		$name   = DEFAULT_BUNDLE;
-		$action = null;
+		$name = $action = null;
 
 		list($method, $fragment) = explode('_', $request, 2);
 
-		str_contains($fragment, '.') and list($name, $action) = explode('.', $fragment, 2);
-
 		// we first check if $name actually an extension, if not we should
 		// consider it's pointing to 'application'
-		if ( ! Extension::started($name))
+		if (str_contains($fragment, '.'))
 		{
+			list($name, $action) = explode('.', $fragment, 2);
+
+			Extension::started($name) or $name = DEFAULT_BUNDLE;
+		}
+		else
+		{
+			$name = $fragment;
+
 			if ( ! Extension::started($fragment))
 			{
 				$action = $fragment;
