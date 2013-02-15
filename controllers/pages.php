@@ -34,22 +34,28 @@ class Orchestra_Pages_Controller extends Orchestra\Controller {
 
 		list($method, $fragment) = explode('_', $request, 2);
 
-		str_contains($fragment, '.') and list($name, $action) = explode('.', $fragment, 2);
-
 		// we first check if $name actually an extension, if not we should
 		// consider it's pointing to 'application'
+		if (str_contains($fragment, '.'))
+		{
+			list($name, $action) = explode('.', $fragment, 2);
+
+			Extension::started($name) or $name = DEFAULT_BUNDLE;
+		}
+		else
+		{
+			$name = $fragment;
+		}
+
 		if ( ! Extension::started($name))
 		{
-			if ( ! Extension::started($fragment))
-			{
-				$action = $fragment;
-				$name   = DEFAULT_BUNDLE;
-			}
-			elseif (Extension::started(DEFAULT_BUNDLE))
-			{
-				$action = array_shift($arguments);
-				$name   = DEFAULT_BUNDLE;
-			}
+			$action = $fragment;
+			$name   = DEFAULT_BUNDLE;
+		}
+
+		if (empty($action) and count($arguments) > 0)
+		{
+			$action = array_shift($arguments);
 		}
 
 		// We shouldn't handle any event that is not associated with a valid

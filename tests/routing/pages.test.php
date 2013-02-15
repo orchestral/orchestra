@@ -18,16 +18,23 @@ class PagesTest extends \Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
+		$base_path = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
+		set_path('app', $base_path.'application'.DS);
+		set_path('orchestra.extension', $base_path.'bundles'.DS);
+		
 		\Event::listen('orchestra.pages: application.foo', function ()
 		{
 			return 'foobar';
 		});
 
+		\Orchestra\Extension::$extensions = array();
+		\Orchestra\Extension::detect();
+
 		$this->user = \Orchestra\Model\User::find(1);
 
 		$this->be($this->user);
 
-		\Orchestra\Extension::start(DEFAULT_BUNDLE);
+		\Orchestra\Extension::activate(DEFAULT_BUNDLE);
 	}
 
 	/**
@@ -38,6 +45,11 @@ class PagesTest extends \Orchestra\Testable\TestCase {
 		unset($this->user);
 		$this->be(null);
 
+		set_path('app', path('base').'application'.DS);
+		set_path('orchestra.extension', path('bundle'));
+
+		\Orchestra\Extension::$extensions = array();
+		
 		parent::tearDown();
 	}
 
@@ -54,6 +66,22 @@ class PagesTest extends \Orchestra\Testable\TestCase {
 		$this->assertEquals(200, $response->foundation->getStatusCode());
 		$this->assertEquals('orchestra::resources.pages', $response->content->view);
 		$this->assertEquals('foobar', $response->content->data['content']);
+
+		$response = $this->call('orchestra::pages@foo');
+
+		$this->assertInstanceOf('\Laravel\Response', $response);
+		$this->assertEquals(200, $response->foundation->getStatusCode());
+		$this->assertEquals('orchestra::resources.pages', $response->content->view);
+		$this->assertEquals('foobar', $response->content->data['content']);
+
+		$response = $this->call('orchestra::pages@application', array('foo'));
+
+		$this->assertInstanceOf('\Laravel\Response', $response);
+		$this->assertEquals(200, $response->foundation->getStatusCode());
+		$this->assertEquals('orchestra::resources.pages', $response->content->view);
+		$this->assertEquals('foobar', $response->content->data['content']);
+
+
 	}
 
 	/**
@@ -63,7 +91,7 @@ class PagesTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testRequestToPagesInvalidFoobar()
 	{
-		$response = $this->call('orchestra::pages@application.foobar');
+		$response = $this->call('orchestra::pages@foobar');
 
 		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(404, $response->foundation->getStatusCode());
