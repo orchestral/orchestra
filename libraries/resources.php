@@ -121,13 +121,13 @@ class Resources {
 				{
 					return Response::error($status_code);
 				}
-				
+
 				break;
 		}
 
 		if ($default instanceof Closure)
 		{
-			return call_user_func($default, $content);
+			$content = call_user_func($default, $content);
 		}
 
 		return $content;
