@@ -66,8 +66,6 @@ class PagesTest extends \Orchestra\Testable\TestCase {
 		$response = $this->call('orchestra::pages@application.foobar');
 
 		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::resources.pages', $response->content->view);
-		$this->assertFalse($response->content->data['content']);
+		$this->assertEquals(404, $response->foundation->getStatusCode());
 	}
 }
