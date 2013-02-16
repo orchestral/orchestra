@@ -42,6 +42,13 @@ class Container {
 	protected $url  = null;
 
 	/**
+	 * Relative URL path of Theme
+	 *
+	 * @var string
+	 */
+	protected $relative_url  = null;
+
+	/**
 	 * Start Theme Engine, this should be called from Orchestra\Core::start()
 	 * or whenever we need to overwrite current active theme per request.
 	 *
@@ -54,8 +61,9 @@ class Container {
 	{
 		if (is_null($this->path))
 		{
-			$this->path = path('public').'themes';
-			$this->url  = rtrim(URL::base(), '/').'/themes';
+			$this->path         = path('public').'themes';
+			$this->url          = rtrim(URL::base(), '/').'/themes';
+			$this->relative_url = str_replace(URL::base(), '/', $this->url);
 		}
 
 		if (is_dir($this->path.DS.$name))
@@ -88,6 +96,19 @@ class Container {
 	public function to($url = '')
 	{
 		return $this->url.'/'.$this->name.'/'.$url;
+	}
+
+	/**
+	 * Relative URL helper for Theme
+	 *
+	 * @static
+	 * @access public
+	 * @param  string   $url
+	 * @return string
+	 */
+	public function to_asset($url = '')
+	{
+		return $this->relative_url.'/'.$this->name.'/'.$url;
 	}
 
 	/**

@@ -65,6 +65,19 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Theme\Container::to_asset() return proper URL.
+	 *
+	 * @test
+	 */
+	public function testToAssetReturnProperUrl()
+	{
+		$this->assertEquals('/themes/default/style.css',
+			$this->stub->to_asset('style.css'));
+		$this->assertEquals('/themes/default/js/script.min.js',
+			$this->stub->to_asset('js/script.min.js'));
+	}
+
+	/**
 	 * Test Orchestra\Theme\Container::parse() return proper file from
 	 * theme.
 	 *
