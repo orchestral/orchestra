@@ -25,7 +25,7 @@ class FacadeTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testCallStaticMethodThrowsException()
 	{
-		ArrayStub::foo($sample, 'foobar'));
+		ArrayStub::foo($sample, 'foobar');
 	}
 }
 
