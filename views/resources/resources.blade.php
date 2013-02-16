@@ -5,7 +5,7 @@
 <div class="row-fluid">
 	<div class="span2 well-resources">
 		<ul class="nav nav-tabs nav-stacked">
-			@foreach ($resources_list as $name => $resource)
+			@foreach ($resources['list'] as $name => $resource)
 			<li class="{{ URI::is("*/resources/{$name}*") ? 'active' : '' }}">
 				<a href="{{ handles("orchestra::resources/{$name}") }}">
 					<i class="icon-chevron-right"></i>
