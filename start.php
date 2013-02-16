@@ -1,5 +1,7 @@
 <?php
 
+$orchestra = Bundle::path('orchestra');
+
 /*
 |--------------------------------------------------------------------------
 | Orchestra Library
@@ -10,20 +12,21 @@
 */
 
 Autoloader::namespaces(array(
-	'Orchestra\Model'     => Bundle::path('orchestra').'models'.DS,
-	'Orchestra\Presenter' => Bundle::path('orchestra').'presenters'.DS,
-	'Orchestra'           => Bundle::path('orchestra').'libraries'.DS,
+	'Orchestra\Model'     => $orchestra.'models'.DS,
+	'Orchestra\Presenter' => $orchestra.'presenters'.DS,
+	'Orchestra\Support'   => $orchestra.'supports'.DS,
+	'Orchestra'           => $orchestra.'libraries'.DS,
 ));
 
 Autoloader::map(array(
 	// Facade for Orchestra\Core
-	'Orchestra' => Bundle::path('orchestra').'orchestra'.EXT,
+	'Orchestra' => $orchestra.'orchestra'.EXT,
 
 	// Exceptions
 	'Orchestra\Extension\UnresolvedException'
-		=> Bundle::path('orchestra').'libraries'.DS.'extension'.DS.'exceptions'.EXT,
+		=> $orchestra.'libraries'.DS.'extension'.DS.'exceptions'.EXT,
 	'Orchestra\Extension\FilePermissionException'
-		=> Bundle::path('orchestra').'libraries'.DS.'extension'.DS.'exceptions'.EXT,
+		=> $orchestra.'libraries'.DS.'extension'.DS.'exceptions'.EXT,
 ));
 
 /*
@@ -46,10 +49,10 @@ set_path('orchestra.extension', path('bundle'));
 |
 */
 
-include_once Bundle::path('orchestra').'helpers'.EXT;
-include_once Bundle::path('orchestra').'includes'.DS.'dependencies'.EXT;
-include_once Bundle::path('orchestra').'includes'.DS.'events'.EXT;
-include_once Bundle::path('orchestra').'includes'.DS.'macros'.EXT;
+include_once $orchestra.'helpers'.EXT;
+include_once $orchestra.'includes'.DS.'dependencies'.EXT;
+include_once $orchestra.'includes'.DS.'events'.EXT;
+include_once $orchestra.'includes'.DS.'macros'.EXT;
 
 /*
 |--------------------------------------------------------------------------
