@@ -18,7 +18,7 @@ abstract class Facade {
 	{
 		$callback = static::$prefix.$method;
 
-		if ( ! is_callable($callback)
+		if ( ! is_callable($callback))
 		{
 			throw new InvalidArgumentException(
 				"Method [{$callback}] is not callable."
