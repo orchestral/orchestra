@@ -76,8 +76,12 @@ class Orchestra_Resources_Controller extends Orchestra\Controller {
 		return Resources::response($content, function ($content) use ($resources)
 		{
 			return View::make('orchestra::resources.resources', array(
-				'content'        => $content,
-				'resources_list' => $resources,
+				'content'   => $content,
+				'resources' => array(
+					'list'   => $resources,
+					'name'   => $name,
+					'action' => $action,
+				),
 			));
 		});
 	}
