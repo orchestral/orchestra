@@ -87,7 +87,7 @@ class UserTest extends \Orchestra\Testable\TestCase {
 
 		$this->assertContains($this->user->fullname, $content);
 		$this->assertContains($this->user->email, $content);
-		$this->assertContains('<span class="label label-info">'.$admin->name.'</span>', 
+		$this->assertContains('<span class="label label-info" role="role">'.$admin->name.'</span>', 
 			$content);
 		$this->assertContains(handles('orchestra::users/view/1'), 
 			$content);
