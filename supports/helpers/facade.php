@@ -14,7 +14,7 @@ abstract class Facade {
 	/**
 	 * Call magic method
 	 */
-	public function __callStatic($method, $parameters)
+	public static function __callStatic($method, $parameters)
 	{
 		$callback = static::$prefix.$method;
 
