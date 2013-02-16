@@ -98,7 +98,7 @@ class User {
 							array(
 								'class' => 'btn btn-mini btn-danger',
 								'role'  => 'delete',
-							),
+							)
 						);
 					}
 
