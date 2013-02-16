@@ -23,7 +23,7 @@ class FacadeTest extends \PHPUnit_Framework_TestCase {
 	 *
 	 * @expectedException \InvalidArgumentException
 	 */
-	public function testCallStaticMethod()
+	public function testCallStaticMethodThrowsException()
 	{
 		ArrayStub::foo($sample, 'foobar'));
 	}
