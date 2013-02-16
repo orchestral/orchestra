@@ -15,6 +15,7 @@
 ## Version 1.1
 
 - Remove `ochestra_migrations` table, not to be implemented.
+- Remove `Orchestra\Response` alias.
 
 <a name="v1.1.0"></a>
 ### v1.1.0
