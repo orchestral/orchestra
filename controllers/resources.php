@@ -76,12 +76,16 @@ class Orchestra_Resources_Controller extends Orchestra\Controller {
 		return Resources::response($content, function ($content) 
 			use ($resources, $name, $action)
 		{
+			str_contains($name, '.') ?
+				$namespace = $name : list($namespace,) = explode('.', $name, 2);
+
 			return View::make('orchestra::resources.resources', array(
 				'content'   => $content,
 				'resources' => array(
-					'list'   => $resources,
-					'name'   => $name,
-					'action' => $action,
+					'list'      => $resources,
+					'namespace' => $namespace,
+					'name'      => $name,
+					'action'    => $action,
 				),
 			));
 		});
