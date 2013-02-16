@@ -41,6 +41,7 @@ class User {
 					{
 						$value[] = HTML::create('span', $role->name, array(
 							'class' => 'label label-info',
+							'role'  => 'role',
 						));
 					}
 
@@ -83,7 +84,10 @@ class User {
 					$btn[] = HTML::link(
 						handles('orchestra::users/view/'.$row->id),
 						__('orchestra::label.edit'),
-						array('class' => 'btn btn-mini btn-warning')
+						array(
+							'class' => 'btn btn-mini btn-warning',
+							'role'  => 'edit',
+						)
 					);
 
 					if (Auth::user()->id !== $row->id)
@@ -91,7 +95,10 @@ class User {
 						$btn[] = HTML::link(
 							handles('orchestra::users/delete/'.$row->id),
 							__('orchestra::label.delete'),
-							array('class' => 'btn btn-mini btn-danger')
+							array(
+								'class' => 'btn btn-mini btn-danger',
+								'role'  => 'delete',
+							)
 						);
 					}
 
