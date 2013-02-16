@@ -11,10 +11,10 @@ class FacadeTest extends \PHPUnit_Framework_TestCase {
 	{
 		$sample = array('foo');
 		$this->assertEquals(array('foo', 'foobar'), 
-			ArrayStub::push($sample, 'foobar'));
+			ArrayStub::push( & $sample, 'foobar'));
 
 		$this->assertEquals(array('foo'), 
-			ArrayStub::pop($sample));
+			ArrayStub::pop( & $sample));
 	}
 
 	/**
@@ -25,7 +25,7 @@ class FacadeTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testCallStaticMethodThrowsException()
 	{
-		ArrayStub::foo($sample, 'foobar');
+		ArrayStub::foo('foobar');
 	}
 }
 

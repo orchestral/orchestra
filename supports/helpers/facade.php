@@ -12,7 +12,7 @@ abstract class Facade {
 	protected static $prefix = '';
 
 	/**
-	 * Call magic method
+	 * Handle dynamic calls to ancestor method.
 	 */
 	public static function __callStatic($method, $parameters)
 	{
