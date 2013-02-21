@@ -123,6 +123,8 @@ class Resources {
 				}
 
 				break;
+			default :
+				// nothing to do here.
 		}
 
 		if ($default instanceof Closure)
