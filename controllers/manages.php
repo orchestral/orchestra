@@ -61,10 +61,7 @@ class Orchestra_Manages_Controller extends Orchestra\Controller {
 
 		// We shouldn't handle any event that is not associated with a valid
 		// extension
-		if ( ! Extension::started($name) or is_null($action))
-		{
-			return Response::error('404');
-		}
+		if ( ! Extension::started($name) or is_null($action)) return Response::error('404');
 
 		// Let get the first event associated to the requested keyword.
 		$content = Event::first("orchestra.manages: {$name}.{$action}", $arguments);
