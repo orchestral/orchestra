@@ -58,11 +58,11 @@ class FTPTest extends \Orchestra\Testable\TestCase {
 	 * Get FTP Client Mock
 	 *
 	 * @access protected
-	 * @return Hybrid\FTP
+	 * @return Orchestra\Support\FTP
 	 */
 	protected function getMockFTP()
 	{
-		$mock = $this->getMock('\Hybrid\FTP', array(
+		$mock = $this->getMock('\Orchestra\Support\FTP', array(
 			'setup', 
 			'connect',
 			'chmod',
@@ -107,7 +107,7 @@ class FTPTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testConstructMethodWithoutCredential()
 	{
-		$mock = $this->getMock('\Hybrid\FTP', array(
+		$mock = $this->getMock('\Orchestra\Support\FTP', array(
 			'setup', 
 			'connect',
 		));
@@ -116,7 +116,7 @@ class FTPTest extends \Orchestra\Testable\TestCase {
 			->will($this->returnValue(true));
 		$mock->expects($this->any())
 			->method('connect')
-			->will($this->throwException(new \Hybrid\FTP\ServerException));
+			->will($this->throwException(new \Orchestra\Support\FTP\ServerException));
 
 		new \Orchestra\Extension\Publisher\FTP($mock);
 
@@ -147,11 +147,11 @@ class FTPTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Extension\Publisher\FTP::connect() method would 
 	 * throw an exception.
 	 *
-	 * @expectedException \Hybrid\FTP\ServerException
+	 * @expectedException \Orchestra\Support\FTP\ServerException
 	 */
 	public function testConnectMethodThrowsException()
 	{
-		$mock = $this->getMock('\Hybrid\FTP', array(
+		$mock = $this->getMock('\Orchestra\Support\FTP', array(
 			'setup', 
 			'connect',
 		));
@@ -160,7 +160,7 @@ class FTPTest extends \Orchestra\Testable\TestCase {
 			->will($this->returnValue(true));
 		$mock->expects($this->any())
 			->method('connect')
-			->will($this->throwException(new \Hybrid\FTP\ServerException));
+			->will($this->throwException(new \Orchestra\Support\FTP\ServerException));
 
 		$this->stub->attach($mock);
 		$this->stub->connect();

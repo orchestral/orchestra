@@ -212,7 +212,7 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 
 		$mock->expects($this->any())
 			->method('connect')
-			->will($this->throwException(new \Hybrid\FTP\ServerException));
+			->will($this->throwException(new \Orchestra\Support\FTP\ServerException));
 
 		\Orchestra\Extension\Publisher::$registrar = array();
 		\Orchestra\Extension\Publisher::$drivers   = array();

@@ -27,6 +27,10 @@ Autoloader::map(array(
 		=> $orchestra.'libraries'.DS.'extension'.DS.'exceptions'.EXT,
 	'Orchestra\Extension\FilePermissionException'
 		=> $orchestra.'libraries'.DS.'extension'.DS.'exceptions'.EXT,
+	'Orchestra\Support\FTP\RuntimeException'
+		=> $orchestra.'supports'.DS.'ftp'.DS.'exceptions'.EXT,
+	'Orchestra\Support\FTP\ServerException'
+		=> $orchestra.'supports'.DS.'ftp'.DS.'exceptions'.EXT,
 ));
 
 /*
