@@ -18,9 +18,12 @@ Listed below are all the possible events that can be used with Orchestra Platfor
 	- orchestra.auth: login
 	- orchestra.auth: logout
 - Extension Events
+	- extension.started: {name}
+	- extension.done: {name}
 	- orchestra.form: extension.{name}
 	- orchestra.saving: extension.{name}
 	- orchestra.saved: extension.{name}
+	- orchestra.publishing: extension
 - Page Events
 	- orchestra.pages: {name}.{action}
 	- orchestra.manages: {name}.action}
