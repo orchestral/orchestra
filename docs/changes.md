@@ -3,6 +3,7 @@
 ## Contents
 
 * [Version 1.0](#v1.0)
+ - [v1.0.5](#v1.0.5)
  - [v1.0.4](#v1.0.4)
  - [v1.0.3](#v1.0.3)
  - [v1.0.2](#v1.0.2)
@@ -11,6 +12,13 @@
 
 <a name="v1.0"></a>
 ## Version 1.0
+
+<a name="v1.0.5"></a>
+### v1.0.5
+
+- 100% code coverage.
+- Fixed password wasn't required for create user from Orchestra Platform Administrator Panel.
+- Add `eloquent.publishing: extension` event.
 
 <a name="v1.0.4"></a>
 ### v1.0.4

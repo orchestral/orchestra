@@ -106,7 +106,17 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 			'roles'    => array('required'),
 		);
 
-		if ((int) $id !== (int) $input['id']) return Response::error('500');
+		// Check if provided id is the same as hidden id, just a pre-caution.
+		if ((int) $id !== (int) $input['id']) 
+		{
+			return Response::error('500');
+		}
+		// Check if this is a new user, if so then password should always 
+		// be required.
+		elseif ((int) $id < 1)
+		{
+			$rules['password'] = array('required');
+		}
 
 		Event::fire('orchestra.validate: users', array(& $rules));
 		Event::fire('orchestra.validate: user.account', array(& $rules));
