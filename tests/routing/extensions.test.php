@@ -110,7 +110,24 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testActivateExtensionFailedPublisherError()
 	{
-		$this->markTestIncomplete('This test has not been implemented yet.');
+		$this->restartApplication();
+
+		$this->be($this->user);
+
+		$events = \Event::$events;
+		\Event::listen('orchestra.publishing: extension.e', function ($name)
+		{
+			throw new \Orchestra\Extension\FilePermissionException();
+		});
+
+		$response = $this->call('orchestra::extensions@activate', array('e'));
+
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::publisher'), 
+			$response->foundation->headers->get('location'));
+
+		\Event::$events = $events;
 	}
 
 	/**
@@ -245,6 +262,74 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 		$this->assertEquals('change-handles', 
 			$memory->get('extensions.active.e.handles'));
 
+		\Orchestra\Extension::deactivate('e');
+	}
+
+	/**
+	 * Test update extension successful.
+	 *
+	 * @test
+	 */
+	public function testUpdateExtensionSuccessful()
+	{
+		\Orchestra\Extension::activate(DEFAULT_BUNDLE);
+
+		$this->restartApplication();
+
+		$this->be($this->user);
+
+		$response = $this->call('orchestra::extensions@update', array(DEFAULT_BUNDLE));
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::extensions'), 
+			$response->foundation->headers->get('location'));
+
+		\Orchestra\Extension::deactivate(DEFAULT_BUNDLE);
+	}
+
+	/**
+	 * Test update extension failed when extension is not started.
+	 *
+	 * @test
+	 */
+	public function testUpdateExtensionFail()
+	{
+		$this->restartApplication();
+
+		$this->be($this->user);
+
+		$response = $this->call('orchestra::extensions@update', array(DEFAULT_BUNDLE));
+		$this->assertInstanceOf('\Laravel\Response', $response);
+		$this->assertEquals(404, $response->foundation->getStatusCode());
+	}
+
+	/**
+	 * Test activate extension failed with publisher error.
+	 *
+	 * @test
+	 */
+	public function testUpdateExtensionFailedPublisherError()
+	{
+		$this->restartApplication();
+
+		\Orchestra\Extension::activate('e');
+
+		$this->be($this->user);
+
+		$events = \Event::$events;
+		\Event::listen('orchestra.publishing: extension.e', function ($name)
+		{
+			throw new \Orchestra\Extension\FilePermissionException();
+		});
+
+		$response = $this->call('orchestra::extensions@update', array('e'));
+
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::publisher'), 
+			$response->foundation->headers->get('location'));
+
+		\Event::$events = $events;
 		\Orchestra\Extension::deactivate('e');
 	}
 
