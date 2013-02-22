@@ -328,6 +328,7 @@ class Extension {
 	{
 		IoC::resolve('task: orchestra.migrator', array('migrate', $name));
 		IoC::resolve('task: orchestra.publisher', array($name));
+		Event::fire("orchestra.publishing: extension.{$name}", array($name));
 	}
 
 	/**
