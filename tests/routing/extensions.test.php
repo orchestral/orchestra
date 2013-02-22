@@ -115,7 +115,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 		$this->be($this->user);
 
 		$events = \Event::$events;
-		\Event::listen('orchestra.publishing: extension.e', function ($name)
+		\Event::listen('orchestra.publishing: extension', function ($name)
 		{
 			throw new \Orchestra\Extension\FilePermissionException();
 		});
@@ -317,7 +317,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 		$this->be($this->user);
 
 		$events = \Event::$events;
-		\Event::listen('orchestra.publishing: extension.e', function ($name)
+		\Event::listen('orchestra.publishing: extension', function ($name)
 		{
 			throw new \Orchestra\Extension\FilePermissionException();
 		});
