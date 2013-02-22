@@ -156,6 +156,27 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	}
 
 	/**
+	 * Test Request POST (orchestra)/users/view with invalid user id.
+	 *
+	 * @test
+	 */
+	public function testPostCreateNewUserPageInvalidUserId()
+	{
+		$this->be($this->user);
+
+		$response = $this->call('orchestra::users@view', array(''), 'POST', array(
+			'id'       => '1',
+			'email'    => 'crynobone@gmail.com',
+			'fullname' => 'Mior Muhammad Zaki',
+			'password' => '123456',
+			'roles'    => array(2),
+		));
+
+		$this->assertInstanceOf('\Laravel\Response', $response);
+		$this->assertEquals(500, $response->foundation->getStatusCode());
+	}
+
+	/**
 	 * Test Request POST (orchestra)/users/view on create or edit have 
 	 * database error.
 	 *
