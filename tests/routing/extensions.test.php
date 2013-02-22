@@ -84,6 +84,25 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	}
 
 	/**
+	 * Test deactivated extension failed with dependencies error.
+	 *
+	 * @test
+	 */
+	public function testActivateExtensionFailedDependenciesError()
+	{
+		$this->restartApplication();
+
+		$this->be($this->user);
+
+		$response = $this->call('orchestra::extensions@activate', array('a'));
+
+		$this->assertInstanceOf('\Laravel\Response', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::extensions'), 
+			$response->foundation->headers->get('location'));
+	}
+
+	/**
 	 * Test deactivated extension failed.
 	 *
 	 * @test
