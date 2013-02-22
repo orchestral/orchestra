@@ -18,11 +18,11 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	{
 		parent::setUp();
 
-		$this->user = \Orchestra\Model\User::find(1);
-
 		$base_path = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
 		set_path('app', $base_path.'application'.DS);
 		set_path('orchestra.extension', $base_path.'bundles'.DS);
+
+		$this->user = \Orchestra\Model\User::find(1);
 	}
 
 	/**
@@ -33,8 +33,9 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 		unset($this->user);
 		$this->be(null);
 
-		set_path('app', path('base').'application'.DS);
-		set_path('orchestra.extension', path('bundle'));
+		$base_path = path('base');
+		set_path('app', $base_path.'application'.DS);
+		set_path('orchestra.extension', $base_path.'bundles'.DS);
 
 		parent::tearDown();
 	}
@@ -56,7 +57,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test deactivated extension failed.
+	 * Test activate extension failed.
 	 *
 	 * @test
 	 */
@@ -84,7 +85,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test deactivated extension failed with dependencies error.
+	 * Test activate extension failed with dependencies error.
 	 *
 	 * @test
 	 */
@@ -96,14 +97,24 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 
 		$response = $this->call('orchestra::extensions@activate', array('a'));
 
-		$this->assertInstanceOf('\Laravel\Response', $response);
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
 		$this->assertEquals(302, $response->foundation->getStatusCode());
 		$this->assertEquals(handles('orchestra::extensions'), 
 			$response->foundation->headers->get('location'));
 	}
 
 	/**
-	 * Test deactivated extension failed.
+	 * Test activate extension failed with publisher error.
+	 *
+	 * @test
+	 */
+	public function testActivateExtensionFailedPublisherError()
+	{
+		$this->markTestIncomplete('This test has not been implemented yet.');
+	}
+
+	/**
+	 * Test de-activate extension failed.
 	 *
 	 * @test
 	 */
@@ -127,7 +138,39 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	}
 
 	/**
-	 * Test activate and deactivate extension successful.
+	 * Test de-activate extension failed with dependencies error.
+	 *
+	 * @test
+	 */
+	public function testDeactivateExtensionFailedDependenciesError()
+	{
+		$this->restartApplication();
+
+		$this->be($this->user);
+
+		\Bundle::register('aws', array(
+			'location' => "path: ".path('orchestra.extension').'aws'.DS,
+		));
+
+		\Bundle::start('aws');
+		\Orchestra\Extension::activate('b');
+		\Orchestra\Extension::activate('a');
+
+		$response = $this->call('orchestra::extensions@deactivate', array('b'));
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::extensions'), 
+			$response->foundation->headers->get('location'));
+
+		$this->assertTrue(\Orchestra\Extension::activated('b'));
+		$this->assertTrue(\Orchestra\Extension::activated('a'));
+
+		\Orchestra\Extension::deactivate('a');
+		\Orchestra\Extension::deactivate('b');
+	}
+
+	/**
+	 * Test activate and de-activate extension successful.
 	 *
 	 * @test
 	 */
@@ -156,6 +199,54 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 		$this->assertFalse(\Orchestra\Extension::activated(DEFAULT_BUNDLE));
 	}
 
+	/**
+	 * Test get extension configuration successful.
+	 *
+	 * @test
+	 */
+	public function testGetConfigureExtensionSuccessful()
+	{
+		\Orchestra\Extension::activate('e');
+		$this->restartApplication();
+
+		$this->be($this->user);
+
+		$response = $this->call('orchestra::extensions@configure', array('e'));
+
+		$this->assertInstanceOf('\Laravel\Response', $response);
+		$this->assertEquals(200, $response->foundation->getStatusCode());
+		$this->assertEquals('orchestra::extensions.configure', $response->content->view);
+
+		\Orchestra\Extension::deactivate('e');
+	}
+
+	/**
+	 * Test post extension configuration successful.
+	 *
+	 * @test
+	 */
+	public function testPostConfigureExtensionSuccessful()
+	{
+		\Orchestra\Extension::activate('e');
+		$this->restartApplication();
+
+		$this->be($this->user);
+
+		$response = $this->call('orchestra::extensions@configure', array('e'), 'POST', array(
+			'handles' => 'change-handles',
+		));
+
+		$memory = \Orchestra\Core::memory();
+
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+		$this->assertEquals(handles('orchestra::extensions'), 
+			$response->foundation->headers->get('location'));
+		$this->assertEquals('change-handles', 
+			$memory->get('extensions.active.e.handles'));
+
+		\Orchestra\Extension::deactivate('e');
+	}
 
 	/**
 	 * Run Orchestra Platform in safe mode.

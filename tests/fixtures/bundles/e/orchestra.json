@@ -5,7 +5,8 @@
 	"url"         : "",
 	"version"     : "0.2.0",
 	"config"      : {
-		"foo" : "foobar"
+		"foo"     : "foobar",
+		"handles" : "foobar"
 	},
 	"require"     : {}
 }
