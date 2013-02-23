@@ -9,6 +9,6 @@ class HtmlTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testInstanceOfHTML()
 	{
-		$this->assertInstanceOf('\Hybrid\HTML', new \Orchestra\HTML);
+		$this->assertInstanceOf('\Orchestra\Support\HTML', new \Orchestra\HTML);
 	}
 }

@@ -26,7 +26,7 @@ Bundle::start('hybrid');
 
 Autoloader::alias('Hybrid\Acl', 'Orchestra\Acl');
 Autoloader::alias('Hybrid\Form', 'Orchestra\Form');
-Autoloader::alias('Hybrid\HTML', 'Orchestra\HTML');
+Autoloader::alias('Orchestra\Support\HTML', 'Orchestra\HTML');
 Autoloader::alias('Hybrid\Memory', 'Orchestra\Memory');
 Autoloader::alias('Hybrid\Table', 'Orchestra\Table');
 
