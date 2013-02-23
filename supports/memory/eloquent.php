@@ -81,8 +81,10 @@ class Eloquent extends Driver {
 			}
 			else
 			{
-				$memory        = call_user_func(array($this->name, 'find'), $id);
-				$memory->value = $serialize;
+				$memory = call_user_func(array($this->name, 'where'), 'name', '=', $key)->first();
+				$memory->fill(array(
+					'value' => $serialize,
+				));
 
 				$memory->save();
 			}
