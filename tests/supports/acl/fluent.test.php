@@ -220,4 +220,19 @@ class FluentTest extends \PHPUnit_Framework_TestCase {
 
 		$stub->remove(null);
 	}
+
+	/**
+	 * Test Orchestra\Support\Acl\Fluent::filter() method.
+	 *
+	 * @test
+	 * @group support
+	 */
+	public function testFilterMethod()
+	{
+		$stub = new \Orchestra\Support\Acl\Fluent('foo');
+		$stub->fill(array('foo', 'foobar'));
+
+		$this->assertEquals(array('foo', 'foobar'), $stub->filter('*'));
+		$this->assertEquals(array(1 => 'foobar'), $stub->filter('!foo'));
+	}
 }

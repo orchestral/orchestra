@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Support\Acl;
 
 use \Str,
-	\Exception,
 	\InvalidArgumentException,
 	\RuntimeException,
 	Orchestra\Support\Auth as Auth,
@@ -171,12 +170,12 @@ class Container {
 	{
 		$roles = array();
 		
-		if (is_null(Auth::user()))
+		if ( ! Auth::guest()) $roles = Auth::roles();
+		else
 		{
 			// only add guest if it's available
 			if ($this->roles->has('guest')) array_push($roles, 'guest');
 		}
-		else $roles = Auth::roles();
 
 		return $this->check($roles, $action);
 	}
@@ -240,38 +239,8 @@ class Container {
 	 */
 	public function allow($roles, $actions, $allow = true) 
 	{
-		if ( ! is_array($roles)) 
-		{
-			switch (true)
-			{
-				case $roles === '*' :
-					$roles = $this->roles->get();
-					break;
-				case $roles[0] === '!' :
-					$roles = array_diff($this->roles->get(), array(substr($roles, 1)));
-					break;
-				default :
-					$roles = array($roles);
-					break;
-			}
-			
-		}
-
-		if ( ! is_array($actions)) 
-		{
-			switch (true)
-			{
-				case $actions === '*' :
-					$actions = $this->actions->get();
-					break;
-				case $actions[0] === '!' :
-					$actions = array_diff($this->actions->get(), array(substr($actions, 1)));
-					break;
-				default :
-					$actions = array($actions);
-					break;
-			}
-		}
+		$roles   = $this->roles->filter($roles);
+		$actions = $this->actions->filter($actions);
 
 		foreach ($roles as $role) 
 		{
@@ -279,7 +248,7 @@ class Container {
 
 			if ( ! $this->roles->has($role)) 
 			{
-				throw new Exception("Role {$role} does not exist.");
+				throw new InvalidArgumentException("Role {$role} does not exist.");
 			}
 
 			foreach ($actions as $action) 
@@ -288,7 +257,7 @@ class Container {
 
 				if ( ! $this->actions->has($action)) 
 				{
-					throw new Exception("Action {$action} does not exist.");
+					throw new InvalidArgumentException("Action {$action} does not exist.");
 				}
 
 				$this->assign($role, $action, $allow);

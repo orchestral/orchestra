@@ -63,11 +63,49 @@ class AclTest extends \PHPUnit_Framework_TestCase {
 	 * @test
 	 * @group support
 	 */
-	public function testHasRoleUsingMockOne()
+	public function testHasRoleMethodUsingMockOne()
 	{
 		$acl = \Orchestra\Support\Acl::make('mock-one');
 		$this->assertTrue($acl->has_role('Guest'));
 		$this->assertFalse($acl->has_role('Adminy'));
+	}
+
+	/**
+	 * Test Orchestra\Support\Acl\Container::check() method throws exception.
+	 *
+	 * @expectedException InvalidArgumentException
+	 * @group support
+	 */
+	public function testCheckMethodUsingMockOneThrowsException()
+	{
+		$acl = \Orchestra\Support\Acl::make('mock-one');
+		$acl->check('guest', 'view foo');
+	}
+
+	/**
+	 * Test Orchestra\Support\Acl\Container::allow() method throws exception
+	 * for roles.
+	 *
+	 * @expectedException InvalidArgumentException
+	 * @group support
+	 */
+	public function testAllowMethodUsingMockOneThrowsExceptionForRoles()
+	{
+		$acl = \Orchestra\Support\Acl::make('mock-one');
+		$acl->allow('boss', 'view blog');
+	}
+
+	/**
+	 * Test Orchestra\Support\Acl\Container::allow() method throws exception
+	 * for actions.
+	 *
+	 * @expectedException InvalidArgumentException
+	 * @group support
+	 */
+	public function testAllowMethodUsingMockOneThrowsExceptionForActions()
+	{
+		$acl = \Orchestra\Support\Acl::make('mock-one');
+		$acl->allow('guest', 'view foo');
 	}
 
 	/**
@@ -76,7 +114,7 @@ class AclTest extends \PHPUnit_Framework_TestCase {
 	 * @test
 	 * @group support
 	 */
-	public function testCanUsingMockOne()
+	public function testCanMethodUsingMockOne()
 	{
 		$acl = \Orchestra\Support\Acl::make('mock-one');
 		$this->assertInstanceOf('\Orchestra\Support\Acl\Container', $acl);
@@ -97,7 +135,7 @@ class AclTest extends \PHPUnit_Framework_TestCase {
 	 * @test
 	 * @group support
 	 */
-	public function testCanSyncRole()
+	public function testCanMethodSyncRoles()
 	{
 		$acl1 = \Orchestra\Support\Acl::make('mock-one');
 		$acl2 = \Orchestra\Support\Acl::make('mock-two');

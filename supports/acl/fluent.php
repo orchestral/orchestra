@@ -165,4 +165,32 @@ class Fluent {
 	{
 		return isset($this->collections[$id]);
 	}
+
+	/**
+	 * Filter request.
+	 *
+	 * @access public
+	 * @param  mixed    $request
+	 * @return array
+	 */
+	public function filter($request)
+	{
+		if ( ! is_array($request)) 
+		{
+			switch (true)
+			{
+				case $request === '*' :
+					$request = $this->get();
+					break;
+				case $request[0] === '!' :
+					$request = array_diff($this->get(), array(substr($request, 1)));
+					break;
+				default :
+					$request = array($request);
+					break;
+			}
+		}
+			
+		return $request;
+	}
 }
