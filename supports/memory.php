@@ -16,15 +16,6 @@ class Memory {
 	public static $registrar = array();
 
 	/**
-	 * Memory initiated status
-	 *
-	 * @static
-	 * @access  protected
-	 * @var     boolean
-	 */
-	protected static $initiated = false;
-
-	/**
 	 * Cache memory instance so we can reuse it
 	 * 
 	 * @static
@@ -32,25 +23,6 @@ class Memory {
 	 * @var     array
 	 */
 	protected static $instances = array();
-
-	/**
-	 * Run Memory start configuration once before doing anything else.
-	 *
-	 * @static
-	 * @access public
-	 * @return void
-	 */
-	public static function start()
-	{
-		if (true === static::$initiated) return true;
-
-		Event::listen('laravel.done', function() 
-		{ 
-			Memory::shutdown(); 
-		});
-
-		return static::$initiated = true;
-	}
 
 	/**
 	 * Register a third-party memory driver.
@@ -76,8 +48,6 @@ class Memory {
 	 */
 	public static function make($name = null, $config = array())
 	{
-		static::start();
-
 		is_null($name) and $name = 'runtime.default';
 		(false === strpos($name, '.')) and $name = $name.'.default';
 

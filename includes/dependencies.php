@@ -32,11 +32,18 @@ Autoloader::alias('Hybrid\Table', 'Orchestra\Table');
 
 /*
 |--------------------------------------------------------------------------
-| Start Orchestra\Support\Memory
+| Register Orchestra\Support\Memory::shutdown()
 |--------------------------------------------------------------------------
+|
+| Require to run Orchestra\Support\Memory::shutdown() to write configuration
+| or data update to storage on `laravel.done`.
+|
 */
 
-Orchestra\Support\Memory::start();
+Event::listen('laravel.done', function() 
+{ 
+	Orchestra\Support\Memory::shutdown(); 
+});
 
 /*
 |--------------------------------------------------------------------------

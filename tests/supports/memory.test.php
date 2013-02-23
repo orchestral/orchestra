@@ -58,18 +58,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase {
 	{
 		\Orchestra\Support\Memory::make('orm');
 	}
-
-	/**
-	 * Test Orchestra\Support\Memory::start() method.
-	 *
-	 * @test
-	 * @group support
-	 */
-	public function testStartMethod()
-	{
-		$this->assertTrue(\Orchestra\Support\Memory::start());
-	}
-
+	
 	/**
 	 * Test that Orchestra\Support\Memory return valid values
 	 *
