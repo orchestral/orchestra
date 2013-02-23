@@ -31,6 +31,7 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase {
 	 * Test Hybrid\Memory\Runtime::__construct()
 	 *
 	 * @test
+	 * @group support
 	 */
 	public function testConstructMethod()
 	{
@@ -49,6 +50,7 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase {
 	 * Test Hybrid\Memory\Runtime::initiate()
 	 *
 	 * @test
+	 * @group support
 	 */
 	public function testInitiateMethod()
 	{
@@ -59,6 +61,7 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase {
 	 * Test Hybrid\Memory\Runtime::shutdown()
 	 *
 	 * @test
+	 * @group support
 	 */
 	public function testShutdownMethod()
 	{

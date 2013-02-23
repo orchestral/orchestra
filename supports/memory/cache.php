@@ -20,15 +20,7 @@ class Cache extends Driver {
 	public function initiate() 
 	{
 		$this->name = isset($this->config['name']) ? $this->config['name'] : $this->name;
-		
-		$memories = C::get('orchestra.memory.'.$this->name, array());
-
-		foreach ($memories as $memory)
-		{
-			$value = unserialize($memory->value);
-
-			$this->put($memory->name, $value);
-		}
+		$this->data = C::get('orchestra.memory.'.$this->name, array());
 	}
 	
 	/**
@@ -39,18 +31,6 @@ class Cache extends Driver {
 	 */
 	public function shutdown() 
 	{
-		$data = array();
-
-		foreach ($this->data as $key => $value)
-		{
-			$serialize = serialize($value);
-
-			array_push($data, (object) array(
-				'name'  => $key,
-				'value' => $serialize,
-			));
-		}
-
-		C::forever('hybrid.memory.'.$this->name, $data);
+		C::forever('hybrid.memory.'.$this->name, $this->data);
 	}
 }
