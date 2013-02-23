@@ -30,6 +30,7 @@ class CoreTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Core::start() would fire events.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testStartMethod()
 	{
@@ -58,6 +59,7 @@ class CoreTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Core::shutdown() triggers `orchestra.done`.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testShutdownMethod()
 	{
@@ -78,6 +80,7 @@ class CoreTest extends \PHPUnit_Framework_TestCase {
 	 * Test validity of Orchestra\Core helper methods.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testHelperMethods()
 	{
@@ -106,6 +109,7 @@ class CoreTest extends \PHPUnit_Framework_TestCase {
 	 * Test Configuration is properly configured.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testConfigurationIsProperlyConfigured()
 	{

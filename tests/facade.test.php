@@ -8,6 +8,7 @@ class FacadeTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra::VERSION
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testVersionSyntax()
 	{
@@ -21,6 +22,7 @@ class FacadeTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra Facades.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testOrchestraFacades()
 	{

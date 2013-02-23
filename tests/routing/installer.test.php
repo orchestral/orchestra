@@ -32,6 +32,7 @@ class InstallerTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/installer/index failed
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetInstallerPageFailed()
 	{
@@ -77,6 +78,7 @@ class InstallerTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/installer/index successful
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetInstallerPageSuccessful()
 	{

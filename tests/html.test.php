@@ -6,6 +6,9 @@ class HtmlTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test instanceof Orchestra\HTML
+	 *
+	 * @test
+	 * @group support
 	 */
 	public function testInstanceOfHTML()
 	{

@@ -44,6 +44,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/extensions
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetExtensionIndexPage()
 	{
@@ -60,6 +61,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	 * Test activate extension failed.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testActivateExtensionFailed()
 	{
@@ -88,6 +90,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	 * Test activate extension failed with dependencies error.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testActivateExtensionFailedDependenciesError()
 	{
@@ -107,6 +110,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	 * Test activate extension failed with publisher error.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testActivateExtensionFailedPublisherError()
 	{
@@ -134,6 +138,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	 * Test de-activate extension failed.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testDeactivateExtensionFailed()
 	{
@@ -158,6 +163,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	 * Test de-activate extension failed with dependencies error.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testDeactivateExtensionFailedDependenciesError()
 	{
@@ -190,6 +196,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	 * Test activate and de-activate extension successful.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testActivateAndDeactivateExtensionSuccessful()
 	{
@@ -220,6 +227,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	 * Test get extension configuration successful.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetConfigureExtensionSuccessful()
 	{
@@ -241,6 +249,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	 * Test post extension configuration successful.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostConfigureExtensionSuccessful()
 	{
@@ -269,6 +278,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	 * Test update extension successful.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testUpdateExtensionSuccessful()
 	{
@@ -291,6 +301,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	 * Test update extension failed when extension is not started.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testUpdateExtensionFail()
 	{
@@ -307,6 +318,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	 * Test activate extension failed with publisher error.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testUpdateExtensionFailedPublisherError()
 	{
@@ -337,6 +349,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	 * Run Orchestra Platform in safe mode.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testRunningInSafeMode()
 	{

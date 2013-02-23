@@ -76,6 +76,7 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/publisher without auth.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetPublisherIndexPageWithoutAuth()
 	{
@@ -91,6 +92,7 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/publisher
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetPublisherIndexPage()
 	{
@@ -120,6 +122,7 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/publisher/ftp without auth.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetPublisherFtpPageWithoutAuth()
 	{
@@ -137,6 +140,7 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/publisher/ftp
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetPublisherFtpPage()
 	{
@@ -153,6 +157,7 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/publisher/ftp without auth.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostPublisherFtpPageWithoutAuth()
 	{
@@ -170,6 +175,7 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/publisher/ftp
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostPublisherFtpPage()
 	{
@@ -201,6 +207,7 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 	 * credential.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostPublisherFtpPageInvalidCredential()
 	{

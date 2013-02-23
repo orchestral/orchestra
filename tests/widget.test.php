@@ -36,6 +36,8 @@ class WidgetTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Widget::make() method.
 	 *
 	 * @test
+	 * @group core
+	 * @group widget
 	 */
 	public function testInstanceOfWidget()
 	{
@@ -51,6 +53,8 @@ class WidgetTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Memory::__construct() throws an exception.
 	 *
 	 * @expectedException \RuntimeException
+	 * @group core
+	 * @group widget
 	 */
 	public function testConstructThrowsException()
 	{
@@ -62,6 +66,8 @@ class WidgetTest extends \PHPUnit_Framework_TestCase {
 	 * instance.
 	 *
 	 * @test
+	 * @group core
+	 * @group widget
 	 */
 	public function testMakeDifferentNameReturnDifferentInstance()
 	{
@@ -74,6 +80,8 @@ class WidgetTest extends \PHPUnit_Framework_TestCase {
 	 * instance.
 	 *
 	 * @test
+	 * @group core
+	 * @group widget
 	 */
 	public function testMakeSameNameReturnSameInstance()
 	{
@@ -86,6 +94,8 @@ class WidgetTest extends \PHPUnit_Framework_TestCase {
 	 * exception
 	 *
 	 * @expectedException \Exception
+	 * @group core
+	 * @group widget
 	 */
 	public function testMakeWithInvalidDriverThrowsException()
 	{
@@ -96,6 +106,8 @@ class WidgetTest extends \PHPUnit_Framework_TestCase {
 	 * Test instanceof WidgetStub.
 	 *
 	 * @test
+	 * @group core
+	 * @group widget
 	 */
 	public function testInstanceOfStub()
 	{
@@ -132,6 +144,8 @@ class WidgetTest extends \PHPUnit_Framework_TestCase {
 	 * Test add an item using stub is valid.
 	 *
 	 * @test
+	 * @group core
+	 * @group widget
 	 */
 	public function testAddItemUsingStubIsValid()
 	{
@@ -169,6 +183,8 @@ class WidgetTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Widget\Driver::__get() throws an exception
 	 *
 	 * @expectedException \InvalidArgumentException
+	 * @group core
+	 * @group widget
 	 */
 	public function testAccessGetThrowsException()
 	{

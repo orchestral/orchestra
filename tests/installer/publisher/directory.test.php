@@ -26,6 +26,7 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Installer\Publisher\Directory can be constructed.
 	 *
 	 * @test
+	 * @group installer
 	 */
 	public function testConstructDirectory()
 	{
@@ -37,6 +38,7 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Installer\Publisher\Directory::flush() method.
 	 *
 	 * @test
+	 * @group installer
 	 */
 	public function testFlushMethod()
 	{

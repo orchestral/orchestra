@@ -46,6 +46,7 @@ class UserTest extends \Orchestra\Testable\TestCase {
 	 * Test instance of Orchestra\Repository\User
 	 *
 	 * @test
+	 * @group repository
 	 */
 	public function testInstanceOfUserRepository()
 	{
@@ -67,6 +68,7 @@ class UserTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Repository\User::get()
 	 *
 	 * @test
+	 * @group repository
 	 */
 	public function testGetMethod()
 	{
@@ -111,6 +113,7 @@ class UserTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Repository\User::put()
 	 *
 	 * @test
+	 * @group repository
 	 */
 	public function testPutMethod()
 	{

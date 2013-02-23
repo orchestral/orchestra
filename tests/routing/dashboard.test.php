@@ -36,6 +36,7 @@ class DashboardTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra) without auth
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetDashboardPageWithoutAuth()
 	{
@@ -51,6 +52,7 @@ class DashboardTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetDashboardPage()
 	{
@@ -67,6 +69,7 @@ class DashboardTest extends \Orchestra\Testable\TestCase {
 	 * Test Language Locale is set properly.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testInitiateCoreCheckLanguageLocale()
 	{
@@ -85,6 +88,7 @@ class DashboardTest extends \Orchestra\Testable\TestCase {
 	 * Test Request Corrupted Installation.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testInitiateCoreStartIsCorruptedInstallation()
 	{

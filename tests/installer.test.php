@@ -16,6 +16,8 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Installer::installed()
 	 *
 	 * @test
+	 * @group core
+	 * @group installer
 	 */
 	public function testInstallationStatus()
 	{
@@ -33,6 +35,8 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Installer::check_database()
 	 *
 	 * @test
+	 * @group core
+	 * @group installer
 	 */
 	public function testCheckDatabaseSuccessful()
 	{
@@ -50,6 +54,8 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Installer::check_database()
 	 *
 	 * @test
+	 * @group core
+	 * @group installer
 	 */
 	public function testCheckDatabaseFailed()
 	{

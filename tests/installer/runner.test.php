@@ -61,6 +61,7 @@ class RunnerTest extends \Orchestra\Testable\TestCase {
 	 * Test Installation generate proper configuration
 	 *
 	 * @test
+	 * @group installer
 	 */
 	public function testInstallationGenerateProperConfiguration()
 	{
@@ -84,6 +85,7 @@ class RunnerTest extends \Orchestra\Testable\TestCase {
 	 * Test administrator user is properly created.
 	 *
 	 * @test
+	 * @group installer
 	 */
 	public function testAdministratorUserIsCreated()
 	{
@@ -123,6 +125,7 @@ class RunnerTest extends \Orchestra\Testable\TestCase {
 	 * Test all events is properly fired during installation.
 	 *
 	 * @test
+	 * @group installer
 	 */
 	public function testInstallationEventIsFired()
 	{

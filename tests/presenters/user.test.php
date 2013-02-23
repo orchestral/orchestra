@@ -35,6 +35,7 @@ class UserTest extends \Orchestra\Testable\TestCase {
 	 * Test instanceof Orchestra\Presenter\User::table()
 	 *
 	 * @test
+	 * @group presenter
 	 */
 	public function testInstanceOfUserTable()
 	{
@@ -57,6 +58,7 @@ class UserTest extends \Orchestra\Testable\TestCase {
 	 * Test instanceof Orchestra\Presenter\User::table_action()
 	 *
 	 * @test
+	 * @group presenter
 	 */
 	public function testInstanceOfUserTableAction()
 	{
@@ -99,6 +101,7 @@ class UserTest extends \Orchestra\Testable\TestCase {
 	 * Test instanceof Orchestra\Presenter\User::form()
 	 *
 	 * @test
+	 * @group presenter
 	 */
 	public function testInstanceOfUserForm()
 	{

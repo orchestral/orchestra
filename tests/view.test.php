@@ -24,6 +24,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
 	 * Test construct a Orchestra\View
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testConstructView()
 	{
@@ -51,6 +52,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\View::exists() method.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testExistsMethod()
 	{

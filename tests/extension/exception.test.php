@@ -8,6 +8,7 @@ class ExceptionsTest extends \PHPUnit_Framework_TestCase {
 	 * Test exception can be thrown.
 	 *
 	 * @expectedException \Orchestra\Extension\FilePermissionException
+	 * @group extension
 	 */
 	public function testFilePermissionExceptionCanBeThrown()
 	{
@@ -18,6 +19,7 @@ class ExceptionsTest extends \PHPUnit_Framework_TestCase {
 	 * Test exception can be thrown.
 	 *
 	 * @expectedException \Orchestra\Extension\UnresolvedException
+	 * @group extension
 	 */
 	public function testUnresolvedExceptionCanBeThrown()
 	{
@@ -28,6 +30,7 @@ class ExceptionsTest extends \PHPUnit_Framework_TestCase {
 	 * Test exception contain proper dependencies.
 	 *
 	 * @test
+	 * @group extension
 	 */
 	public function testUnresolvedException()
 	{

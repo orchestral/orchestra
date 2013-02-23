@@ -36,6 +36,7 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/users without auth
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetUsersPageWithoutAuth()
 	{
@@ -51,6 +52,7 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/users
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetUsersPage()
 	{
@@ -67,6 +69,7 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/users/view/1 without auth
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetSingleUserPageWithoutAuth()
 	{
@@ -82,6 +85,7 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/users/view/1
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetSingleUserPage()
 	{
@@ -104,6 +108,7 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/users/view with validation error.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostUserPageValidationError()
 	{
@@ -127,6 +132,7 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/users/view
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostCreateNewUserPage()
 	{
@@ -159,6 +165,7 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/users/view with invalid user id.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostCreateNewUserPageInvalidUserId()
 	{
@@ -181,6 +188,7 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 * database error.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostUserPageDatabaseError()
 	{
@@ -217,6 +225,7 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/users/view/(:num) on update.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostUpdateUserPage()
 	{
@@ -255,6 +264,7 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/users/view/1
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostDeleteUserPage()
 	{
@@ -287,6 +297,7 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/users/view/1 with multiple roles
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostDeleteUserPageWithMultipleRoles()
 	{
@@ -319,6 +330,7 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/users/view/1 with id or user data error.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostDeleteUserPageIdError()
 	{
@@ -335,6 +347,7 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/users/view/1 with database error.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostDeleteUserDatabaseError()
 	{

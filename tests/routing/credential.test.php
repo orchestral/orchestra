@@ -30,6 +30,7 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 * Get Mailer Mock
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function getMailerMock()
 	{
@@ -48,6 +49,7 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/credential/login
 	 * 
 	 * @test
+	 * @group routing
 	 */
 	public function testGetLoginPage()
 	{
@@ -62,6 +64,7 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/credential/login failed without csrf.
 	 * 
 	 * @test
+	 * @group routing
 	 */
 	public function testPostLoginPageFailedWithoutCsrf()
 	{
@@ -79,6 +82,7 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/credential/login with validation errors.
 	 * 
 	 * @test
+	 * @group routing
 	 */
 	public function testPostLoginPageWithValidationError()
 	{
@@ -98,6 +102,7 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/credential/login
 	 * 
 	 * @test
+	 * @group routing
 	 */
 	public function testPostLoginPageIsSuccessful()
 	{
@@ -131,6 +136,7 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 * is invalid.
 	 * 
 	 * @test
+	 * @group routing
 	 */
 	public function testPostLoginPageWithInvalidAuthentication()
 	{
@@ -151,6 +157,7 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/credential/login
 	 * 
 	 * @test
+	 * @group routing
 	 */
 	public function testGetLogoutPage()
 	{
@@ -177,6 +184,7 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/credential/register
 	 * 
 	 * @test
+	 * @group routing
 	 */
 	public function testGetRegisterPage()
 	{
@@ -193,6 +201,7 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/credential/register failed without csrf.
 	 * 
 	 * @test
+	 * @group routing
 	 */
 	public function testPostRegisterPageFailedWithoutCsrf()
 	{
@@ -216,6 +225,7 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 * error.
 	 * 
 	 * @test
+	 * @group routing
 	 */
 	public function testPostRegisterPageWithValidationError()
 	{
@@ -239,6 +249,7 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/credential/register with database error.
 	 * 
 	 * @test
+	 * @group routing
 	 */
 	public function testPostRegisterPageWithDatabaseError()
 	{
@@ -271,6 +282,7 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/credential/register
 	 * 
 	 * @test
+	 * @group routing
 	 */
 	public function testPostRegisterPageIsSuccessful()
 	{
@@ -299,6 +311,7 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/credential/register email was not sent
 	 * 
 	 * @test
+	 * @group routing
 	 */
 	public function testPostRegisterPageEmailWasNotSent()
 	{

@@ -8,6 +8,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase {
 	 * Test instance of Hybrid\Memory.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testInstanceOfMemory()
 	{

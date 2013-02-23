@@ -8,6 +8,8 @@ class MailTest extends \Orchestra\Testable\TestCase {
 	 * Test instance of mailer with invalid view will throw an exception.
 	 *
 	 * @expectedException \Exception
+	 * @group core
+	 * @group mail
 	 */
 	public function testInstanceOfMailerWithInvalidViewThrowsException()
 	{
@@ -22,6 +24,8 @@ class MailTest extends \Orchestra\Testable\TestCase {
 	 * Test using Orchestra\Mail.
 	 *
 	 * @test
+	 * @group core
+	 * @group mail
 	 */
 	public function testUsingMailer()
 	{
@@ -60,6 +64,8 @@ class MailTest extends \Orchestra\Testable\TestCase {
 	 * Test using Orchestra\Mail::send().
 	 *
 	 * @test
+	 * @group core
+	 * @group mail
 	 */
 	public function testUsingMailSend()
 	{

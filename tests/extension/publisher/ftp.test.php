@@ -92,6 +92,7 @@ class FTPTest extends \Orchestra\Testable\TestCase {
 	 * Test instanceof stub
 	 *
 	 * @test
+	 * @group extension
 	 */
 	public function testInstanceOfFtp()
 	{
@@ -104,6 +105,7 @@ class FTPTest extends \Orchestra\Testable\TestCase {
 	 * credential.
 	 *
 	 * @test
+	 * @group extension
 	 */
 	public function testConstructMethodWithoutCredential()
 	{
@@ -128,6 +130,7 @@ class FTPTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Extension\Publisher\FTP::connect() method.
 	 *
 	 * @test
+	 * @group extension
 	 */
 	public function testConnectMethod()
 	{
@@ -148,6 +151,7 @@ class FTPTest extends \Orchestra\Testable\TestCase {
 	 * throw an exception.
 	 *
 	 * @expectedException \Orchestra\Support\FTP\ServerException
+	 * @group extension
 	 */
 	public function testConnectMethodThrowsException()
 	{
@@ -170,6 +174,7 @@ class FTPTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Extension\Publisher\FTP::upload() method.
 	 *
 	 * @test
+	 * @group extension
 	 */
 	public function testUploadMethod()
 	{

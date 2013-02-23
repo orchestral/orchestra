@@ -38,6 +38,8 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Resources::make().
 	 *
 	 * @test
+	 * @group core
+	 * @group resources
 	 */
 	public function testConstructResource()
 	{
@@ -65,6 +67,8 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Resources::make() thrown an exception.
 	 *
 	 * @expectedException \InvalidArgumentException
+	 * @group core
+	 * @group resources
 	 */
 	public function testMakeAResourceThrowsException()
 	{
@@ -76,6 +80,8 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	 * keywords.
 	 *
 	 * @expectedException \InvalidArgumentException
+	 * @group core
+	 * @group resources
 	 */
 	public function testAddChildUsingReservedKeywordsThrowsException()
 	{
@@ -86,6 +92,8 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	 * Test adding child attribute value using setter.
 	 *
 	 * @test
+	 * @group core
+	 * @group resources
 	 */
 	public function testAddChildUsingSetter()
 	{
@@ -109,6 +117,8 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	 * Test set visibility using Orchestra\Resources::show()
 	 *
 	 * @test
+	 * @group core
+	 * @group resources
 	 */
 	public function testDisplayResourceViaShowMethod()
 	{
@@ -127,6 +137,8 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	 * Test set visibility using Orchestra\Resources::hide()
 	 *
 	 * @test
+	 * @group core
+	 * @group resources
 	 */
 	public function testDisplayResourceViaHideMethod()
 	{
@@ -145,6 +157,8 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	 * Test set visibility using Orchestra\Resources::visibility()
 	 *
 	 * @test
+	 * @group core
+	 * @group resources
 	 */
 	public function testResourceVisibilityViaVisibilityMethod()
 	{
@@ -166,6 +180,8 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Resources::call() method.
 	 *
 	 * @test
+	 * @group core
+	 * @group resources
 	 */
 	public function testCallMethod()
 	{
@@ -185,6 +201,8 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Resources::of() method.
 	 *
 	 * @test
+	 * @group core
+	 * @group resources
 	 */
 	public function testOfMethod()
 	{
@@ -204,6 +222,8 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Resources::__call() method throws an exception.
 	 *
 	 * @expectedException \InvalidArgumentException
+	 * @group core
+	 * @group resources
 	 */
 	public function testCallMethodThrowsException()
 	{
@@ -216,6 +236,8 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	 * is string.
 	 *
 	 * @test
+	 * @group core
+	 * @group resources
 	 */
 	public function testResponseMethodWhenIsString()
 	{
@@ -229,6 +251,8 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	 * is null.
 	 *
 	 * @test
+	 * @group core
+	 * @group resources
 	 */
 	public function testResponseMethodWhenIsFalse()
 	{
@@ -243,6 +267,8 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	 * is instanceof Laravel\Redirect.
 	 *
 	 * @test
+	 * @group core
+	 * @group resources
 	 */
 	public function testResponseMethodWhenIsRedirect()
 	{
@@ -261,6 +287,8 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	 * is instanceof Laravel\Response.
 	 *
 	 * @test
+	 * @group core
+	 * @group resources
 	 */
 	public function testResponseMethodWhenIsResponse()
 	{
@@ -284,6 +312,8 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	 * is instanceof Closure.
 	 *
 	 * @test
+	 * @group core
+	 * @group resources
 	 */
 	public function testResponseMethodWhenIsClosure()
 	{

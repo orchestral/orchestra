@@ -53,6 +53,7 @@ class ResourcesTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/resources without auth
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetResourcesIndexPageWithoutAuth()
 	{
@@ -68,6 +69,7 @@ class ResourcesTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/resources
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetResourcesIndexPage()
 	{
@@ -84,6 +86,7 @@ class ResourcesTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/resources/foobar
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetResourcesFoobarPage()
 	{

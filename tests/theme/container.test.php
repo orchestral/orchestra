@@ -42,6 +42,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
 	 * Test constuct a new Orchestra\Theme\Container.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testConstructThemeContainer()
 	{
@@ -55,6 +56,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Theme\Container::to() return proper URL.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testToReturnProperUrl()
 	{
@@ -68,6 +70,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Theme\Container::to_asset() return proper URL.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testToAssetReturnProperUrl()
 	{
@@ -82,6 +85,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
 	 * theme.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testParseFileFromTheme()
 	{
@@ -97,6 +101,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
 	 * theme using alias.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testParseFileFromThemeUsingAlias()
 	{
@@ -116,6 +121,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
 	 * when file is not available from theme.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testParseFileFromViewWhenThemeIsNull()
 	{

@@ -44,6 +44,8 @@ class ExtensionTest extends \Orchestra\Testable\TestCase {
 	 * Test invalid extension is not started.
 	 *
 	 * @test
+	 * @group core
+	 * @group extension
 	 */
 	public function testInvalidExtensionIsNotStarted()
 	{
@@ -58,6 +60,8 @@ class ExtensionTest extends \Orchestra\Testable\TestCase {
 	 * Test activate extensions without any dependencies.
 	 *
 	 * @test
+	 * @group core
+	 * @group extension
 	 */
 	public function testActivateExtensionWithoutAnyDependencies()
 	{
@@ -95,6 +99,8 @@ class ExtensionTest extends \Orchestra\Testable\TestCase {
 	 * Test deactivate extensions without any dependencies.
 	 *
 	 * @test
+	 * @group core
+	 * @group extension
 	 */
 	public function testDeactivateExtensionWithoutAnyDependencies()
 	{
@@ -114,6 +120,8 @@ class ExtensionTest extends \Orchestra\Testable\TestCase {
 	 * Test extension unable to be activated when unresolved dependencies.
 	 *
 	 * @expectedException \Orchestra\Extension\UnresolvedException
+	 * @group core
+	 * @group extension
 	 */
 	public function testActivateExtensionFailedWhenUnresolvedDependencies()
 	{
@@ -128,6 +136,8 @@ class ExtensionTest extends \Orchestra\Testable\TestCase {
 	 * due to version.
 	 *
 	 * @expectedException \Orchestra\Extension\UnresolvedException
+	 * @group core
+	 * @group extension
 	 */
 	public function testActivateExtensionFailedWhenUnresolvedDependenciesByVersion()
 	{
@@ -143,6 +153,8 @@ class ExtensionTest extends \Orchestra\Testable\TestCase {
 	 * parsed.
 	 *
 	 * @expectedException \RuntimeException
+	 * @group core
+	 * @group extension
 	 */
 	public function testDetectExtensionCauseThrowsExceptionWithoutValidJson()
 	{
@@ -157,6 +169,8 @@ class ExtensionTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Extension::option() method.
 	 *
 	 * @test
+	 * @group core
+	 * @group extension
 	 */
 	public function testOptionMethod()
 	{
@@ -172,6 +186,8 @@ class ExtensionTest extends \Orchestra\Testable\TestCase {
 	 * Test extension unable to be deactivated when unresolved dependencies.
 	 *
 	 * @expectedException \Orchestra\Extension\UnresolvedException
+	 * @group core
+	 * @group extension
 	 */
 	public function testDeactivateExtensionFailedWhenUnresolvedDependencies()
 	{
@@ -197,6 +213,8 @@ class ExtensionTest extends \Orchestra\Testable\TestCase {
 	 * due to unavailable extension.
 	 *
 	 * @test
+	 * @group core
+	 * @group extension
 	 */
 	public function testDeactivateExtensionFailedWhenUnresolvedDependenciesDueToUnavailableExtension()
 	{

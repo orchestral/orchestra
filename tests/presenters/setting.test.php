@@ -51,6 +51,7 @@ class SettingTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Presenter\Setting::form().
 	 *
 	 * @test
+	 * @group presenter
 	 */
 	public function testInstanceOfSettingForm()
 	{

@@ -35,6 +35,7 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Presenter\Account::form().
 	 *
 	 * @test
+	 * @group presenter
 	 */
 	public function testInstanceOfAccountForm()
 	{
@@ -57,6 +58,7 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Presenter\Account::form_password().
 	 *
 	 * @test
+	 * @group presenter
 	 */
 	public function testInstanceOfEditPasswordForm()
 	{

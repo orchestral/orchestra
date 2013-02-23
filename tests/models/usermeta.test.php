@@ -8,6 +8,7 @@ class UserMetaTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Model\User\Meta configuration.
 	 *
 	 * @test
+	 * @group model
 	 */
 	public function testConfiguration()
 	{
@@ -18,6 +19,7 @@ class UserMetaTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Model\User\Meta::users() relationship.
 	 *
 	 * @test
+	 * @group model
 	 */
 	public function testUsersRelationship()
 	{

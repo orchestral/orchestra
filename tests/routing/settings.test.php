@@ -35,6 +35,7 @@ class SettingsTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/settings without auth
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetSettingsPageWithoutAuth()
 	{
@@ -50,6 +51,7 @@ class SettingsTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/settings
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetSettingsPage()
 	{
@@ -66,6 +68,7 @@ class SettingsTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/settings
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostSettingsPageIsSuccessful()
 	{
@@ -125,6 +128,7 @@ class SettingsTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/settings failed
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostSettingsPageFailed()
 	{

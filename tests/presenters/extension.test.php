@@ -50,6 +50,7 @@ class ExtensionTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Presenter\Extension::form().
 	 *
 	 * @test
+	 * @group presenter
 	 */
 	public function testInstanceOfExtensionForm()
 	{

@@ -52,6 +52,7 @@ class ResourceTest extends \Orchestra\Testable\TestCase {
 	 * Test instanceof Orchestra\Presenter\Resource::table()
 	 *
 	 * @test
+	 * @group presenter
 	 */
 	public function testInstanceOfResourceTable()
 	{
