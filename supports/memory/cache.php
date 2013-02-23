@@ -31,6 +31,6 @@ class Cache extends Driver {
 	 */
 	public function shutdown() 
 	{
-		C::forever('hybrid.memory.'.$this->name, $this->data);
+		C::forever('orchestra.memory.'.$this->name, $this->data);
 	}
 }

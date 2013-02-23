@@ -97,11 +97,11 @@ class Memory {
 			switch ($storage)
 			{
 				case 'fluent' :
-					if ($driver === 'default') $driver = Config::get('hybrid::memory.default_table');
+					if ($driver === 'default') $driver = Config::get('orchestra::memory.default_table');
 					static::$instances[$name] = new Memory\Fluent($driver, $config);
 					break;
 				case 'eloquent' :
-					if ($driver === 'default') $driver = Config::get('hybrid::memory.default_model');
+					if ($driver === 'default') $driver = Config::get('orchestra::memory.default_model');
 					static::$instances[$name] = new Memory\Eloquent($driver, $config);
 					break;
 				case 'cache' :
