@@ -1,13 +1,13 @@
-<?php namespace Hybrid\Tests\Memory;
+<?php namespace Orchestra\Tests\Supports\Memory;
 
-\Bundle::start('hybrid');
+\Bundle::start('orchestra');
 
 class RuntimeTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Stub instance.
 	 *
-	 * @var Hybrid\Memory\Runtime
+	 * @var Orchestra\Support\Memory\Runtime
 	 */
 	protected $stub = null;
 
@@ -16,7 +16,7 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		$this->stub = new \Hybrid\Memory\Runtime('stub', array());
+		$this->stub = new \Orchestra\Support\Memory\Runtime('stub', array());
 	}
 
 	/**
@@ -28,7 +28,7 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Hybrid\Memory\Runtime::__construct()
+	 * Test Orchestra\Support\Memory\Runtime::__construct()
 	 *
 	 * @test
 	 * @group support
@@ -47,7 +47,7 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Hybrid\Memory\Runtime::initiate()
+	 * Test Orchestra\Support\Memory\Runtime::initiate()
 	 *
 	 * @test
 	 * @group support
@@ -58,7 +58,7 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Hybrid\Memory\Runtime::shutdown()
+	 * Test Orchestra\Support\Memory\Runtime::shutdown()
 	 *
 	 * @test
 	 * @group support

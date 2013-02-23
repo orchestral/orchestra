@@ -50,8 +50,9 @@ class UserTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testInstanceOfUserRepository()
 	{
-		$this->assertInstanceOf('\Hybrid\Memory\Driver', $this->stub);
-		$this->assertInstanceOf('\Hybrid\Memory\Driver', new \Orchestra\Repository\User);
+		$this->assertInstanceOf('\Orchestra\Support\Memory\Driver', $this->stub);
+		$this->assertInstanceOf('\Orchestra\Support\Memory\Driver', 
+			new \Orchestra\Repository\User);
 	
 		$refl    = new \ReflectionObject($this->stub);
 		$storage = $refl->getProperty('storage');

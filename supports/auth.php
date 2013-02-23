@@ -29,7 +29,7 @@ class Auth extends A {
 		// only search for roles when user is logged
 		if ( ! is_null($user)) $user_id = $user->id;
 
-		if (is_null(static::$user_roles[$user_id]))
+		if ( ! isset(static::$user_roles[$user_id]) or is_null(static::$user_roles[$user_id]))
 		{
 			static::$user_roles[$user_id] = Event::until('orchestra.auth: roles', array($user, $roles));
 		}

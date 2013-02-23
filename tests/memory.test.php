@@ -20,7 +20,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase {
 		$name->setAccessible(true);
 		$storage->setAccessible(true);
 
-		$this->assertInstanceOf('\Hybrid\Memory\Driver', $memory);
+		$this->assertInstanceOf('\Orchestra\Support\Memory\Driver', $memory);
 		$this->assertEquals('runtime', $storage->getValue($memory));
 		$this->assertEquals('orchestra-memory', $name->getValue($memory));
 	}

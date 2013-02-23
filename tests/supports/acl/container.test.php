@@ -21,7 +21,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
 
 		$this->stub = \Orchestra\Support\Acl::make('foo', $runtime);
 
-		\Event::override('hybrid.auth.roles', function ($user_id, $roles)
+		\Event::override('orchestra.auth: roles', function ($user_id, $roles)
 		{
 			return array('guest');
 		});

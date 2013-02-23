@@ -42,7 +42,7 @@ class AclTest extends \Orchestra\Testable\TestCase {
 	public function testInstanceOfAcl()
 	{
 		$acl = \Orchestra\Acl::make();
-		$this->assertInstanceOf('\Hybrid\Acl\Container', $acl);
+		$this->assertInstanceOf('\Orchestra\Support\Acl\Container', $acl);
 	}
 
 	/**

@@ -64,7 +64,7 @@ class Core {
 		// First, we need to ensure that Orchestra\Acl is compliance with
 		// our Eloquent Model, This would overwrite the default
 		// configuration
-		Config::set('hybrid::auth.roles', function ($user, $roles)
+		Event::override('orchestra.auth: roles', function ($user, $roles)
 		{
 			// Check if user is null, where roles wouldn't be available,
 			// returning null would allow any other event listener (if any).

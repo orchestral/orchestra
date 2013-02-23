@@ -24,10 +24,10 @@ Bundle::start('hybrid');
 |
 */
 
-Autoloader::alias('Hybrid\Acl', 'Orchestra\Acl');
+Autoloader::alias('Orchestra\Support\Acl', 'Orchestra\Acl');
 Autoloader::alias('Hybrid\Form', 'Orchestra\Form');
 Autoloader::alias('Orchestra\Support\HTML', 'Orchestra\HTML');
-Autoloader::alias('Hybrid\Memory', 'Orchestra\Memory');
+Autoloader::alias('Orchestra\Support\Memory', 'Orchestra\Memory');
 Autoloader::alias('Hybrid\Table', 'Orchestra\Table');
 
 /*
