@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Support;
 
-use \Auth as A, \Event;
+use \Auth as A, 
+	\Event;
 
 class Auth extends A {
 	

@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Support\Table;
 
 use \Closure, 
-	InvalidArgumentException,
+	\InvalidArgumentException,
 	Laravel\Fluent, 
 	\Lang,
 	\Str;

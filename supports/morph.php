@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Support;
 
-use RuntimeException;
+use \RuntimeException;
 
 abstract class Morph {
 	
