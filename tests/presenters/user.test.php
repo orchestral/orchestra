@@ -51,7 +51,7 @@ class UserTest extends \Orchestra\Testable\TestCase {
 
 		$this->assertInstanceOf('\Orchestra\Table', $stub);
 		$this->assertEquals(\Orchestra\Table::of('orchestra.users'), $stub);
-		$this->assertInstanceOf('\Hybrid\Table\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Support\Table\Grid', $grid);
 	}
 
 	/**
@@ -78,7 +78,7 @@ class UserTest extends \Orchestra\Testable\TestCase {
 		$this->assertNull($output);
 		$this->assertInstanceOf('\Orchestra\Table', $stub);
 		$this->assertEquals(\Orchestra\Table::of('orchestra.users'), $stub);
-		$this->assertInstanceOf('\Hybrid\Table\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Support\Table\Grid', $grid);
 
 		ob_start();
 		echo $stub->render();
