@@ -14,9 +14,7 @@ class DecoratorTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		$this->stub = DecoratorStub::of('stub', function ($t) {});
-		DecoratorStub::of('mock-1', function ($t) {});
-		DecoratorStub::of('mock-2', function ($t) {});
+		$this->stub = new DecoratorStub(function ($t) {});
 	}
 
 	/**
@@ -25,7 +23,6 @@ class DecoratorTest extends \PHPUnit_Framework_TestCase {
 	public function tearDown()
 	{
 		unset($this->stub);
-		DecoratorStub::$names = array();
 	}
 	
 	/**
@@ -65,18 +62,6 @@ class DecoratorTest extends \PHPUnit_Framework_TestCase {
 	{
 		$expected = $this->stub->expected;
 	}
-
-	/**
-	 * Test Orchestra\Support\Decorator::of() method.
-	 *
-	 * @test
-	 * @group support
-	 */
-	public function testTableOfMethod()
-	{
-		$this->assertEquals(DecoratorStub::of('stub'), $this->stub);
-		$this->assertEquals('stub', $this->stub->name);
-	}
 	
 	/**
 	 * test Orchestra\Support\Decorator::render() method.
@@ -86,13 +71,16 @@ class DecoratorTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testRenderMethod()
 	{
+		$mock1 = new DecoratorStub(function ($t) {});
+		$mock2 = new DecoratorStub(function ($t) {});
+
 		ob_start();
-		echo DecoratorStub::of('mock-1');
+		echo $mock1;
 		$output = ob_get_contents();
 		ob_end_clean();
 
 		$this->assertEquals('foo', $output);
-		$this->assertEquals('foo', DecoratorStub::of('mock-2')->render());
+		$this->assertEquals('foo', $mock2->render());
 	}
 }
 

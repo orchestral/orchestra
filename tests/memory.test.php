@@ -5,7 +5,7 @@
 class MemoryTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * Test instance of Hybrid\Memory.
+	 * Test instance of Orchestra\Memory.
 	 *
 	 * @test
 	 * @group core

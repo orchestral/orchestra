@@ -51,7 +51,7 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 
 		$this->assertInstanceOf('\Orchestra\Form', $stub);
 		$this->assertEquals(\Orchestra\Form::of('orchestra.account'), $stub);
-		$this->assertInstanceOf('\Hybrid\Form\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Support\Form\Grid', $grid);
 	}
 
 	/**
@@ -76,6 +76,6 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 
 		$this->assertInstanceOf('\Orchestra\Form', $stub);
 		$this->assertEquals(\Orchestra\Form::of('orchestra.account: password'), $stub);
-		$this->assertInstanceOf('\Hybrid\Form\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Support\Form\Grid', $grid);
 	}
 }

@@ -156,7 +156,7 @@ class Core {
 	protected static function appearance()
 	{
 		// Set default size for Form
-		Config::set('hybrid::form.fieldset', array(
+		Config::set('orchestra::support.form.fieldset', array(
 			'select'   => array('class' => 'span12'),
 			'textarea' => array('class' => 'span12'),
 			'input'    => array('class' => 'span12'),

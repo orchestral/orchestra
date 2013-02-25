@@ -1,6 +1,6 @@
 # Role Based Access Control
 
-Orchestra Platform Role Based Access Control is powered  by Hybrid Bundle ACL classes. It gives you the ability to create custom ACL metrics which is unique to each of your extensions. In most other solutions, you are either restrict to file based configuration for ACL or only allow to define a single metric for your entire application.
+Orchestra Platform Role Based Access Control gives you the ability to create custom ACL metrics which is unique to each of your extensions. In most other solutions, you are either restrict to file based configuration for ACL or only allow to define a single metric for your entire application.
 
 This simplicity would later become an issue depends on how many extensions do you have within your application.
 

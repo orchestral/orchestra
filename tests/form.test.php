@@ -5,7 +5,7 @@
 class FormTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * Test Orchestra\Form is an instance of Hybrid\Form
+	 * Test Orchestra\Form is an instance of Orchestra\Support\Form
 	 *
 	 * @test
 	 */
@@ -17,7 +17,7 @@ class FormTest extends \PHPUnit_Framework_TestCase {
 		
 		$grid->setAccessible(true);
 
-		$this->assertInstanceOf('\Hybrid\Form', $form);
-		$this->assertInstanceOf('\Hybrid\Form\Grid', $grid->getValue($form));
+		$this->assertInstanceOf('\Orchestra\Support\Form', $form);
+		$this->assertInstanceOf('\Orchestra\Support\Form\Grid', $grid->getValue($form));
 	}
 }

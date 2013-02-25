@@ -9,6 +9,44 @@ use \Closure,
 class Table extends Decorator {
 
 	/**
+	 * All of the registered table names.
+	 *
+	 * @var array
+	 */
+	public static $names = array();
+
+	/**
+	 * Create a new table instance of a named table.
+	 *
+	 * <code>
+	 *		// Create a new table instance
+	 *		$view = Table::of('user-table', function ($table) {
+	 *			$table->with(User::all());
+	 *
+	 *			$table->column('username');
+	 *			$table->column('password');
+	 * 		});
+	 * </code>
+	 *
+	 * @static
+	 * @access   public
+	 * @param    string	    $name
+	 * @param    Closure	$callback
+	 * @return   Table
+	 */
+	public static function of($name, Closure $callback = null)
+	{
+		if ( ! isset(static::$names[$name]))
+		{
+			static::$names[$name] = new static($callback);
+
+			static::$names[$name]->name = $name;
+		}
+
+		return static::$names[$name];
+	}
+	
+	/**
 	 * Create a new Table instance.
 	 * 			
 	 * @access public
