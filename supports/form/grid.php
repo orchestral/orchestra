@@ -205,10 +205,12 @@ class Grid {
 	{
 		unset($arguments);
 
-		if (in_array($method, array('fieldsets', 'view', 'hiddens')))
+		if ( ! in_array($method, array('fieldsets', 'view', 'hiddens')))
 		{
-			return $this->$method;
+			throw new InvalidArgumentException("Unable to use __get for [{$method}].");
 		}
+
+		return $this->$method;
 	}
 
 	/**
@@ -229,13 +231,17 @@ class Grid {
 	/**
 	 * Magic Method for handling the dynamic setting of data.
 	 */
-	public function __set($key, array $arguments)
+	public function __set($key, $arguments)
 	{
 		$key = $this->key($key);
 		
 		if ( ! in_array($key, array('markup')))
 		{
-			throw new InvalidArgumentException("Uunable to set [{$key}].");
+			throw new InvalidArgumentException("Unable to set [{$key}].");
+		}
+		elseif ( ! is_array($arguments))
+		{
+			throw new InvalidArgumentException("Require values to be an array.");
 		}
 
 		$this->markup($arguments, null);
