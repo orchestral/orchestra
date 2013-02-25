@@ -29,7 +29,7 @@ Autoloader::alias('Hybrid\Form', 'Orchestra\Form');
 Autoloader::alias('Orchestra\Support\HTML', 'Orchestra\HTML');
 Autoloader::alias('Orchestra\Support\Memory', 'Orchestra\Memory');
 Autoloader::alias('Orchestra\Support\Messages', 'Orchestra\Messages');
-Autoloader::alias('Hybrid\Table', 'Orchestra\Table');
+Autoloader::alias('Orchestra\Support\Table', 'Orchestra\Table');
 
 /*
 |--------------------------------------------------------------------------

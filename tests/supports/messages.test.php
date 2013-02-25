@@ -25,7 +25,7 @@ class MessagesTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Messages::make()
 	 *
 	 * @test
-	 * @group core
+	 * @group support
 	 */
 	public function testMakeInstance()
 	{
@@ -43,7 +43,7 @@ class MessagesTest extends \PHPUnit_Framework_TestCase {
 	 * Session
 	 *
 	 * @test
-	 * @group core
+	 * @group support
 	 */
 	public function testSerializeAndRetrieve()
 	{
