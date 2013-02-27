@@ -13,6 +13,14 @@ class FieldsetTest extends \PHPUnit_Framework_TestCase {
 
 		// load the session.
 		\Session::load();
+
+		\Config::set('orchestra::support.form.fieldset', array(
+			'select'   => array(),
+			'textarea' => array(),
+			'input'    => array(),
+			'password' => array(),
+			'radio'    => array(),
+		));
 	}
 
 	/**
@@ -85,14 +93,103 @@ class FieldsetTest extends \PHPUnit_Framework_TestCase {
 			{
 				$c->label('Foo')->value('foobar');
 			});
+
+			$f->control('input:email', 'email_foo', function ($c)
+			{
+				$c->label('Foo')->value('foobar');
+			});
+
+			$f->control('password', 'password_foo', function ($c)
+			{
+				$c->label('Foo')->value('foobar');
+			});
+
+			$f->control('textarea', 'textarea_foo', function ($c)
+			{
+				$c->label('Foo')->value('foobar');
+			});
+
+			$f->control('radio', 'radio_foo', function ($c)
+			{
+				$c->label('Foo')->value('foobar')->checked(true);
+			});
+
+			$f->control('checkbox', 'checkbox_foo', function ($c)
+			{
+				$c->label('Foo')->value('foobar')->checked(true);
+			});
+
+			$f->control('select', 'select_foo', function ($c)
+			{
+				$c->label('Foo')->value('foobar')->options(array(
+					'yes' => 'Yes',
+					'no'  => 'No',
+				));
+			});
+
+			$f->control('text', 'a', 'A');
+
+			$f->control('text', function($c)
+			{
+				$c->name('b')->label('B')->value('value-of-B');
+			});
 		});
+
+		$refl     = new \ReflectionObject($stub);
+		$controls = $refl->getProperty('controls');
+		$controls->setAccessible(true);
 
 		$output = $stub->of('text_foo');
 
-		$this->assertEquals('foobar', $output->value);
-		$this->assertEquals('Foo', $output->label);
 		$this->assertEquals('text_foo', $output->id);
 		$this->assertEquals(\Form::text('text_foo', 'foobar'), 
+			 call_user_func($output->field, new \Laravel\Fluent, $output));
+
+		$output = $stub->of('email_foo');
+
+		$this->assertEquals('email_foo', $output->id);
+		$this->assertEquals(\Form::email('email_foo', 'foobar'), 
+			 call_user_func($output->field, new \Laravel\Fluent, $output));
+
+		$output = $stub->of('password_foo');
+		
+		$this->assertEquals('password_foo', $output->id);
+		$this->assertEquals(\Form::password('password_foo'), 
+			 call_user_func($output->field, new \Laravel\Fluent, $output));
+
+		$output = $stub->of('textarea_foo');
+
+		$this->assertEquals('textarea_foo', $output->id);
+		$this->assertEquals(\Form::textarea('textarea_foo', 'foobar'), 
+			 call_user_func($output->field, new \Laravel\Fluent, $output));
+
+		$output = $stub->of('radio_foo');
+
+		$this->assertEquals('radio_foo', $output->id);
+		$this->assertEquals(\Form::radio('radio_foo', 'foobar', true), 
+			 call_user_func($output->field, new \Laravel\Fluent, $output));
+
+		$output = $stub->of('checkbox_foo');
+
+		$this->assertEquals('checkbox_foo', $output->id);
+		$this->assertEquals(\Form::checkbox('checkbox_foo', 'foobar', true), 
+			 call_user_func($output->field, new \Laravel\Fluent, $output));
+
+		$output = $stub->of('select_foo');
+
+		$this->assertEquals('select_foo', $output->id);
+		$this->assertEquals(\Form::select('select_foo', array('yes' => 'Yes', 'no' => 'No'), 'foobar'), 
+			 call_user_func($output->field, new \Laravel\Fluent, $output));
+
+		$output = $stub->of('a');
+
+		$this->assertEquals('a', $output->id);
+		$this->assertEquals(\Form::text('a'), 
+			 call_user_func($output->field, new \Laravel\Fluent, $output));
+
+		$output = end($controls->getValue($stub));
+
+		$this->assertEquals(\Form::text('b', 'value-of-B'), 
 			 call_user_func($output->field, new \Laravel\Fluent, $output));
 	}
 

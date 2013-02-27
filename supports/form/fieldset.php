@@ -192,10 +192,10 @@ class Fieldset {
 					return F::select($name, $options, $value, HTML::markup($control->markup, $config['select']));
 				
 				case (in_array($type, array('checkbox', 'input:checkbox'))) :
-					return F::checkbox($name, null, $control->checked);
+					return F::checkbox($name, $value, $control->checked);
 				
 				case (in_array($type, array('radio', 'input:radio'))) :
-					return F::radio($name, $value, $row->checked);
+					return F::radio($name, $value, $control->checked);
 				
 				case (in_array($type, array('textarea', 'input:textarea'))):
 					return F::textarea($name, $value, HTML::markup($control->markup, $config['textarea']));
