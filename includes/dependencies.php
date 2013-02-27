@@ -2,11 +2,11 @@
 
 /*
 |--------------------------------------------------------------------------
-| Map Hybrid Classes as Orchestra
+| Map Orchestra\Support Classes as Orchestra
 |--------------------------------------------------------------------------
 |
 | This would allow user to access Orchestra namespace without having to
-| know Hybrid.
+| know Orchestra\Support.
 |
 */
 
@@ -16,6 +16,30 @@ Autoloader::alias('Orchestra\Support\HTML', 'Orchestra\HTML');
 Autoloader::alias('Orchestra\Support\Memory', 'Orchestra\Memory');
 Autoloader::alias('Orchestra\Support\Messages', 'Orchestra\Messages');
 Autoloader::alias('Orchestra\Support\Table', 'Orchestra\Table');
+
+/*
+|--------------------------------------------------------------------------
+| Register `orchestra.auth: roles` Event. 
+|--------------------------------------------------------------------------
+|
+| First, we need to ensure that Orchestra\Acl is compliance with our 
+| Eloquent Model, This would overwrite the default configuration.
+|
+*/
+
+Event::listen('orchestra.auth: roles', function ($user, $roles)
+{
+	// Check if user is null, where roles wouldn't be available,
+	// returning null would allow any other event listener (if any).
+	if (is_null($user)) return ;
+
+	foreach ($user->roles()->get() as $role)
+	{
+		array_push($roles, $role->name);
+	}
+
+	return $roles;
+});
 
 /*
 |--------------------------------------------------------------------------

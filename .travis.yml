@@ -18,7 +18,6 @@ before_install:
   - mv ./orchestral/orchestra ./laravel/bundles/orchestra
   - echo "<?php return array('orchestra' => array('auto' => true, 'handles' => 'orchestra'));" > ./laravel/application/bundles.php
   - cd ./laravel
-  - php artisan bundle:install hybrid
   - php artisan bundle:install Messages
   - sh -c "if [ '$DB' = 'pdo/pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS orchestra;' -U postgres; fi"
   - sh -c "if [ '$DB' = 'pdo/pgsql' ]; then psql -c 'CREATE DATABASE orchestra;' -U postgres; fi"
