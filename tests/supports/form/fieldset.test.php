@@ -135,10 +135,6 @@ class FieldsetTest extends \PHPUnit_Framework_TestCase {
 			});
 		});
 
-		$refl     = new \ReflectionObject($stub);
-		$controls = $refl->getProperty('controls');
-		$controls->setAccessible(true);
-
 		$output = $stub->of('text_foo');
 
 		$this->assertEquals('text_foo', $output->id);
@@ -187,7 +183,8 @@ class FieldsetTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(\Form::text('a'), 
 			 call_user_func($output->field, new \Laravel\Fluent, $output));
 
-		$output = end($controls->getValue($stub));
+		$controls = $stub->controls;
+		$output   = end($controls);
 
 		$this->assertEquals(\Form::text('b', 'value-of-B'), 
 			 call_user_func($output->field, new \Laravel\Fluent, $output));
