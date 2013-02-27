@@ -129,6 +129,36 @@ class GridTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Support\Form\Grid::hidden() method.
+	 *
+	 * @test
+	 * @group support
+	 */
+	public function testHiddenMethod()
+	{
+		$stub = new \Orchestra\Support\Form\Grid(array());
+		$stub->row(new \Laravel\Fluent(array(
+			'foo'    => 'foobar',
+			'foobar' => 'foo',
+		)));
+
+		$stub->hidden('foo');
+		$stub->hidden('foobar', function ($f)
+		{
+			$f->value('stubbed');
+		});
+
+		$refl    = new \ReflectionObject($stub);
+		$hiddens = $refl->getProperty('hiddens'); 
+		$hiddens->setAccessible(true);
+
+		$data = $hiddens->getValue($stub);
+
+		$this->assertEquals(\Form::hidden('foo', 'foobar'), $data['foo']);
+		$this->assertEquals(\Form::hidden('foobar', 'stubbed'), $data['foobar']);
+	}
+
+	/**
 	 * Test Orchestra\Support\Form\Grid magic method __call() throws 
 	 * exception.
 	 *

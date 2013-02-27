@@ -212,7 +212,7 @@ class Fieldset {
 			}
 		};
 
-		if (is_null($control->field)) $control->field = $field;
+		 ! is_null($control->field) or $control->field = $field;
 
 		$this->controls[]     = $control;
 		$this->key_map[$name] = count($this->controls) - 1;
@@ -232,7 +232,7 @@ class Fieldset {
 	{
 		if ( ! isset($this->key_map[$name]))
 		{
-			throw new InvalidArgumentsException("Control name [{$name}] is not available.");
+			throw new InvalidArgumentException("Control name [{$name}] is not available.");
 		}
 
 		$id = $this->key_map[$name];
@@ -255,10 +255,7 @@ class Fieldset {
 	 */
 	public function legend($name = null) 
 	{
-		if (is_null($name))
-		{
-			return $this->name;
-		}
+		if (is_null($name)) return $this->name;
 
 		$this->name = $name;
 	}
@@ -268,10 +265,12 @@ class Fieldset {
 	 */
 	public function __call($method, array $arguments = array())
 	{
-		if (in_array($method, array('controls', 'view')))
+		if ( ! in_array($method, array('controls', 'name')))
 		{
-			return $this->$method;
+			throw new InvalidArgumentException("Unable to use __call for [{$method}].");
 		}
+
+		return $this->$method;
 	}
 
 	/**
@@ -281,22 +280,28 @@ class Fieldset {
 	{
 		$key = $this->key($key);
 
-		if (in_array($key, array('markup', 'name', 'controls', 'view')))
+		if ( ! in_array($key, array('markup', 'name', 'controls')))
 		{
-			return $this->{$key};
+			throw new InvalidArgumentException("Unable to use __get for [{$key}].");
 		}
+
+		return $this->{$key};
 	}
 
 	/**
 	 * Magic Method for handling the dynamic setting of data.
 	 */
-	public function __set($key, array $values)
+	public function __set($key, $values)
 	{
 		$key = $this->key($key);
 
 		if ( ! in_array($key, array('markup')))
 		{
-			throw new Exception(__METHOD__.": unable to set {$key}");
+			throw new InvalidArgumentException("Unable to use __set for [{$key}].");
+		}
+		elseif ( ! is_array($values))
+		{
+			throw new InvalidArgumentException("Require values to be an array.");
 		}
 
 		$this->markup($values, null);
@@ -309,10 +314,12 @@ class Fieldset {
 	{
 		$key = $this->key($key);
 
-		if (in_array($key, array('markup', 'name', 'controls', 'view')))
+		if ( ! in_array($key, array('markup', 'name', 'controls')))
 		{
-			return isset($this->{$key});
+			throw new InvalidArgumentException("Unable to use __isset for [{$key}].");
 		}
+
+		return isset($this->{$key});
 	}
 
 	/**
