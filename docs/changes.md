@@ -16,7 +16,9 @@
 ## Version 1.1
 
 - Remove `ochestra_migrations` table, not to be implemented.
-- Remove `Orchestra\Response` alias.
+- Remove un-used `Orchestra\Response` alias.
+- Remove Hybrid Bundle dependencies and move all requirement to `Orchestra\Support`.
+- Update Twitter Bootstrap v2.3.0.
 
 <a name="v1.1.0"></a>
 ### v1.1.0

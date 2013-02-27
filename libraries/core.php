@@ -61,23 +61,6 @@ class Core {
 		// Make ACL instance for Orchestra
 		static::$cached['acl'] = Acl::make('orchestra');
 
-		// First, we need to ensure that Orchestra\Acl is compliance with
-		// our Eloquent Model, This would overwrite the default
-		// configuration
-		Event::override('orchestra.auth: roles', function ($user, $roles)
-		{
-			// Check if user is null, where roles wouldn't be available,
-			// returning null would allow any other event listener (if any).
-			if (is_null($user)) return ;
-
-			foreach ($user->roles()->get() as $role)
-			{
-				array_push($roles, $role->name);
-			}
-
-			return $roles;
-		});
-
 		try
 		{
 			// Initiate Memory class from IoC, this to allow advanced user
@@ -155,15 +138,6 @@ class Core {
 	 */
 	protected static function appearance()
 	{
-		// Set default size for Form
-		Config::set('orchestra::support.form.fieldset', array(
-			'select'   => array('class' => 'span12'),
-			'textarea' => array('class' => 'span12'),
-			'input'    => array('class' => 'span12'),
-			'password' => array('class' => 'span12'),
-			'radio'    => array(),
-		));
-
 		// Localize memory variable.
 		$memory = static::memory();
 
