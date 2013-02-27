@@ -18,7 +18,9 @@
 - Remove `ochestra_migrations` table, not to be implemented.
 - Remove un-used `Orchestra\Response` alias.
 - Remove Hybrid Bundle dependencies and move all requirement to `Orchestra\Support`.
-- Update Twitter Bootstrap v2.3.0.
+- Update Assets:
+  - Twitter Bootstrap v2.3.0.
+  - Zurb Foundation v3.2.5.
 
 <a name="v1.1.0"></a>
 ### v1.1.0
