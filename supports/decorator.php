@@ -1,8 +1,7 @@
 <?php namespace Orchestra\Support;
 
 use \Closure,
-	\InvalidArgumentException,
-	\Config;
+	\InvalidArgumentException;
 
 abstract class Decorator {
 
