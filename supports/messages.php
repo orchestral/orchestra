@@ -1,4 +1,4 @@
-<?php namespace Orchestra;
+<?php namespace Orchestra\Support;
 
 use \Session,
 	Laravel\Messages as M;

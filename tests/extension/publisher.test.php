@@ -66,6 +66,7 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 	 * Test instance of Orchestra\Extension\Publisher default driver
 	 *
 	 * @test
+	 * @group extension
 	 */
 	public function testInstanceOfDefaultDriver()
 	{
@@ -81,6 +82,7 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 	 * Test instance of Orchestra\Extension\Publisher using stub.
 	 *
 	 * @test
+	 * @group extension
 	 */
 	public function testInstanceOfPublisher()
 	{
@@ -97,6 +99,7 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Extension\Publisher::queue() method.
 	 *
 	 * @test
+	 * @group extension
 	 */
 	public function testQueueMethod()
 	{
@@ -113,6 +116,7 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Extension\Publisher::execute() method.
 	 *
 	 * @test
+	 * @group extension
 	 */
 	public function testExecuteMethodSuccessful()
 	{
@@ -132,6 +136,7 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Extension\Publisher::execute() method fail.
 	 *
 	 * @test
+	 * @group extension
 	 */
 	public function testExecuteMethodFail()
 	{
@@ -154,6 +159,7 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 	 * exception when not injecting Orchestra\Messages.
 	 *
 	 * @expectedException \InvalidArgumentException
+	 * @group extension
 	 */
 	public function testExecuteMethodThrowsInvalidArgumentException()
 	{

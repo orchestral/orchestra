@@ -57,6 +57,7 @@ class ManagesTest extends \Orchestra\Testable\TestCase {
 	 * Test Request to manage foo
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testRequestToManageFoo()
 	{
@@ -86,6 +87,7 @@ class ManagesTest extends \Orchestra\Testable\TestCase {
 	 * Test Request to manage invalid foobar
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testRequestToManageInvalidFoobar()
 	{

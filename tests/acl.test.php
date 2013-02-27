@@ -37,17 +37,19 @@ class AclTest extends \Orchestra\Testable\TestCase {
 	 * Test instanceof Orchestra\Acl
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testInstanceOfAcl()
 	{
 		$acl = \Orchestra\Acl::make();
-		$this->assertInstanceOf('\Hybrid\Acl\Container', $acl);
+		$this->assertInstanceOf('\Orchestra\Support\Acl\Container', $acl);
 	}
 
 	/**
 	 * Test model create CRUD for Orchestra\Model\Role does sync with Orchestra\Acl
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testModelCreateRoleSyncToAcl()
 	{
@@ -66,6 +68,7 @@ class AclTest extends \Orchestra\Testable\TestCase {
 	 * Test model update CRUD for Orchestra\Model\Role does sync with Orchestra\Acl
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testModelUpdateRoleSyncToAcl()
 	{
@@ -89,6 +92,7 @@ class AclTest extends \Orchestra\Testable\TestCase {
 	 * Test model delete CRUD for Orchestra\Model\Role does sync with Orchestra\Acl
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testModelDeleteRoleSyncToAcl()
 	{

@@ -31,6 +31,8 @@ class PaneTest extends \PHPUnit_Framework_TestCase {
 	 * Test instanceof stub.
 	 *
 	 * @test
+	 * @group core
+	 * @group widget
 	 */
 	public function testInstanceOfPane()
 	{
@@ -60,6 +62,8 @@ class PaneTest extends \PHPUnit_Framework_TestCase {
 	 * Test add an item return properly.
 	 *
 	 * @test
+	 * @group core
+	 * @group widget
 	 */
 	public function testAddMethod()
 	{

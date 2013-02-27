@@ -27,6 +27,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
 	 * `orchestra.started: backend`
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testConstructController()
 	{
@@ -49,6 +50,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Controller::after() triggers `orchestra.done: backend`
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testAfterFilter()
 	{

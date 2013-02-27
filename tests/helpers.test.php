@@ -28,6 +28,7 @@ class HelpersTest extends \Orchestra\Testable\TestCase {
 	 * Test handles() return proper URL.
 	 *
 	 * @test
+	 * @group helper
 	 */
 	public function testHandlesReturnProperURL()
 	{
@@ -42,6 +43,7 @@ class HelpersTest extends \Orchestra\Testable\TestCase {
 	 * Test memorize() return proper values.
 	 *
 	 * @test
+	 * @group helper
 	 */
 	public function testMemorizeReturnProperValues()
 	{
@@ -53,6 +55,7 @@ class HelpersTest extends \Orchestra\Testable\TestCase {
 	 * Test locate() return proper view path.
 	 *
 	 * @test
+	 * @group helper
 	 */
 	public function testLocateReturnProperViewPath()
 	{

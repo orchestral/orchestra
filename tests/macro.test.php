@@ -26,6 +26,7 @@ class MacroTest extends \Orchestra\Testable\TestCase {
 	 * Test HTML::title() macro.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testHTMLTitleMacro()
 	{
@@ -41,6 +42,9 @@ class MacroTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * Test blade compile @placeholder
+	 * 
+	 * @test
+	 * @group core
 	 */
 	public function testBladeCompilePlaceholder()
 	{

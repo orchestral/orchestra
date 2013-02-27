@@ -5,9 +5,10 @@
 class TableTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
-	 * Test Orchestra\Table is an instance of Hybrid\Table
+	 * Test Orchestra\Table is an instance of Orchestra\Support\Table
 	 *
 	 * @test
+	 * @group support
 	 */
 	public function testInstanceOfTable()
 	{
@@ -17,7 +18,7 @@ class TableTest extends \PHPUnit_Framework_TestCase {
 
 		$grid->setAccessible(true);
 
-		$this->assertInstanceOf('\Hybrid\Table', $table);
-		$this->assertInstanceOf('\Hybrid\Table\Grid', $grid->getValue($table));
+		$this->assertInstanceOf('\Orchestra\Support\Table', $table);
+		$this->assertInstanceOf('\Orchestra\Support\Table\Grid', $grid->getValue($table));
 	}
 }

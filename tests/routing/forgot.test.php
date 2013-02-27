@@ -36,6 +36,7 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 * Get Mailer Mock
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function getMailerMock()
 	{
@@ -54,6 +55,7 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/forgot
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetForgotPage()
 	{
@@ -68,6 +70,7 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/forgot with auth
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetForgotPageWithAuth()
 	{
@@ -85,6 +88,7 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/forgot with invalid csrf
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostForgotPageFailedInvalidCsrf()
 	{
@@ -100,6 +104,7 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/forgot
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostForgotPage()
 	{
@@ -128,6 +133,7 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/forgot with validation error.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostForgotPageValidationError()
 	{
@@ -147,6 +153,7 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/forgot with user not found error.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostForgotPageUserNotFoundError()
 	{
@@ -167,6 +174,7 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/forgot with email wasn't sent error.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostForgotPageEmailWasNotSentError()
 	{
@@ -188,6 +196,7 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/forgot/reset/(id)/(hash)
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetResetPasswordPage()
 	{
@@ -212,6 +221,7 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 * argument error.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetResetPasswordPageInvalidArgumentError()
 	{
@@ -226,6 +236,7 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 * hash error.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetResetPasswordPageInvalidHashError()
 	{
@@ -244,6 +255,7 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 * sent error.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetResetPasswordPageEmailWasNotSentError()
 	{

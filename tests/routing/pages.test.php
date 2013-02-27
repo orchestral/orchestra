@@ -57,6 +57,7 @@ class PagesTest extends \Orchestra\Testable\TestCase {
 	 * Test Request to manage foo
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testRequestToPagesFoo()
 	{
@@ -88,6 +89,7 @@ class PagesTest extends \Orchestra\Testable\TestCase {
 	 * Test Request to manage invalid foobar
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testRequestToPagesInvalidFoobar()
 	{

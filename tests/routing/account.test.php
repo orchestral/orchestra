@@ -36,6 +36,7 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/account when not logged-in
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetEditProfilePageWithoutAuth()
 	{
@@ -51,6 +52,7 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/account
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetEditProfilePage()
 	{
@@ -67,6 +69,7 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/account/password when not logged-in
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetEditPasswordPageWithoutAuth()
 	{
@@ -82,6 +85,7 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 * Test Request GET (orchestra)/account/password
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testGetEditPasswordPage()
 	{
@@ -98,6 +102,7 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/account
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostEditProfilePage()
 	{
@@ -124,6 +129,7 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/account with validation error.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostEditProfilePageWithValidationError()
 	{
@@ -146,6 +152,7 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/account with database error.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostEditProfilePageDatabaseError()
 	{
@@ -177,6 +184,7 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/account/password
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostEditPasswordPage()
 	{
@@ -207,6 +215,7 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 * Test Request POST (orchestra)/account/password with database error.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostEditPasswordPageDatabaseError()
 	{
@@ -240,6 +249,7 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 * when new password and confirm password is not the same.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostEditPasswordPageMismatchValidationError()
 	{
@@ -264,6 +274,7 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 * when old password is not correct.
 	 *
 	 * @test
+	 * @group routing
 	 */
 	public function testPostEditPasswordPageIncorrectOldPasswordError()
 	{

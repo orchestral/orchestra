@@ -2,20 +2,6 @@
 
 /*
 |--------------------------------------------------------------------------
-| Load dependencies
-|--------------------------------------------------------------------------
-|
-| Register and start Hybrid bundle if it's not registered in
-| `application/bundles.php`.
-|
-*/
-
- ! Bundle::exists('hybrid') and Bundle::register('hybrid');
-
-Bundle::start('hybrid');
-
-/*
-|--------------------------------------------------------------------------
 | Map Hybrid Classes as Orchestra
 |--------------------------------------------------------------------------
 |
@@ -24,12 +10,27 @@ Bundle::start('hybrid');
 |
 */
 
-Autoloader::alias('Hybrid\Acl', 'Orchestra\Acl');
-Autoloader::alias('Hybrid\Form', 'Orchestra\Form');
-Autoloader::alias('Hybrid\HTML', 'Orchestra\HTML');
-Autoloader::alias('Hybrid\Memory', 'Orchestra\Memory');
-Autoloader::alias('Hybrid\Response', 'Orchestra\Response');
-Autoloader::alias('Hybrid\Table', 'Orchestra\Table');
+Autoloader::alias('Orchestra\Support\Acl', 'Orchestra\Acl');
+Autoloader::alias('Orchestra\Support\Form', 'Orchestra\Form');
+Autoloader::alias('Orchestra\Support\HTML', 'Orchestra\HTML');
+Autoloader::alias('Orchestra\Support\Memory', 'Orchestra\Memory');
+Autoloader::alias('Orchestra\Support\Messages', 'Orchestra\Messages');
+Autoloader::alias('Orchestra\Support\Table', 'Orchestra\Table');
+
+/*
+|--------------------------------------------------------------------------
+| Register Orchestra\Support\Memory::shutdown()
+|--------------------------------------------------------------------------
+|
+| Require to run Orchestra\Support\Memory::shutdown() to write configuration
+| or data update to storage on `laravel.done`.
+|
+*/
+
+Event::listen('laravel.done', function() 
+{ 
+	Orchestra\Support\Memory::shutdown(); 
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -223,25 +224,11 @@ if ( ! IoC::registered('orchestra.memory'))
 {
 	IoC::singleton('orchestra.memory', function ()
 	{
-		return Orchestra\Memory::make('fluent.orchestra_options');
+		return Orchestra\Support\Memory::make('fluent.orchestra_options');
 	});
 }
 
-Orchestra\Memory::extend('user', function()
+Orchestra\Support\Memory::extend('user', function()
 {
 	return new Orchestra\Repository\User;
-});
-
-/*
-|--------------------------------------------------------------------------
-| Orchestra View IoC for Hybrid Bundle
-|--------------------------------------------------------------------------
-|
-| Lets Orchestra handle View instance using IoC for Hybrid Bundle.
-|
-*/
-
-IoC::register('hybrid.view', function ($view)
-{
-	return Orchestra\View::make($view);
 });

@@ -64,7 +64,7 @@ class Core {
 		// First, we need to ensure that Orchestra\Acl is compliance with
 		// our Eloquent Model, This would overwrite the default
 		// configuration
-		Config::set('hybrid::auth.roles', function ($user, $roles)
+		Event::override('orchestra.auth: roles', function ($user, $roles)
 		{
 			// Check if user is null, where roles wouldn't be available,
 			// returning null would allow any other event listener (if any).
@@ -156,7 +156,7 @@ class Core {
 	protected static function appearance()
 	{
 		// Set default size for Form
-		Config::set('hybrid::form.fieldset', array(
+		Config::set('orchestra::support.form.fieldset', array(
 			'select'   => array('class' => 'span12'),
 			'textarea' => array('class' => 'span12'),
 			'input'    => array('class' => 'span12'),

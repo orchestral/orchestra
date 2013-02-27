@@ -1,5 +1,5 @@
 jQuery(function startOrchestra ($) { 'use strict';
-	var ev = Javie.Events.make();
+	var ev = new Javie.Events();
 
 	$('select[role="switcher"]').each(function(i, item) {
 		var el = $(item);

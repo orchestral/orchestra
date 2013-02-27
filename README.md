@@ -21,11 +21,8 @@ Orchestra Platform can be downloaded directly from Artisan using the following c
 In the `application/bundles.php` file, add the following entries:
 
 	'orchestra' => array('auto' => true, 'handles' => 'orchestra'),
-	'hybrid',
 
 > **Note on Orchestra**, you can change `handles` value to anything unique, such as `admin` for example.
-
-> **Note on Hybrid**, registering Hybrid bundle is optional, but allow you to upgrade Orchestra Platform and Hybrid Bundle with just a single `php artisan bundle:upgrade`.
 
 #### Publish Bundle Asset
 

@@ -80,7 +80,7 @@ class Orchestra_Publisher_Controller extends Controller {
 		{
 			Publisher::connect($input);
 		}
-		catch(Hybrid\FTP\ServerException $e)
+		catch(Orchestra\Support\FTP\ServerException $e)
 		{
 			Session::forget('orchestra.ftp');
 

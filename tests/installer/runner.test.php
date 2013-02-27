@@ -61,6 +61,7 @@ class RunnerTest extends \Orchestra\Testable\TestCase {
 	 * Test Installation generate proper configuration
 	 *
 	 * @test
+	 * @group installer
 	 */
 	public function testInstallationGenerateProperConfiguration()
 	{
@@ -70,7 +71,7 @@ class RunnerTest extends \Orchestra\Testable\TestCase {
 
 		$memory = \Orchestra\Core::memory();
 
-		$this->assertInstanceOf('\Hybrid\Memory\Fluent', $memory);
+		$this->assertInstanceOf('\Orchestra\Support\Memory\Fluent', $memory);
 		$this->assertEquals('Orchestra Test Suite', $memory->get('site.name'));
 		$this->assertEquals('', $memory->get('site.description'));
 		$this->assertEquals('default', $memory->get('site.theme.frontend'));
@@ -84,6 +85,7 @@ class RunnerTest extends \Orchestra\Testable\TestCase {
 	 * Test administrator user is properly created.
 	 *
 	 * @test
+	 * @group installer
 	 */
 	public function testAdministratorUserIsCreated()
 	{
@@ -100,7 +102,7 @@ class RunnerTest extends \Orchestra\Testable\TestCase {
 
 			$acl = \Orchestra\Core::acl();
 
-			$this->assertInstanceOf('\Hybrid\Acl\Container', $acl);
+			$this->assertInstanceOf('\Orchestra\Support\Acl\Container', $acl);
 
 			if ($acl->can('manage-orchestra'))
 			{
@@ -123,6 +125,7 @@ class RunnerTest extends \Orchestra\Testable\TestCase {
 	 * Test all events is properly fired during installation.
 	 *
 	 * @test
+	 * @group installer
 	 */
 	public function testInstallationEventIsFired()
 	{

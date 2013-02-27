@@ -35,6 +35,7 @@ class UserTest extends \Orchestra\Testable\TestCase {
 	 * Test instanceof Orchestra\Presenter\User::table()
 	 *
 	 * @test
+	 * @group presenter
 	 */
 	public function testInstanceOfUserTable()
 	{
@@ -50,13 +51,14 @@ class UserTest extends \Orchestra\Testable\TestCase {
 
 		$this->assertInstanceOf('\Orchestra\Table', $stub);
 		$this->assertEquals(\Orchestra\Table::of('orchestra.users'), $stub);
-		$this->assertInstanceOf('\Hybrid\Table\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Support\Table\Grid', $grid);
 	}
 
 	/**
 	 * Test instanceof Orchestra\Presenter\User::table_action()
 	 *
 	 * @test
+	 * @group presenter
 	 */
 	public function testInstanceOfUserTableAction()
 	{
@@ -76,7 +78,7 @@ class UserTest extends \Orchestra\Testable\TestCase {
 		$this->assertNull($output);
 		$this->assertInstanceOf('\Orchestra\Table', $stub);
 		$this->assertEquals(\Orchestra\Table::of('orchestra.users'), $stub);
-		$this->assertInstanceOf('\Hybrid\Table\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Support\Table\Grid', $grid);
 
 		ob_start();
 		echo $stub->render();
@@ -99,6 +101,7 @@ class UserTest extends \Orchestra\Testable\TestCase {
 	 * Test instanceof Orchestra\Presenter\User::form()
 	 *
 	 * @test
+	 * @group presenter
 	 */
 	public function testInstanceOfUserForm()
 	{
@@ -110,9 +113,9 @@ class UserTest extends \Orchestra\Testable\TestCase {
 		$grid->setAccessible(true);
 		$grid = $grid->getValue($stub);
 
-		$this->assertInstanceOf('\Orchestra\Form', $stub);
+		$this->assertInstanceOf('\Orchestra\Support\Form', $stub);
 		$this->assertEquals(\Orchestra\Form::of('orchestra.users'), $stub);
-		$this->assertInstanceOf('\Hybrid\Form\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Support\Form\Grid', $grid);
 
 		ob_start();
 		echo $stub->render();
