@@ -9,7 +9,7 @@ return array(
 		| Default Error Message String
 		|------------------------------------------------------------------
 		|
-		| Set default error message string format for Hybrid\Form.
+		| Set default error message string format for Orchestra\Support\Form.
 		|
 		*/
 
