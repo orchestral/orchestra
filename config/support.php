@@ -9,7 +9,7 @@ return array(
 		| Default Error Message String
 		|------------------------------------------------------------------
 		|
-		| Set default error message string format for Hybrid\Form.
+		| Set default error message string format for Orchestra\Support\Form.
 		|
 		*/
 
@@ -49,10 +49,10 @@ return array(
 		*/
 
 		'fieldset' => array(
-			'select'   => array('class' => 'span4'),
-			'textarea' => array('class' => 'span4'),
-			'input'    => array('class' => 'span4'),
-			'password' => array('class' => 'span4'),
+			'select'   => array('class' => 'span12'),
+			'textarea' => array('class' => 'span12'),
+			'input'    => array('class' => 'span12'),
+			'password' => array('class' => 'span12'),
 			'radio'    => array(),
 			'checkbox' => array(),
 		),
