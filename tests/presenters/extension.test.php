@@ -50,6 +50,7 @@ class ExtensionTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Presenter\Extension::form().
 	 *
 	 * @test
+	 * @group presenter
 	 */
 	public function testInstanceOfExtensionForm()
 	{
@@ -64,7 +65,7 @@ class ExtensionTest extends \Orchestra\Testable\TestCase {
 
 		$this->assertInstanceOf('\Orchestra\Form', $stub);
 		$this->assertEquals(\Orchestra\Form::of('orchestra.extension: foo'), $stub);
-		$this->assertInstanceOf('\Hybrid\Form\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Support\Form\Grid', $grid);
 
 		ob_start();
 		echo $stub->render();

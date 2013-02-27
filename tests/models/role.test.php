@@ -8,6 +8,7 @@ class RoleTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Model\Role::admin() method.
 	 *
 	 * @test
+	 * @group model
 	 */
 	public function testAdminMethod()
 	{
@@ -20,6 +21,7 @@ class RoleTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Model\Role::member() method.
 	 *
 	 * @test
+	 * @group model
 	 */
 	public function testMemberMethod()
 	{
@@ -32,6 +34,7 @@ class RoleTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Model\Role::users() relationship method.
 	 *
 	 * @test
+	 * @group model
 	 */
 	public function testUsersRelationship()
 	{

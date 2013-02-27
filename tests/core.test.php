@@ -30,6 +30,7 @@ class CoreTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Core::start() would fire events.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testStartMethod()
 	{
@@ -46,7 +47,7 @@ class CoreTest extends \PHPUnit_Framework_TestCase {
 		$menu   = \Orchestra\Core::menu();
 
 		$this->assertNotNull($memory);
-		$this->assertInstanceOf('\Hybrid\Memory\Driver', $memory);
+		$this->assertInstanceOf('\Orchestra\Support\Memory\Driver', $memory);
 		$this->assertNotNull($menu);
 		$this->assertInstanceOf('\Orchestra\Widget\Menu', $menu);
 		$this->assertEquals('foo', $_SERVER['test.orchestra.started']);
@@ -58,6 +59,7 @@ class CoreTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Core::shutdown() triggers `orchestra.done`.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testShutdownMethod()
 	{
@@ -78,6 +80,7 @@ class CoreTest extends \PHPUnit_Framework_TestCase {
 	 * Test validity of Orchestra\Core helper methods.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testHelperMethods()
 	{
@@ -94,9 +97,9 @@ class CoreTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($expected, \Orchestra\Core::menu('app'));
 		$this->assertInstanceOf('\Orchestra\Widget\Driver', 
 			\Orchestra\Core::menu('app'));
-		$this->assertInstanceOf('\Hybrid\Memory\Driver', 
+		$this->assertInstanceOf('\Orchestra\Support\Memory\Driver', 
 			\Orchestra\Core::memory());
-		$this->assertInstanceOf('Hybrid\Acl\Container', 
+		$this->assertInstanceOf('Orchestra\Support\Acl\Container', 
 			\Orchestra\Core::acl());
 
 		\Orchestra\Core::shutdown();
@@ -106,13 +109,13 @@ class CoreTest extends \PHPUnit_Framework_TestCase {
 	 * Test Configuration is properly configured.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testConfigurationIsProperlyConfigured()
 	{
 		\Orchestra\Core::start();
 		
-		$this->assertTrue(is_callable(\Config::get('hybrid::auth.roles')));
-		$this->assertTrue(is_array(\Config::get('hybrid::form.fieldset')));
+		$this->assertTrue(is_array(\Config::get('orchestra::support.form.fieldset')));
 		$this->assertTrue(\IoC::registered('orchestra.theme: backend'));
 		$this->assertTrue(\IoC::registered('orchestra.theme: frontend'));
 

@@ -44,6 +44,7 @@ class ConfigTest extends \Orchestra\Testable\TestCase {
 	 * Test map DEFAULT_BUNDLE configuration.
 	 *
 	 * @test
+	 * @group extension
 	 */
 	public function testMapMethod()
 	{

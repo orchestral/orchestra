@@ -25,6 +25,7 @@ class PublisherTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Installer\Publisher can be constructed.
 	 *
 	 * @test
+	 * @group installer
 	 */
 	public function testConstructPublisher()
 	{
@@ -37,6 +38,7 @@ class PublisherTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Installer\Publisher::publish() method.
 	 *
 	 * @test
+	 * @group installer
 	 */
 	public function testPublishMethod()
 	{

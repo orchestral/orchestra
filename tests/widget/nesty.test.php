@@ -31,6 +31,8 @@ class NestyTest extends \PHPUnit_Framework_TestCase {
 	 * Test instanceof stub.
 	 *
 	 * @test
+	 * @group core
+	 * @group widget
 	 */
 	public function testInstanceOfNesty()
 	{
@@ -48,6 +50,8 @@ class NestyTest extends \PHPUnit_Framework_TestCase {
 	 * string.
 	 *
 	 * @test
+	 * @group core
+	 * @group widget
 	 */
 	public function testNewInstanceReturnEmptyArray()
 	{
@@ -59,6 +63,8 @@ class NestyTest extends \PHPUnit_Framework_TestCase {
 	 * Test adding an item to Orchestra\Widget\Nesty.
 	 *
 	 * @test
+	 * @group core
+	 * @group widget
 	 */
 	public function testAddMethod()
 	{

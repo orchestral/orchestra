@@ -26,6 +26,7 @@ class ThemeTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Theme::__construct()
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testConstructThemeContainer()
 	{
@@ -44,6 +45,7 @@ class ThemeTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Theme::container()
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testThemeContainer()
 	{
@@ -56,6 +58,7 @@ class ThemeTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Theme::resolve()
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testThemeResolver()
 	{
@@ -75,6 +78,7 @@ class ThemeTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Theme::__callStatic() passthru methods.
 	 *
 	 * @test
+	 * @group core
 	 */
 	public function testCallStaticPassthruMethods()
 	{

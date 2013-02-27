@@ -2,9 +2,9 @@
 
 use \IoC,
 	\Session,
-	Hybrid\FTP as FTPClient,
-	Hybrid\FTP\RuntimeException,
-	Hybrid\FTP\ServerException,
+	Orchestra\Support\FTP as FTPClient,
+	Orchestra\Support\FTP\RuntimeException,
+	Orchestra\Support\FTP\ServerException,
 	Orchestra\Extension;
 
 class FTP extends Driver {
@@ -12,7 +12,7 @@ class FTP extends Driver {
 	/**
 	 * FTP Connection instance.
 	 * 
-	 * @var Hybrid\FTP
+	 * @var Orchestra\Support\FTP
 	 */
 	protected $connection = null;
 
@@ -60,7 +60,7 @@ class FTP extends Driver {
 	 * Get service connection instance.
 	 *
 	 * @access public
-	 * @return Hybrid\FTP
+	 * @return Orchestra\Support\FTP
 	 */
 	public function connection()
 	{

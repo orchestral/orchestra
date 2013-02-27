@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Repository;
 
-use Hybrid\Memory\Driver,
+use Orchestra\Support\Memory\Driver,
 	Orchestra\Model\User\Meta as User_Meta;
 
 class User extends Driver {

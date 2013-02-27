@@ -52,6 +52,7 @@ class ResourceTest extends \Orchestra\Testable\TestCase {
 	 * Test instanceof Orchestra\Presenter\Resource::table()
 	 *
 	 * @test
+	 * @group presenter
 	 */
 	public function testInstanceOfResourceTable()
 	{
@@ -65,7 +66,7 @@ class ResourceTest extends \Orchestra\Testable\TestCase {
 
 		$this->assertInstanceOf('\Orchestra\Table', $stub);
 		$this->assertEquals(\Orchestra\Table::of('orchestra.resources: list'), $stub);
-		$this->assertInstanceOf('\Hybrid\Table\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Support\Table\Grid', $grid);
 
 		ob_start();
 		echo $stub->render();

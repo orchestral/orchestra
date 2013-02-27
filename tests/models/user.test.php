@@ -17,6 +17,7 @@ class UserTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Model\User constant.
 	 *
 	 * @test
+	 * @group model
 	 */
 	public function testConfiguration()
 	{
@@ -28,6 +29,7 @@ class UserTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Model\User roles relationship.
 	 *
 	 * @test
+	 * @group model
 	 */
 	public function testRolesRelationship()
 	{
@@ -45,6 +47,7 @@ class UserTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Model\User::localtime() method.
 	 *
 	 * @test
+	 * @group model
 	 */
 	public function testTimezoneMethod()
 	{
@@ -65,6 +68,7 @@ class UserTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Model\User::search() method.
 	 *
 	 * @test
+	 * @group model
 	 */
 	public function testSearchMethod()
 	{

@@ -38,6 +38,7 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Installer\Requirement can be constructed.
 	 *
 	 * @test
+	 * @group installer
 	 */
 	public function testConstructRequirement()
 	{
@@ -49,6 +50,7 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Installer\Requirement::installable() return a boolean.
 	 *
 	 * @test
+	 * @group installer
 	 */
 	public function testInstallableMethodReturnBoolean()
 	{
@@ -65,6 +67,7 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Installer\Requirement::checklist() return an array.
 	 *
 	 * @test
+	 * @group installer
 	 */
 	public function testChecklistMethodReturnArray()
 	{
@@ -82,6 +85,7 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 	 * writable.
 	 *
 	 * @test
+	 * @group installer
 	 */
 	public function testChecklistMethodIsNotWritable()
 	{

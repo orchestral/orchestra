@@ -35,6 +35,7 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Presenter\Account::form().
 	 *
 	 * @test
+	 * @group presenter
 	 */
 	public function testInstanceOfAccountForm()
 	{
@@ -50,13 +51,14 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 
 		$this->assertInstanceOf('\Orchestra\Form', $stub);
 		$this->assertEquals(\Orchestra\Form::of('orchestra.account'), $stub);
-		$this->assertInstanceOf('\Hybrid\Form\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Support\Form\Grid', $grid);
 	}
 
 	/**
 	 * Test Orchestra\Presenter\Account::form_password().
 	 *
 	 * @test
+	 * @group presenter
 	 */
 	public function testInstanceOfEditPasswordForm()
 	{
@@ -74,6 +76,6 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 
 		$this->assertInstanceOf('\Orchestra\Form', $stub);
 		$this->assertEquals(\Orchestra\Form::of('orchestra.account: password'), $stub);
-		$this->assertInstanceOf('\Hybrid\Form\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Support\Form\Grid', $grid);
 	}
 }

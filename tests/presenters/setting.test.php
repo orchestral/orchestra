@@ -51,6 +51,7 @@ class SettingTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Presenter\Setting::form().
 	 *
 	 * @test
+	 * @group presenter
 	 */
 	public function testInstanceOfSettingForm()
 	{
@@ -63,6 +64,6 @@ class SettingTest extends \Orchestra\Testable\TestCase {
 
 		$this->assertInstanceOf('\Orchestra\Form', $stub);
 		$this->assertEquals(\Orchestra\Form::of('orchestra.settings'), $stub);
-		$this->assertInstanceOf('\Hybrid\Form\Grid', $grid);
+		$this->assertInstanceOf('\Orchestra\Support\Form\Grid', $grid);
 	}
 }

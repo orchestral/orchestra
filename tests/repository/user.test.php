@@ -46,11 +46,13 @@ class UserTest extends \Orchestra\Testable\TestCase {
 	 * Test instance of Orchestra\Repository\User
 	 *
 	 * @test
+	 * @group repository
 	 */
 	public function testInstanceOfUserRepository()
 	{
-		$this->assertInstanceOf('\Hybrid\Memory\Driver', $this->stub);
-		$this->assertInstanceOf('\Hybrid\Memory\Driver', new \Orchestra\Repository\User);
+		$this->assertInstanceOf('\Orchestra\Support\Memory\Driver', $this->stub);
+		$this->assertInstanceOf('\Orchestra\Support\Memory\Driver', 
+			new \Orchestra\Repository\User);
 	
 		$refl    = new \ReflectionObject($this->stub);
 		$storage = $refl->getProperty('storage');
@@ -67,6 +69,7 @@ class UserTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Repository\User::get()
 	 *
 	 * @test
+	 * @group repository
 	 */
 	public function testGetMethod()
 	{
@@ -111,6 +114,7 @@ class UserTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Repository\User::put()
 	 *
 	 * @test
+	 * @group repository
 	 */
 	public function testPutMethod()
 	{
