@@ -11,23 +11,6 @@ class MemoryTest extends \PHPUnit_Framework_TestCase {
 	{
 		\Config::set('application.profiler', false);
 
-		$mock = \Orchestra\Support\Memory::make('runtime.mock');
-		$mock->put('foo.bar', 'hello world');
-		$mock->put('username', 'laravel');
-
-		$mock = \Orchestra\Support\Memory::make('cache.mock');
-		$mock->put('foo.bar', 'hello world');
-		$mock->put('username', 'laravel');
-		$mock->put('foobar', function ()
-		{
-			return 'hello world foobar';
-		});
-		
-		$mock->get('hello.world', function () use ($mock)
-		{
-			return $mock->put('hello.world', 'HELLO WORLD');
-		});
-
 		\Orchestra\Support\Memory::extend('stub', function($driver, $config) 
 		{
 			return new MemoryStub($driver, $config);
@@ -57,50 +40,6 @@ class MemoryTest extends \PHPUnit_Framework_TestCase {
 	public function testMakeExpectedException()
 	{
 		\Orchestra\Support\Memory::make('orm');
-	}
-	
-	/**
-	 * Test that Orchestra\Support\Memory return valid values
-	 *
-	 * @test
-	 * @group support
-	 */
-	public function testGetRuntimeMock()
-	{
-		$mock = \Orchestra\Support\Memory::make('runtime.mock');
-		
-		$this->assertEquals(array('bar' => 'hello world'), $mock->get('foo'));
-		$this->assertEquals('hello world', $mock->get('foo.bar'));
-		$this->assertEquals('laravel', $mock->get('username'));
-	}
-
-	/**
-	 * Test that Orchestra\Support\Memory return valid values
-	 *
-	 * @test
-	 * @group support
-	 */
-	public function testCacheMock()
-	{
-		$mock = \Orchestra\Support\Memory::make('cache.mock');
-		
-		$this->assertEquals(array('bar' => 'hello world'), $mock->get('foo'));
-		$this->assertEquals('hello world', $mock->get('foo.bar'));
-		$this->assertEquals('laravel', $mock->get('username'));
-	}
-
-	/**
-	 * Test that Orchestra\Support\Memory return valid values
-	 *
-	 * @test
-	 * @group support
-	 */
-	public function testCacheMockWithClosure()
-	{
-		$mock = \Orchestra\Support\Memory::make('cache.mock');
-		
-		$this->assertEquals('hello world foobar', $mock->get('foobar'));
-		$this->assertEquals('HELLO WORLD', $mock->get('hello.world'));
 	}
 
 	/**
@@ -139,7 +78,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase {
 	 * @test
 	 * @group support
 	 */
-	public function testCacheMorckForgetMethod()
+	public function testCacheMockForgetMethod()
 	{
 		$mock = \Orchestra\Support\Memory::make('cache.mock');
 		$mock->forget('hello.world');
@@ -155,7 +94,6 @@ class MemoryTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testShutdownMethod()
 	{
-
 		$stub = \Orchestra\Support\Memory::make();
 		$this->assertTrue($stub === \Orchestra\Support\Memory::make());
 
