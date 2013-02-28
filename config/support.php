@@ -56,6 +56,58 @@ return array(
 			'radio'    => array(),
 			'checkbox' => array(),
 		),
+
+		'templates' => array(
+			'select' => function($data)
+			{
+				return Form::select(
+					$data->name, 
+					$data->options, 
+					$data->value, 
+					$data->markup
+				);
+			},
+			'checkbox' => function ($data)
+			{
+				return Form::checkbox(
+					$data->name, 
+					$data->value, 
+					$data->checked
+				);
+			},
+			'radio' => function ($data)
+			{
+				return Form::radio(
+					$data->name, 
+					$data->value, 
+					$data->checked
+				);
+			},
+			'textarea' => function ($data)
+			{
+				return Form::textarea(
+					$data->name,
+					$data->value,
+					$data->markup
+				);
+			},
+			'password' => function ($data)
+			{
+				return Form::password(
+					$data->name, 
+					$data->markup
+				);
+			},
+			'input' => function ($data)
+			{
+				return Form::input(
+					$data->type,
+					$data->name,
+					$data->value, 
+					$data->markup
+				);
+			},
+		),
 	),
 
 	'table' => array(

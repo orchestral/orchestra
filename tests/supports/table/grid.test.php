@@ -89,17 +89,53 @@ class GridTest extends \PHPUnit_Framework_TestCase {
 	public function testOfMethod()
 	{
 		$stub = new \Orchestra\Support\Table\Grid(array());
+		$expected = array(
+			new \Laravel\Fluent(array(
+				'id'           => 'id',
+				'label'        => 'Id',
+				'value'        => 'Foobar',
+				'label_markup' => array(),
+				'cell_markup'  => function ($row) { return array(); }
+			)),
+			new \Laravel\Fluent(array(
+				'id'           => 'foo1',
+				'label'        => 'Foo1',
+				'value'        => 'Foo1 value',
+				'label_markup' => array(),
+				'cell_markup'  => function ($row) { return array(); }
+			)),
+			new \Laravel\Fluent(array(
+				'id'           => 'foo2',
+				'label'        => 'Foo2',
+				'value'        => 'Foo2 value',
+				'label_markup' => array(),
+				'cell_markup'  => function ($row) { return array(); }
+			))
+		);
 
 		$stub->column('id', function ($c)
 		{
 			$c->value('Foobar');
 		});
 
+		$stub->column(function ($c)
+		{
+			$c->id('foo1')->label('Foo1');
+			$c->value('Foo1 value');
+		});
+
+		$stub->column('Foo2', 'foo2')->value('Foo2 value');
+
+		$stub->markup = array('class' => 'foo');
+
 		$output = $stub->of('id');
 
 		$this->assertEquals('Foobar', $output->value);
 		$this->assertEquals('Id', $output->label);
 		$this->assertEquals('id', $output->id);
+
+		$this->assertEquals(array('class' => 'foo'), $stub->markup);
+		$this->assertEquals($expected, $stub->columns());
 	}
 
 	/**
