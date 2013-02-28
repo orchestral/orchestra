@@ -71,44 +71,6 @@ class AclTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Support\Acl\Container::check() method throws exception.
-	 *
-	 * @expectedException InvalidArgumentException
-	 * @group support
-	 */
-	public function testCheckMethodUsingMockOneThrowsException()
-	{
-		$acl = \Orchestra\Support\Acl::make('mock-one');
-		$acl->check('guest', 'view foo');
-	}
-
-	/**
-	 * Test Orchestra\Support\Acl\Container::allow() method throws exception
-	 * for roles.
-	 *
-	 * @expectedException InvalidArgumentException
-	 * @group support
-	 */
-	public function testAllowMethodUsingMockOneThrowsExceptionForRoles()
-	{
-		$acl = \Orchestra\Support\Acl::make('mock-one');
-		$acl->allow('boss', 'view blog');
-	}
-
-	/**
-	 * Test Orchestra\Support\Acl\Container::allow() method throws exception
-	 * for actions.
-	 *
-	 * @expectedException InvalidArgumentException
-	 * @group support
-	 */
-	public function testAllowMethodUsingMockOneThrowsExceptionForActions()
-	{
-		$acl = \Orchestra\Support\Acl::make('mock-one');
-		$acl->allow('guest', 'view foo');
-	}
-
-	/**
 	 * Test Orchestra\Support\Acl::can() given 'mock-one'
 	 *
 	 * @test
