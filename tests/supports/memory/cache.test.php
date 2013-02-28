@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Tests\Support\Memory;
+<?php namespace Orchestra\Tests\Supports\Memory;
 
 \Bundle::start('orchestra');
 
