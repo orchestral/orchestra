@@ -73,20 +73,6 @@ class MemoryTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Support\Memory::forget() method.
-	 *
-	 * @test
-	 * @group support
-	 */
-	public function testCacheMockForgetMethod()
-	{
-		$mock = \Orchestra\Support\Memory::make('cache.mock');
-		$mock->forget('hello.world');
-
-		$this->assertEquals(array(), $mock->get('hello'));
-	}
-
-	/**
 	 * Test Orchestra\Support\Memory::shutdown() method.
 	 *
 	 * @test
