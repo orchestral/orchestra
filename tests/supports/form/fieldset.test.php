@@ -139,55 +139,55 @@ class FieldsetTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals('text_foo', $output->id);
 		$this->assertEquals(\Form::text('text_foo', 'foobar'), 
-			 call_user_func($output->field, new \Laravel\Fluent, $output));
+			 call_user_func($output->field, new \Orchestra\Support\Fluent, $output));
 
 		$output = $stub->of('email_foo');
 
 		$this->assertEquals('email_foo', $output->id);
 		$this->assertEquals(\Form::email('email_foo', 'foobar'), 
-			 call_user_func($output->field, new \Laravel\Fluent, $output));
+			 call_user_func($output->field, new \Orchestra\Support\Fluent, $output));
 
 		$output = $stub->of('password_foo');
 		
 		$this->assertEquals('password_foo', $output->id);
 		$this->assertEquals(\Form::password('password_foo'), 
-			 call_user_func($output->field, new \Laravel\Fluent, $output));
+			 call_user_func($output->field, new \Orchestra\Support\Fluent, $output));
 
 		$output = $stub->of('textarea_foo');
 
 		$this->assertEquals('textarea_foo', $output->id);
 		$this->assertEquals(\Form::textarea('textarea_foo', 'foobar'), 
-			 call_user_func($output->field, new \Laravel\Fluent, $output));
+			 call_user_func($output->field, new \Orchestra\Support\Fluent, $output));
 
 		$output = $stub->of('radio_foo');
 
 		$this->assertEquals('radio_foo', $output->id);
 		$this->assertEquals(\Form::radio('radio_foo', 'foobar', true), 
-			 call_user_func($output->field, new \Laravel\Fluent, $output));
+			 call_user_func($output->field, new \Orchestra\Support\Fluent, $output));
 
 		$output = $stub->of('checkbox_foo');
 
 		$this->assertEquals('checkbox_foo', $output->id);
 		$this->assertEquals(\Form::checkbox('checkbox_foo', 'foobar', true), 
-			 call_user_func($output->field, new \Laravel\Fluent, $output));
+			 call_user_func($output->field, new \Orchestra\Support\Fluent, $output));
 
 		$output = $stub->of('select_foo');
 
 		$this->assertEquals('select_foo', $output->id);
 		$this->assertEquals(\Form::select('select_foo', array('yes' => 'Yes', 'no' => 'No'), 'foobar'), 
-			 call_user_func($output->field, new \Laravel\Fluent, $output));
+			 call_user_func($output->field, new \Orchestra\Support\Fluent, $output));
 
 		$output = $stub->of('a');
 
 		$this->assertEquals('a', $output->id);
 		$this->assertEquals(\Form::text('a'), 
-			 call_user_func($output->field, new \Laravel\Fluent, $output));
+			 call_user_func($output->field, new \Orchestra\Support\Fluent, $output));
 
 		$controls = $stub->controls;
 		$output   = end($controls);
 
 		$this->assertEquals(\Form::text('b', 'value-of-B'), 
-			 call_user_func($output->field, new \Laravel\Fluent, $output));
+			 call_user_func($output->field, new \Orchestra\Support\Fluent, $output));
 	}
 
 	/**
@@ -309,7 +309,7 @@ class FieldsetTest extends \PHPUnit_Framework_TestCase {
 	{
 		\Orchestra\Support\Form\Fieldset::render(
 			array(),
-			new \Laravel\Fluent(array('method' => 'foo'))
+			new \Orchestra\Support\Fluent(array('method' => 'foo'))
 		);
 	}
 }

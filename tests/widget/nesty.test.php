@@ -69,35 +69,35 @@ class NestyTest extends \PHPUnit_Framework_TestCase {
 	public function testAddMethod()
 	{
 		$expected = array(
-			'hello' => new \Laravel\Fluent(array(
+			'hello' => new \Orchestra\Support\Fluent(array(
 				'id'     => 'hello',
 				'childs' => array(),
 			)),
-			'world' => new \Laravel\Fluent(array(
+			'world' => new \Orchestra\Support\Fluent(array(
 				'id'     => 'world',
 				'childs' => array(),
 			)),
-			'foo' => new \Laravel\Fluent(array(
+			'foo' => new \Orchestra\Support\Fluent(array(
 				'id'     => 'foo',
 				'childs' => array(
-					'bar' => new \Laravel\Fluent(array(
+					'bar' => new \Orchestra\Support\Fluent(array(
 						'id'     => 'bar',
 						'childs' => array(),
 					)),
-					'foobar' => new \Laravel\Fluent(array(
+					'foobar' => new \Orchestra\Support\Fluent(array(
 						'id'     => 'foobar',
 						'childs' => array(
-							'hello-foobar' => new \Laravel\Fluent(array(
+							'hello-foobar' => new \Orchestra\Support\Fluent(array(
 								'id'     => 'hello-foobar',
 								'childs' => array(),
 							)),
 						),
 					)),
-					'foo-bar' => new \Laravel\Fluent(array(
+					'foo-bar' => new \Orchestra\Support\Fluent(array(
 						'id'     => 'foo-bar',
 						'childs' => array(),
 					)),
-					'hello-world-foobar' => new \Laravel\Fluent(array(
+					'hello-world-foobar' => new \Orchestra\Support\Fluent(array(
 						'id'     => 'hello-world-foobar',
 						'childs' => array(),
 					)),

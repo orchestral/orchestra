@@ -64,12 +64,12 @@ class WidgetPlaceholderTest extends \PHPUnit_Framework_TestCase {
 		};
 
 		$expected = array(
-			'foo' => new \Laravel\Fluent(array(
+			'foo' => new \Orchestra\Support\Fluent(array(
 				'value'  => $callback,
 				'id'     => 'foo',
 				'childs' => array(),
 			)),
-			'foobar' => new \Laravel\Fluent(array(
+			'foobar' => new \Orchestra\Support\Fluent(array(
 				'value'  => $callback,
 				'id'     => 'foobar',
 				'childs' => array(),

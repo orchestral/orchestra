@@ -19,10 +19,7 @@ class Fluent {
 	 */
 	public function __construct($attributes = array())
 	{
-		foreach ($attributes as $key => $value)
-		{
-			$this->attributes[$key] = $value;
-		}
+		$this->attributes = $attributes;
 	}
 
 	/**
@@ -34,12 +31,7 @@ class Fluent {
 	 */
 	public function get($key, $default = null)
 	{
-		if (array_key_exists($key, $this->attributes))
-		{
-			return $this->attributes[$key];
-		}
-
-		return value($default);
+		return array_get($this->attributes, $key, $default);
 	}
 
 	/**
@@ -61,7 +53,7 @@ class Fluent {
 	 */
 	public function __call($method, $parameters)
 	{
-		$this->$method = count($parameters) > 0 ? $parameters[0] : true;
+		$this->attributes[$method] = count($parameters) > 0 ? $parameters[0] : true;
 
 		return $this;
 	}

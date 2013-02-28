@@ -37,7 +37,7 @@ class GridTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testWithMethod()
 	{
-		$mock = array(new \Laravel\Fluent);
+		$mock = array(new \Orchestra\Support\Fluent);
 		$stub = new \Orchestra\Support\Table\Grid(array());
 		$stub->with($mock, false);
 
@@ -90,21 +90,21 @@ class GridTest extends \PHPUnit_Framework_TestCase {
 	{
 		$stub = new \Orchestra\Support\Table\Grid(array());
 		$expected = array(
-			new \Laravel\Fluent(array(
+			new \Orchestra\Support\Fluent(array(
 				'id'               => 'id',
 				'label'            => 'Id',
 				'value'            => 'Foobar',
 				'label_attributes' => array(),
 				'cell_attributes'  => function ($row) { return array(); }
 			)),
-			new \Laravel\Fluent(array(
+			new \Orchestra\Support\Fluent(array(
 				'id'               => 'foo1',
 				'label'            => 'Foo1',
 				'value'            => 'Foo1 value',
 				'label_attributes' => array(),
 				'cell_attributes'  => function ($row) { return array(); }
 			)),
-			new \Laravel\Fluent(array(
+			new \Orchestra\Support\Fluent(array(
 				'id'               => 'foo2',
 				'label'            => 'Foo2',
 				'value'            => 'Foo2 value',
