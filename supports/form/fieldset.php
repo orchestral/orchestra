@@ -160,11 +160,16 @@ class Fieldset {
 		// run closure
 		if (is_callable($callback)) call_user_func($callback, $control);
 
-		$field = function ($row, $control) use ($type, $config) 
+		$field = function ($row, $control, $templates = array()) use ($type, $config) 
 		{
 			// prep control type information
 			$type    = ($type === 'input:password' ? 'password' : $type);
 			$methods = explode(':', $type);
+
+			$templates = array_merge(
+				Config::get('orchestra::support.form.templates', array()), 
+				$templates
+			);
 			
 			// set the name of the control
 			$name = $control->name;
@@ -181,6 +186,16 @@ class Fieldset {
 			// should also check if it's a closure, when this happen run it.
 			if ($value instanceof Closure) $value = $value($row, $control);
 
+			$data = new Fluent(array(
+				'method'  => '',
+				'type'    => '',
+				'options' => array(),
+				'checked' => false,
+				'markup'  => array(),
+				'name'    => $name,
+				'value'   => $value,
+			));
+
 			switch (true)
 			{
 				case (in_array($type, array('select', 'input:select'))) :
@@ -189,27 +204,46 @@ class Fieldset {
 					
 					if ($options instanceof Closure) $options = $options($row, $control);
 
-					return F::select($name, $options, $value, HTML::markup($control->markup, $config['select']));
+					$data->method('select')
+						->markup(HTML::markup($control->markup, $config['select']))
+						->options($options);
+					break;
 				
 				case (in_array($type, array('checkbox', 'input:checkbox'))) :
-					return F::checkbox($name, $value, $control->checked);
+					$data->method('checkbox')
+						->checked($control->checked);
+					break;
 				
 				case (in_array($type, array('radio', 'input:radio'))) :
-					return F::radio($name, $value, $control->checked);
+					$data->method('radio')
+						->checked($control->checked);
+					break;
 				
 				case (in_array($type, array('textarea', 'input:textarea'))):
-					return F::textarea($name, $value, HTML::markup($control->markup, $config['textarea']));
+					$data->method('textarea')
+						->markup(HTML::markup($control->markup, $config['textarea']));
+					break;
 				
 				case (in_array($type, array('password', 'input:password'))) :
-					return F::password($name, HTML::markup($control->markup, $config['password']));
+					$data->method('password')
+						->markup(HTML::markup($control->markup, $config['password']));
+					break;
 				
 				case (isset($methods[0]) and $methods[0] === 'input') :
 					$methods[1] = $methods[1] ?: 'text';
-					return F::input($methods[1], $name, $value, HTML::markup($control->markup, $config['input']));
+					$data->method('input')
+						->type($methods[1])
+						->markup(HTML::markup($control->markup, $config['input']));
+					break;
 				
 				default :
-					return F::input('text', $name, $value, HTML::markup($control->markup, $config['input']));
+					$data->method('input')
+						->type('text')
+						->markup(HTML::markup($control->markup, $config['input']));
+
 			}
+
+			return Fieldset::render($templates, $data);
 		};
 
 		 ! is_null($control->field) or $control->field = $field;
@@ -218,6 +252,27 @@ class Fieldset {
 		$this->key_map[$name] = count($this->controls) - 1;
 
 		return $control;
+	}
+
+	/**
+	 * Render the field.
+	 *
+	 * @static
+	 * @access public
+	 * @param  array            $templates
+	 * @param  Laravel\Fluent   $data
+	 * @return string
+	 */
+	public static function render($templates, $data)
+	{
+		if ( ! isset($templates[$data->method]))
+		{
+			throw new InvalidArgumentException(
+				"Form template for [{$data->method}] is not available."
+			);
+		}
+
+		return call_user_func($templates[$data->method], $data);
 	}
 
 	/**

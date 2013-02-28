@@ -254,6 +254,41 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Support\Acl\Container::check() method throws exception.
+	 *
+	 * @expectedException InvalidArgumentException
+	 * @group support
+	 */
+	public function testCheckMethodUsingMockOneThrowsException()
+	{
+		$this->stub->check('guest', 'view foo');
+	}
+
+	/**
+	 * Test Orchestra\Support\Acl\Container::allow() method throws exception
+	 * for roles.
+	 *
+	 * @expectedException InvalidArgumentException
+	 * @group support
+	 */
+	public function testAllowMethodUsingMockOneThrowsExceptionForRoles()
+	{
+		$this->stub->allow('boss', 'view blog');
+	}
+
+	/**
+	 * Test Orchestra\Support\Acl\Container::allow() method throws exception
+	 * for actions.
+	 *
+	 * @expectedException InvalidArgumentException
+	 * @group support
+	 */
+	public function testAllowMethodUsingMockOneThrowsExceptionForActions()
+	{
+		$this->stub->allow('guest', 'view foo');
+	}
+
+	/**
 	 * Test memory is properly sync during construct.
 	 *
 	 * @test
