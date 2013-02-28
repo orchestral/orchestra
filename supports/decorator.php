@@ -6,22 +6,12 @@ use \Closure,
 abstract class Decorator {
 
 	/**
-	 * Create a new Table instance
-	 *
-	 * <code>
-	 *		// Create a new table instance
-	 *		$view = Table::make(function ($table) {
-	 *			$table->with(User::all());
-	 *
-	 *			$table->column('username');
-	 *			$table->column('password');
-	 * 		});
-	 * </code>
+	 * Create a new Decorator instance
 	 *
 	 * @static
 	 * @access  public
 	 * @param   Closure     $callback
-	 * @return  Table
+	 * @return  Decorator
 	 */
 	public static function make(Closure $callback)
 	{
@@ -29,21 +19,21 @@ abstract class Decorator {
 	}
 	
 	/**
-	 * Name of table.
+	 * Name of decorator.
 	 *
 	 * @var string
 	 */
 	protected $name = null;
 
 	/**
-	 * Table\Grid instance.
+	 * Grid instance.
 	 *
-	 * @var Orchestra\Support\Table\Grid
+	 * @var object
 	 */
 	protected $grid = null;
 
 	/**
-	 * Create a new Table instance.
+	 * Create a new Decorator instance.
 	 * 			
 	 * @access public
 	 * @param  Closure      $callback
@@ -52,7 +42,7 @@ abstract class Decorator {
 	abstract public function __construct(Closure $callback);
 
 	/**
-	 * Extend Table designer 
+	 * Extend decoration. 
 	 *
 	 * @access public
 	 * @param  Closure $callback
@@ -91,7 +81,7 @@ abstract class Decorator {
 	}
 
 	/**
-	 * Render the table
+	 * Render the decoration.
 	 *
 	 * @abstract
 	 * @access  public
