@@ -10,8 +10,7 @@
  * 
  */
 
-use \Log,
-	Orchestra\Support\FTP\Facade;
+use Orchestra\Support\FTP\Facade;
 
 class FTP {
 
