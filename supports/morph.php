@@ -25,7 +25,7 @@ abstract class Morph {
 	}
 
 	/**
-	 * Determine of method is_callable().
+	 * Determine if method is callable.
 	 *
 	 * @static
 	 * @access public
