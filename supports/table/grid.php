@@ -2,7 +2,7 @@
 
 use \Closure, 
 	\InvalidArgumentException,
-	Laravel\Fluent, 
+	Orchestra\Support\Fluent, 
 	\Lang,
 	\Str;
 
@@ -27,7 +27,7 @@ class Grid {
 	 *
 	 * @var array
 	 */
-	protected $markup = array();
+	protected $attributes = array();
 
 	/**
 	 * All the columns
@@ -80,8 +80,8 @@ class Grid {
 		}
 		
 		$this->rows = new Fluent(array(
-			'data'   => array(),
-			'markup' => function ($row) { return array(); },
+			'data'       => array(),
+			'attributes' => function ($row) { return array(); },
 		));
 	}
 
@@ -178,9 +178,9 @@ class Grid {
 	 * 				return $row->first_name.' '.$row->last_name; 
 	 * 			};
 	 *
-	 * 			$column->label_markup(array('class' => 'header-class'));
+	 * 			$column->label_attributes(array('class' => 'header-class'));
 	 *
-	 * 			$column->cell_markup(function ($row) { 
+	 * 			$column->cell_attributes(function ($row) { 
 	 *				return array('data-id' => $row->id);
 	 *			});
 	 *		});
@@ -224,8 +224,8 @@ class Grid {
 			'id'           => $name,
 			'label'        => $label,
 			'value'        => $value,
-			'label_markup' => array(),
-			'cell_markup'  => function ($row) { return array(); },
+			'label_attributes' => array(),
+			'cell_attributes'  => function ($row) { return array(); },
 		));
 
 		// run closure
@@ -260,20 +260,6 @@ class Grid {
 	}
 
 	/**
-	 * Add or append fieldset HTML attributes
-	 *
-	 * @access  public
-	 * @deprecated          To be removed in 1.2
-	 * @param   mixed       $key
-	 * @param   mixed       $value
-	 * @return  void
-	 */
-	public function attr($key = null, $value = null)
-	{
-		return $this->markup($key, $value);
-	}
-
-	/**
 	 * Add or append table HTML attributes
 	 *
 	 * @access public
@@ -281,20 +267,20 @@ class Grid {
 	 * @param  mixed    $value
 	 * @return void
 	 */
-	public function markup($key = null, $value = null)
+	public function attributes($key = null, $value = null)
 	{
 		switch (true)
 		{
 			case is_null($key) :
-				return $this->markup;
+				return $this->attributes;
 				break;
 
 			case is_array($key) :
-				$this->markup = array_merge($this->markup, $key);
+				$this->attributes = array_merge($this->attributes, $key);
 				break;
 
 			default :
-				$this->markup[$key] = $value;
+				$this->attributes[$key] = $value;
 				break;
 		}
 	}
@@ -321,7 +307,7 @@ class Grid {
 	{
 		$key = $this->key($key);
 		
-		if ( ! in_array($key, array('markup', 'columns', 'model', 'paginate', 'view', 'rows')))
+		if ( ! in_array($key, array('attributes', 'columns', 'model', 'paginate', 'view', 'rows')))
 		{
 			throw new InvalidArgumentException("Unable to use __get for [{$key}].");
 		}
@@ -336,7 +322,7 @@ class Grid {
 	{
 		$key = $this->key($key);
 		
-		if ( ! in_array($key, array('markup')))
+		if ( ! in_array($key, array('attributes')))
 		{
 			throw new InvalidArgumentException("Unable to use __set for [{$key}].");
 		}
@@ -345,7 +331,7 @@ class Grid {
 			throw new InvalidArgumentException("Require values to be an array.");
 		}
 
-		$this->markup($values, null);
+		$this->attributes($values, null);
 	}
 
 	/**
@@ -355,7 +341,7 @@ class Grid {
 	{
 		$key = $this->key($key);
 
-		if ( ! in_array($key, array('markup', 'columns', 'model', 'paginate', 'view')))
+		if ( ! in_array($key, array('attributes', 'columns', 'model', 'paginate', 'view')))
 		{
 			throw new InvalidArgumentException("Unable to use __isset for [{$key}].");
 		}
@@ -372,7 +358,6 @@ class Grid {
 	 */
 	private function key($key)
 	{
-		// @deprecated 'attr' key should be removed in 1.2.
-		return ($key === 'attr') ? 'markup' : $key;
+		return $key;
 	}
 }

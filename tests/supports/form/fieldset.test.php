@@ -41,18 +41,18 @@ class FieldsetTest extends \PHPUnit_Framework_TestCase {
 	{
 		$stub = new \Orchestra\Support\Form\Fieldset('foo', function ($f)
 		{
-			$f->markup(array('class' => 'foo'));
+			$f->attributes(array('class' => 'foo'));
 		});
 
 		$this->assertInstanceOf('\Orchestra\Support\Form\Fieldset', $stub);
 		$this->assertEquals(array(), $stub->controls);
 		$this->assertTrue(isset($stub->name));
 
-		$this->assertEquals(array('class' => 'foo'), $stub->markup);
+		$this->assertEquals(array('class' => 'foo'), $stub->attributes);
 		$this->assertEquals('foo', $stub->name());
 
-		$stub->markup = array('class' => 'foobar');
-		$this->assertEquals(array('class' => 'foobar'), $stub->markup);
+		$stub->attributes = array('class' => 'foobar');
+		$this->assertEquals(array('class' => 'foobar'), $stub->attributes);
 
 	}
 
@@ -204,28 +204,28 @@ class FieldsetTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Support\Form\Grid::markup() method.
+	 * Test Orchestra\Support\Form\Grid::attributes() method.
 	 *
 	 * @test
 	 * @group support
 	 */
-	public function testMarkupMethod()
+	public function testAttributesMethod()
 	{
 		$stub = new \Orchestra\Support\Form\Fieldset(function () {});
 
 		$refl   = new \ReflectionObject($stub);
-		$markup = $refl->getProperty('markup');
-		$markup->setAccessible(true);
+		$attributes = $refl->getProperty('attributes');
+		$attributes->setAccessible(true);
 
-		$stub->markup(array('class' => 'foo'));
+		$stub->attributes(array('class' => 'foo'));
 
-		$this->assertEquals(array('class' => 'foo'), $markup->getValue($stub));
-		$this->assertEquals(array('class' => 'foo'), $stub->markup());
+		$this->assertEquals(array('class' => 'foo'), $attributes->getValue($stub));
+		$this->assertEquals(array('class' => 'foo'), $stub->attributes());
 
-		$stub->markup('id', 'foobar');
+		$stub->attributes('id', 'foobar');
 
-		$this->assertEquals(array('id' => 'foobar', 'class' => 'foo'), $markup->getValue($stub));
-		$this->assertEquals(array('id' => 'foobar', 'class' => 'foo'), $stub->markup());
+		$this->assertEquals(array('id' => 'foobar', 'class' => 'foo'), $attributes->getValue($stub));
+		$this->assertEquals(array('id' => 'foobar', 'class' => 'foo'), $stub->attributes());
 	}
 
 	/**
@@ -281,7 +281,7 @@ class FieldsetTest extends \PHPUnit_Framework_TestCase {
 	{
 		$stub = new \Orchestra\Support\Form\Fieldset(function ($f) {});
 
-		$stub->markup = 'foo';
+		$stub->attributes = 'foo';
 	}
 
 	/**

@@ -38,10 +38,10 @@ class PaneTest extends \PHPUnit_Framework_TestCase {
 	{
 		$expected = array(
 			'defaults' => array(
-				'markup'  => array(),
-				'title'   => '',
-				'content' => '',
-				'html'    => '',
+				'attributes' => array(),
+				'title'      => '',
+				'content'    => '',
+				'html'       => '',
 			),
 		);
 
@@ -68,21 +68,21 @@ class PaneTest extends \PHPUnit_Framework_TestCase {
 	public function testAddMethod()
 	{
 		$expected = array(
-			'foo' => new \Laravel\Fluent(array(
-				'markup'  => array(),
-				'title'   => '',
-				'content' => 'hello world',
-				'html'    => '',
-				'id'      => 'foo',
-				'childs'  => array(),
+			'foo' => new \Orchestra\Support\Fluent(array(
+				'attributes' => array(),
+				'title'      => '',
+				'content'    => 'hello world',
+				'html'       => '',
+				'id'         => 'foo',
+				'childs'     => array(),
 			)),
-			'foobar' => new \Laravel\Fluent(array(
-				'markup'  => array(),
-				'title'   => 'hello world',
-				'content' => '',
-				'html'    => '',
-				'id'      => 'foobar',
-				'childs'  => array(),
+			'foobar' => new \Orchestra\Support\Fluent(array(
+				'attributes' => array(),
+				'title'      => 'hello world',
+				'content'    => '',
+				'html'       => '',
+				'id'         => 'foobar',
+				'childs'     => array(),
 			)),
 		);
 

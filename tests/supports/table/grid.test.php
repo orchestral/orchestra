@@ -91,25 +91,25 @@ class GridTest extends \PHPUnit_Framework_TestCase {
 		$stub = new \Orchestra\Support\Table\Grid(array());
 		$expected = array(
 			new \Laravel\Fluent(array(
-				'id'           => 'id',
-				'label'        => 'Id',
-				'value'        => 'Foobar',
-				'label_markup' => array(),
-				'cell_markup'  => function ($row) { return array(); }
+				'id'               => 'id',
+				'label'            => 'Id',
+				'value'            => 'Foobar',
+				'label_attributes' => array(),
+				'cell_attributes'  => function ($row) { return array(); }
 			)),
 			new \Laravel\Fluent(array(
-				'id'           => 'foo1',
-				'label'        => 'Foo1',
-				'value'        => 'Foo1 value',
-				'label_markup' => array(),
-				'cell_markup'  => function ($row) { return array(); }
+				'id'               => 'foo1',
+				'label'            => 'Foo1',
+				'value'            => 'Foo1 value',
+				'label_attributes' => array(),
+				'cell_attributes'  => function ($row) { return array(); }
 			)),
 			new \Laravel\Fluent(array(
-				'id'           => 'foo2',
-				'label'        => 'Foo2',
-				'value'        => 'Foo2 value',
-				'label_markup' => array(),
-				'cell_markup'  => function ($row) { return array(); }
+				'id'               => 'foo2',
+				'label'            => 'Foo2',
+				'value'            => 'Foo2 value',
+				'label_attributes' => array(),
+				'cell_attributes'  => function ($row) { return array(); }
 			))
 		);
 
@@ -126,7 +126,7 @@ class GridTest extends \PHPUnit_Framework_TestCase {
 
 		$stub->column('Foo2', 'foo2')->value('Foo2 value');
 
-		$stub->markup = array('class' => 'foo');
+		$stub->attributes = array('class' => 'foo');
 
 		$output = $stub->of('id');
 
@@ -134,7 +134,7 @@ class GridTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('Id', $output->label);
 		$this->assertEquals('id', $output->id);
 
-		$this->assertEquals(array('class' => 'foo'), $stub->markup);
+		$this->assertEquals(array('class' => 'foo'), $stub->attributes);
 		$this->assertEquals($expected, $stub->columns());
 	}
 
@@ -152,28 +152,28 @@ class GridTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Support\Table\Grid::markup() method.
+	 * Test Orchestra\Support\Table\Grid::attributes() method.
 	 *
 	 * @test
 	 * @group support
 	 */
-	public function testMarkupMethod()
+	public function testAttributesMethod()
 	{
 		$stub = new \Orchestra\Support\Table\Grid(array());
 
 		$refl   = new \ReflectionObject($stub);
-		$markup = $refl->getProperty('markup');
-		$markup->setAccessible(true);
+		$attributes = $refl->getProperty('attributes');
+		$attributes->setAccessible(true);
 
-		$stub->markup(array('class' => 'foo'));
+		$stub->attributes(array('class' => 'foo'));
 
-		$this->assertEquals(array('class' => 'foo'), $markup->getValue($stub));
-		$this->assertEquals(array('class' => 'foo'), $stub->markup());
+		$this->assertEquals(array('class' => 'foo'), $attributes->getValue($stub));
+		$this->assertEquals(array('class' => 'foo'), $stub->attributes());
 
-		$stub->markup('id', 'foobar');
+		$stub->attributes('id', 'foobar');
 
-		$this->assertEquals(array('id' => 'foobar', 'class' => 'foo'), $markup->getValue($stub));
-		$this->assertEquals(array('id' => 'foobar', 'class' => 'foo'), $stub->markup());
+		$this->assertEquals(array('id' => 'foobar', 'class' => 'foo'), $attributes->getValue($stub));
+		$this->assertEquals(array('id' => 'foobar', 'class' => 'foo'), $stub->attributes());
 	}
 
 	/**
@@ -229,7 +229,7 @@ class GridTest extends \PHPUnit_Framework_TestCase {
 	{
 		$stub = new \Orchestra\Support\Table\Grid(array());
 
-		$stub->markup = 'foo';
+		$stub->attributes = 'foo';
 	}
 
 	/**
