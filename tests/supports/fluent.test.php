@@ -63,7 +63,7 @@ class FluentTest extends \PHPUnit_Framework_TestCase {
 	 * @test
 	 * @group support
 	 */
-	public function testIssetMagicMethos()
+	public function testIssetMagicMethod()
 	{
 		$array  = array('name' => 'Taylor', 'age' => 25);
 		$fluent = new \Orchestra\Support\Fluent($array);
