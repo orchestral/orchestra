@@ -151,13 +151,13 @@ class WidgetTest extends \PHPUnit_Framework_TestCase {
 	{
 		$stub     = \Orchestra\Widget::make('stub');
 		$expected = array(
-			'foo' => new \Laravel\Fluent(array(
+			'foo' => new \Orchestra\Support\Fluent(array(
 				'id'     => 'foo',
 				'title'  => 'foobar',
 				'foobar' => false,
 				'childs' => array(),
 			)),
-			'foobar' => new \Laravel\Fluent(array(
+			'foobar' => new \Orchestra\Support\Fluent(array(
 				'id'     => 'foobar',
 				'title'  => 'hello world',
 				'foobar' => true,

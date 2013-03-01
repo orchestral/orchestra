@@ -18,7 +18,7 @@ class Account {
 		return Form::of('orchestra.account', function ($form) use ($model, $action)
 		{
 			$form->row($model);
-			$form->markup(array(
+			$form->attributes(array(
 				'action' => $action,
 				'method' => 'POST',
 			));
@@ -52,7 +52,7 @@ class Account {
 		return Form::of('orchestra.account: password', function ($form) use ($model)
 		{
 			$form->row($model);
-			$form->markup(array(
+			$form->attributes(array(
 				'action' => handles('orchestra::account/password'),
 				'method' => 'POST',
 			));

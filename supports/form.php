@@ -66,8 +66,8 @@ class Form extends Decorator {
 	public function render() 
 	{
 		// Localize Grid instance.
-		$grid      = $this->grid;
-		$attributes = $grid->markup;
+		$grid       = $this->grid;
+		$attributes = $grid->attributes;
 
 		// Build Form attribute, action and method should be unset from attr 
 		// as it is build using Form::open().
@@ -92,7 +92,7 @@ class Form extends Decorator {
 			'form_method'   => $form_method,
 			'submit_button' => $submit_button,
 			'error_message' => $grid->error_message,
-			'markup'        => $attributes,
+			'attributes'    => $attributes,
 			'fieldsets'     => $grid->fieldsets(),
 		);
 

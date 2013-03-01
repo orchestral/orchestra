@@ -2,7 +2,7 @@
 
 use \Config,
 	\InvalidArgumentException,
-	Laravel\Fluent;
+	Orchestra\Support\Fluent;
 
 abstract class Driver {
 

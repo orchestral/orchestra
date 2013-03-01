@@ -2,7 +2,7 @@
 
 use \Closure, 
 	\InvalidArgumentException,
-	Laravel\Fluent, 
+	Orchestra\Support\Fluent, 
 	Laravel\Form as F;
 
 class Grid {
@@ -40,7 +40,7 @@ class Grid {
 	 *
 	 * @var array
 	 */
-	protected $markup = array();
+	protected $attributes = array();
 
 	/**
 	 * Set submit button message.
@@ -141,20 +141,20 @@ class Grid {
 	 * @param   mixed       $value
 	 * @return  void
 	 */
-	public function markup($key = null, $value = null)
+	public function attributes($key = null, $value = null)
 	{
 		switch (true)
 		{
 			case is_null($key) :
-				return $this->markup;
+				return $this->attributes;
 				break;
 
 			case is_array($key) :
-				$this->markup = array_merge($this->markup, $key);
+				$this->attributes = array_merge($this->attributes, $key);
 				break;
 
 			default :
-				$this->markup[$key] = $value;
+				$this->attributes[$key] = $value;
 				break;
 		}
 	}
@@ -188,14 +188,14 @@ class Grid {
 		}
 
 		$field = new Fluent(array(
-			'name'   => $name,
-			'value'  => $value ?: '',
-			'markup' => array(),
+			'name'       => $name,
+			'value'      => $value ?: '',
+			'attributes' => array(),
 		));
 
 		if ($callback instanceof Closure) call_user_func($callback, $field);
 
-		$this->hiddens[$name] = F::hidden($name, $field->value, $field->markup);
+		$this->hiddens[$name] = F::hidden($name, $field->value, $field->attributes);
 	}
 
 	/**
@@ -220,7 +220,7 @@ class Grid {
 	{
 		$key = $this->key($key);
 		
-		if ( ! in_array($key, array('markup', 'row', 'view', 'hiddens')))
+		if ( ! in_array($key, array('attributes', 'row', 'view', 'hiddens')))
 		{
 			throw new InvalidArgumentException("Unable to use __get for [{$key}].");
 		}
@@ -235,7 +235,7 @@ class Grid {
 	{
 		$key = $this->key($key);
 		
-		if ( ! in_array($key, array('markup')))
+		if ( ! in_array($key, array('attributes')))
 		{
 			throw new InvalidArgumentException("Unable to set [{$key}].");
 		}
@@ -244,7 +244,7 @@ class Grid {
 			throw new InvalidArgumentException("Require values to be an array.");
 		}
 
-		$this->markup($arguments, null);
+		$this->attributes($arguments, null);
 	}
 
 	/**
@@ -254,7 +254,7 @@ class Grid {
 	{
 		$key = $this->key($key);
 
-		if ( ! in_array($key, array('markup', 'row', 'view', 'hiddens')))
+		if ( ! in_array($key, array('attributes', 'row', 'view', 'hiddens')))
 		{
 			throw new InvalidArgumentException("Unable to use __isset for [{$key}].");
 		}
@@ -271,7 +271,6 @@ class Grid {
 	 */
 	private function key($key)
 	{
-		// @deprecated 'attr' key should be removed in 1.2.
-		return ($key === 'attr') ? 'markup' : $key;
+		return $key;
 	}
 }

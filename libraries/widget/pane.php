@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Widget;
 
-use \Closure, \Exception;
+use \Closure, 
+	\Exception;
 
 class Pane extends Driver {
 
@@ -20,10 +21,10 @@ class Pane extends Driver {
 	 */
 	protected $config = array(
 		'defaults' => array(
-			'markup'  => array(),
-			'title'   => '',
-			'content' => '',
-			'html'    => '',
+			'attributes' => array(),
+			'title'      => '',
+			'content'    => '',
+			'html'       => '',
 		),
 	);
 

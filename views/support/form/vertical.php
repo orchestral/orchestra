@@ -1,6 +1,6 @@
 <?php 
 
-echo Form::open($form_action, $form_method, array_merge($markup, array('class' => 'form-vertical')));
+echo Form::open($form_action, $form_method, array_merge($attributes, array('class' => 'form-vertical')));
 
 if ($token) echo Form::token();
 
@@ -8,7 +8,7 @@ foreach ($hiddens as $hidden) echo $hidden;
 
 foreach ($fieldsets as $fieldset) { ?>
 
-	<fieldset<?php echo HTML::attributes($fieldset->markup ?: array()); ?>>
+	<fieldset<?php echo HTML::attributes($fieldset->attributes ?: array()); ?>>
 		
 		<?php if( $fieldset->name ) : ?><legend><?php echo $fieldset->name ?: '' ?></legend><?php endif; ?>
 
