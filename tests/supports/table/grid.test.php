@@ -111,7 +111,7 @@ class GridTest extends \PHPUnit_Framework_TestCase {
 				'label'            => 'Foo2',
 				'value'            => 'Foo2 value',
 				'label_attributes' => array(),
-				'cell_attributes'  => function ($row) { return array(); }
+				'cell_attributes'  => function ($row) { return array(); },
 				'escape'           => true,
 			))
 		);
