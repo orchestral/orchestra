@@ -95,14 +95,16 @@ class GridTest extends \PHPUnit_Framework_TestCase {
 				'label'            => 'Id',
 				'value'            => 'Foobar',
 				'label_attributes' => array(),
-				'cell_attributes'  => function ($row) { return array(); }
+				'cell_attributes'  => function ($row) { return array(); },
+				'escape'           => true,
 			)),
 			new \Orchestra\Support\Fluent(array(
 				'id'               => 'foo1',
 				'label'            => 'Foo1',
 				'value'            => 'Foo1 value',
 				'label_attributes' => array(),
-				'cell_attributes'  => function ($row) { return array(); }
+				'cell_attributes'  => function ($row) { return array(); },
+				'escape'           => true,
 			)),
 			new \Orchestra\Support\Fluent(array(
 				'id'               => 'foo2',
@@ -110,6 +112,7 @@ class GridTest extends \PHPUnit_Framework_TestCase {
 				'value'            => 'Foo2 value',
 				'label_attributes' => array(),
 				'cell_attributes'  => function ($row) { return array(); }
+				'escape'           => true,
 			))
 		);
 
