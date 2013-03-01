@@ -20,7 +20,7 @@ class Extension {
 		{
 			$form->row($config);
 
-			$form->markup(array(
+			$form->attributes(array(
 				'action' => handles("orchestra::extensions/configure/{$name}"),
 				'method' => "POST",
 			));

@@ -74,28 +74,28 @@ class GridTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Support\Form\Grid::markup() method.
+	 * Test Orchestra\Support\Form\Grid::attributes() method.
 	 *
 	 * @test
 	 * @group support
 	 */
-	public function testMarkupMethod()
+	public function testAttributesMethod()
 	{
 		$stub = new \Orchestra\Support\Form\Grid(array());
 
 		$refl   = new \ReflectionObject($stub);
-		$markup = $refl->getProperty('markup');
-		$markup->setAccessible(true);
+		$attributes = $refl->getProperty('attributes');
+		$attributes->setAccessible(true);
 
-		$stub->markup(array('class' => 'foo'));
+		$stub->attributes(array('class' => 'foo'));
 
-		$this->assertEquals(array('class' => 'foo'), $markup->getValue($stub));
-		$this->assertEquals(array('class' => 'foo'), $stub->markup());
+		$this->assertEquals(array('class' => 'foo'), $attributes->getValue($stub));
+		$this->assertEquals(array('class' => 'foo'), $stub->attributes());
 
-		$stub->markup('id', 'foobar');
+		$stub->attributes('id', 'foobar');
 
-		$this->assertEquals(array('id' => 'foobar', 'class' => 'foo'), $markup->getValue($stub));
-		$this->assertEquals(array('id' => 'foobar', 'class' => 'foo'), $stub->markup());
+		$this->assertEquals(array('id' => 'foobar', 'class' => 'foo'), $attributes->getValue($stub));
+		$this->assertEquals(array('id' => 'foobar', 'class' => 'foo'), $stub->attributes());
 	}
 
 	/**
@@ -211,7 +211,7 @@ class GridTest extends \PHPUnit_Framework_TestCase {
 	{
 		$stub = new \Orchestra\Support\Form\Grid(array());
 
-		$stub->markup = 'foo';
+		$stub->attributes = 'foo';
 	}
 
 	/**

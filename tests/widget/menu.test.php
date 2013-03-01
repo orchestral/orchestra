@@ -60,13 +60,13 @@ class MenuTest extends \PHPUnit_Framework_TestCase {
 	public function testAddMethod()
 	{
 		$expected = array(
-			'foo' => new \Laravel\Fluent(array(
+			'foo' => new \Orchestra\Support\Fluent(array(
 				'title'   => 'hello world',
 				'link'    => '#',
 				'id'      => 'foo',
 				'childs'  => array(),
 			)),
-			'foobar' => new \Laravel\Fluent(array(
+			'foobar' => new \Orchestra\Support\Fluent(array(
 				'title'   => 'hello world 2',
 				'link'    => '#',
 				'id'      => 'foobar',

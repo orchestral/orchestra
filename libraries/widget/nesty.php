@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Widget;
 
-use Laravel\Fluent;
+use Orchestra\Support\Fluent;
 
 class Nesty {
 

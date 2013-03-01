@@ -5,7 +5,7 @@ use \Closure,
 	\Config, 
 	\Input, 
 	Laravel\Form as F, 
-	Laravel\Fluent, 
+	Orchestra\Support\Fluent, 
 	\Lang,
 	\Str, 
 	Orchestra\Support\HTML;
@@ -31,7 +31,7 @@ class Fieldset {
 	 *
 	 * @var array
 	 */
-	protected $markup = array();
+	protected $attributes = array();
 
 	/**
 	 * All the controls
@@ -77,20 +77,20 @@ class Fieldset {
 	 * @param   mixed       $value
 	 * @return  void
 	 */
-	public function markup($key = null, $value = null)
+	public function attributes($key = null, $value = null)
 	{
 		switch (true)
 		{
 			case is_null($key) :
-				return $this->markup;
+				return $this->attributes;
 				break;
 
 			case is_array($key) :
-				$this->markup = array_merge($this->markup, $key);
+				$this->attributes = array_merge($this->attributes, $key);
 				break;
 
 			default :
-				$this->markup[$key] = $value;
+				$this->attributes[$key] = $value;
 				break;
 		}
 	}
@@ -147,14 +147,14 @@ class Fieldset {
 		}
 
 		$control = new Fluent(array(
-			'id'      => $name,
-			'name'    => $name,
-			'value'   => null,
-			'label'   => $label,
-			'markup'  => array(),
-			'options' => array(),
-			'checked' => false,
-			'field'   => null,
+			'id'         => $name,
+			'name'       => $name,
+			'value'      => null,
+			'label'      => $label,
+			'attributes' => array(),
+			'options'    => array(),
+			'checked'    => false,
+			'field'      => null,
 		));
 
 		// run closure
@@ -187,13 +187,13 @@ class Fieldset {
 			if ($value instanceof Closure) $value = $value($row, $control);
 
 			$data = new Fluent(array(
-				'method'  => '',
-				'type'    => '',
-				'options' => array(),
-				'checked' => false,
-				'markup'  => array(),
-				'name'    => $name,
-				'value'   => $value,
+				'method'     => '',
+				'type'       => '',
+				'options'    => array(),
+				'checked'    => false,
+				'attributes' => array(),
+				'name'       => $name,
+				'value'      => $value,
 			));
 
 			switch (true)
@@ -205,7 +205,7 @@ class Fieldset {
 					if ($options instanceof Closure) $options = $options($row, $control);
 
 					$data->method('select')
-						->markup(HTML::markup($control->markup, $config['select']))
+						->attributes(HTML::compile_attributes($control->attributes, $config['select']))
 						->options($options);
 					break;
 				
@@ -221,25 +221,25 @@ class Fieldset {
 				
 				case (in_array($type, array('textarea', 'input:textarea'))):
 					$data->method('textarea')
-						->markup(HTML::markup($control->markup, $config['textarea']));
+						->attributes(HTML::compile_attributes($control->attributes, $config['textarea']));
 					break;
 				
 				case (in_array($type, array('password', 'input:password'))) :
 					$data->method('password')
-						->markup(HTML::markup($control->markup, $config['password']));
+						->attributes(HTML::compile_attributes($control->attributes, $config['password']));
 					break;
 				
 				case (isset($methods[0]) and $methods[0] === 'input') :
 					$methods[1] = $methods[1] ?: 'text';
 					$data->method('input')
 						->type($methods[1])
-						->markup(HTML::markup($control->markup, $config['input']));
+						->attributes(HTML::compile_attributes($control->attributes, $config['input']));
 					break;
 				
 				default :
 					$data->method('input')
 						->type('text')
-						->markup(HTML::markup($control->markup, $config['input']));
+						->attributes(HTML::compile_attributes($control->attributes, $config['input']));
 
 			}
 
@@ -335,7 +335,7 @@ class Fieldset {
 	{
 		$key = $this->key($key);
 
-		if ( ! in_array($key, array('markup', 'name', 'controls')))
+		if ( ! in_array($key, array('attributes', 'name', 'controls')))
 		{
 			throw new InvalidArgumentException("Unable to use __get for [{$key}].");
 		}
@@ -350,7 +350,7 @@ class Fieldset {
 	{
 		$key = $this->key($key);
 
-		if ( ! in_array($key, array('markup')))
+		if ( ! in_array($key, array('attributes')))
 		{
 			throw new InvalidArgumentException("Unable to use __set for [{$key}].");
 		}
@@ -359,7 +359,7 @@ class Fieldset {
 			throw new InvalidArgumentException("Require values to be an array.");
 		}
 
-		$this->markup($values, null);
+		$this->attributes($values, null);
 	}
 
 	/**
@@ -369,7 +369,7 @@ class Fieldset {
 	{
 		$key = $this->key($key);
 
-		if ( ! in_array($key, array('markup', 'name', 'controls')))
+		if ( ! in_array($key, array('attributes', 'name', 'controls')))
 		{
 			throw new InvalidArgumentException("Unable to use __isset for [{$key}].");
 		}
@@ -386,7 +386,6 @@ class Fieldset {
 	 */
 	private function key($key)
 	{
-		// @deprecated 'attr' key should be removed in 1.2.
-		return ($key === 'attr') ? 'markup' : $key;
+		return $key;
 	}
 }

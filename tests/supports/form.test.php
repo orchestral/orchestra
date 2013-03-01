@@ -69,7 +69,7 @@ class FormTest extends \PHPUnit_Framework_TestCase {
 		$mock1 = new \Orchestra\Support\Form(function ($form) use ($mock_data)
 		{
 			$form->row($mock_data);
-			$form->markup(array(
+			$form->attributes(array(
 				'method' => 'POST',
 				'action' => 'http://localhost',
 				'class'  => 'foo',
@@ -79,7 +79,7 @@ class FormTest extends \PHPUnit_Framework_TestCase {
 		$mock2 = new \Orchestra\Support\Form(function ($form) use ($mock_data)
 		{
 			$form->row($mock_data);
-			$form->markup = array(
+			$form->attributes = array(
 				'method' => 'POST',
 				'action' => 'http://localhost',
 				'class'  => 'foo'

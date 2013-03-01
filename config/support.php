@@ -64,7 +64,7 @@ return array(
 					$data->name, 
 					$data->options, 
 					$data->value, 
-					$data->markup
+					$data->attributes
 				);
 			},
 			'checkbox' => function ($data)
@@ -88,14 +88,14 @@ return array(
 				return Form::textarea(
 					$data->name,
 					$data->value,
-					$data->markup
+					$data->attributes
 				);
 			},
 			'password' => function ($data)
 			{
 				return Form::password(
 					$data->name, 
-					$data->markup
+					$data->attributes
 				);
 			},
 			'input' => function ($data)
@@ -104,7 +104,7 @@ return array(
 					$data->type,
 					$data->name,
 					$data->value, 
-					$data->markup
+					$data->attributes
 				);
 			},
 		),
