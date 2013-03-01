@@ -49,7 +49,7 @@ class Fluent {
 	 *
 	 * @param  string  $method
 	 * @param  array   $parameters
-	 * @return Illuminate\Support\Fluent
+	 * @return Orchestra\Support\Fluent
 	 */
 	public function __call($method, $parameters)
 	{

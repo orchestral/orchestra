@@ -78,17 +78,26 @@ class HTMLTest extends \PHPUnit_Framework_TestCase {
 	 * @test
 	 * @group support
 	 */
-	public function testCompileMethod()
+	public function testCompileAttributesMethod()
 	{
-		$output   = \Orchestra\Support\HTML::compile(array('class' => 'span4 table'), array('id' => 'foobar'));
+		$output = \Orchestra\Support\HTML::compile_attributes(
+			array('class' => 'span4 table'), 
+			array('id' => 'foobar')
+		);
 		$expected = array('id' => 'foobar', 'class' => 'span4 table');
 		$this->assertEquals($expected, $output);
 
-		$output   = \Orchestra\Support\HTML::compile(array('class' => 'span4 !span12'), array('class' => 'span12'));
+		$output = \Orchestra\Support\HTML::compile_attributes(
+			array('class' => 'span4 !span12'), 
+			array('class' => 'span12')
+		);
 		$expected = array('class' => 'span4');
 		$this->assertEquals($expected, $output);
 
-		$output   = \Orchestra\Support\HTML::compile(array('id' => 'table'), array('id' => 'foobar', 'class' => 'span4'));
+		$output = \Orchestra\Support\HTML::compile_attributes(
+			array('id' => 'table'), 
+			array('id' => 'foobar', 'class' => 'span4')
+		);
 		$expected = array('id' => 'table', 'class' => 'span4');
 		$this->assertEquals($expected, $output);
 	}
