@@ -17,7 +17,7 @@ class Fluent {
 	 * @param  array  $attributes
 	 * @return void
 	 */
-	public function __construct($attributes = array())
+	public function __construct(array $attributes = array())
 	{
 		$this->attributes = $attributes;
 	}
