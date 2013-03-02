@@ -221,9 +221,10 @@ class Grid {
 		}
 		
 		$column = new Fluent(array(
-			'id'           => $name,
-			'label'        => $label,
-			'value'        => $value,
+			'id'               => $name,
+			'label'            => $label,
+			'value'            => $value,
+			'escape'           => true,
 			'label_attributes' => array(),
 			'cell_attributes'  => function ($row) { return array(); },
 		));
