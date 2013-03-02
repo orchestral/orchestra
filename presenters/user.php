@@ -32,6 +32,7 @@ class User {
 			$table->column('fullname', function ($column)
 			{
 				$column->label(__('orchestra::label.users.fullname'));
+				$column->escape(false);
 				$column->value(function ($row)
 				{
 					$roles = $row->roles;
@@ -39,14 +40,14 @@ class User {
 
 					foreach ($roles as $role)
 					{
-						$value[] = HTML::create('span', $role->name, array(
+						$value[] = HTML::create('span', e($role->name), array(
 							'class' => 'label label-info',
 							'role'  => 'role',
 						));
 					}
 
 					return implode('', array(
-						HTML::create('strong', $row->fullname),
+						HTML::create('strong', e($row->fullname)),
 						HTML::create('br'),
 						HTML::create('span', HTML::raw(implode(' ', $value)), array(
 							'class' => 'meta',
@@ -77,6 +78,7 @@ class User {
 			$table->column('action', function ($column)
 			{
 				$column->label('');
+				$column->escape(false);
 				$column->label_attributes(array('class' => 'th-action'));
 				$column->value(function ($row)
 				{

@@ -152,15 +152,15 @@ class TableTest extends \PHPUnit_Framework_TestCase {
 	<tbody>
 		<tr>
 			<td>1</td>
-			<td><strong>Laravel</strong></td>
+			<td>&lt;strong&gt;Laravel&lt;/strong&gt;</td>
 		</tr>
 		<tr>
 			<td>2</td>
-			<td><strong>Illuminate</strong></td>
+			<td>&lt;strong&gt;Illuminate&lt;/strong&gt;</td>
 		</tr>
 		<tr>
 			<td>3</td>
-			<td><strong>Symfony</strong></td>
+			<td>&lt;strong&gt;Symfony&lt;/strong&gt;</td>
 		</tr>
 	</tbody>
 </table>
