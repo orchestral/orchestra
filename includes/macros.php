@@ -26,6 +26,20 @@ HTML::macro('title', function ()
 
 /*
 |--------------------------------------------------------------------------
+| Blade extend for @title and @description
+|--------------------------------------------------------------------------
+*/
+
+Blade::extend(function ($view)
+{
+	$pattern     = '/(\s*)@(title|description)\s?/';
+	$replacement = '$1<?php echo Orchestra\Site::get("$2"); ?>';
+
+	return preg_replace($pattern, $replacement, $view);
+});
+
+/*
+|--------------------------------------------------------------------------
 | Blade extend for @placeholder
 |--------------------------------------------------------------------------
 |

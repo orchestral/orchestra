@@ -57,4 +57,32 @@ class MacroTest extends \Orchestra\Testable\TestCase {
 
 		$this->assertEquals($expected, $output);
 	}
+
+	/**
+	 * Test blade compile @title
+	 * 
+	 * @test
+	 * @group core
+	 */
+	public function testBladeCompileTitle()
+	{
+		$expected = '<?php echo Orchestra\Site::get("title"); ?>';
+		$output   = \Blade::compile_string('@title');
+
+		$this->assertEquals($expected, $output);
+	}
+
+	/**
+	 * Test blade compile @description
+	 * 
+	 * @test
+	 * @group core
+	 */
+	public function testBladeCompileDescription()
+	{
+		$expected = '<?php echo Orchestra\Site::get("description"); ?>';
+		$output   = \Blade::compile_string('@description');
+
+		$this->assertEquals($expected, $output);
+	}
 }
