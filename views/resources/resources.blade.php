@@ -3,6 +3,7 @@
 @section('content')
 
 <div class="row-fluid">
+
 	<div class="span2 well-resources">
 		<ul class="nav nav-tabs nav-stacked">
 			@foreach ($resources['list'] as $name => $resource)
@@ -15,9 +16,11 @@
 			@endforeach
 		</ul>
 	</div>
+
 	<div class="span10">
 		{{ $content }}
 	</div>
+	
 </div>
 
 @endsection

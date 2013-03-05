@@ -6,13 +6,7 @@
 
 	<div class="span6 offset3 guest-form">
 		
-		<div class="page-header">
-			<h3>{{ ! empty($_title_) ? $_title_ : 'Something Awesome Without A Name' }}
-				@if ( ! empty($_description_))
-				<small>{{ $_description_ ?: '' }}</small>
-				@endif
-			</h3>
-		</div>
+		@include(locate('orchestra::layout.widgets.header'))
 
 		{{ Form::open(handles('orchestra::forgot'), 'POST', array('class' => 'form-horizontal')) }}
 			{{ Form::token() }}

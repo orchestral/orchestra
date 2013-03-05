@@ -3,6 +3,7 @@
 ## Contents
 
 * [Version 1.1](#v1.1)
+ - [v1.1.2](#v1.1.2)
  - [v1.1.1](#v1.1.1)
  - [v1.1.0](#v1.1.0)
 * [Version 1.0](#v1.0)
@@ -15,6 +16,13 @@
 
 <a name="v1.1"></a>
 ## Version 1.1
+
+<a name="v1.1.2"></a>
+### v1.1.2
+
+* Add `Orchestra\Support\Site` to replace usage of ugly `$_title_` and `$_description_` in Orchestra Platform.
+* Add `Orchestra\Support\Messages::store()` method.
+* Add option to escape user inserted data using `Orchestra\Support\Table`.
 
 <a name="v1.1.1"></a>
 ### v1.1.1

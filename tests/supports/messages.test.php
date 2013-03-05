@@ -45,7 +45,7 @@ class MessagesTest extends \PHPUnit_Framework_TestCase {
 	 * @test
 	 * @group support
 	 */
-	public function testSerializeAndRetrieve()
+	public function testUsingMessages()
 	{
 		$messages = new \Orchestra\Support\Messages;
 		$messages->add('hello', 'Hi World');
@@ -59,7 +59,7 @@ class MessagesTest extends \PHPUnit_Framework_TestCase {
 		$this->assertContains('bye', $serialize);
 		$this->assertContains('Goodbye', $serialize);
 
-		\Session::flash('message', $serialize);
+		$messages->store();
 
 		$this->assertTrue(\Session::has('message'));
 

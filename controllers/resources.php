@@ -2,6 +2,7 @@
 
 use Orchestra\Presenter\Resource as ResourcePresenter,
 	Orchestra\Resources,
+	Orchestra\Site,
 	Orchestra\View;
 
 class Orchestra_Resources_Controller extends Orchestra\Controller {
@@ -38,10 +39,11 @@ class Orchestra_Resources_Controller extends Orchestra\Controller {
 			$model[$name] = $resource;
 		}
 
+		Site::set('title', __('orchestra::title.resources.list'));
+		Site::set('description', __('orchestra::title.resources.list-detail'));
+
 		return View::make('orchestra::resources.index', array(
-			'table'         => ResourcePresenter::table($model),
-			'_title_'       => __('orchestra::title.resources.list'),
-			'_description_' => __('orchestra::title.resources.list-detail'),
+			'table' => ResourcePresenter::table($model),
 		));
 	}
 

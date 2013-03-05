@@ -2,6 +2,7 @@
 
 use Orchestra\Mail,
 	Orchestra\Messages,
+	Orchestra\Site,
 	Orchestra\View,
 	Orchestra\Model\User,
 	Orchestra\Presenter\Account as AccountPresenter;
@@ -51,10 +52,12 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		$redirect       = Session::get('orchestra.redirect', handles('orchestra'));
 		$username_types = current($this->username_types);
 
+		Site::set('title', __("orchestra::title.login"));
+
 		return View::make('orchestra::credential.login', compact(
 			'redirect',
 			'username_types'
-		))->with('_title_', __('orchestra::title.login'));
+		));
 	}
 	
 	/**
@@ -177,10 +180,12 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 
 		Event::fire('orchestra.form: user.account', array($user, $form));
 		
+		Site::set('title', __($title));
+		
 		return View::make('orchestra::credential.register', array(
 			'eloquent' => $user,
 			'form'     => $form,
-		))->with('_title_', __($title));
+		));
 	}
 
 	/**

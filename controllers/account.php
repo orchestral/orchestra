@@ -1,6 +1,7 @@
 <?php
 
 use Orchestra\Presenter\Account as AccountPresenter,
+	Orchestra\Site,
 	Orchestra\Messages,
 	Orchestra\View;
 
@@ -38,8 +39,9 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 		$data = array(
 			'eloquent' => $user,
 			'form'     => $form,
-			'_title_'  => __("orchestra::title.account.profile"),
 		);
+
+		Site::set('title', __("orchestra::title.account.profile"));
 
 		return View::make('orchestra::account.index', $data);
 	}
@@ -119,8 +121,9 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 		$data = array(
 			'eloquent' => $user,
 			'form'     => $form,
-			'_title_'  => __("orchestra::title.account.password"),
 		);
+
+		Site::set('title', __("orchestra::title.account.password"));
 
 		return View::make('orchestra::account.password', $data);
 	}

@@ -1,16 +1,17 @@
 <?php namespace Orchestra\Testable;
 
-use \Auth,
-	\Config,
-	\Cookie,
-	\DB,
-	\Event,
-	\IoC,
-	\Orchestra as O,
+use Auth,
+	Config,
+	Cookie,
+	DB,
+	Event,
+	IoC,
+	Orchestra\Core,
+	Orchestra\Installer,
 	Orchestra\Model\User as User,
-	\Request,
-	\Session,
-	\URL,
+	Request,
+	Session,
+	URL,
 	Symfony\Component\HttpFoundation\LaravelRequest;
 
 class Application {
@@ -30,48 +31,19 @@ class Application {
 
 		Config::set('database.default', 'testdb');
 		Event::first('orchestra.testable: setup-db');
-		O\Installer::$status = false;
-		URL::$base           = null;
+
+		Installer::$status = false;
+		URL::$base = null;
 
 		Config::set('application.url', 'http://localhost');
 		Config::set('application.index', '');
 		Config::set('auth.driver', 'eloquent');
 		Config::set('auth.model', 'Orchestra\Model\User');
-
-		if ( ! O\Installer::installed())
+		
+		if ( ! Installer::installed()) 
 		{
-			Request::$foundation = LaravelRequest::createFromGlobals();
-			Session::load();
-
-			Request::foundation()->server->add(array(
-				'REQUEST_METHOD' => 'POST',
-			));
-
-			O\Installer\Runner::install();
-
-			O\Installer\Runner::create_user(array(
-				'site_name' => 'Orchestra Test Suite',
-				'email'     => 'admin@orchestra.com',
-				'password'  => '123456',
-				'fullname'  => 'Test Administrator',
-			));
-
-			$foouser = User::where_email('member@orchestra.com')->first();
-
-			if (is_null($foouser))
-			{
-				$foouser = User::create(array(
-					'fullname' => 'Test User',
-					'email'    => 'member@orchestra.com',
-					'password' => '123456',
-					'status'   => User::VERIFIED,
-				));
-				$foouser->roles()->sync(array(
-					Config::get('orchestra::orchestra.member_role'),
-				));
-			}
-
-			O\Core::shutdown();
+			$this->installation();
+			Core::shutdown();
 		}
 
 		// Request and Session instance need to be flushed an restarted.
@@ -79,7 +51,47 @@ class Application {
 		Session::$instance   = null;
 
 		Session::load();
-		O\Core::start();
+		Core::start();
+	}
+
+	/**
+	 * Application installation.
+	 *
+	 * @access protected
+	 * @return void
+	 */
+	protected function installation()
+	{
+		Request::$foundation = LaravelRequest::createFromGlobals();
+		Session::load();
+
+		Request::foundation()->server->add(array(
+			'REQUEST_METHOD' => 'POST',
+		));
+
+		Installer\Runner::install();
+
+		Installer\Runner::create_user(array(
+			'site_name' => 'Orchestra Test Suite',
+			'email'     => 'admin@orchestra.com',
+			'password'  => '123456',
+			'fullname'  => 'Test Administrator',
+		));
+
+		$foouser = User::where_email('member@orchestra.com')->first();
+
+		if (is_null($foouser))
+		{
+			$foouser = User::create(array(
+				'fullname' => 'Test User',
+				'email'    => 'member@orchestra.com',
+				'password' => '123456',
+				'status'   => User::VERIFIED,
+			));
+			$foouser->roles()->sync(array(
+				Config::get('orchestra::orchestra.member_role'),
+			));
+		}
 	}
 
 	/**
@@ -90,7 +102,7 @@ class Application {
 	 */
 	public function shutdown()
 	{
-		O\Core::shutdown();
+		Core::shutdown();
 		$this->remove();
 	}
 
@@ -107,7 +119,7 @@ class Application {
 		Cookie::$jar         = array();
 		Session::$instance   = null;
 		URL::$base           = null;
-		O\Installer::$status = false;
+		Installer::$status = false;
 
 		Config::set('auth.driver', 'eloquent');
 		Config::set('auth.model', 'User');

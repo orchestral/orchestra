@@ -9,11 +9,11 @@
 |
 */
 
-HTML::macro('title', function ($page_title)
+HTML::macro('title', function ()
 {
 	$memory     = Orchestra::memory();
 	$site_title = $memory->get('site.name');
-	$page_title = trim($page_title);
+	$page_title = trim(Orchestra\Site::get('title', ''));
 	$format     = $memory->get('site.format.title', ':page-title &mdash; :site-title');
 
 	if (empty($page_title) or URI::is('/')) return $site_title;
@@ -22,6 +22,20 @@ HTML::macro('title', function ($page_title)
 		":site-title" => $site_title,
 		":page-title" => $page_title,
 	));
+});
+
+/*
+|--------------------------------------------------------------------------
+| Blade extend for @title and @description
+|--------------------------------------------------------------------------
+*/
+
+Blade::extend(function ($view)
+{
+	$pattern     = '/(\s*)@(title|description)\s?/';
+	$replacement = '$1<?php echo Orchestra\Site::get("$2"); ?>';
+
+	return preg_replace($pattern, $replacement, $view);
 });
 
 /*

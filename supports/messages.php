@@ -49,6 +49,17 @@ class Messages extends M {
 	}
 
 	/**
+	 * Save current instance to Session flash.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function store()
+	{
+		Session::flash('message', $this->serialize());
+	}
+
+	/**
 	 * Compile the instance into serialize
 	 *
 	 * @access public

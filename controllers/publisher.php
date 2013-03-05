@@ -3,7 +3,8 @@
 use Orchestra\Controller,
 	Orchestra\Core,
 	Orchestra\Extension\Publisher,
-	Orchestra\Messages;
+	Orchestra\Messages,
+	Orchestra\Site;
 
 class Orchestra_Publisher_Controller extends Controller {
 
@@ -56,6 +57,9 @@ class Orchestra_Publisher_Controller extends Controller {
 	 */
 	public function get_ftp()
 	{
+		Site::set('title', __('orchestra::title.publisher.ftp'));
+		Site::set('description', __('orchestra::title.publisher.description'));
+
 		return View::make('orchestra::publisher.ftp');
 	}
 
