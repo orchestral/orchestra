@@ -7,6 +7,7 @@ use Laravel\Fluent,
 	Orchestra\Form,
 	Orchestra\Messages,
 	Orchestra\Presenter\Extension as ExtensionPresenter,
+	Orchestra\Site,
 	Orchestra\View;
 
 class Orchestra_Extensions_Controller extends Orchestra\Controller {
@@ -36,12 +37,9 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	 */
 	public function get_index()
 	{
-		$data = array(
-			'extensions' => Extension::detect(),
-			'_title_' => __("orchestra::title.extensions.list"),
-		);
+		$extensions = Extension::detect();
 
-		foreach($data['extensions'] as $name => & $extension)
+		foreach($extensions as $name => & $extension)
 		{
 			isset($extension->require) or $extension->require = array();
 
@@ -49,7 +47,9 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 			$extension->unresolved = Extension::not_activatable($name);
 		}
 
-		return View::make('orchestra::extensions.index', $data);
+		Site::set('title', __("orchestra::title.extensions.list"));
+
+		return View::make('orchestra::extensions.index', compact('extensions'));
 	}
 
 	/**
@@ -167,11 +167,12 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 		Event::fire("orchestra.form: extension.{$name}", array($config, $form));
 
 		$data = array(
-			'eloquent'      => $config,
-			'form'          => Form::of("orchestra.extension: {$name}"),
-			'_title_'       => $extension_name,
-			'_description_' => __("orchestra::title.extensions.configure"),
+			'eloquent' => $config,
+			'form'     => Form::of("orchestra.extension: {$name}"),
 		);
+
+		Site::set('title', $extension_name);
+		Site::set('description', __("orchestra::title.extensions.configure"));
 
 		return View::make('orchestra::extensions.configure', $data);
 	}

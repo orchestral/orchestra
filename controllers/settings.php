@@ -5,6 +5,7 @@ use Laravel\Fluent,
 	Orchestra\Extension,
 	Orchestra\Messages,
 	Orchestra\Presenter\Setting as SettingPresenter,
+	Orchestra\Site,
 	Orchestra\View;
 
 class Orchestra_Settings_Controller extends Orchestra\Controller {
@@ -57,10 +58,11 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 
 		Event::fire('orchestra.form: settings', array($settings, $form));
 
+		Site::set('title', __('orchestra::title.settings.list'));
+
 		$data = array(
 			'eloquent' => $settings,
 			'form'     => $form,
-			'_title_'  => __('orchestra::title.settings.list'),
 		);
 
 		return View::make('orchestra::settings.index', $data);

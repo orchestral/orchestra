@@ -28,6 +28,11 @@ return array(
 		'list'    => 'Settings',
 	),
 
+	'publisher' => array(
+		'ftp'         => 'FTP Credential',
+		'description' => 'We would need to have your credential in order to run the following task.'
+	),
+
 	'users' => array(
 		'list'   => 'Users',
 		'create' => 'Add User',

@@ -1,8 +1,10 @@
 <?php namespace Orchestra\Testable;
 
-use \Controller,
-	\Request,
-	\Session,
+use Controller,
+	Request,
+	Session,
+	Orchestra\View,
+	Orchestra\Presenter\Site as SitePresenter,
 	Symfony\Component\HttpFoundation\LaravelRequest;
 
 class Client {
@@ -77,6 +79,11 @@ class Client {
 	 */
 	public function flush()
 	{
+		// Flush any reference to old request.
+		View::$shared         = array();
+		SitePresenter::$items = array();
+
+		// Get current request data.
 		$request = Request::foundation()->request;
 
 		foreach ($request->keys() as $key)
@@ -84,6 +91,7 @@ class Client {
 			$request->remove($key);
 		}
 
+		// Create a new request from global.
 		Request::$foundation = LaravelRequest::createFromGlobals();
 	}
 }

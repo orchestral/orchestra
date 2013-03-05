@@ -6,9 +6,7 @@
 
 <div class="row-fluid">
 
-	<div class="page-header">
-		<h2>{{ __('orchestra::title.extensions.list') }}</h2>
-	</div>
+	@include(locate('orchestra::layout.widgets.header'))
 
 	<table class="table table-bordered table-striped">
 		<thead>

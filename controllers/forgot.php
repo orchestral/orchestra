@@ -4,6 +4,7 @@ use Orchestra\Core,
 	Orchestra\Mail,
 	Orchestra\Messages,
 	Orchestra\Model\User,
+	Orchestra\Site,
 	Orchestra\View;
 
 class Orchestra_Forgot_Controller extends Orchestra\Controller {
@@ -36,8 +37,9 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 	 */
 	public function get_index()
 	{
-		return View::make('orchestra::forgot.index')
-				->with('_title_', __('orchestra::title.forgot-password'));
+		Site::set('title', __('orchestra::title.forgot-password'));
+
+		return View::make('orchestra::forgot.index');
 	}
 
 	/**

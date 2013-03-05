@@ -3,11 +3,8 @@
 @section('content')
 <div class="row-fluid">
 	<div class="span8">
-		<div class="page-header">
-			<h2>FTP Credential</h2>
-		</div>
-
-		<p>We would need to have your FTP credential in order to run the following task.</p>
+		
+		@include(locate('orchestra::layout.widgets.header'))
 
 		{{ Form::open(handles('orchestra::publisher/ftp'), 'POST', array('class' => 'form-horizontal')) }}
 			<fieldset>

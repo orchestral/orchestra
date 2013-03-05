@@ -3,10 +3,11 @@
 use Orchestra\Form,
 	Orchestra\HTML,
 	Orchestra\Messages,
-	Orchestra\Presenter\User as UserPresenter,
-	Orchestra\View,
 	Orchestra\Model\Role,
-	Orchestra\Model\User;
+	Orchestra\Model\User,
+	Orchestra\Presenter\User as UserPresenter,
+	Orchestra\Site,
+	Orchestra\View;
 
 class Orchestra_Users_Controller extends Orchestra\Controller {
 
@@ -52,8 +53,9 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 			'eloquent' => $users,
 			'table'    => $table,
 			'roles'    => Role::lists('name', 'id'),
-			'_title_'  => __('orchestra::title.users.list'),
 		);
+
+		Site::set('title', __('orchestra::title.users.list'));
 
 		return View::make('orchestra::users.index', $data);
 	}
@@ -84,8 +86,9 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		$data = array(
 			'eloquent' => $user,
 			'form'     => $form,
-			'_title_'  => __("orchestra::title.users.{$type}"),
 		);
+
+		Site::set('title', __("orchestra::title.users.{$type}"));
 
 		return View::make('orchestra::users.edit', $data);
 	}
