@@ -54,7 +54,7 @@ class Messages extends M {
 	 * @access public
 	 * @return void
 	 */
-	public function flash()
+	public function store()
 	{
 		Session::flash('message', $this->serialize());
 	}

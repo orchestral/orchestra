@@ -21,7 +21,7 @@
 ### v1.1.2
 
 * Add `Orchestra\Support\Site` to replace usage of ugly `$_title_` and `$_description_` in Orchestra Platform.
-* Add `Orchestra\Support\Messages::flash()` method.
+* Add `Orchestra\Support\Messages::store()` method.
 * Add option to escape user inserted data using `Orchestra\Support\Table`.
 
 <a name="v1.1.1"></a>
