@@ -77,6 +77,10 @@ class Client {
 	 */
 	public function flush()
 	{
+		// Flush any reference to old request.
+		View::$shared = array();
+		Site::$items  = array();
+
 		// Get current request data.
 		$request = Request::foundation()->request;
 
