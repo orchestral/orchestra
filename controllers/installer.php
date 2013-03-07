@@ -6,6 +6,7 @@ use Orchestra\Core,
 	Orchestra\Installer\Requirement,
 	Orchestra\Installer\Runner,
 	Orchestra\Messages,
+	Orchestra\Site,
 	Orchestra\View;
 
 class Orchestra_Installer_Controller extends Controller {
@@ -20,12 +21,10 @@ class Orchestra_Installer_Controller extends Controller {
 	{
 		parent::__construct();
 
-		Config::set('orchestra::navigation.show-user-box', false);
+		Site::set('navigation::show-user-box', false);
 
 		$memory = Core::memory();
 		$memory->put('site_name', 'Orchestra Installer');
-
-		View::share('orchestra_memory', $memory);
 	}
 
 	/**
