@@ -66,10 +66,12 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	{
 		\Orchestra\Support\Site::$items = array(
 			'title'       => 'Hello World',
-			'description' => 'Just another Hello World'
+			'description' => 'Just another Hello World',
+			'hello'       => null,
 		);
 
 		$this->assertTrue(\Orchestra\Support\Site::has('title'));
 		$this->assertFalse(\Orchestra\Support\Site::has('title.foo'));
+		$this->assertFalse(\Orchestra\Support\Site::has('hello'));
 	}
 }
