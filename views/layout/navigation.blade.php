@@ -1,47 +1,16 @@
-<div class="navbar navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="container{{ (Orchestra\Site::has('layout::fixed') ? '' : '-fluid') }}">
+<?php 
 
-			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#mainnav">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
+$navbar = new Orchestra\Fluent(array(
+	'id'             => 'main',
+	'title'          => memorize('site.name', 'Orchestra'),
+	'url'            => handles('orchestra'),
+	'attributes'     => array('class' => 'navbar-fixed-top'),
+	'primary_menu'   => render(locate('orchestra::layout.widgets.menu'), array('menu' => Orchestra\Core::menu())),
+	'secondary_menu' => render(locate('orchestra::layout.widgets.usernav'), get_defined_vars()),
+)); ?>
 
-			{{ HTML::link(handles('orchestra'), memorize('site.name', 'Orchestra'), array('class' => 'brand')) }}
+{{ Orchestra\Decorator::navbar($navbar) }}
 
-			<div id="mainnav" class="collapse nav-collapse">
-					
-				{{ render(locate('orchestra::layout.widgets.menu'), array('menu' => Orchestra\Core::menu())) }}
-				
-				@if (Orchestra\Site::get('navigation::show-user-box', true))
-				<ul class="nav pull-right">
-					<li class="dropdown" id="user-menu">
-						<p>
-							<a href="#user-menu" rel="user-menu" class="btn dropdown-toggle" data-toggle="dropdown">
-								<i class="icon-user"></i> {{ ( ! Auth::guest() ? Auth::user()->fullname : __('orchestra::title.login')) }}
-							</a> 
-						</p>
-
-						@if (Auth::check())
-
-						<ul class="dropdown-menu">
-							
-							<li>{{ HTML::link(handles('orchestra::account'), __('orchestra::title.account.profile')) }}</li>
-							<li>{{ HTML::link(handles('orchestra::account/password'), __('orchestra::title.account.password')) }}</li>
-							<li class="divider"></li>
-							<li>{{ HTML::link(handles('orchestra::logout'), __('orchestra::title.logout')) }}</li>
-						</ul>
-
-						@endif
-
-					</li>
-				</ul>
-				@endif
-			</div>
-		</div>
-	</div>
-</div>
 @if ( ! Auth::check())
 
 <script>
