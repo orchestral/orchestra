@@ -38,7 +38,7 @@ Since an ACL metric is defined for each extension, it is best to define ACL acti
 				'view foobar',
 			);
 
-			$acl->add_action($actions);
+			$acl->add_actions($actions);
 			$acl->allow($role->name, $actions);
 		}
 

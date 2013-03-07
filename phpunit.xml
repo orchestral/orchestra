@@ -14,7 +14,7 @@
 	</php>
 	<testsuites>
 		<testsuite name="Orchestra Platform Test Suite">
-			<directory suffix=".test.php">tests/</directory>
+			<directory suffix=".test.php">tests/cases/</directory>
 		</testsuite>
 	</testsuites>
 	<filter>
