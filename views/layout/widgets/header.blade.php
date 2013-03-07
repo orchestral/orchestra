@@ -6,7 +6,9 @@ $description = Orchestra\Site::get('description'); ?>
 <div class="page-header">
 	@if (Orchestra\Site::get('header::add-button'))
 	<div class="pull-right">
-		<a href="{{ URL::current() }}/view" class="btn btn-primary">Add</a>
+		<a href="{{ URL::current() }}/view" class="btn btn-primary">
+			{{ __('orchestra::label.add') }}
+		</a>
 	</div>
 	@endif
 	

@@ -32,6 +32,7 @@ return array(
 		),
 	),
 
+	'add'          => 'Add',
 	'submit'       => 'Submit',
 	'view'         => 'View',
 	'edit'         => 'Edit',
