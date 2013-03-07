@@ -41,7 +41,6 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
 		$controller = new \Orchestra\Controller;
 
 		$this->assertEquals('foo', $_SERVER['test.orchestra.started']);
-		$this->assertTrue(\View::$shared['fluent_layout']);
 	}
 
 	/**

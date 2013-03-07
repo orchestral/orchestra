@@ -27,9 +27,7 @@ class Controller extends Base_Controller {
 		// All controller should be accessible only after Orchestra is
 		// installed.
 		$this->filter('before', 'orchestra::installed');
-
-		V::share('fluent_layout', true);
-
+		
 		Event::fire('orchestra.started: backend');
 	}
 

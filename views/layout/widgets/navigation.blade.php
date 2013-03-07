@@ -1,6 +1,6 @@
 <div class="navbar navbar-fixed-top">
 	<div class="navbar-inner">
-		<div class="container{{ isset($fluent_layout) ? '-fluid' : '' }}">
+		<div class="container{{ (Orchestra\Site::has('layout::fixed') ? '' : '-fluid') }}">
 
 			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#mainnav">
 				<span class="icon-bar"></span>
