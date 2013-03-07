@@ -75,7 +75,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testStringifyMethod()
 	{
-		$base_path = \Bundle::path('orchestra').'tests'.DS.'supports'.DS.'memory'.DS.'stub'.DS;
+		$base_path = \Bundle::path('orchestra').'tests'.DS.'cases'.DS.'supports'.DS.'memory'.DS.'stub'.DS;
 
 		$stub     = new MemoryDriverStub;
 		$expected = 'a:2:{s:4:"name";s:9:"Orchestra";s:5:"theme";a:2:{s:7:"backend";s:7:"default";s:8:"frontend";s:7:"default";}}';
