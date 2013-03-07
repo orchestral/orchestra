@@ -3,6 +3,7 @@
 ## Contents
 
 * [Version 1.1](#v1.1)
+ - [v1.1.3](#v1.1.3)
  - [v1.1.2](#v1.1.2)
  - [v1.1.1](#v1.1.1)
  - [v1.1.0](#v1.1.0)
@@ -16,6 +17,16 @@
 
 <a name="v1.1"></a>
 ## Version 1.1
+
+<a name="v1.1.3"></a>
+### v1.1.3
+
+**Ongoing development**
+
+ * Add `Orchestra\Fluent` alias from `Orchestra\Support\Fluent`.
+ * Add `Orchestra\Decorator` alias from `Orchestra\Support\Site\Decorator`.
+ * Improvements to templating system.
+ * Rename `orchestra.backend: bottom` asset container as `orchestra.backend: footer`.
 
 <a name="v1.1.2"></a>
 ### v1.1.2
