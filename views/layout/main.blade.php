@@ -10,7 +10,7 @@
 
 	<body>
 
-		@include(locate('orchestra::layout.widgets.navigation'))
+		@include(locate('orchestra::layout.navigation'))
 
 		<section class="container{{ (Orchestra\Site::has('layout::fixed') ? '' : '-fluid') }}">
 
