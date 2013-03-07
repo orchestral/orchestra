@@ -29,7 +29,6 @@ class Controller extends Base_Controller {
 		$this->filter('before', 'orchestra::installed');
 
 		V::share('fluent_layout', true);
-		V::share('orchestra_memory', Core::memory());
 
 		Event::fire('orchestra.started: backend');
 	}

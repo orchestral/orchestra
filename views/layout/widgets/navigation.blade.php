@@ -8,7 +8,7 @@
 				<span class="icon-bar"></span>
 			</button>
 
-			{{ HTML::link(handles('orchestra'), $orchestra_memory->get('site.name', 'Orchestra'), array('class' => 'brand')) }}
+			{{ HTML::link(handles('orchestra'), memorize('site.name', 'Orchestra'), array('class' => 'brand')) }}
 
 			<div id="mainnav" class="collapse nav-collapse">
 					
