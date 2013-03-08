@@ -73,28 +73,28 @@ class HTMLTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Support\HTML::compile() method.
+	 * Test Orchestra\Support\HTML::decorate() method.
 	 *
 	 * @test
 	 * @group support
 	 */
-	public function testCompileAttributesMethod()
+	public function testDecorateMethod()
 	{
-		$output = \Orchestra\Support\HTML::compile_attributes(
+		$output = \Orchestra\Support\HTML::decorate(
 			array('class' => 'span4 table'), 
 			array('id' => 'foobar')
 		);
 		$expected = array('id' => 'foobar', 'class' => 'span4 table');
 		$this->assertEquals($expected, $output);
 
-		$output = \Orchestra\Support\HTML::compile_attributes(
+		$output = \Orchestra\Support\HTML::decorate(
 			array('class' => 'span4 !span12'), 
 			array('class' => 'span12')
 		);
 		$expected = array('class' => 'span4');
 		$this->assertEquals($expected, $output);
 
-		$output = \Orchestra\Support\HTML::compile_attributes(
+		$output = \Orchestra\Support\HTML::decorate(
 			array('id' => 'table'), 
 			array('id' => 'foobar', 'class' => 'span4')
 		);
