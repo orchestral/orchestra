@@ -18,10 +18,10 @@ HTML::macro('title', function ()
 
 	if (empty($page_title) or URI::is('/')) return $site_title;
 
-	return strtr($format, array(
+	return Orchestra\HTML::create('title', strtr($format, array(
 		":site-title" => $site_title,
 		":page-title" => $page_title,
-	));
+	)));
 });
 
 /*
