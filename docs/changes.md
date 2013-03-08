@@ -27,6 +27,8 @@
  * Add `Orchestra\Decorator` alias from `Orchestra\Support\Site\Decorator`.
  * Improvements to templating system.
  * Rename `orchestra.backend: bottom` asset container as `orchestra.backend: footer`.
+ * Replace `Orchestra\Support\HTML::compile_attributes()` to `Orchestra\Support\HTML::decorate()`.
+
 
 <a name="v1.1.2"></a>
 ### v1.1.2

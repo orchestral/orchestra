@@ -1,4 +1,5 @@
-<?php $attributes = Orchestra\HTML::compile_attributes($navbar->attributes ?: array(), array('class' => 'navbar')); ?>
+{{- Define the navbar attributes -}}
+<?php $attributes = Orchestra\HTML::decorate($navbar->attributes ?: array(), array('class' => 'navbar')); ?>
 
 <div{{ Orchestra\HTML::attributes($attributes) }}>
 	<div class="navbar-inner">
