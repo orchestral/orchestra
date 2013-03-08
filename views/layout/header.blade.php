@@ -18,18 +18,7 @@ $asset->script('javie', 'bundles/orchestra/js/javie.min.js', array('underscore')
 
 $asset->style('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.css');
 $asset->style('bootstrap-responsive', 'bundles/orchestra/vendor/bootstrap/bootstrap-responsive.min.css', array('bootstrap'));
-$asset->style('orchestra', 'bundles/orchestra/css/style.css', array('bootstrap-responsive'));
-
-$asset->style('select2', 'bundles/orchestra/vendor/select2/select2.css');
-$asset->style('jquery-ui', 'bundles/orchestra/vendor/delta/theme/jquery-ui.css');
-
-$asset->script('bootstrap', 'bundles/orchestra/vendor/bootstrap/bootstrap.min.js', array('jquery'));
-$asset->script('orchestra', 'bundles/orchestra/js/script.min.js', array('bootstrap', 'javie'));
-$asset->script('select2', 'bundles/orchestra/vendor/select2/select2.min.js', array('jquery'));
-
-// Add jQuery-UI Library with Delta theme.
-$asset->script('jquery-ui', 'bundles/orchestra/vendor/jquery.ui.js', array('jquery'));
-$asset->script('jquery-ui-ts', 'bundles/orchestra/vendor/delta/js/jquery-ui.toggleSwitch.js', array('jquery-ui')); ?>
+$asset->style('orchestra', 'bundles/orchestra/css/style.css', array('bootstrap-responsive')); ?>
 
 {{ $asset->styles() }}
 {{ $asset->scripts() }}
