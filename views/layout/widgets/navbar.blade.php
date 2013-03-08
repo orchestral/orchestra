@@ -1,4 +1,4 @@
-{{- Define the navbar attributes -}}
+{{-- Define the navbar attributes --}}
 <?php $attributes = Orchestra\HTML::decorate($navbar->attributes ?: array(), array('class' => 'navbar')); ?>
 
 <div{{ Orchestra\HTML::attributes($attributes) }}>
