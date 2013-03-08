@@ -17,5 +17,6 @@ $asset->script('select2', 'bundles/orchestra/vendor/select2/select2.min.js', arr
 // Add jQuery-UI Library with Delta theme.
 $asset->script('jquery-ui', 'bundles/orchestra/vendor/jquery.ui.js', array('jquery'));
 $asset->script('jquery-ui-ts', 'bundles/orchestra/vendor/delta/js/jquery-ui.toggleSwitch.js', array('jquery-ui')); ?>
+
 {{ $asset->styles() }}
 {{ $asset->scripts() }}
