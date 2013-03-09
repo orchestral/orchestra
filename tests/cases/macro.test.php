@@ -34,14 +34,14 @@ class MacroTest extends \Orchestra\Testable\TestCase {
 		$memory = \Orchestra::memory();
 		$memory->put('site.name', 'Orchestra Test Suite');
 
-		$this->assertEquals('Orchestra Test Suite', \HTML::title());
+		$this->assertEquals('<title>Orchestra Test Suite</title>', \HTML::title());
 
 		\Orchestra\Site::set('title', 'Home');
 
-		$this->assertEquals('Home &mdash; Orchestra Test Suite', \HTML::title());
+		$this->assertEquals('<title>Home &mdash; Orchestra Test Suite</title>', \HTML::title());
 
 		$memory->put('site.format.title', ':page-title at :site-title');
-		$this->assertEquals('Home at Orchestra Test Suite', \HTML::title());
+		$this->assertEquals('<title>Home at Orchestra Test Suite</title>', \HTML::title());
 	}
 
 	/**

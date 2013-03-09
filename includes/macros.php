@@ -12,16 +12,19 @@
 HTML::macro('title', function ()
 {
 	$memory     = Orchestra::memory();
-	$site_title = $memory->get('site.name');
+	$site_title = $title = $memory->get('site.name');
 	$page_title = trim(Orchestra\Site::get('title', ''));
 	$format     = $memory->get('site.format.title', ':page-title &mdash; :site-title');
 
-	if (empty($page_title) or URI::is('/')) return $site_title;
+	if ( ! (empty($page_title) or URI::is('/'))) 
+	{
+		$title = strtr($format, array(
+			":site-title" => $site_title,
+			":page-title" => $page_title,
+		));
+	}
 
-	return strtr($format, array(
-		":site-title" => $site_title,
-		":page-title" => $page_title,
-	));
+	return Orchestra\HTML::create('title', $title);
 });
 
 /*

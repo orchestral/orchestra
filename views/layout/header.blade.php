@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+{{ HTML::title() }}
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta name="description" content="">
 <meta name="author" content="">
