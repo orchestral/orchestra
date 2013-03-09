@@ -1,5 +1,12 @@
 # HTML Helper Class
 
+## Table of Contents
+
+* [Create HTML Tag](#create)
+* [Raw HTML entities](#raw)
+* [Decorate HTML](#decorate)
+
+<a name="create"></a>
 ## Create HTML Tag
 
 Create a HTML tag from within your libraries/extension using following code:
@@ -14,6 +21,7 @@ Customize the HTML attibutes by adding third parameter.
 	
 	// return <p id="foo">Another awesomeness</p>
 
+<a name="raw"></a>
 ## Raw HTML entities
 
 Mark a string to be excluded from being escaped.
@@ -22,7 +30,7 @@ Mark a string to be excluded from being escaped.
 	
 	// return <a href="foo"><img src="foo.jpg"></a>
 
-
+<a name="decorate"></a>
 ## Decorate HTML
 
 Decorate method allow developer to define HTML attributes collection as `HTML::attributes` method, with the addition of including default attributes array as second parameter.
