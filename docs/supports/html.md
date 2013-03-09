@@ -5,10 +5,23 @@
 Create a HTML tag from within your libraries/extension using following code:
 
 	{{ Orchestra\Support\HTML::create('p', 'Some awesome information') }}
+	
+	// return <p>Some awesome information</p> 
 
 Customize the HTML attibutes by adding third parameter.
 
 	{{ Orchestra\Support\HTML::create('p', 'Another awesomeness', array('id' => 'foo')) }}
+	
+	// return <p id="foo">Another awesomeness</p>
+
+## Raw HTML entities
+
+Mark a string to be excluded from being escaped.
+
+	{{ HTML::link('foo', Orchestra\Support\HTML::raw('<img src="foo.jpg">')) }}
+	
+	// return <a href="foo"><img src="foo.jpg"></a>
+
 
 ## Decorate HTML
 
