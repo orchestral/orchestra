@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8">
-		<title>{{ HTML::title() }}</title>
 		
 		@include(locate('orchestra::layout.header'))
 

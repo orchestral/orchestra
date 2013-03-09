@@ -74,4 +74,32 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse(\Orchestra\Support\Site::has('title.foo'));
 		$this->assertFalse(\Orchestra\Support\Site::has('hello'));
 	}
+
+	/**
+	 * Test Orchestra\Support\Site::forget() method.
+	 *
+	 * @test
+	 * @group support
+	 */
+	public function testForgetMethod()
+	{
+		\Orchestra\Support\Site::$items = array(
+			'title'       => 'Hello World',
+			'description' => 'Just another Hello World',
+			'hello'       => null,
+			'foo'         => array(
+				'hello' => 'foo',
+				'bar'   => 'foobar',
+			),
+		);
+
+		\Orchestra\Support\Site::forget('title');
+		\Orchestra\Support\Site::forget('hello');
+		\Orchestra\Support\Site::forget('foo.bar');
+
+		$this->assertFalse(\Orchestra\Support\Site::has('title'));
+		$this->assertTrue(\Orchestra\Support\Site::has('description'));
+		$this->assertFalse(\Orchestra\Support\Site::has('hello'));
+		$this->assertEquals(array('hello' => 'foo'), \Orchestra\Support\Site::get('foo'));
+	}
 }

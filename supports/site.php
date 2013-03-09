@@ -43,12 +43,23 @@ class Site {
 	 * @static
 	 * @access public 	
 	 * @param  string   $key
-	 * @return mixed
+	 * @return bool
 	 */
 	public static function has($key)
 	{
 		return ! is_null(static::get($key));
 	}
 
-
+	/**
+	 * Remove a site key.
+	 *
+	 * @static
+	 * @access public
+	 * @param  string   $key
+	 * @return void
+	 */
+	public static function forget($key)
+	{
+		return array_forget(static::$items, $key);
+	}
 }
