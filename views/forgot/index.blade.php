@@ -23,7 +23,7 @@
 			</fieldset>
 
 			<div class="form-actions">
-				<button type="submit" class="btn btn-primary">{{ $_title_ }}</button>
+				<button type="submit" class="btn btn-primary">{{ Orchestra\Site::get('title', 'Submit') }}</button>
 			</div>
 
 		{{ Form::close() }}
