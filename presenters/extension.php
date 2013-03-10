@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Presenter;
 
-use Orchestra\Form,
+use Orchestra\Extension as E,
+	Orchestra\Form,
 	Orchestra\HTML;
 
 class Extension {
@@ -25,7 +26,7 @@ class Extension {
 				'method' => "POST",
 			));
 
-			$handles      = isset($config->handles) ? $config->handles : null;
+			$handles      = isset($config->handles) ? $config->handles : E::option($name, 'handles');
 			$configurable = isset($config->configurable) ? $config->configurable : true;
 
 			$form->fieldset(function ($fieldset) use ($handles, $name, $configurable)
