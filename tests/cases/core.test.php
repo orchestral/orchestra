@@ -116,8 +116,6 @@ class CoreTest extends \PHPUnit_Framework_TestCase {
 		\Orchestra\Core::start();
 		
 		$this->assertTrue(is_array(\Config::get('orchestra::support.form.fieldset')));
-		$this->assertTrue(\IoC::registered('orchestra.theme: backend'));
-		$this->assertTrue(\IoC::registered('orchestra.theme: frontend'));
 
 		\Orchestra\Core::shutdown();
 	}

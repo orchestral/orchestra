@@ -23,6 +23,18 @@ class ThemeTest extends \Orchestra\Testable\TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Theme::start() is register propery IoC.
+	 *
+	 * @test
+	 * @group core
+	 */
+	public function testStartThemeRegisterProperIoC()
+	{
+		$this->assertTrue(\IoC::registered('orchestra.theme: backend'));
+		$this->assertTrue(\IoC::registered('orchestra.theme: frontend'));
+	}
+
+	/**
 	 * Test Orchestra\Theme::__construct()
 	 *
 	 * @test
