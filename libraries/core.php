@@ -100,8 +100,7 @@ class Core {
 			Installer::$status = false;
 		}
 
-		static::appearance();
-
+		Theme::start();
 		Event::fire('orchestra.started');
 
 		static::$initiated = true;
@@ -127,34 +126,6 @@ class Core {
 
 		// Only do this on installed application
 		if (false === Installer::$status) return;
-	}
-
-	/**
-	 * Initiate Asset and Theme IoC for Orchestra.
-	 *
-	 * @static
-	 * @access protected
-	 * @return void
-	 */
-	protected static function appearance()
-	{
-		// Localize memory variable.
-		$memory = static::memory();
-
-		// Define IoC for Theme.
-		IoC::singleton('orchestra.theme: backend', function() use ($memory)
-		{
-			$theme = $memory->get('site.theme.backend', 'default');
-
-			return Theme::container('backend', $theme);
-		});
-
-		IoC::singleton('orchestra.theme: frontend', function() use ($memory)
-		{
-			$theme = $memory->get('site.theme.frontend', 'default');
-
-			return Theme::container('frontend', $theme);
-		});
 	}
 
 	/**
