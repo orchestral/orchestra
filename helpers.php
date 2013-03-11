@@ -86,3 +86,28 @@ if ( ! function_exists('handles'))
 		return url($handles.'/'.$path);
 	}
 }
+
+if ( ! function_exists('user_localtime'))
+{
+	/**
+	 * Convert given time to user localtime, however if it a guest user 
+	 * return based on default timezone.
+	 * 
+	 * @param  mixed    $datetime
+	 * @return DateTime
+	 */
+	function user_localtime($datetime)
+	{
+		if ( ! ($datetime instanceof DateTime))
+		{
+			$datetime = new DateTime(
+				$datetime, 
+				new DateTimeZone(Config::get('application.timezone', 'UTC'))
+			);
+		}
+
+		if (Auth::guest()) return $datetime;
+
+		return Auth::user()->localtime($datetime);
+	}
+}
