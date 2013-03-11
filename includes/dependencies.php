@@ -2,26 +2,6 @@
 
 /*
 |--------------------------------------------------------------------------
-| Map Orchestra\Support Classes as Orchestra
-|--------------------------------------------------------------------------
-|
-| This would allow user to access Orchestra namespace without having to
-| know Orchestra\Support.
-|
-*/
-
-Autoloader::alias('Orchestra\Support\Acl', 'Orchestra\Acl');
-Autoloader::alias('Orchestra\Support\Fluent', 'Orchestra\Fluent');
-Autoloader::alias('Orchestra\Support\Form', 'Orchestra\Form');
-Autoloader::alias('Orchestra\Support\HTML', 'Orchestra\HTML');
-Autoloader::alias('Orchestra\Support\Memory', 'Orchestra\Memory');
-Autoloader::alias('Orchestra\Support\Messages', 'Orchestra\Messages');
-Autoloader::alias('Orchestra\Support\Site', 'Orchestra\Site');
-Autoloader::alias('Orchestra\Support\Site\Decorator', 'Orchestra\Decorator');
-Autoloader::alias('Orchestra\Support\Table', 'Orchestra\Table');
-
-/*
-|--------------------------------------------------------------------------
 | Register `orchestra.auth: roles` Event. 
 |--------------------------------------------------------------------------
 |

@@ -5,13 +5,6 @@
 class HelpersTest extends \Orchestra\Testable\TestCase {
 
 	/**
-	 * User instance.
-	 *
-	 * @var Orchestra\Model\User
-	 */
-	protected $user = null;
-
-	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
@@ -21,8 +14,6 @@ class HelpersTest extends \Orchestra\Testable\TestCase {
 		parent::setUp();
 
 		set_path('public', \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS);
-
-		$this->user = \Orchestra\Model\User::find(1);
 	}
 
 	/**
@@ -31,7 +22,6 @@ class HelpersTest extends \Orchestra\Testable\TestCase {
 	public function tearDown()
 	{
 		set_path('public', path('base').'public'.DS);
-		unset($this->user);
 
 		parent::tearDown();
 	}
@@ -81,26 +71,5 @@ class HelpersTest extends \Orchestra\Testable\TestCase {
 		$this->assertEquals("path: {$theme}default/home/index.blade.php", $view2);
 		$this->assertEquals("path: {$theme}default/home/dashboard.php", $view3);
 		$this->assertEquals('error.404', $view4);
-	}
-
-	/**
-	 * Test localtime() return proper datetime.
-	 *
-	 * @test
-	 * @group helper
-	 */
-	public function testLocalTimeReturnProperDateTime()
-	{
-		\Config::set('application.timezone', 'UTC');
-		$meta = \Orchestra\Support\Memory::make('user');
-
-		$this->assertEquals(new \DateTimeZone('UTC'),
-				user_localtime('2012-01-01 00:00:00')->getTimezone());
-		
-		$meta->put("timezone.1", 'Asia/Kuala_Lumpur');
-		$this->be($this->user);
-
-		$this->assertEquals(new \DateTimeZone('Asia/Kuala_Lumpur'),
-				user_localtime('2012-01-01 00:00:00')->getTimezone());
 	}
 }

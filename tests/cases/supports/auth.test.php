@@ -2,7 +2,7 @@
 
 \Bundle::start('orchestra');
 
-class AuthTest extends \PHPUnit_Framework_TestCase {
+class AuthTest extends \Orchestra\Testable\TestCase {
 
 	/**
 	 * Setup the test environment.
