@@ -2,6 +2,8 @@
 
 ## Contents
 
+* [Version 1.2](#v1.2)
+ - [v1.2.0](#v1.2.0)
 * [Version 1.1](#v1.1)
  - [v1.1.3](#v1.1.3)
  - [v1.1.2](#v1.1.2)
@@ -15,20 +17,23 @@
  - [v1.0.1](#v1.0.1)
  - [v1.0.0](#v1.0.0)
 
-<a name="v1.1"></a>
-## Version 1.1
+<a name="v1.2"></a>
+## Version 1.2
 
-<a name="v1.1.3"></a>
-### v1.1.3
+<a name="v1.2.3"></a>
+### v1.2.0
 
 **Ongoing development**
 
  * Add `Orchestra\Fluent` alias from `Orchestra\Support\Fluent`.
  * Add `Orchestra\Decorator` alias from `Orchestra\Support\Site\Decorator`.
+ * Add `user_localtime()` helper.
  * Improvements to templating system.
  * Rename `orchestra.backend: bottom` asset container as `orchestra.backend: footer`.
  * Replace `Orchestra\Support\HTML::compile_attributes()` to `Orchestra\Support\HTML::decorate()`.
 
+<a name="v1.1"></a>
+## Version 1.1
 
 <a name="v1.1.2"></a>
 ### v1.1.2
