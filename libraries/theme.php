@@ -14,6 +14,33 @@ class Theme {
 	public static $containers = array();
 
 	/**
+	 * Start Theme when Orchestra Platform is loaded.
+	 *
+	 * @static
+	 * @access public
+	 * @return void
+	 */
+	public static function start()
+	{
+		$memory = Core::memory();
+
+		// Define IoC for Theme.
+		IoC::singleton('orchestra.theme: backend', function() use ($memory)
+		{
+			$theme = $memory->get('site.theme.backend', 'default');
+
+			return Theme::container('backend', $theme);
+		});
+
+		IoC::singleton('orchestra.theme: frontend', function() use ($memory)
+		{
+			$theme = $memory->get('site.theme.frontend', 'default');
+
+			return Theme::container('frontend', $theme);
+		});
+	}
+
+	/**
 	 * Shorthand to resolve current active Theme.
 	 *
 	 * @static
