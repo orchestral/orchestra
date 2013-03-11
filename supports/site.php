@@ -1,5 +1,10 @@
 <?php namespace Orchestra\Support;
 
+use \DateTime, 
+	\DateTimeZone,
+	\Auth as A, 
+	\Config;
+
 class Site {
 
 	/**
@@ -61,5 +66,29 @@ class Site {
 	public static function forget($key)
 	{
 		return array_forget(static::$items, $key);
+	}
+
+	/**
+	 * Convert given time to user localtime, however if it a guest user 
+	 * return based on default timezone.
+	 *
+	 * @static
+	 * @access public
+	 * @param  mixed    $datetime
+	 * @return DateTime
+	 */
+	public static function localtime($datetime)
+	{
+		if ( ! ($datetime instanceof DateTime))
+		{
+			$datetime = new DateTime(
+				$datetime, 
+				new DateTimeZone(Config::get('application.timezone', 'UTC'))
+			);
+		}
+
+		if (Auth::guest()) return $datetime;
+
+		return Auth::user()->localtime($datetime);
 	}
 }
