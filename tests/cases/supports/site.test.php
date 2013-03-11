@@ -1,13 +1,24 @@
 <?php namespace Orchestra\Tests\Supports;
 
-class SiteTest extends \PHPUnit_Framework_TestCase {
+class SiteTest extends \Orchestra\Testable\TestCase {
 	
+	/**
+	 * User instance.
+	 *
+	 * @var Orchestra\Model\User
+	 */
+	protected $user = null;
+
 	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
+		parent::setUp();
+
 		\Orchestra\Support\Site::$items = array();
+
+		$this->user = \Orchestra\Model\User::find(1);
 	}
 
 	/**
@@ -16,6 +27,9 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	public function tearDown()
 	{
 		\Orchestra\Support\Site::$items = array();
+		unset($this->user);
+		
+		parent::tearDown();
 	}
 
 	/**
@@ -101,5 +115,26 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue(\Orchestra\Support\Site::has('description'));
 		$this->assertFalse(\Orchestra\Support\Site::has('hello'));
 		$this->assertEquals(array('hello' => 'foo'), \Orchestra\Support\Site::get('foo'));
+	}
+
+	/**
+	 * Test localtime() return proper datetime.
+	 *
+	 * @test
+	 * @group support
+	 */
+	public function testLocalTimeReturnProperDateTime()
+	{
+		\Config::set('application.timezone', 'UTC');
+		$meta = \Orchestra\Support\Memory::make('user');
+
+		$this->assertEquals(new \DateTimeZone('UTC'),
+				\Orchestra\Support\Site::localtime('2012-01-01 00:00:00')->getTimezone());
+		
+		$meta->put("timezone.1", 'Asia/Kuala_Lumpur');
+		$this->be($this->user);
+
+		$this->assertEquals(new \DateTimeZone('Asia/Kuala_Lumpur'),
+				\Orchestra\Support\Site::localtime('2012-01-01 00:00:00')->getTimezone());
 	}
 }

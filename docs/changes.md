@@ -27,7 +27,7 @@
 
  * Add `Orchestra\Fluent` alias from `Orchestra\Support\Fluent`.
  * Add `Orchestra\Decorator` alias from `Orchestra\Support\Site\Decorator`.
- * Add `user_localtime()` helper.
+ * Add `Orchestra\Site::localtime()` helper.
  * Add `Orchestra\Theme::start()` to replace `Orchestra\Core::appearance()`.
  * Improvements to templating system.
  * Rename `orchestra.backend: bottom` asset container as `orchestra.backend: footer`.
