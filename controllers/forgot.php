@@ -59,7 +59,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 			'email' => array('required', 'email'),
 		);
 
-		$msg = new Messages;
+		$msg = Messages::make();
 		$val = Validator::make($input, $rules);
 
 		if ($val->fails())
@@ -80,8 +80,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 			// no user could be associated with the provided email address
 			$msg->add('error', __('orchestra::response.db-404'));
 
-			return Redirect::to(handles('orchestra::forgot'))
-					->with('message', $msg->serialize());
+			return Redirect::to(handles('orchestra::forgot'));
 		}
 
 		$meta   = Orchestra\Memory::make('user');
@@ -114,8 +113,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 			$msg->add('success', __('orchestra::response.forgot.email-send'));
 		}
 
-		return Redirect::to(handles('orchestra::forgot'))
-			->with('message', $msg->serialize());
+		return Redirect::to(handles('orchestra::forgot'));
 	}
 
 	/**
@@ -145,7 +143,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 			return Response::error('404');
 		}
 
-		$msg      = new Messages;
+		$msg      = Messages::make();
 		$memory   = Core::memory();
 		$hash     = sha1($user->email.Str::random(10));
 		$password = Str::random(5);
@@ -178,7 +176,6 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 			$msg->add('success', __('orchestra::response.forgot.email-send'));
 		}
 
-		return Redirect::to(handles('orchestra::login'))
-			->with('message', $msg->serialize());
+		return Redirect::to(handles('orchestra::login'));
 	}
 }

@@ -66,7 +66,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 
 		Event::fire('orchestra.validate: user.account', array(& $rules));
 
-		$msg = new Messages;
+		$msg = Messages::make();
 		$val = Validator::make($input, $rules);
 
 		if ($val->fails())
@@ -102,8 +102,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 			)));
 		}
 
-		return Redirect::to(handles('orchestra::account'))
-				->with('message', $msg->serialize());
+		return Redirect::to(handles('orchestra::account'));
 	}
 
 	/**
@@ -163,7 +162,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 					->with_errors($val);
 		}
 
-		$msg  = new Messages;
+		$msg  = Messages::make();
 		$user = Auth::user();
 
 		if (Hash::check($input['current_password'], $user->password))
@@ -189,8 +188,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 			$msg->add('error', __('orchestra::response.account.password.invalid'));
 		}
 
-		return Redirect::to(handles('orchestra::account/password'))
-				->with('message', $msg->serialize());
+		return Redirect::to(handles('orchestra::account/password'));
 	}
 
 	/**

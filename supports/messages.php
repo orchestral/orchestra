@@ -6,24 +6,44 @@ use \Session,
 class Messages extends M {
 
 	/**
+	 * Messages instance.
+	 *
+	 * @var Messages
+	 */
+	public static $instance = null;
+
+	/**
 	 * Add a message to the collector.
 	 *
 	 * <code>
 	 *		// Add a message for the e-mail attribute
-	 *		Message::make('email', 'The e-mail address is invalid.');
+	 *		$msg = Message::make();
+	 *		$msg->add('email', 'The e-mail address is invalid.');
 	 * </code>
 	 *
 	 * @static
-	 * @param  string  $key
-	 * @param  string  $message
 	 * @return void
 	 */
-	public static function make($key, $message)
+	public static function make()
 	{
-		$instance = new static();
-		$instance->add($key, $message);
+		if (is_null(static::$instance))
+		{
+			static::$instance = new static();
+		}
 
-		return $instance;
+		return static::$instance;
+	}
+
+	/**
+	 * Shudown the message instance.
+	 *
+	 * @static
+	 * @access public
+	 * @return void
+	 */
+	public static function shutdown()
+	{
+		if ( ! is_null(static::$instance)) static::$instance->save();
 	}
 
 	/**
@@ -49,12 +69,12 @@ class Messages extends M {
 	}
 
 	/**
-	 * Save current instance to Session flash.
+	 * Save current instance to Session flash during shutdown.
 	 *
 	 * @access public
 	 * @return void
 	 */
-	public function store()
+	public function save()
 	{
 		Session::flash('message', $this->serialize());
 	}

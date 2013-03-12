@@ -49,7 +49,10 @@ class Runner {
 		// check whether message actually an instanceof Messages, if for any
 		// reason it's not we should assume the object is invalid and
 		// therefore we need to construct a new object.
-		if ( ! (static::$message instanceof Messages)) static::$message = new Messages;
+		if ( ! (static::$message instanceof Messages))
+		{
+			static::$message = Messages::make();
+		}
 
 		// Check if DEFAULT_BUNDLE has an instruction for Orchestra
 		// installation, if so include it.

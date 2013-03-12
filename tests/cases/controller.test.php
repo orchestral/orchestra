@@ -9,6 +9,9 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
+		\Session::$instance = null;
+		\Session::load();
+
 		$_SERVER['test.orchestra.started'] = null;
 		$_SERVER['test.orchestra.done']    = null;
 	}
@@ -18,6 +21,8 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
+		\Session::$instance = null;
+		
 		unset($_SERVER['test.orchestra.started']);
 		unset($_SERVER['test.orchestra.done']);
 	}
