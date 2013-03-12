@@ -116,7 +116,7 @@ class TableTest extends \PHPUnit_Framework_TestCase {
 		$output = ob_get_contents();
 		ob_end_clean();
 
-		$expected = '<table class="foo">
+		$expected = '<table class="table table-bordered table-striped foo">
 	<thead>
 		<tr>
 			<th>Id</th>
@@ -142,7 +142,7 @@ class TableTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals($expected, $output);
 
-		$expected = '<table class="foo">
+		$expected = '<table class="table table-bordered table-striped foo">
 	<thead>
 		<tr>
 			<th>ID</th>

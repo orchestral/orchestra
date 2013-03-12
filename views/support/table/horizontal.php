@@ -1,3 +1,4 @@
+<?php $table_attributes = Orchestra\HTML::decorate($table_attributes, array('class' => 'table table-bordered table-striped')); ?>
 <table<?php echo HTML::attributes($table_attributes); ?>>
 	<thead>
 		<tr>
