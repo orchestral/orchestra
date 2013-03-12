@@ -81,7 +81,7 @@ class User {
 				{
 					$btn = array();
 					$btn[] = HTML::link(
-						handles('orchestra::users/view/'.$row->id),
+						handles("orchestra::users/view/{$row->id}"),
 						__('orchestra::label.edit'),
 						array(
 							'class' => 'btn btn-mini btn-warning',
@@ -92,7 +92,7 @@ class User {
 					if (Auth::user()->id !== $row->id)
 					{
 						$btn[] = HTML::link(
-							handles('orchestra::users/delete/'.$row->id),
+							handles("orchestra::users/delete/{$row->id}"),
 							__('orchestra::label.delete'),
 							array(
 								'class' => 'btn btn-mini btn-danger',

@@ -22,9 +22,7 @@ class Orchestra_Installer_Controller extends Controller {
 		parent::__construct();
 
 		Site::set('navigation::show-user-box', false);
-
-		$memory = Core::memory();
-		$memory->put('site_name', 'Orchestra Installer');
+		Core::memory()->put('site_name', 'Orchestra Installer');
 	}
 
 	/**
@@ -123,11 +121,11 @@ class Orchestra_Installer_Controller extends Controller {
 				}
 				else
 				{
-					$message = new Messages;
-					$message->add('error', 'Unable to create user');
+					$msg = Messages::make();
+					$msg->add('error', 'Unable to create user');
+					$msg->save();
 
-					return Redirect::to(handles('orchestra::installer/steps/1'))
-							->with('message', serialize($message));
+					return Redirect::to(handles('orchestra::installer/steps/1'));
 				}
 				break;
 		}
