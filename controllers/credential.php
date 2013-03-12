@@ -108,18 +108,16 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 
 			Event::fire(array('orchestra.logged.in', 'orchestra.auth: login'));
 
-			$msg->add('success', __('orchestra::response.credential.logged-in'));
-
 			$redirect = Input::get('redirect', handles('orchestra'));
 
-			return Redirect::to($redirect)
-					->with('message', $msg->serialize());
+			$msg->add('success', __('orchestra::response.credential.logged-in'));
+
+			return Redirect::to($redirect);
 		}
 
 		$msg->add('error', __('orchestra::response.credential.invalid-combination'));
 
-		return Redirect::to(handles('orchestra::login'))
-				->with('message', $msg->serialize());
+		return Redirect::to(handles('orchestra::login'));
 	}
 
 	/**
@@ -141,8 +139,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 		$msg = Messages::make();
 		$msg->add('success', __('orchestra::response.credential.logged-out'));
 
-		return Redirect::to($redirect)
-				->with('message', $msg->serialize());
+		return Redirect::to($redirect);
 	}
 
 	/**
@@ -259,8 +256,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 				'error' => $e->getMessage(),
 			)));
 			
-			return Redirect::to(handles('orchestra::register'))
-					->with('message', $msg->serialize());
+			return Redirect::to(handles('orchestra::register'));
 		}
 
 		return $this->send_email($user, $password, $msg);
@@ -301,8 +297,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 			$msg->add('success', __('orchestra::response.credential.register.email-send'));
 		}
 
-		return Redirect::to(handles('orchestra::login'))
-				->with('message', $msg->serialize());
+		return Redirect::to(handles('orchestra::login'));
 	}
 
 	/**

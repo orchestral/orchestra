@@ -139,7 +139,6 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 
 		$msg = Messages::make();
 		$msg->add('success', __('orchestra::response.settings.update'));
-		$msg->store();
 
 		return Redirect::to(handles('orchestra::settings'));
 	}

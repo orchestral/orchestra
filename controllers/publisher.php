@@ -44,8 +44,7 @@ class Orchestra_Publisher_Controller extends Controller {
 			Publisher::execute($msg);
 		}
 
-		return Redirect::to(handles('orchestra::publisher/ftp'))
-				->with('message', $msg->serialize());
+		return Redirect::to(handles('orchestra::publisher/ftp'));
 	}
 	
 
@@ -91,7 +90,6 @@ class Orchestra_Publisher_Controller extends Controller {
 			$msg->add('error', $e->getMessage());
 
 			return Redirect::to(handles('orchestra::publisher/ftp'))
-				->with('message', $msg->serialize())
 				->with_input();
 		}
 
@@ -102,7 +100,6 @@ class Orchestra_Publisher_Controller extends Controller {
 			Publisher::execute($msg);
 		}
 
-		return Redirect::to(handles('orchestra::publisher/ftp'))
-				->with('message', $msg->serialize());
+		return Redirect::to(handles('orchestra::publisher/ftp'));
 	}
 }

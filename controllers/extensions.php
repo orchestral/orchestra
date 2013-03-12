@@ -99,8 +99,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 			)));
 		}
 
-		return Redirect::to(handles('orchestra::extensions'))
-				->with('message', $msg->serialize());
+		return Redirect::to(handles('orchestra::extensions'));
 	}
 
 	/**
@@ -136,8 +135,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 			)));
 		}
 
-		return Redirect::to(handles('orchestra::extensions'))
-				->with('message', $msg->serialize());
+		return Redirect::to(handles('orchestra::extensions'));
 	}
 
 	/**
@@ -214,8 +212,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 		$msg->add('success', __("orchestra::response.extensions.configure", compact('name')));
 
-		return Redirect::to(handles('orchestra::extensions'))
-			->with('message', $msg->serialize());
+		return Redirect::to(handles('orchestra::extensions'));
 	}
 
 	/**
@@ -253,7 +250,6 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 
 		$msg->add('success', __('orchestra::response.extensions.update', compact('name')));
 
-		return Redirect::to(handles('orchestra::extensions'))
-				->with('message', $msg->serialize());
+		return Redirect::to(handles('orchestra::extensions'));
 	}
 }

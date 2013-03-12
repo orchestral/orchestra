@@ -80,8 +80,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 
 		$form = UserPresenter::form($user);
 
-		Event::fire('orchestra.form: users', array($user, $form));
-		Event::fire('orchestra.form: user.account', array($user, $form));
+		$this->fire_event('form', array($user, $form));
 
 		$data = array(
 			'eloquent' => $user,
@@ -121,8 +120,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 			$rules['password'] = array('required');
 		}
 
-		Event::fire('orchestra.validate: users', array(& $rules));
-		Event::fire('orchestra.validate: user.account', array(& $rules));
+		$this->fire_event('validate', array(& $rules));
 
 		$val = Validator::make($input, $rules);
 		$msg = Messages::make();
@@ -174,8 +172,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 			)));
 		}
 
-		return Redirect::to(handles('orchestra::users'))
-				->with('message', $msg->serialize());
+		return Redirect::to(handles('orchestra::users'));
 	}
 
 	/**
@@ -218,8 +215,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 			)));
 		}
 
-		return Redirect::to(handles('orchestra::users'))
-				->with('message', $msg->serialize());
+		return Redirect::to(handles('orchestra::users'));
 	}
 
 	/**
