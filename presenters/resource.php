@@ -19,9 +19,6 @@ class Resource {
 		{
 			$table->empty_message = __('orchestra::label.no-data');
 
-			// Add HTML attributes option for the table.
-			$table->attributes('class', 'table table-bordered table-striped');
-
 			// attach the list
 			$table->rows($model);
 
