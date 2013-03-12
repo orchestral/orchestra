@@ -37,7 +37,7 @@ class Orchestra_Publisher_Controller extends Controller {
 	public function get_index()
 	{
 		$driver = Core::memory()->get('orchestra.publisher.driver', 'ftp');
-		$msg    = new Messages;
+		$msg    = Messages::make();
 
 		if (Publisher::connected()) 
 		{
@@ -74,7 +74,7 @@ class Orchestra_Publisher_Controller extends Controller {
 	public function post_ftp()
 	{
 		$input  = Input::only(array('host', 'user', 'password'));
-		$msg    = new Messages;
+		$msg    = Messages::make();
 		$queues = Publisher::queued();
 
 		$input['ssl'] = (Input::get('connection-type', 'sftp') === 'sftp');

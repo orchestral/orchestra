@@ -65,7 +65,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 	{
 		if (is_null($name) or Extension::started($name)) return Response::error('404');
 
-		$msg = new Messages;
+		$msg = Messages::make();
 
 		try
 		{
@@ -119,7 +119,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 			return Response::error('404');
 		}
 		
-		$msg = new Messages;
+		$msg = Messages::make();
 
 		try
 		{
@@ -194,7 +194,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 		$memory = Core::memory();
 		$config = new Fluent((array) $memory->get("extension_{$name}", array()));
 		$loader = (array) $memory->get("extensions.active.{$name}", array());
-		$msg    = new Messages;
+		$msg    = Messages::make();
 
 		// This part should be part of extension loader configuration. What
 		// saved here wouldn't be part of extension configuration.
@@ -236,7 +236,7 @@ class Orchestra_Extensions_Controller extends Orchestra\Controller {
 			return Response::error('404');
 		}
 
-		$msg = new Messages;
+		$msg = Messages::make();
 
 		try
 		{

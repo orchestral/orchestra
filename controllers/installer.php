@@ -123,7 +123,7 @@ class Orchestra_Installer_Controller extends Controller {
 				}
 				else
 				{
-					$message = new Messages;
+					$message = Messages::make();
 					$message->add('error', 'Unable to create user');
 
 					return Redirect::to(handles('orchestra::installer/steps/1'))

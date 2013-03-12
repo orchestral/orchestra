@@ -66,7 +66,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 
 		Event::fire('orchestra.validate: user.account', array(& $rules));
 
-		$msg = new Messages;
+		$msg = Messages::make();
 		$val = Validator::make($input, $rules);
 
 		if ($val->fails())
@@ -163,7 +163,7 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 					->with_errors($val);
 		}
 
-		$msg  = new Messages;
+		$msg  = Messages::make();
 		$user = Auth::user();
 
 		if (Hash::check($input['current_password'], $user->password))

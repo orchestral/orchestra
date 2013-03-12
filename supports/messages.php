@@ -6,6 +6,13 @@ use \Session,
 class Messages extends M {
 
 	/**
+	 * Messages instance.
+	 *
+	 * @var Messages
+	 */
+	public static $instance = null;
+
+	/**
 	 * Add a message to the collector.
 	 *
 	 * <code>
@@ -14,16 +21,16 @@ class Messages extends M {
 	 * </code>
 	 *
 	 * @static
-	 * @param  string  $key
-	 * @param  string  $message
 	 * @return void
 	 */
-	public static function make($key, $message)
+	public static function make()
 	{
-		$instance = new static();
-		$instance->add($key, $message);
+		if (is_null(static::$instance))
+		{
+			static::$instance = new static();
+		}
 
-		return $instance;
+		return static::$instance;
 	}
 
 	/**

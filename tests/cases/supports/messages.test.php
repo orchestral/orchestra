@@ -29,7 +29,8 @@ class MessagesTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testMakeInstance()
 	{
-		$messages = \Orchestra\Support\Messages::make('welcome', 'Hello world');
+		$messages = \Orchestra\Support\Messages::make();
+		$messages->add('welcome', 'Hello world');
 
 		$this->assertInstanceOf('\Orchestra\Support\Messages', $messages);
 		$this->assertEquals(array('Hello world'), $messages->get('welcome'));

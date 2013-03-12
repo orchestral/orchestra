@@ -59,7 +59,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 			'email' => array('required', 'email'),
 		);
 
-		$msg = new Messages;
+		$msg = Messages::make();
 		$val = Validator::make($input, $rules);
 
 		if ($val->fails())
@@ -145,7 +145,7 @@ class Orchestra_Forgot_Controller extends Orchestra\Controller {
 			return Response::error('404');
 		}
 
-		$msg      = new Messages;
+		$msg      = Messages::make();
 		$memory   = Core::memory();
 		$hash     = sha1($user->email.Str::random(10));
 		$password = Str::random(5);

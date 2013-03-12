@@ -76,7 +76,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 			'password' => array('required'),
 		);
 
-		$msg = new Messages;
+		$msg = Messages::make();
 		$val = Validator::make($input, $rules);
 
 		// Validate user login, if any errors is found redirect it back to
@@ -138,7 +138,8 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 
 		Event::fire(array('orchestra.logged.out', 'orchestra.auth: logout'));
 
-		$msg = Messages::make('success', __('orchestra::response.credential.logged-out'));
+		$msg = Messages::make();
+		$msg->add('success', __('orchestra::response.credential.logged-out'));
 
 		return Redirect::to($redirect)
 				->with('message', $msg->serialize());
@@ -215,7 +216,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 
 		Event::fire('orchestra.validate: user.account', array(& $rules));
 	
-		$msg  = new Messages;
+		$msg = Messages::make();
 		$val = Validator::make($input, $rules);
 	
 		// Validate user registration, if any errors is found redirect it 

@@ -125,7 +125,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		Event::fire('orchestra.validate: user.account', array(& $rules));
 
 		$val = Validator::make($input, $rules);
-		$msg = new Messages;
+		$msg = Messages::make();
 
 		if ($val->fails())
 		{
@@ -190,7 +190,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		if (is_null($id)) return Response::error('404');
 
 		$user = User::find($id);
-		$msg  = new Messages;
+		$msg  = Messages::make();
 
 		if (is_null($user) or ($user->id === Auth::user()->id))
 		{
