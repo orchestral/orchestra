@@ -60,7 +60,7 @@ class MessagesTest extends \PHPUnit_Framework_TestCase {
 		$this->assertContains('bye', $serialize);
 		$this->assertContains('Goodbye', $serialize);
 
-		$messages->store();
+		$messages->save();
 
 		$this->assertTrue(\Session::has('message'));
 

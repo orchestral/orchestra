@@ -17,7 +17,8 @@ class Messages extends M {
 	 *
 	 * <code>
 	 *		// Add a message for the e-mail attribute
-	 *		Message::make('email', 'The e-mail address is invalid.');
+	 *		$msg = Message::make();
+	 *		$msg->add('email', 'The e-mail address is invalid.');
 	 * </code>
 	 *
 	 * @static
@@ -31,6 +32,18 @@ class Messages extends M {
 		}
 
 		return static::$instance;
+	}
+
+	/**
+	 * Shudown the message instance.
+	 *
+	 * @static
+	 * @access public
+	 * @return void
+	 */
+	public static function shutdown()
+	{
+		if ( ! is_null(static::$instance)) static::$instance->save();
 	}
 
 	/**
@@ -56,12 +69,12 @@ class Messages extends M {
 	}
 
 	/**
-	 * Save current instance to Session flash.
+	 * Save current instance to Session flash during shutdown.
 	 *
 	 * @access public
 	 * @return void
 	 */
-	public function store()
+	public function save()
 	{
 		Session::flash('message', $this->serialize());
 	}
