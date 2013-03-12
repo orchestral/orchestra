@@ -53,6 +53,7 @@ return array(
 			'textarea' => array('class' => 'span12'),
 			'input'    => array('class' => 'span12'),
 			'password' => array('class' => 'span12'),
+			'file'     => array(),
 			'radio'    => array(),
 			'checkbox' => array(),
 		),
@@ -95,6 +96,13 @@ return array(
 			{
 				return Form::password(
 					$data->name, 
+					$data->attributes
+				);
+			},
+			'file' => function ($data)
+			{
+				return Form::file(
+					$data->name,
 					$data->attributes
 				);
 			},

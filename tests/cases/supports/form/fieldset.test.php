@@ -18,6 +18,7 @@ class FieldsetTest extends \PHPUnit_Framework_TestCase {
 			'select'   => array(),
 			'textarea' => array(),
 			'input'    => array(),
+			'file'     => array(),
 			'password' => array(),
 			'radio'    => array(),
 		));
@@ -104,6 +105,11 @@ class FieldsetTest extends \PHPUnit_Framework_TestCase {
 				$c->label('Foo')->value('foobar');
 			});
 
+			$f->control('file', 'file_foo', function ($c)
+			{
+				$c->label('Foo')->value('foobar');
+			});
+
 			$f->control('textarea', 'textarea_foo', function ($c)
 			{
 				$c->label('Foo')->value('foobar');
@@ -151,6 +157,12 @@ class FieldsetTest extends \PHPUnit_Framework_TestCase {
 		
 		$this->assertEquals('password_foo', $output->id);
 		$this->assertEquals(\Form::password('password_foo'), 
+			 call_user_func($output->field, new \Orchestra\Support\Fluent, $output));
+
+		$output = $stub->of('file_foo');
+		
+		$this->assertEquals('file_foo', $output->id);
+		$this->assertEquals(\Form::file('file_foo'), 
 			 call_user_func($output->field, new \Orchestra\Support\Fluent, $output));
 
 		$output = $stub->of('textarea_foo');
