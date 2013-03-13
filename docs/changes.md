@@ -20,7 +20,7 @@
 <a name="v1.2"></a>
 ## Version 1.2
 
-<a name="v1.2.3"></a>
+<a name="v1.2.0"></a>
 ### v1.2.0
 
 **Ongoing development**
@@ -29,7 +29,9 @@
  * Add `Orchestra\Decorator` alias from `Orchestra\Support\Site\Decorator`.
  * Add `Orchestra\Site::localtime()` helper.
  * Add `Orchestra\Theme::start()` to replace `Orchestra\Core::appearance()`.
- * Improvements to templating system.
+ * Add `Input::file()` support for `Orchestra\Form`.
+ * Multiple improvements to `Orchestra\Messages`.
+ * Multiple improvements to templating system.
  * Rename `orchestra.backend: bottom` asset container as `orchestra.backend: footer`.
  * Replace `Orchestra\Support\HTML::compile_attributes()` to `Orchestra\Support\HTML::decorate()`.
 
