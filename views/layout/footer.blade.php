@@ -20,3 +20,5 @@ $asset->script('jquery-ui-ts', 'bundles/orchestra/vendor/delta/js/jquery-ui.togg
 
 {{ $asset->styles() }}
 {{ $asset->scripts() }}
+
+@placeholder("orchestra.layout: footer")

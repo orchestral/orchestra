@@ -137,8 +137,8 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 
 		Event::fire('orchestra.saved: settings', array($memory, $input));
 
-		$msg = Messages::make();
-		$msg->add('success', __('orchestra::response.settings.update'));
+		$msg = Messages::make()
+				->add('success', __('orchestra::response.settings.update'));
 
 		return Redirect::to(handles('orchestra::settings'));
 	}
