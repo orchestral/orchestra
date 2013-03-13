@@ -24,3 +24,5 @@ $asset->style('orchestra', 'bundles/orchestra/css/style.css', array('bootstrap-r
 
 {{ $asset->styles() }}
 {{ $asset->scripts() }}
+
+@placeholder("orchestra.layout: header")

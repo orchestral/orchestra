@@ -22,7 +22,7 @@ class Orchestra_Installer_Controller extends Controller {
 		parent::__construct();
 
 		Site::set('navigation::show-user-box', false);
-		Core::memory()->put('site_name', 'Orchestra Installer');
+		Core::memory()->put('site.name', 'Orchestra Installer');
 	}
 
 	/**

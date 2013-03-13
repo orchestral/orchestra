@@ -69,6 +69,25 @@ class Messages extends M {
 	}
 
 	/**
+	 * Add a message to the collector.
+	 *
+	 * <code>
+	 *		// Add a message for the e-mail attribute
+	 *		$messages->add('email', 'The e-mail address is invalid.');
+	 * </code>
+	 *
+	 * @param  string  $key
+	 * @param  string  $message
+	 * @return void
+	 */
+	public function add($key, $message)
+	{
+		parent::add($key, $message);
+
+		return $this;
+	}
+
+	/**
 	 * Save current instance to Session flash during shutdown.
 	 *
 	 * @access public
