@@ -75,41 +75,10 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testStringifyMethod()
 	{
-		$base_path = \Bundle::path('orchestra').'tests'.DS.'cases'.DS.'supports'.DS.'memory'.DS.'stub'.DS;
-
 		$stub     = new MemoryDriverStub;
-		$expected = 'a:2:{s:4:"name";s:9:"Orchestra";s:5:"theme";a:2:{s:7:"backend";s:7:"default";s:8:"frontend";s:7:"default";}}';
-		$stream   = fopen($base_path.'driver1.stub.php', 'r');
-		$output   = $stub->stringify($stream);
-
-		$this->assertEquals($expected, $output);
-
-		$expected = array(
-			'name'  => 'Orchestra',
-			'theme' => array(
-				'backend' => 'default',
-				'frontend' => 'default',
-			),
-		);
-
-		$this->assertEquals($expected, unserialize($output));
-
-		$stub     = new MemoryDriverStub;
-		$expected = 'a:2:{s:4:"name";s:9:"Orchestra";s:5:"theme";a:2:{s:7:"backend";s:7:"default";s:8:"frontend";s:7:"default";}}';
-		$stream   = fopen($base_path.'driver2.stub.php', 'r');
-		$output   = $stub->stringify($stream);
-
-		$this->assertEquals($expected, $output);
-
-		$expected = array(
-			'name'  => 'Orchestra',
-			'theme' => array(
-				'backend' => 'default',
-				'frontend' => 'default',
-			),
-		);
-
-		$this->assertEquals($expected, unserialize($output));
+		$expected = 'foobar';
+		
+		$this->assertEquals($expected, $stub->stringify($expected));
 	}
 
 	/**
