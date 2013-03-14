@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <phpunit 
-	bootstrap="tests/bootstrap.phpunit.php"
-	colors="true"
-	convertNoticesToExceptions="true"
-	convertWarningsToExceptions="true"
-	stopOnError="false"
-	stopOnFailure="false"
-	stopOnIncomplete="false"
-	stopOnSkipped="false">
+	 bootstrap="tests/bootstrap.phpunit.php"
+	 colors="true"
+	 convertNoticesToExceptions="true"
+	 convertWarningsToExceptions="true"
+	 stopOnError="false"
+	 stopOnFailure="false"
+	 stopOnIncomplete="false"
+	 stopOnSkipped="false">
 	<php>
 		<const name="DB_DRIVER" value="sqlite"/>
 	</php>
