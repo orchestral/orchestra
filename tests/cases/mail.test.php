@@ -5,6 +5,14 @@
 class MailTest extends \Orchestra\Testable\TestCase {
 
 	/**
+	 * Teardown the test environment.
+	 */
+	public function tearDown()
+	{
+		\Orchestra\Mail::$pretending = false;
+	}
+
+	/**
 	 * Test instance of mailer with invalid view will throw an exception.
 	 *
 	 * @expectedException \Exception
