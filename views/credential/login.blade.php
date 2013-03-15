@@ -16,7 +16,7 @@
 				<div class="control-group {{ $errors->has('username') ? 'error' : '' }}">
 					{{ Form::label('username', __("orchestra::label.users.{$username_types}"), array('class' => 'control-label')) }}
 					<div class="controls">
-						{{ Form::input('text', 'username', '', array('required' => true, 'class' => 'input-xlarge', 'tabindex' => 1)) }}
+						{{ Form::input('text', 'username', '', array('required' => true, 'class' => 'span12', 'tabindex' => 1)) }}
 						{{ $errors->first('username', '<p class="help-block">:message</p>') }}
 					</div>
 				</div>
@@ -24,7 +24,7 @@
 				<div class="control-group {{ $errors->has('password') ? 'error' : '' }}">
 					{{ Form::label('password', __('orchestra::label.users.password'), array('class' => 'control-label')) }}
 					<div class="controls">
-						{{ Form::input('password', 'password', '', array('required' => true, 'class' => 'input-xlarge', 'tabindex' => 2)) }}
+						{{ Form::input('password', 'password', '', array('required' => true, 'class' => 'span12', 'tabindex' => 2)) }}
 						{{ $errors->first('password', '<p class="help-block">:message</p>') }}
 						<p class="help-block">
 							{{ HTML::link(handles('orchestra::forgot'), __('orchestra::title.forgot-password')) }}

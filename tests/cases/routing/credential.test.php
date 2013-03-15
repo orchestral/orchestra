@@ -34,14 +34,17 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function getMailerMock()
 	{
-		$mock = $this->getMock('\Orchestra\Testable\Mailer', array('was_sent'));
+		$mock = $this->getMockBuilder('\Orchestra\Testable\Mailer')
+					->disableOriginalConstructor()
+					->setMethods(array('was_sent'))
+					->getMock();
 		$mock->expects($this->any())
 			->method('was_sent')
 			->will($this->returnValue(false));
 
 		\IoC::register('orchestra.mailer', function ($from = true) use ($mock)
 		{
-			return $mock;
+			return new $mock(array());
 		});
 	}
 

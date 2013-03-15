@@ -15,7 +15,7 @@
 				<div class="control-group {{ $errors->has('email') ? 'error' : '' }}">
 					{{ Form::label('email', __('orchestra::label.users.email'), array('class' => 'control-label')) }}
 					<div class="controls">
-						{{ Form::input('email', 'email', '', array('required' => true, 'class' => 'input-xlarge')) }}
+						{{ Form::input('email', 'email', '', array('required' => true, 'class' => 'span12')) }}
 						{{ $errors->first('email', '<p class="help-block">:message</p>') }}
 					</div>
 				</div>

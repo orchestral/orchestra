@@ -12,9 +12,17 @@ class Mailer {
 	 */
 	public static function instance($driver = null)
 	{
-		return new static();
+		return new static(array());
 	}
 
+	/**
+	 * Register the Swift Mailer message and transport instances.
+	 *
+	 * @param  array  $config
+	 * @return void
+	 */
+	public function __construct($config) {}
+	
 	/**
 	 * Assume that we going to accept everything, for now.
 	 */
