@@ -88,4 +88,19 @@ class MailTest extends \Orchestra\Testable\TestCase {
 		$this->assertInstanceOf('\Orchestra\Mail', $mail);
 		$this->assertTrue($mail->was_sent($user->email));
 	}
+
+	/** 
+	 * Test Orchestra\Mail::pretend() method.
+	 *
+	 * @test
+	 * @group mail
+	 */
+	public function testPretendMethod()
+	{
+		\Orchestra\Mail::$pretending = false;
+
+		\Orchestra\Mail::pretend(true);
+
+		$this->assertTrue(\Orchestra\Mail::$pretending);
+	}
 }
