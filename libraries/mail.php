@@ -85,9 +85,9 @@ class Mail {
 		{
 			$this->mailer->body($this->view);
 			$this->mailer->html(true);
-
-			call_user_func($callback, $this->mailer);
 		}
+
+		call_user_func($callback, $this->mailer);
 	}
 
 	/**
