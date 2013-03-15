@@ -27,6 +27,9 @@ class Mail {
 	{
 		$instance = new static($view, $data, $callback);
 
+		// Automatically send the e-mail.
+		$instance->mailer->send();
+
 		return $instance->mailer;
 	}
 

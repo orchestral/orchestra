@@ -284,8 +284,7 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 			function ($mail) use ($data, $user, $site)
 			{
 				$mail->subject(__('orchestra::email.credential.register', compact('site'))->get())
-					->to($user->email, $user->fullname)
-					->send();
+					->to($user->email, $user->fullname);
 			});
 
 		if( ! $mailer->was_sent($user->email))
