@@ -81,10 +81,13 @@ class Mail {
 		$this->view   = View::make($view, $data);
 		$this->mailer = IoC::resolve('orchestra.mailer');
 
-		$this->mailer->body($this->view);
-		$this->mailer->html(true);
+		if ( ! static::$pretending)
+		{
+			$this->mailer->body($this->view);
+			$this->mailer->html(true);
 
-		call_user_func($callback, $this->mailer);
+			call_user_func($callback, $this->mailer);
+		}
 	}
 
 	/**

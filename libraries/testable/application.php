@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Testable;
 
 use Auth,
+	Bundle,
 	Config,
 	Cookie,
 	DB,
@@ -25,7 +26,12 @@ class Application {
 	 */
 	public function __construct()
 	{
-		Mail::pretend(true);
+		Bundle::start('messages');
+		IoC::register('orchestra.mailer', function ($from = true)
+		{
+			return Mailer::instance();
+		});
+
 		Config::set('database.default', 'testdb');
 		Event::first('orchestra.testable: setup-db');
 
