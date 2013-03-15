@@ -8,6 +8,7 @@ use Auth,
 	IoC,
 	Orchestra\Core,
 	Orchestra\Installer,
+	Orchestra\Mail,
 	Orchestra\Model\User as User,
 	Request,
 	Session,
@@ -24,11 +25,7 @@ class Application {
 	 */
 	public function __construct()
 	{
-		IoC::register('orchestra.mailer', function ($from = true)
-		{
-			return Mailer::instance();
-		});
-
+		Mail::pretend(true);
 		Config::set('database.default', 'testdb');
 		Event::first('orchestra.testable: setup-db');
 

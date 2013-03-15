@@ -5,6 +5,26 @@ use \Closure, \IoC;
 class Mail {
 
 	/**
+	 * Pretending to send an email.
+	 *
+	 * @var boolean
+	 */
+	public static $pretending = false;
+
+	/**
+	 * Set pretend status.
+	 *
+	 * @static
+	 * @access public
+	 * @param  boolean  $pretend
+	 * @return void
+	 */
+	public static function pretend($pretend = false)
+	{
+		static::$pretending = $pretend;
+	}
+
+	/**
 	 * Make a new Orchestra\Mail instance.
 	 *
 	 * <code>
@@ -28,9 +48,9 @@ class Mail {
 		$instance = new static($view, $data, $callback);
 
 		// Automatically send the e-mail.
-		$instance->mailer->send();
+		if ( ! static::$pretending) $instance->mailer->send();
 
-		return $instance->mailer;
+		return $instance;
 	}
 
 	/**
@@ -65,5 +85,19 @@ class Mail {
 		$this->mailer->html(true);
 
 		call_user_func($callback, $this->mailer);
+	}
+
+	/**
+	 * Check whether email was actually sent.
+	 *
+	 * @access public
+	 * @param  mixed    $emails
+	 * @return boolean
+	 */
+	public function was_sent($emails)
+	{
+		if (static::$pretending) return true;
+
+		return $this->mailer->was_sent($emails);
 	}
 }

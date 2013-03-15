@@ -42,8 +42,7 @@ class MailTest extends \Orchestra\Testable\TestCase {
 			function ($mail) use ($data, $user)
 			{
 				$mail->subject(__('orchestra::email.credential.register', array('site' => $data['site']))->get())
-					->to($user->email, $user->fullname)
-					->send();
+					->to($user->email, $user->fullname);
 			}
 		);
 
@@ -55,7 +54,7 @@ class MailTest extends \Orchestra\Testable\TestCase {
 		$view->setAccessible(true);
 
 		$this->assertInstanceOf('\Orchestra\Mail', $mail);
-		$this->assertInstanceOf('\Orchestra\Testable\Mailer', $mailer->getValue($mail));
+		$this->assertInstanceOf('\Swiftmailer\Drivers\Mail', $mailer->getValue($mail));
 		$this->assertTrue($mailer->getValue($mail)->was_sent($user->email));
 		$this->assertInstanceOf('\Laravel\View', $view->getValue($mail));
 	}
@@ -82,12 +81,11 @@ class MailTest extends \Orchestra\Testable\TestCase {
 			function ($mail) use ($data, $user)
 			{
 				$mail->subject(__('orchestra::email.credential.register', array('site' => $data['site']))->get())
-					->to($user->email, $user->fullname)
-					->send();
+					->to($user->email, $user->fullname);
 			}
 		);
 
-		$this->assertInstanceOf('\Orchestra\Testable\Mailer', $mail);
+		$this->assertInstanceOf('\Orchestra\Mail', $mail);
 		$this->assertTrue($mail->was_sent($user->email));
 	}
 }
