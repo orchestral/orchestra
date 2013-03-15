@@ -1,5 +1,0 @@
-<p>Password has been reset for <?php echo  $user->fullname ; ?></p>
-
-<p>Please login with your temporary password: <?php echo  $password ; ?></p>
-
-<p>Once logged, please change your password.</p>

@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Testable;
 
 use Auth,
-	Bundle,
 	Config,
 	Cookie,
 	DB,
@@ -25,7 +24,6 @@ class Application {
 	 */
 	public function __construct()
 	{
-		Bundle::start('messages');
 		IoC::register('orchestra.mailer', function ($from = true)
 		{
 			return Mailer::instance();

@@ -55,7 +55,6 @@ class MailTest extends \Orchestra\Testable\TestCase {
 		$view->setAccessible(true);
 
 		$this->assertInstanceOf('\Orchestra\Mail', $mail);
-		$this->assertInstanceOf('\Swiftmailer\Drivers\Driver', $mailer->getValue($mail));
 		$this->assertTrue($mailer->getValue($mail)->was_sent($user->email));
 		$this->assertInstanceOf('\Laravel\View', $view->getValue($mail));
 	}

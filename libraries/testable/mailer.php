@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Testable;
 
-class Mailer extends \Swiftmailer\Drivers\Driver {
+class Mailer {
 
 	protected $was_sent = false;
 
