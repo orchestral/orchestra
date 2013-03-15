@@ -16,6 +16,14 @@ class Mailer extends \Swiftmailer\Drivers\Driver {
 	}
 
 	/**
+	 * Register the Swift Mailer message and transport instances.
+	 *
+	 * @param  array  $config
+	 * @return void
+	 */
+	public function __construct($config) {}
+	
+	/**
 	 * Assume that we going to accept everything, for now.
 	 */
 	public function __call($method, $parameters) 
