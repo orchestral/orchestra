@@ -10,6 +10,12 @@ By now, everyone would be loving Laravel 4 Mail class. Why wait when you can hav
 
 > The Mail class is utilizing [Messages bundle](http://bundles.laravel.com/bundle/detail/Messages).
 
+## Pretending
+
+During development, you might not really need to send the actual e-mail, Orchestra Platform already create an option only pretend to send the e-mail.
+
+	Orchestra\Mail::pretend(true);
+
 ## Alternative Method
 
 Other than using `View` to make the body of an e-mail, you can also use IoC Container.
