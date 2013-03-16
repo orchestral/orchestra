@@ -23,8 +23,15 @@ Any extension start using this approach by using `Orchestra\View` instead of `\V
 	array(
 		/* ... */
 
-		'View' => path('bundle').'orchestra'.DS.'libraries'.DS.'view'.EXT,
+		'View' => 'Orchestra\\View',
 	),
+
+You would also need to register the classmap in `application/start.php` line 61.
+
+	Autoloader::map(array(
+		'Orchestra\View'  => path('bundle').'orchestra/libraries/view.php',
+		'Base_Controller' => path('app').'controllers/base.php',
+	));
 
 <a name="default-theme"></a>
 ## Default Theme
@@ -49,7 +56,7 @@ The `DEFAULT_BUNDLE` views is accessible from the root path of your theme, while
 <a name="definition"></a>
 ### Theme Definition File
 
-In order Melody Theme Manager to register and use your theme, please include a `screenshot.png` file with dimension of 300px x 225px and a definition file `theme.json`
+In order Melody Theme Manager to register and use your theme, please include a `screenshot.png` file with dimension of 300px*225px and a definition file `theme.json`
 
 	{
 		"name"        : "Default Theme",
