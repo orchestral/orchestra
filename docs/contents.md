@@ -7,7 +7,7 @@
 * [Installation & Setup](/bundocs/orchestra/install)
 	- [Download](/bundocs/orchestra/install#download)
 	- [Setup](/bundocs/orchestra/install#setup)
-	- [Server Requirement](/bundocs/orchestra/install#requirement)
+	- [System Requirement](/bundocs/orchestra/install#requirement)
 * [Helpers](/bundocs/orchestra/helpers)
 * [Mail](/bundocs/orchestra/mail)
 * [Role Based Access Control](/bundocs/orchestra/rbac)
@@ -48,7 +48,7 @@
 * [Installation](/bundocs/orchestra/events/install)
 * [Credential](/bundocs/orchestra/events/credential)
 
-### IoC
+### Injection of Container
 * [Overviews](/bundocs/orchestra/ioc)
 	- [Mailer](/bundocs/orchestra/ioc#mailer)
 	- [Memory](/bundocs/orchestra/ioc#memory)

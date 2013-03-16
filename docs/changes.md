@@ -23,13 +23,14 @@
 <a name="v1.2.0"></a>
 ### v1.2.0
 
-**Ongoing development**
+**ONGOING DEVELOPMENT**
 
  * Add `Orchestra\Fluent` alias from `Orchestra\Support\Fluent`.
  * Add `Orchestra\Decorator` alias from `Orchestra\Support\Site\Decorator`.
  * Add `Orchestra\Site::localtime()` helper.
  * Add `Orchestra\Theme::start()` to replace `Orchestra\Core::appearance()`.
  * Add `Input::file()` support for `Orchestra\Form`.
+ * Add `Orchestra\Mail::pretend()` helper during development process.
  * Multiple improvements to `Orchestra\Messages`.
  * Multiple improvements to templating system.
  * Rename `orchestra.backend: bottom` asset container as `orchestra.backend: footer`.
