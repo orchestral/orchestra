@@ -40,7 +40,7 @@ Decorate method allow developer to define HTML attributes collection as `HTML::a
 		array('id' => 'foo', 'class' => 'span5')
 	);
 
-	var_dump($attributes); // return array('class' => 'foo span5', 'id' => 'foo');
+	// return array('class' => 'foo span5', 'id' => 'foo');
 	
 It also support replacement of default attributes if such requirement is needed.
 
@@ -49,4 +49,4 @@ It also support replacement of default attributes if such requirement is needed.
 		array('class' => 'bar span5'),
 	);
 	
-	var_dump($attributes); // return array('class' => 'foo bar');
+	// return array('class' => 'foo bar');

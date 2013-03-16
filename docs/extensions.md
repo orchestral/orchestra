@@ -52,6 +52,8 @@ Few things to consider:
 
 Extension start file (optional) allow extension to run start script (as Laravel run bundles start.php file). The start file will be stored in `bundles/bundle-name/orchestra.php`. 
 
+> The definition file can easily be created using `php artisan orchestra::toolkit start`.
+
 What inside the file depends on how extension would interact with Orchestra Platform and this can be diverse depending on use cases.
 
 Some examples:
