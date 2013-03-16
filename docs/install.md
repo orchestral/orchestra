@@ -42,3 +42,9 @@ Complete the installation wizard, a simple 3 step installation process.
 # System Requirement
 
 Orchestra Platform would on top of Laravel 3 without any additional requirement except for `public/bundles` need to have proper permission access. If you are on shared hosting or hosted in web server without SSH access, Orchestra Platform would require you to fill in FTP credential in order to run extension activation.
+
+* Apache, nginx, or another compatible web server.
+* SQLite, MySQL, PostgreSQL, or SQL Server PDO drivers.
+* Laravel takes advantage of the powerful features that have become available in PHP 5.3. Consequently, PHP 5.3 is a requirement.
+* Laravel uses the FileInfo library to detect files' mime-types. This is included by default with PHP 5.3. However, Windows users may need to add a line to their php.ini file before the Fileinfo module is enabled. For more information check out the installation / configuration details on PHP.net.
+* Laravel uses the Mcrypt library for encryption and hash generation. Mcrypt typically comes pre-installed. If you can't find Mcrypt in the output of phpinfo() then check the vendor site of your LAMP installation or check out the installation / configuration details on PHP.net.
