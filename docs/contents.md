@@ -58,5 +58,6 @@
 * [Overviews](/bundocs/orchestra/toolkit)
 
 ### Support
+* [Auth](/bundocs/orchestra/supports/auth)
 * [HTML](/bundocs/orchestra/supports/html)
 * [Memory](/bundocs/orchestra/supports/memory)
