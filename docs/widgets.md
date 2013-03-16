@@ -12,6 +12,5 @@ Widget allow you to manage widgetize actions in Orchestra Platform. By default O
 	$p->add('demo', function ()
 	{
 		// you can return a string or a View.
-		
 		return View::make('placeholders.orchestra-helps');
 	});

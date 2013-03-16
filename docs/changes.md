@@ -34,6 +34,7 @@
  * Multiple improvements to templating system.
  * Rename `orchestra.backend: bottom` asset container as `orchestra.backend: footer`.
  * Replace `Orchestra\Support\HTML::compile_attributes()` to `Orchestra\Support\HTML::decorate()`.
+ * Remove requirement to run `$mailer->send()` when using `Orchestra\Mail::send()`.
 
 <a name="v1.1"></a>
 ## Version 1.1

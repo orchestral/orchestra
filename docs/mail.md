@@ -5,8 +5,7 @@ By now, everyone would be loving Laravel 4 Mail class. Why wait when you can hav
 	Orchestra\Mail::send('mail.newsletter', compact('content'), function ($mail)
 	{
 		$mail->to('test@example.com')
-			->subject('Your Awesome Subject.')
-			->send();
+			->subject('Your Awesome Subject.');
 	});
 
 > The Mail class is utilizing [Messages bundle](http://bundles.laravel.com/bundle/detail/Messages).
