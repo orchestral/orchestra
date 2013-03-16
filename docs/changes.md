@@ -23,7 +23,7 @@
 <a name="v1.2.0"></a>
 ### v1.2.0
 
-**Ongoing development**
+**ONGOING DEVELOPMENT**
 
  * Add `Orchestra\Fluent` alias from `Orchestra\Support\Fluent`.
  * Add `Orchestra\Decorator` alias from `Orchestra\Support\Site\Decorator`.

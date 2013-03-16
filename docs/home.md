@@ -5,6 +5,7 @@ Provide a solid base off of which to build your new web applications. It's not a
 
 ## What Makes Orchestra Platform Different?
 
+* **Laravel Framework** is simply a great framework to work with.
 * **Extensions** are a much needed improvement to bundle implementation in Laravel. With one click activation and upgrade (migration and publish).
 * **Database Based Configuration** for any extensions are a solid replacement of file based configuration, stop telling your non-technical client to edit PHP file for any simple configuration changes. 
 * **Resources** lets you build HMVC implementation on top of Orchestra Platform. Hook your backend application to Orchestra with just simple API. 
