@@ -1,6 +1,4 @@
-# Memory
-
-## Introduction
+# Memory Helper Class
 
 `Orchestra\Memory` handle runtime configuration either using 'in memory' Runtime or database using Cache, Fluent Query Builder or Eloquent ORM.
 
