@@ -30,6 +30,7 @@
  * Add `Orchestra\Site::localtime()` helper.
  * Add `Orchestra\Theme::start()` to replace `Orchestra\Core::appearance()`.
  * Add `Input::file()` support for `Orchestra\Form`.
+ * Add `Orchestra\Mail::pretend()` helper during development process.
  * Multiple improvements to `Orchestra\Messages`.
  * Multiple improvements to templating system.
  * Rename `orchestra.backend: bottom` asset container as `orchestra.backend: footer`.
