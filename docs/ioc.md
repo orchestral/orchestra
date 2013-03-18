@@ -7,10 +7,14 @@ Other than `Event`, Orchestra Platform also utilize a number of IoC Container to
 
 By default Orchestra Platform would use Messages bundle, if you find a need to replace this dependency, simply replace the default IoC.
 
+	class AwesomeMailer extends \Swiftmailer\Drivers\Driver {}
+
 	IoC::register('orchestra.mailer', function ($from = true)
 	{
-		// replace with your implementation.
+		return new AwesomeMailer(array());
 	});
+
+> To create your class by extending `Swiftmailer\Drivers\Driver`.
 
 <a name="memory"></a>
 ## Memory
