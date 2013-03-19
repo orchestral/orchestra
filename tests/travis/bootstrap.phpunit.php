@@ -33,11 +33,6 @@ if (defined('DB_DRIVER'))
 					'prefix'   => '',
 				));
 			});
-
-			Event::listen('orchestra.testable: teardown-db', function ()
-			{
-				return true;
-			});
 			break;
 		case 'pdo/pgsql' :
 			Event::listen('orchestra.testable: setup-db', function ()
@@ -52,11 +47,6 @@ if (defined('DB_DRIVER'))
 					'prefix'   => '',
 					'schema'   => 'public',
 				));
-			});
-
-			Event::listen('orchestra.testable: teardown-db', function ()
-			{
-				return true;
 			});
 			break;
 	}
