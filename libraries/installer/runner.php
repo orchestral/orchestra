@@ -8,7 +8,6 @@ use \Bundle,
 	\Hash,
 	\Input,
 	\IoC,
-	\Request,
 	\Schema,
 	\Session,
 	\Str,
@@ -114,7 +113,7 @@ class Runner {
 	 */
 	public static function create_user($input)
 	{
-		if ('POST' !== Request::method() or Installer::installed()) return true;
+		if (Installer::installed()) return true;
 
 		static::initiate();
 
