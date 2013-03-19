@@ -1,6 +1,7 @@
 <?php
 
-use Orchestra\Core,
+use \Request,
+	Orchestra\Core,
 	Orchestra\Installer,
 	Orchestra\Installer\Publisher,
 	Orchestra\Installer\Requirement,
@@ -115,7 +116,7 @@ class Orchestra_Installer_Controller extends Controller {
 
 				// Step 2 involve creating administation user account for
 				// current application.
-				if (Runner::create_user(Input::all()))
+				if ('POST' !== Request::method() or Runner::create_user(Input::all()))
 				{
 					return View::make('orchestra::installer.step2', $data);
 				}
