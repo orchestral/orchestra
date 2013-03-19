@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Support\Memory;
 
-use \DB;
+use \DB,
+	Orchestra\Support\Str;
 
 class Fluent extends Driver {
 	
@@ -42,7 +43,7 @@ class Fluent extends Driver {
 
 		foreach ($memories as $memory)
 		{
-			$value = $this->stringify($memory->value);
+			$value = Str::stream_get_contents($memory->value);
 
 			$this->put($memory->name, unserialize($value));
 

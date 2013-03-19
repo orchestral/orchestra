@@ -1,7 +1,5 @@
 <?php namespace Orchestra\Support\Memory;
 
-use Orchestra\Support\Str;
-
 abstract class Driver {
 	
 	/**
@@ -48,20 +46,6 @@ abstract class Driver {
 		$this->config = is_array($config) ? $config : array(); 
 
 		$this->initiate();
-	}
-
-	/**
-	 * Convert filter to string, this process is required to filter stream 
-	 * data return from Postgres where blob type schema would actually use 
-	 * BYTEA and convert the string to stream.
-	 * 
-	 * @access public
-	 * @param  mixed    $data
-	 * @return string
-	 */
-	public function stringify($data)
-	{
-		return Str::stream_get_contents($data);
 	}
 
 	/**
