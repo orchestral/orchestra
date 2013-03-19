@@ -38,20 +38,11 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		{
 			Event::listen('orchestra.testable: setup-db', function ()
 			{
-				File::delete(path('storage').'database'.DS.'orchestra.sqlite');
 				Config::set('database.connections.testdb', array(
 					'driver'   => 'sqlite',
-					'database' => 'orchestra',
+					'database' => ':memory:',
 					'prefix'   => '',
 				));
-			});
-		}
-
-		if ( ! Event::listeners('orchestra.testable: teardown-db'))
-		{
-			Event::listen('orchestra.testable: teardown-db', function ()
-			{
-				File::delete(path('storage').'database'.DS.'orchestra.sqlite');
 			});
 		}
 
