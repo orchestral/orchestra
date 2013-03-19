@@ -1,6 +1,7 @@
 ### General
 * [Overviews](/bundocs/orchestra/home)
 * [Change Logs](/bundocs/orchestra/changes)
+* [License](/bundocs/orchestra/license)
 
 ### Getting Started
 
