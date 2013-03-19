@@ -1,5 +1,7 @@
 <?php namespace Orchestra\Support\Memory;
 
+use Orchestra\Support\Str;
+
 class Eloquent extends Driver {
 
 	/**
@@ -32,7 +34,7 @@ class Eloquent extends Driver {
 
 		foreach ($memories as $memory)
 		{
-			$value = $this->stringify($memory->value);
+			$value = Str::stream_get_contents($memory->value);
 
 			$this->put($memory->name, unserialize($value));
 
