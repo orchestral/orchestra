@@ -151,8 +151,8 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 
 		try
 		{
-			$this->fire_event(($type === 'create' ? 'creating' : 'updating'), $user);
-			$this->fire_event('saving', $user);
+			$this->fire_event(($type === 'create' ? 'creating' : 'updating'), array($user));
+			$this->fire_event('saving', array($user));
 
 			DB::transaction(function () use ($user, $input, $type)
 			{
@@ -160,8 +160,8 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 				$user->roles()->sync($input['roles']);
 			});
 
-			$this->fire_event(($type === 'create' ? 'created' : 'updated'), $user);
-			$this->fire_event('saved', $user);
+			$this->fire_event(($type === 'create' ? 'created' : 'updated'), array($user));
+			$this->fire_event('saved', array($user));
 
 			$msg->add('success', __("orchestra::response.users.{$type}"));
 		}
@@ -196,7 +196,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 		
 		try
 		{
-			$this->fire_event('deleting', $user);
+			$this->fire_event('deleting', array($user));
 
 			DB::transaction(function () use ($user)
 			{				
@@ -204,7 +204,7 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 				$user->delete();
 			});
 
-			$this->fire_event('deleted', $user);
+			$this->fire_event('deleted', array($user));
 
 			$msg->add('success', __('orchestra::response.users.delete'));
 		}
@@ -223,12 +223,12 @@ class Orchestra_Users_Controller extends Orchestra\Controller {
 	 *
 	 * @access private
 	 * @param  string   $type
-	 * @param  Eloquent $user
+	 * @param  array    $parameters
 	 * @return void
 	 */
-	private function fire_event($type, $user)
+	private function fire_event($type, $parameters)
 	{
-		Event::fire("orchestra.{$type}: users", array($user));
-		Event::fire("orchestra.{$type}: user.account", array($user));
+		Event::fire("orchestra.{$type}: users", $parameters);
+		Event::fire("orchestra.{$type}: user.account", $parameters);
 	}
 }
