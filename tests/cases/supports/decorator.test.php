@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Tests\Supports\Site;
+<?php namespace Orchestra\Tests\Supports;
 
 class DecoratorTest extends \PHPUnit_Framework_TestCase {
 	
@@ -7,7 +7,7 @@ class DecoratorTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		\Orchestra\Support\Site\Decorator::$macros = array();
+		\Orchestra\Support\Decorator::$macros = array();
 	}
 
 	/**
@@ -15,7 +15,7 @@ class DecoratorTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
-		\Orchestra\Support\Site\Decorator::$macros = array();
+		\Orchestra\Support\Decorator::$macros = array();
 	}
 
 	/**
@@ -26,12 +26,12 @@ class DecoratorTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testAddAndUsingMacros()
 	{
-		\Orchestra\Support\Site\Decorator::macro('foo', function ()
+		\Orchestra\Support\Decorator::macro('foo', function ()
 		{
 			return 'foo';
 		});
 
-		$this->assertEquals('foo', \Orchestra\Support\Site\Decorator::foo());
+		$this->assertEquals('foo', \Orchestra\Support\Decorator::foo());
 	}
 
 	/**
@@ -42,6 +42,6 @@ class DecoratorTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testCallingUndefinedMacrosThrowsException()
 	{
-		\Orchestra\Support\Site\Decorator::foobar();
+		\Orchestra\Support\Decorator::foobar();
 	}
 }

@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Support\Site;
+<?php namespace Orchestra\Support;
 
 use BadMethodCallException;
 

@@ -26,7 +26,7 @@
 **ONGOING DEVELOPMENT**
 
  * Add `Orchestra\Fluent` alias from `Orchestra\Support\Fluent`.
- * Add `Orchestra\Decorator` alias from `Orchestra\Support\Site\Decorator`.
+ * Add `Orchestra\Decorator` alias from `Orchestra\Support\Decorator`.
  * Add `Orchestra\Site::localtime()` helper.
  * Add `Orchestra\Theme::start()` to replace `Orchestra\Core::appearance()`.
  * Add `Input::file()` support for `Orchestra\Form`.
