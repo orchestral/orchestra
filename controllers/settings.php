@@ -11,7 +11,7 @@ use Laravel\Fluent,
 class Orchestra_Settings_Controller extends Orchestra\Controller {
 
 	/**
-	 * Construct Settings Controller, only authenticated user hould be able
+	 * Construct Settings Controller, only authenticated user should be able
 	 * to access this controller.
 	 *
 	 * @access public
