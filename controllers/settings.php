@@ -45,7 +45,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 			'site_user_registration' => ($memory->get('site.users.registration', false) ? 'yes' : 'no'),
 
 			'email_default'          => $memory->get('email.default', ''),
-			'email_from'            => $memory->get('email.from', ''),
+			'email_from'             => $memory->get('email.from', ''),
 			'email_smtp_host'        => $memory->get('email.transports.smtp.host', ''),
 			'email_smtp_port'        => $memory->get('email.transports.smtp.port', ''),
 			'email_smtp_username'    => $memory->get('email.transports.smtp.username', ''),
@@ -137,7 +137,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 
 		Event::fire('orchestra.saved: settings', array($memory, $input));
 
-		$msg = Messages::make()
+		Messages::make()
 				->add('success', __('orchestra::response.settings.update'));
 
 		return Redirect::to(handles('orchestra::settings'));
