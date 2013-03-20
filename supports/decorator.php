@@ -1,91 +1,42 @@
 <?php namespace Orchestra\Support;
 
-use \Closure,
-	\InvalidArgumentException;
+use BadMethodCallException;
 
-abstract class Decorator {
-
-	/**
-	 * Create a new Decorator instance
-	 *
-	 * @static
-	 * @access  public
-	 * @param   Closure     $callback
-	 * @return  Decorator
-	 */
-	public static function make(Closure $callback)
-	{
-		return new static($callback);
-	}
+class Decorator {
 	
 	/**
-	 * Name of decorator.
+	 * The registered custom macros.
 	 *
-	 * @var string
+	 * @var array
 	 */
-	protected $name = null;
+	public static $macros = array();
 
 	/**
-	 * Grid instance.
+	 * Registers a custom macro.
 	 *
-	 * @var object
-	 */
-	protected $grid = null;
-
-	/**
-	 * Create a new Decorator instance.
-	 * 			
-	 * @access public
-	 * @param  Closure      $callback
-	 * @return void	 
-	 */
-	abstract public function __construct(Closure $callback);
-
-	/**
-	 * Extend decoration. 
-	 *
-	 * @access public
-	 * @param  Closure $callback
+	 * @param  string   $name
+	 * @param  Closure  $macro
 	 * @return void
 	 */
-	public function extend(Closure $callback)
+	public static function macro($name, $macro)
 	{
-		// Run the table designer.
-		call_user_func($callback, $this->grid);
+		static::$macros[$name] = $macro;
 	}
 
 	/**
-	 * Magic method to get Grid instance.
+	 * Dynamically handle calls to custom macros.
+	 *
+	 * @param  string  $method
+	 * @param  array   $parameters
+	 * @return mixed
 	 */
-	public function __get($key)
+	public static function __callStatic($method, $parameters)
 	{
-		if ( ! in_array($key, array('grid', 'name'))) 
+		if (isset(static::$macros[$method]))
 		{
-			throw new InvalidArgumentException(
-				"Unable to get property [{$key}]."
-			);
+			return call_user_func_array(static::$macros[$method], $parameters);
 		}
-		
-		return $this->{$key};
-	}
 
-	/**
-	 * An alias to render()
-	 *
-	 * @access  public
-	 * @see     render()
-	 */
-	public function __toString()
-	{
-		return $this->render();
+		throw new BadMethodCallException("Method [$method] does not exist.");
 	}
-
-	/**
-	 * Render the decoration.
-	 *
-	 * @abstract
-	 * @access  public
-	 * @return  string
-	 */
-	abstract public function render();
 }
