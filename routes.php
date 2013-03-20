@@ -60,6 +60,7 @@ Route::any('(:bundle)/(login|register|logout)', function ($action)
 
 Route::controller(array(
 	'orchestra::account',
+	'orchestra::bundles',
 	'orchestra::credential',
 	'orchestra::dashboard',
 	'orchestra::extensions',
