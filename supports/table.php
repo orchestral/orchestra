@@ -6,7 +6,7 @@ use \Closure,
 	\Lang,
 	Orchestra\View;
 
-class Table extends Decorator {
+class Table extends Builder {
 
 	/**
 	 * All of the registered table names.

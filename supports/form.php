@@ -5,7 +5,7 @@ use \Closure,
 	\Lang,
 	Orchestra\View;
 
-class Form extends Decorator {
+class Form extends Builder {
 
 	/**
 	 * All of the registered form names.

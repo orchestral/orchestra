@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Tests\Supports;
 
-class DecoratorTest extends \PHPUnit_Framework_TestCase {
+class BuilderTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Stub instance.
@@ -14,7 +14,7 @@ class DecoratorTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		$this->stub = new DecoratorStub(function ($t) {});
+		$this->stub = new BuilderStub(function ($t) {});
 	}
 
 	/**
@@ -33,8 +33,8 @@ class DecoratorTest extends \PHPUnit_Framework_TestCase {
 	 */	
 	public function testInstanceOfTable()
 	{
-		$stub1 = new DecoratorStub(function ($t) { });
-		$stub2 = DecoratorStub::make(function ($t) { });
+		$stub1 = new BuilderStub(function ($t) { });
+		$stub2 = BuilderStub::make(function ($t) { });
 		
 		$refl = new \ReflectionObject($stub1);
 		$name = $refl->getProperty('name');
@@ -43,13 +43,13 @@ class DecoratorTest extends \PHPUnit_Framework_TestCase {
 		$name->setAccessible(true);
 		$grid->setAccessible(true);
 
-		$this->assertInstanceOf('\Orchestra\Support\Decorator', $stub1);
-		$this->assertInstanceOf('\Orchestra\Support\Decorator', $stub2);
+		$this->assertInstanceOf('\Orchestra\Support\Builder', $stub1);
+		$this->assertInstanceOf('\Orchestra\Support\Builder', $stub2);
 
 		$this->assertNull($name->getValue($stub1));
 		$this->assertNull($stub1->name);
-		$this->assertInstanceOf('\Orchestra\Tests\Supports\DecoratorGrid', $grid->getValue($stub1));
-		$this->assertInstanceOf('\Orchestra\Tests\Supports\DecoratorGrid', $stub1->grid);
+		$this->assertInstanceOf('\Orchestra\Tests\Supports\GridStub', $grid->getValue($stub1));
+		$this->assertInstanceOf('\Orchestra\Tests\Supports\GridStub', $stub1->grid);
 	}
 
 	/**
@@ -64,15 +64,15 @@ class DecoratorTest extends \PHPUnit_Framework_TestCase {
 	}
 	
 	/**
-	 * test Orchestra\Support\Decorator::render() method.
+	 * test Orchestra\Support\Builder::render() method.
 	 *
 	 * @test
 	 * @group support
 	 */
 	public function testRenderMethod()
 	{
-		$mock1 = new DecoratorStub(function ($t) {});
-		$mock2 = new DecoratorStub(function ($t) {});
+		$mock1 = new BuilderStub(function ($t) {});
+		$mock2 = new BuilderStub(function ($t) {});
 
 		ob_start();
 		echo $mock1;
@@ -84,13 +84,13 @@ class DecoratorTest extends \PHPUnit_Framework_TestCase {
 	}
 }
 
-class DecoratorGrid {}
+class GridStub {}
 
-class DecoratorStub extends \Orchestra\Support\Decorator {
+class BuilderStub extends \Orchestra\Support\Builder {
 
 	public function __construct(\Closure $callback)
 	{
-		$this->grid = new DecoratorGrid;
+		$this->grid = new GridStub;
 	}
 
 	public function render()

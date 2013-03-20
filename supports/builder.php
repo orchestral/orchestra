@@ -3,7 +3,7 @@
 use \Closure,
 	\InvalidArgumentException;
 
-abstract class Decorator {
+abstract class Builder {
 
 	/**
 	 * Create a new Decorator instance
