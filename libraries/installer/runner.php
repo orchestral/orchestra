@@ -286,6 +286,7 @@ class Runner {
 
 				// ensure email address is unique
 				$table->index('user_id');
+				$table->index(array('user_id', 'name'));
 			});
 
 			Schema::table('roles', function ($table)
@@ -310,8 +311,7 @@ class Runner {
 				// add timestamp created_at and updated_at
 				$table->timestamps();
 
-				$table->index('user_id');
-				$table->index('role_id');
+				$table->index(array('user_id', 'role_id'));
 			});
 
 			static::$message->add('success', 'Users table created');
