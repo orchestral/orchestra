@@ -1,7 +1,7 @@
 <footer>
 	<div class="container{{ (Orchestra\Site::has('layout::fixed') ? '' : '-fluid') }}">
 		<hr>
-		<p>&copy; 2012 Orchestra</p>
+		<p>&copy; 2012 Orchestra Platform</p>
 	</div>
 </footer>
 
