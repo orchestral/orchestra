@@ -16,7 +16,7 @@ HTML::macro('title', function ()
 	$page_title = trim(Orchestra\Site::get('title', ''));
 	$format     = $memory->get('site.format.title', ':page-title &mdash; :site-title');
 
-	if ( ! (empty($page_title) or URI::is('/'))) 
+	if ( ! empty($page_title)) 
 	{
 		$title = strtr($format, array(
 			":site-title" => $site_title,
