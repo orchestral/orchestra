@@ -62,3 +62,4 @@
 * [Auth](/bundocs/orchestra/supports/auth)
 * [HTML](/bundocs/orchestra/supports/html)
 * [Memory](/bundocs/orchestra/supports/memory)
+* [Str](/bundocs/orchestra/supports/str)
