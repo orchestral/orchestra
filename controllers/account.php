@@ -82,16 +82,16 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 
 		try
 		{
-			$this->fire_event('updating', $user);
-			$this->fire_event('saving', $user);
+			$this->fire_event('updating', array($user));
+			$this->fire_event('saving', array($user));
 
 			DB::transaction(function () use ($user)
 			{
 				$user->save();
 			});
 
-			$this->fire_event('updated', $user);
-			$this->fire_event('saved', $user);
+			$this->fire_event('updated', array($user));
+			$this->fire_event('saved', array($user));
 
 			$msg->add('success', __('orchestra::response.account.profile.update'));
 		}
@@ -196,11 +196,11 @@ class Orchestra_Account_Controller extends Orchestra\Controller {
 	 *
 	 * @access private
 	 * @param  string   $type
-	 * @param  Eloquent $user
+	 * @param  mixed    $parameters
 	 * @return void
 	 */
-	private function fire_event($type, $user)
+	private function fire_event($type, $parameters)
 	{
-		Event::fire("orchestra.{$type}: user.account", array($user));
+		Event::fire("orchestra.{$type}: user.account", $parameters);
 	}
 }
