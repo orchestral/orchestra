@@ -20,18 +20,4 @@ abstract class Migration {
 			);
 		}
 	}
-
-	/**
-	 * Make changes to the database.
-	 *
-	 * @return void
-	 */
-	public abstract function up();
-
-	/**
-	 * Revert the changes to the database.
-	 *
-	 * @return void
-	 */
-	public abstract function down();
 }
