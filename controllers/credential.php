@@ -234,8 +234,8 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 
 		try
 		{
-			$this->fire_event('creating', $user);
-			$this->fire_event('saving', $user);
+			$this->fire_event('creating', array($user));
+			$this->fire_event('saving', array($user));
 
 			DB::transaction(function () use ($user)
 			{
@@ -245,8 +245,8 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 				));
 			});
 
-			$this->fire_event('created', $user);
-			$this->fire_event('saved', $user);
+			$this->fire_event('created', array($user));
+			$this->fire_event('saved', array($user));
 
 			$msg->add('success', __("orchestra::response.users.create"));
 		}
@@ -304,11 +304,11 @@ class Orchestra_Credential_Controller extends Orchestra\Controller {
 	 *
 	 * @access private
 	 * @param  string   $type
-	 * @param  Eloquent $user
+	 * @param  array    $parameters
 	 * @return void
 	 */
-	private function fire_event($type, $user)
+	private function fire_event($type, $parameters)
 	{
-		Event::fire("orchestra.{$type}: user.account", array($user));
+		Event::fire("orchestra.{$type}: user.account", $parameters);
 	}
 }
