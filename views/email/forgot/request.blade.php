@@ -6,6 +6,6 @@
 </p>
 
 <p>
-	To reset your password, please proceed to {{ $url }} and reset your
-	password.
+	To reset your password, please proceed to <a href="{{ $url }}">{{ $url }}</a> 
+	and reset your password.
 </p>
