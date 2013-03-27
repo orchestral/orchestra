@@ -27,6 +27,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase {
 	public function tearDown()
 	{
 		\Cache::forget('orchestra.memory.cachemock');
+		\File::delete(path('storage').'cache/orchestra.memory.default');
+		\File::delete(path('storage').'cache/orchestra.memory.cachemock');
+		
 
 		set_path('storage', path('base').'storage'.DS);
 	}
