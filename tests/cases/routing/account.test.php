@@ -40,12 +40,8 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testGetEditProfilePageWithoutAuth()
 	{
-		$response = $this->call('orchestra::account@index', array());
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::login'), 
-			$response->foundation->headers->get('location'));
+		$this->call('orchestra::account@index', array());
+		$this->assertRedirectedTo(handles('orchestra::login'));
 	}
 
 	/**
@@ -57,12 +53,8 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	public function testGetEditProfilePage()
 	{
 		$this->be($this->user);
-
-		$response = $this->call('orchestra::account@index', array());
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::account.index', $response->content->view);
+		$this->call('orchestra::account@index', array());
+		$this->assertViewIs('orchestra::account.index');
 	}
 
 	/**
@@ -73,12 +65,8 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testGetEditPasswordPageWithoutAuth()
 	{
-		$response = $this->call('orchestra::account@password', array());
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::login'), 
-			$response->foundation->headers->get('location'));
+		$this->call('orchestra::account@password', array());
+		$this->assertRedirectedTo(handles('orchestra::login'));
 	}
 
 	/**
@@ -90,12 +78,8 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	public function testGetEditPasswordPage()
 	{
 		$this->be($this->user);
-
-		$response = $this->call('orchestra::account@password', array());
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::account.password', $response->content->view);
+		$this->call('orchestra::account@password', array());
+		$this->assertViewIs('orchestra::account.password');
 	}
 
 	/**
@@ -106,21 +90,18 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostEditProfilePage()
 	{
-		$this->be($this->user);
-
-		$response = $this->call('orchestra::account@index', array(), 'POST', array(
+		$post = array(
 			'id'       => $this->user->id,
 			'fullname' => 'Foobar',
 			'email'    => $this->user->email,
-		));
+		);
 
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::account'), 
-			$response->foundation->headers->get('location'));
+		$this->be($this->user);
+		$this->call('orchestra::account@index', array(), 'POST', $post);
 
 		$user = \Orchestra\Model\User::find(1);
 
+		$this->assertRedirectedTo(handles('orchestra::account'));
 		$this->assertEquals('Foobar', $user->fullname);
 		$this->assertEmpty(\Session::get('errors'));
 	}
@@ -133,18 +114,15 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostEditProfilePageWithValidationError()
 	{
-		$this->be($this->user);
-
-		$response = $this->call('orchestra::account@index', array(), 'POST', array(
+		$post = array(
 			'id'       => $this->user->id,
 			'fullname' => 'Foobar',
 			'email'    => 'foo+bar.com',
-		));
+		);
 
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::account'), 
-			$response->foundation->headers->get('location'));
+		$this->be($this->user);
+		$this->call('orchestra::account@index', array(), 'POST', $post);
+		$this->assertRedirectedTo(handles('orchestra::account'));
 		$this->assertTrue(array() !== \Session::get('errors', array()));
 	}
 
@@ -156,25 +134,21 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostEditProfilePageDatabaseError()
 	{
-		$this->be($this->user);
+		$post = array(
+			'id'       => $this->user->id,
+			'fullname' => 'Foobar',
+			'email'    => $this->user->email,
+		);
 
 		$events = \Event::$events;
-
 		\Event::listen('eloquent.saving: Orchestra\Model\User', function ($model)
 		{
 			throw new \Exception();
 		});
 
-		$response = $this->call('orchestra::account@index', array(), 'POST', array(
-			'id'       => $this->user->id,
-			'fullname' => 'Foobar',
-			'email'    => $this->user->email,
-		));
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::account'), 
-			$response->foundation->headers->get('location'));
+		$this->be($this->user);
+		$this->call('orchestra::account@index', array(), 'POST', $post);
+		$this->assertRedirectedTo(handles('orchestra::account'));
 		$this->assertTrue(is_string(\Session::get('message')));
 
 		\Event::$events = $events;
@@ -188,21 +162,19 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostEditPasswordPage()
 	{
-		$this->be($this->user);
-
-		$response = $this->call('orchestra::account@password', array(), 'POST', array(
+		$post = array(
 			'id'               => $this->user->id,
 			'current_password' => '123456',
 			'new_password'     => '123',
 			'confirm_password' => '123',
-		));
+		);
+
+		$this->be($this->user);
+		$this->call('orchestra::account@password', array(), 'POST', $post);
 
 		$user = \Orchestra\Model\User::find(1);
 
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::account/password'), 
-			$response->foundation->headers->get('location'));
+		$this->assertRedirectedTo(handles('orchestra::account/password'));
 		$this->assertEmpty(\Session::get('errors'));
 		$this->assertTrue(\Hash::check('123', $user->password));
 
@@ -219,26 +191,22 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostEditPasswordPageDatabaseError()
 	{
-		$this->be($this->user);
+		$post = array(
+			'id'               => $this->user->id,
+			'current_password' => '123456',
+			'new_password'     => '123',
+			'confirm_password' => '123',
+		);
 
 		$events = \Event::$events;
-
 		\Event::listen('eloquent.saving: Orchestra\Model\User', function($model)
 		{
 			throw new \Exception();
 		});
 
-		$response = $this->call('orchestra::account@password', array(), 'POST', array(
-			'id'               => $this->user->id,
-			'current_password' => '123456',
-			'new_password'     => '123',
-			'confirm_password' => '123',
-		));
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::account/password'),
-			$response->foundation->headers->get('location'));
+		$this->be($this->user);
+		$this->call('orchestra::account@password', array(), 'POST', $post);
+		$this->assertRedirectedTo(handles('orchestra::account/password'));
 		$this->assertTrue(is_string(\Session::get('message')));
 
 		\Event::$events = $events;
@@ -253,19 +221,16 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostEditPasswordPageMismatchValidationError()
 	{
-		$this->be($this->user);
-
-		$response = $this->call('orchestra::account@password', array(), 'POST', array(
+		$post = array(
 			'id'               => $this->user->id,
 			'current_password' => '123456',
 			'new_password'     => '123',
 			'confirm_password' => '1233',
-		));
+		);
 
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::account/password'), 
-			$response->foundation->headers->get('location'));
+		$this->be($this->user);
+		$this->call('orchestra::account@password', array(), 'POST', $post);
+		$this->assertRedirectedTo(handles('orchestra::account/password'));
 		$this->assertTrue(array() !== \Session::get('errors', array()));
 	}
 
@@ -278,19 +243,16 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostEditPasswordPageIncorrectOldPasswordError()
 	{
-		$this->be($this->user);
-
-		$response = $this->call('orchestra::account@password', array(), 'POST', array(
+		$post = array(
 			'id'               => $this->user->id,
 			'current_password' => '123467',
 			'new_password'     => '123',
 			'confirm_password' => '123',
-		));
+		);
 
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::account/password'), 
-			$response->foundation->headers->get('location'));
+		$this->be($this->user);
+		$this->call('orchestra::account@password', array(), 'POST', $post);
+		$this->assertRedirectedTo(handles('orchestra::account/password'));
 		$this->assertTrue(array() !== \Session::get('message', array()));
 	}
 }

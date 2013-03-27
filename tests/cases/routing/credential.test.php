@@ -38,6 +38,7 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 					->disableOriginalConstructor()
 					->setMethods(array('was_sent'))
 					->getMock();
+
 		$mock->expects($this->any())
 			->method('was_sent')
 			->will($this->returnValue(false));
@@ -56,11 +57,8 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testGetLoginPage()
 	{
-		$response = $this->call('orchestra::credential@login', array());
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::credential.login', $response->content->view);
+		$this->call('orchestra::credential@login', array());
+		$this->assertViewIs('orchestra::credential.login');
 	}
 
 	/**
@@ -71,13 +69,13 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostLoginPageFailedWithoutCsrf()
 	{
-		$response = $this->call('orchestra::credential@login', array(), 'POST', array(
+		$post = array(
 			'username' => 'admin@orchestra.com',
 			'password' => '123456',
-		));
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(500, $response->foundation->getStatusCode());
+		);
+		
+		$this->call('orchestra::credential@login', array(), 'POST', $post);
+		$this->assertResponseIs(500);
 		$this->assertFalse(\Auth::check());
 	}
 
@@ -89,15 +87,13 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostLoginPageWithValidationError()
 	{
-		$response = $this->call('orchestra::credential@login', array(), 'POST', array(
+		$post = array(
 			'username'           => 'admin+orchestra.com',
 			\Session::csrf_token => \Session::token(),
-		));
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::login'), 
-			$response->foundation->headers->get('location'));
+		);
+		
+		$this->call('orchestra::credential@login', array(), 'POST', $post);
+		$this->assertRedirectedTo(handles('orchestra::login'));
 		$this->assertFalse(\Auth::check());
 	}
 
@@ -109,6 +105,12 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostLoginPageIsSuccessful()
 	{
+		$post = array(
+			'username'           => 'admin@orchestra.com',
+			'password'           => '123456',
+			\Session::csrf_token => \Session::token(),
+		);
+
 		\Event::listen('orchestra.auth: login', function ()
 		{
 			$_SERVER['orchestra.auth.login'] = 'foobar';
@@ -116,19 +118,11 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 
 		$this->assertEquals(null, $_SERVER['orchestra.auth.login']);
 
-		$response = $this->call('orchestra::credential@login', array(), 'POST', array(
-			'username'           => 'admin@orchestra.com',
-			'password'           => '123456',
-			\Session::csrf_token => \Session::token(),
-		));
-
+		$this->call('orchestra::credential@login', array(), 'POST', $post);
 		
 		$auth = \Auth::user();
 
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra'), 
-			$response->foundation->headers->get('location'));
+		$this->assertRedirectedTo(handles('orchestra'));
 		$this->assertTrue(\Auth::check());
 		$this->assertEquals('admin@orchestra.com', $auth->email);
 		$this->assertEquals('foobar', $_SERVER['orchestra.auth.login']);
@@ -143,16 +137,14 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostLoginPageWithInvalidAuthentication()
 	{
-		$response = $this->call('orchestra::credential@login', array(), 'POST', array(
+		$post = array(
 			'username'           => 'admin@orchestra.com',
 			'password'           => '1234561',
 			\Session::csrf_token => \Session::token(),
-		));
+		);
 
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::login'), 
-			$response->foundation->headers->get('location'));
+		$this->call('orchestra::credential@login', array(), 'POST', $post);
+		$this->assertRedirectedTo(handles('orchestra::login'));
 		$this->assertFalse(\Auth::check());
 	}
 
@@ -171,13 +163,8 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 			$_SERVER['orchestra.auth.logout'] = 'foobar';
 		});
 
-		$response = $this->call('orchestra::credential@logout', array());
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::login'), 
-			$response->foundation->headers->get('location'));
-
+		$this->call('orchestra::credential@logout', array());
+		$this->assertRedirectedTo(handles('orchestra::login'));
 		$this->assertFalse(\Auth::check());
 		$this->assertEquals('foobar', $_SERVER['orchestra.auth.logout']);
 	}
@@ -193,11 +180,8 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	{
 		\Orchestra\Core::memory()->put('site.users.registration', true);
 
-		$response = $this->call('orchestra::credential@register', array());
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::credential.register', $response->content->view);
+		$this->call('orchestra::credential@register', array());
+		$this->assertViewIs('orchestra::credential.register');
 	}
 
 	/**
@@ -208,18 +192,19 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostRegisterPageFailedWithoutCsrf()
 	{
-		\Orchestra\Core::memory()->put('site.users.registration', true);
-		
-		$response = $this->call('orchestra::credential@register', array(), 'POST', array(
+		$post = array(
 			'email'    => 'foobar@register-test.com',
 			'fullname' => 'Test Register Foobar',
 			'password' => '123456',
-		));
+		);
+
+		\Orchestra\Core::memory()->put('site.users.registration', true);
+		
+		$this->call('orchestra::credential@register', array(), 'POST', $post);
 
 		$user = \Orchestra\Model\User::where_email('foobar@register-test.com')->first();
 
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(500, $response->foundation->getStatusCode());
+		$this->assertResponseIs(500);
 		$this->assertNull($user);
 	}
 
@@ -232,20 +217,18 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostRegisterPageWithValidationError()
 	{
-		unset(\IoC::$registry['orchestra.user: register']);
-		\Orchestra\Core::memory()->put('site.users.registration', true);
-		
-		$response = $this->call('orchestra::credential@register', array(), 'POST', array(
+		$post = array(
 			'email'              => 'foobar+register-test.com',
 			'fullname'           => 'Test Register Foobar',
 			'password'           => '123456',
 			\Session::csrf_token => \Session::token(),
-		));
+		);
 
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::register'), 
-			$response->foundation->headers->get('location'));
+		unset(\IoC::$registry['orchestra.user: register']);
+		\Orchestra\Core::memory()->put('site.users.registration', true);
+		
+		$this->call('orchestra::credential@register', array(), 'POST', $post);
+		$this->assertRedirectedTo(handles('orchestra::register'));
 	}
 
 	/**
@@ -256,6 +239,13 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostRegisterPageWithDatabaseError()
 	{
+		$post = array(
+			'email'              => 'foobar@register-test.com',
+			'fullname'           => 'Test Register Foobar',
+			'password'           => '123456',
+			\Session::csrf_token => \Session::token(),
+		);
+
 		unset(\IoC::$registry['orchestra.user: register']);
 		\Orchestra\Core::memory()->put('site.users.registration', true);
 
@@ -265,17 +255,8 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 			throw new \Exception();
 		});
 		
-		$response = $this->call('orchestra::credential@register', array(), 'POST', array(
-			'email'              => 'foobar@register-test.com',
-			'fullname'           => 'Test Register Foobar',
-			'password'           => '123456',
-			\Session::csrf_token => \Session::token(),
-		));
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::register'), 
-			$response->foundation->headers->get('location'));
+		$this->call('orchestra::credential@register', array(), 'POST', $post);
+		$this->assertRedirectedTo(handles('orchestra::register'));
 		$this->assertTrue(is_string(\Session::get('message')));
 
 		\Event::$events = $events;
@@ -289,24 +270,22 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostRegisterPageIsSuccessful()
 	{
-		unset(\IoC::$registry['orchestra.user: register']);
-		\Orchestra\Core::memory()->put('site.users.registration', true);
-		
-		$response = $this->call('orchestra::credential@register', array(), 'POST', array(
+		$post = array(
 			'email'              => 'foobar@register-test.com',
 			'fullname'           => 'Test Register Foobar',
 			'password'           => '123456',
 			\Session::csrf_token => \Session::token(),
-		));
+		);
+
+		unset(\IoC::$registry['orchestra.user: register']);
+		\Orchestra\Core::memory()->put('site.users.registration', true);
+		
+		$this->call('orchestra::credential@register', array(), 'POST', $post);
 
 		$user = \Orchestra\Model\User::where_email('foobar@register-test.com')->first();
 
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::login'), 
-			$response->foundation->headers->get('location'));
-		$this->assertInstanceOf('\Orchestra\Model\User', 
-			\IoC::resolve('orchestra.user: register'));
+		$this->assertRedirectedTo(handles('orchestra::login'));
+		$this->assertInstanceOf('\Orchestra\Model\User', \IoC::resolve('orchestra.user: register'));
 		$this->assertFalse(is_null($user));
 	}
 
@@ -318,26 +297,24 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostRegisterPageEmailWasNotSent()
 	{
+		$post = array(
+			'email'              => 'foobar@register-test.com',
+			'fullname'           => 'Test Register Foobar',
+			'password'           => '123456',
+			\Session::csrf_token => \Session::token(),
+		);
+
 		unset(\IoC::$registry['orchestra.user: register']);
 		\Orchestra\Core::memory()->put('site.users.registration', true);
 
 		$this->getMailerMock();
 		
-		$response = $this->call('orchestra::credential@register', array(), 'POST', array(
-			'email'              => 'foobar@register-test.com',
-			'fullname'           => 'Test Register Foobar',
-			'password'           => '123456',
-			\Session::csrf_token => \Session::token(),
-		));
+		$this->call('orchestra::credential@register', array(), 'POST', $post);
 
 		$user = \Orchestra\Model\User::where_email('foobar@register-test.com')->first();
 
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::login'), 
-			$response->foundation->headers->get('location'));
-		$this->assertInstanceOf('\Orchestra\Model\User', 
-			\IoC::resolve('orchestra.user: register'));
+		$this->assertRedirectedTo(handles('orchestra::login'));
+		$this->assertInstanceOf('\Orchestra\Model\User', \IoC::resolve('orchestra.user: register'));
 		$this->assertFalse(is_null($user));
 	}
 }
