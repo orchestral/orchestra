@@ -40,12 +40,8 @@ class DashboardTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testGetDashboardPageWithoutAuth()
 	{
-		$response = $this->call('orchestra::dashboard@index');
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::login'), 
-			$response->foundation->headers->get('location'));
+		$this->call('orchestra::dashboard@index');
+		$this->assertRedirectedTo(handles('orchestra::login'));
 	}
 
 	/**
@@ -57,12 +53,8 @@ class DashboardTest extends \Orchestra\Testable\TestCase {
 	public function testGetDashboardPage()
 	{
 		$this->be($this->user);
-
-		$response = $this->call('orchestra::dashboard@index');
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::dashboard.index', $response->content->view);
+		$this->call('orchestra::dashboard@index');
+		$this->assertViewIs('orchestra::dashboard.index');
 	}
 
 	/**

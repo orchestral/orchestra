@@ -40,7 +40,7 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function getMailerMock()
 	{
-		$mock = $mock = $this->getMockBuilder('\Orchestra\Testable\Mailer')
+		$mock = $this->getMockBuilder('\Orchestra\Testable\Mailer')
 					->disableOriginalConstructor()
 					->setMethods(array('was_sent'))
 					->getMock();
@@ -62,11 +62,8 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testGetForgotPage()
 	{
-		$response = $this->call('orchestra::forgot@index');
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::forgot.index', $response->content->view);
+		$this->call('orchestra::forgot@index');
+		$this->assertViewIs('orchestra::forgot.index');
 	}
 
 	/**
@@ -78,13 +75,8 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	public function testGetForgotPageWithAuth()
 	{
 		$this->be($this->user);
-
-		$response = $this->call('orchestra::forgot@index');
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra'), 
-			$response->foundation->headers->get('location'));
+		$this->call('orchestra::forgot@index');
+		$this->assertRedirectedTo(handles('orchestra'));
 	}
 
 	/**
@@ -95,12 +87,10 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostForgotPageFailedInvalidCsrf()
 	{
-		$response = $this->call('orchestra::forgot@index', array(), 'POST', array(
+		$this->call('orchestra::forgot@index', array(), 'POST', array(
 			'email' => 'admin@orchestra.com',
 		));
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(500, $response->foundation->getStatusCode());
+		$this->assertResponseIs(500);
 	}
 
 	/**
@@ -111,15 +101,11 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostForgotPage()
 	{
-		$response = $this->call('orchestra::forgot@index', array(), 'POST', array(
+		$this->call('orchestra::forgot@index', array(), 'POST', array(
 			'email'              => 'admin@orchestra.com',
 			\Session::csrf_token => \Session::token(),
 		));
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::forgot'), 
-			$response->foundation->headers->get('location'));
+		$this->assertRedirectedTo(handles('orchestra::forgot'));
 
 		// Mimic shutting down Orchestra.
 		\Orchestra\Core::shutdown();
@@ -140,15 +126,12 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostForgotPageValidationError()
 	{
-		$response = $this->call('orchestra::forgot@index', array(), 'POST', array(
+		$this->call('orchestra::forgot@index', array(), 'POST', array(
 			'email'              => 'admin+orchestra.com',
 			\Session::csrf_token => \Session::token(),
 		));
 
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::forgot'), 
-			$response->foundation->headers->get('location'));
+		$this->assertRedirectedTo(handles('orchestra::forgot'));
 		$this->assertInstanceOf('\Laravel\Messages', \Session::get('errors'));
 	}
 
@@ -160,16 +143,13 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostForgotPageUserNotFoundError()
 	{
-		$hash     = \Str::random(10);
-		$response = $this->call('orchestra::forgot@index', array(), 'POST', array(
+		$hash = \Str::random(10);
+		
+		$this->call('orchestra::forgot@index', array(), 'POST', array(
 			'email'              => "{$hash}@{$hash}.com",
 			\Session::csrf_token => \Session::token(),
 		));
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::forgot'), 
-			$response->foundation->headers->get('location'));
+		$this->assertRedirectedTo(handles('orchestra::forgot'));
 		$this->assertTrue(is_string(\Session::get('message')));
 	}
 
@@ -183,15 +163,12 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	{
 		$this->getMailerMock();
 
-		$response = $this->call('orchestra::forgot@index', array(), 'POST', array(
+		$this->call('orchestra::forgot@index', array(), 'POST', array(
 			'email'              => "admin@orchestra.com",
 			\Session::csrf_token => \Session::token(),
 		));
 
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::forgot'), 
-			$response->foundation->headers->get('location'));
+		$this->assertRedirectedTo(handles('orchestra::forgot'));
 		$this->assertTrue(is_string(\Session::get('message')));
 	}
 
@@ -207,15 +184,10 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 		$hash = \Str::random(32);
 		$meta->put('reset_password_hash.1', $hash);
 
-		$response = $this->call('orchestra::forgot@reset', array(1, $hash));
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::login'), 
-			$response->foundation->headers->get('location'));
+		$this->call('orchestra::forgot@reset', array(1, $hash));
+		$this->assertRedirectedTo(handles('orchestra::login'));
 
 		$user = \Orchestra\Model\User::find(1);
-
 		$this->assertFalse(\Hash::check('123456', $user->password));
 	}
 
@@ -228,10 +200,8 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testGetResetPasswordPageInvalidArgumentError()
 	{
-		$response = $this->call('orchestra::forgot@reset', array('hello world', ''));
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(404, $response->foundation->getStatusCode());
+		$this->call('orchestra::forgot@reset', array('hello world', ''));
+		$this->assertResponseNotFound();
 	}
 
 	/**
@@ -247,10 +217,8 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 		$hash = \Str::random(32);
 		$meta->put('reset_password_hash.1', $hash);
 
-		$response = $this->call('orchestra::forgot@reset', array(1, \Str::random(30)));
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(404, $response->foundation->getStatusCode());
+		$this->call('orchestra::forgot@reset', array(1, \Str::random(30)));
+		$this->assertResponseNotFound();
 	}
 
 	/**
@@ -267,13 +235,8 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 		$meta->put('reset_password_hash.1', $hash);
 
 		$this->getMailerMock();
-
-		$response = $this->call('orchestra::forgot@reset', array(1, $hash));
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::login'), 
-			$response->foundation->headers->get('location'));
+		$this->call('orchestra::forgot@reset', array(1, $hash));
+		$this->assertRedirectedTo(handles('orchestra::login'));
 		$this->assertTrue(is_string(\Session::get('message')));
 	}
 }

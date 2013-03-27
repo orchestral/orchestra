@@ -57,12 +57,8 @@ class ResourcesTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testGetResourcesIndexPageWithoutAuth()
 	{
-		$response = $this->call('orchestra::resources@index');
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::login'), 
-			$response->foundation->headers->get('location'));
+		$this->call('orchestra::resources@index');
+		$this->assertRedirectedTo(handles('orchestra::login'));
 	}
 
 	/**
@@ -74,12 +70,8 @@ class ResourcesTest extends \Orchestra\Testable\TestCase {
 	public function testGetResourcesIndexPage()
 	{
 		$this->be($this->user);
-
-		$response = $this->call('orchestra::resources@index');
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::resources.index', $response->content->view);
+		$this->call('orchestra::resources@index');
+		$this->assertViewIs('orchestra::resources.index');
 	}
 
 	/**
@@ -91,11 +83,7 @@ class ResourcesTest extends \Orchestra\Testable\TestCase {
 	public function testGetResourcesFoobarPage()
 	{
 		$this->be($this->user);
-
-		$response = $this->call('orchestra::resources@foobar');
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::resources.resources', $response->content->view);
+		$this->call('orchestra::resources@foobar');
+		$this->assertViewIs('orchestra::resources.resources');
 	}
 }

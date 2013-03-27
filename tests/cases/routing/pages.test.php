@@ -61,28 +61,17 @@ class PagesTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testRequestToPagesFoo()
 	{
-		$response = $this->call('orchestra::pages@application.foo');
+		$this->call('orchestra::pages@application.foo');
+		$this->assertViewIs('orchestra::resources.pages');
+		$this->assertViewHas('content', 'foobar');
 
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::resources.pages', $response->content->view);
-		$this->assertEquals('foobar', $response->content->data['content']);
+		$this->call('orchestra::pages@foo');
+		$this->assertViewIs('orchestra::resources.pages');
+		$this->assertViewHas('content', 'foobar');
 
-		$response = $this->call('orchestra::pages@foo');
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::resources.pages', $response->content->view);
-		$this->assertEquals('foobar', $response->content->data['content']);
-
-		$response = $this->call('orchestra::pages@application', array('foo'));
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::resources.pages', $response->content->view);
-		$this->assertEquals('foobar', $response->content->data['content']);
-
-
+		$this->call('orchestra::pages@application', array('foo'));
+		$this->assertViewIs('orchestra::resources.pages');
+		$this->assertViewHas('content', 'foobar');
 	}
 
 	/**
@@ -93,9 +82,7 @@ class PagesTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testRequestToPagesInvalidFoobar()
 	{
-		$response = $this->call('orchestra::pages@foobar');
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(404, $response->foundation->getStatusCode());
+		$this->call('orchestra::pages@foobar');
+		$this->assertResponseNotFound();
 	}
 }

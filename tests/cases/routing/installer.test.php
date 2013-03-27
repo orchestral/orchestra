@@ -58,12 +58,8 @@ class InstallerTest extends \Orchestra\Testable\TestCase {
 		));
 		\Config::set('auth', $dummyauth);
 
-		$response = $this->call('orchestra::installer@index', array());
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::installer.index', $response->content->view);
-
+		$this->call('orchestra::installer@index', array());
+		$this->assertViewIs('orchestra::installer.index');
 		$this->assertFalse(\Orchestra\Installer::check_database());
 
 		\Auth::$drivers   = null;
@@ -82,45 +78,30 @@ class InstallerTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testGetInstallerPageSuccessful()
 	{
-		$response = $this->call('orchestra::installer@steps', array(100));
+		$this->call('orchestra::installer@steps', array(100));
+		$this->assertResponseNotFound();
 
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(404, $response->foundation->getStatusCode());
+		$this->call('orchestra::installer@index', array());
+		$this->assertViewIs('orchestra::installer.index');
 
-		$response = $this->call('orchestra::installer@index', array());
+		$this->call('orchestra::installer@steps', array(1));
+		$this->assertViewIs('orchestra::installer.step1');
 
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::installer.index', $response->content->view);
-
-		$response = $this->call('orchestra::installer@steps', array(1));
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::installer.step1', $response->content->view);
-
-		$response = $this->call('orchestra::installer@steps', array(2), 'POST', array(
+		$this->call('orchestra::installer@steps', array(2), 'POST', array(
 			'site_name' => 'Orchestra Test Suite',
 			'email'     => 'admin+orchestra.com',
 			'password'  => '123456',
 			'fullname'  => 'Test Administrator',
 		));
+		$this->assertRedirectedTo(handles('orchestra::installer/steps/1'));
 
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::installer/steps/1'), 
-			$response->foundation->headers->get('location'));
-
-		$response = $this->call('orchestra::installer@steps', array(2), 'POST', array(
+		$this->call('orchestra::installer@steps', array(2), 'POST', array(
 			'site_name' => 'Orchestra Test Suite',
 			'email'     => 'admin@orchestra.com',
 			'password'  => '123456',
 			'fullname'  => 'Test Administrator',
 		));
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::installer.step2', $response->content->view);
+		$this->assertViewIs('orchestra::installer.step2');
 	}
 }
 

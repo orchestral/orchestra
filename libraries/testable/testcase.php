@@ -146,4 +146,103 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		$this->removeApplication();
 		$this->createApplication();
 	}
+
+	/**
+	 * Assert request has 200 response.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function assertResponseOk()
+	{
+		$this->assertResponseIs(200);
+	}
+
+	/**
+	 * Assert request has 404 response.
+	 *
+	 * @access public
+	 * @param  string   $redirect
+	 * @return void
+	 */
+	public function assertResponseNotFound()
+	{
+		$this->assertResponseIs(404);
+	}
+
+	/**
+	 * Assert request has response with selected status.
+	 *
+	 * @access public
+	 * @param  string   $status
+	 * @return void
+	 */
+	public function assertResponseIs($status = 200)
+	{
+		$response = $this->client->response;
+		$this->assertInstanceOf('\Laravel\Response', $response);
+		$this->assertEquals($status, $response->foundation->getStatusCode());
+	}
+
+	/**
+	 * Assert view is added.
+	 *
+	 * @access public
+	 * @param  string   $view
+	 * @param  integer  $status
+	 * @return void
+	 */
+	public function assertViewIs($view, $status = 200)
+	{
+		$response = $this->client->response;
+		$this->assertResponseIs($status);
+		$this->assertEquals($view, $response->content->view);
+	}
+
+	/**
+	 * Assert view has data.
+	 *
+	 * @access public	
+	 * @param  string   $key
+	 * @param  mixed    $value
+	 * @return void
+	 */
+	public function assertViewHas($key, $value = null)
+	{
+		$content = $this->client->response->content->data;
+
+		$this->assertTrue(isset($content[$key]));
+
+		if ( ! is_null($value))
+		{
+			$this->assertEquals($content[$key], $value);
+		}
+	}
+
+	/**
+	 * Assert request is redirected.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function assertRedirected()
+	{
+		$response = $this->client->response;
+		$this->assertInstanceOf('\Laravel\Redirect', $response);
+		$this->assertEquals(302, $response->foundation->getStatusCode());
+	}
+
+	/**
+	 * Assert request is redirected to.
+	 *
+	 * @access public
+	 * @param  string   $redirect
+	 * @return void
+	 */
+	public function assertRedirectedTo($redirect)
+	{
+		$response = $this->client->response;
+		$this->assertRedirected();
+		$this->assertEquals($redirect, $response->foundation->headers->get('location'));
+	}
 }

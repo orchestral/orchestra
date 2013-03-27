@@ -10,6 +10,13 @@ use Controller,
 class Client {
 
 	/**
+	 * Last response from client.
+	 *
+	 * @var mixed
+	 */
+	public $response = null;
+
+	/**
 	 * Construct a new client
 	 */
 	public function __construct()
@@ -39,7 +46,9 @@ class Client {
 			'REQUEST_METHOD' => $method,
 		));
 
-		return Controller::call($destination, $parameters);
+		$this->response = Controller::call($destination, $parameters);
+
+		return $this->response;
 	}
 
 	/**
