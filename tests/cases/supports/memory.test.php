@@ -18,6 +18,14 @@ class MemoryTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Teardown the test environment.
+	 */
+	public function tearDown()
+	{
+		\File::delete(path('storage').'cache/orchestra.memory.default');
+	}
+
+	/**
 	 * Test that Orchestra\Support\Memory::make() return an instanceof Orchestra\Support\Memory.
 	 * 
 	 * @test
