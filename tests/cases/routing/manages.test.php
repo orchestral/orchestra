@@ -61,26 +61,17 @@ class ManagesTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testRequestToManageFoo()
 	{
-		$response = $this->call('orchestra::manages@application.foo');
+		$this->call('orchestra::manages@application.foo');
+		$this->assertViewIs('orchestra::resources.pages');
+		$this->assertViewHas('content', 'foobar');
 
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::resources.pages', $response->content->view);
-		$this->assertEquals('foobar', $response->content->data['content']);
+		$this->call('orchestra::manages@foo');
+		$this->assertViewIs('orchestra::resources.pages');
+		$this->assertViewHas('content', 'foobar');
 
-		$response = $this->call('orchestra::manages@foo');
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::resources.pages', $response->content->view);
-		$this->assertEquals('foobar', $response->content->data['content']);
-
-		$response = $this->call('orchestra::manages@application', array('foo'));
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::resources.pages', $response->content->view);
-		$this->assertEquals('foobar', $response->content->data['content']);
+		$this->call('orchestra::manages@application', array('foo'));
+		$this->assertViewIs('orchestra::resources.pages');
+		$this->assertViewHas('content', 'foobar');
 	}
 
 	/**
@@ -91,9 +82,7 @@ class ManagesTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testRequestToManageInvalidFoobar()
 	{
-		$response = $this->call('orchestra::manages@foobar');
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(404, $response->foundation->getStatusCode());
+		$this->call('orchestra::manages@foobar');
+		$this->assertResponseNotFound();
 	}
 }

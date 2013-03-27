@@ -200,6 +200,26 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Assert view has data.
+	 *
+	 * @access public	
+	 * @param  string   $key
+	 * @param  mixed    $value
+	 * @return void
+	 */
+	public function assertViewHas($key, $value = null)
+	{
+		$content = $this->client->response->content->data;
+
+		$this->assertTrue(isset($content[$key]));
+
+		if ( ! is_null($value))
+		{
+			$this->assertEquals($content[$key], $value);
+		}
+	}
+
+	/**
 	 * Assert request is redirected.
 	 *
 	 * @access public

@@ -39,12 +39,8 @@ class SettingsTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testGetSettingsPageWithoutAuth()
 	{
-		$response = $this->call('orchestra::settings@index');
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::login'), 
-			$response->foundation->headers->get('location'));
+		$this->call('orchestra::settings@index');
+		$this->assertRedirectedTo(handles('orchestra::login'));
 	}
 
 	/**
@@ -56,12 +52,8 @@ class SettingsTest extends \Orchestra\Testable\TestCase {
 	public function testGetSettingsPage()
 	{
 		$this->be($this->user);
-
-		$response = $this->call('orchestra::settings@index');
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::settings.index', $response->content->view);
+		$this->call('orchestra::settings@index');
+		$this->assertViewIs('orchestra::settings.index');
 	}
 
 	/**
@@ -74,7 +66,7 @@ class SettingsTest extends \Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 
-		$response = $this->call('orchestra::settings@index', array(), 'POST', array(
+		$post1 = array(
 			'site_name'              => 'Foo',
 			'site_description'       => 'Foobar',
 			'site_user_registration' => 'no',
@@ -88,18 +80,14 @@ class SettingsTest extends \Orchestra\Testable\TestCase {
 			'email_smtp_encryption'  => '',
 			'email_sendmail_command' => '/usr/sbin/sendmail -bs',
 			'stmp_change_password'   => 'no',
-		));
+		);
 
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::settings'), 
-			$response->foundation->headers->get('location'));
-
+		$this->call('orchestra::settings@index', array(), 'POST', $post1);
+		$this->assertRedirectedTo(handles('orchestra::settings'));
 		$this->assertEquals('Foo', memorize('site.name'));
 		$this->assertEquals('Foobar', memorize('site.description'));
 
-
-		$response = $this->call('orchestra::settings@index', array(), 'POST', array(
+		$post2 = array(
 			'site_name'              => 'Foobar',
 			'site_description'       => 'Foo',
 			'site_user_registration' => 'no',
@@ -113,13 +101,10 @@ class SettingsTest extends \Orchestra\Testable\TestCase {
 			'email_smtp_encryption'  => 'ssl',
 			'email_sendmail_command' => '',
 			'stmp_change_password'   => 'no',
-		));
+		);
 
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::settings'), 
-			$response->foundation->headers->get('location'));
-
+		$this->call('orchestra::settings@index', array(), 'POST', $post2);
+		$this->assertRedirectedTo(handles('orchestra::settings'));
 		$this->assertEquals('Foobar', memorize('site.name'));
 		$this->assertEquals('Foo', memorize('site.description'));
 	}
@@ -133,16 +118,10 @@ class SettingsTest extends \Orchestra\Testable\TestCase {
 	public function testPostSettingsPageFailed()
 	{
 		$this->be($this->user);
-
-		$response = $this->call('orchestra::settings@index', array(), 'POST', array(
+		$this->call('orchestra::settings@index', array(), 'POST', array(
 			'site_name' => "Hello"
 		));
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::settings'), 
-			$response->foundation->headers->get('location'));
-
+		$this->assertRedirectedTo(handles('orchestra::settings'));
 		$this->assertFalse('Hello' === memorize('site.name'));
 	}
 }
