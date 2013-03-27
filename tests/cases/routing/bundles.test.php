@@ -53,13 +53,8 @@ class BundleTest extends \Orchestra\Testable\TestCase {
 	public function testGetUpdateWhenNotAuth()
 	{
 		$this->be(null);
-
-		$response = $this->call('orchestra::bundles@update', array('aws'));
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::login'), 
-			$response->foundation->headers->get('location'));
+		$this->call('orchestra::bundles@update', array('aws'));
+		$this->assertRedirectedTo(handles('orchestra::login'));
 	}
 
 	/**
@@ -77,12 +72,8 @@ class BundleTest extends \Orchestra\Testable\TestCase {
 			$_SERVER['orchestra.publishing'][] = $name;
 		});
 
-		$response = $this->call('orchestra::bundles@update', array('aws'));
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra'), 
-			$response->foundation->headers->get('location'));
+		$this->call('orchestra::bundles@update', array('aws'));
+		$this->assertRedirectedTo(handles('orchestra'));
 
 		$this->assertEquals(array('aws'), $_SERVER['orchestra.publishing']);
 	}
@@ -97,11 +88,8 @@ class BundleTest extends \Orchestra\Testable\TestCase {
 	public function testGetUpdateInvalidBundle()
 	{
 		$this->be($this->user);
-
-		$response = $this->call('orchestra::bundles@update', array('invalid-bundle-does-not-exist'));
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(404, $response->foundation->getStatusCode());
+		$this->call('orchestra::bundles@update', array('invalid-bundle-does-not-exist'));
+		$this->assertResponseNotFound();
 	}
 
 	/**
@@ -120,12 +108,8 @@ class BundleTest extends \Orchestra\Testable\TestCase {
 			throw new \Orchestra\Extension\FilePermissionException();
 		});
 
-		$response = $this->call('orchestra::bundles@update', array('aws'));
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::publisher'), 
-			$response->foundation->headers->get('location'));
+		$this->call('orchestra::bundles@update', array('aws'));
+		$this->assertRedirectedTo(handles('orchestra::publisher'));
 
 		\Event::$events = $events;
 	}

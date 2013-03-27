@@ -20,10 +20,10 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function tearDown()
 	{
-		parent::tearDown();
-		
 		unset($_SERVER['orchestra.auth.login']);
 		unset($_SERVER['orchestra.auth.logout']);
+
+		parent::tearDown();
 	}
 
 	/**

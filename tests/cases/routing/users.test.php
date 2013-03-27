@@ -40,12 +40,8 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testGetUsersPageWithoutAuth()
 	{
-		$response = $this->call('orchestra::users@index');
-		
-		$this->assertInstanceOf('\Laravel\Redirect', $response);	
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::login'), 
-			$response->foundation->headers->get('location'));
+		$this->call('orchestra::users@index');
+		$this->assertRedirectedTo(handles('orchestra::login'));
 	}
 
 	/**
@@ -57,12 +53,8 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	public function testGetUsersPage()
 	{
 		$this->be($this->user);
-
-		$response = $this->call('orchestra::users@index');
-		
-		$this->assertInstanceOf('\Laravel\Response', $response);	
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::users.index', $response->content->view);
+		$this->call('orchestra::users@index');
+		$this->assertViewIs('orchestra::users.index');
 	}
 
 	/**
@@ -73,12 +65,8 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testGetSingleUserPageWithoutAuth()
 	{
-		$response = $this->call('orchestra::users@view', array(1));
-		
-		$this->assertInstanceOf('\Laravel\Redirect', $response);	
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::login'), 
-			$response->foundation->headers->get('location'));
+		$this->call('orchestra::users@view', array(1));
+		$this->assertRedirectedTo(handles('orchestra::login'));
 	}
 
 	/**
@@ -91,17 +79,11 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 
-		$response = $this->call('orchestra::users@view', array(1));
-		
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::users.edit', $response->content->view);
+		$this->call('orchestra::users@view', array(1));
+		$this->assertViewIs('orchestra::users.edit');
 
-		$response = $this->call('orchestra::users@view', array(''));
-		
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(200, $response->foundation->getStatusCode());
-		$this->assertEquals('orchestra::users.edit', $response->content->view);
+		$this->call('orchestra::users@view', array(''));
+		$this->assertViewIs('orchestra::users.edit');
 	}
 
 	/**
@@ -112,20 +94,17 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostUserPageValidationError()
 	{
-		$this->be($this->user);
-
-		$response = $this->call('orchestra::users@view', array(''), 'POST', array(
+		$post = array(
 			'id'       => '',
 			'email'    => 'crynobone+gmail.com',
 			'fullname' => 'Mior Muhammad Zaki',
 			'password' => '123456',
 			'roles'    => array(2),
-		));
+		);
 
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::users/view/'), 
-			$response->foundation->headers->get('location'));
+		$this->be($this->user);
+		$this->call('orchestra::users@view', array(''), 'POST', $post);
+		$this->assertRedirectedTo(handles('orchestra::users/view/'));
 	}
 
 	/**
@@ -136,23 +115,20 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostCreateNewUserPage()
 	{
-		$this->be($this->user);
-
-		$response = $this->call('orchestra::users@view', array(''), 'POST', array(
+		$post = array(
 			'id'       => '',
 			'email'    => 'crynobone@gmail.com',
 			'fullname' => 'Mior Muhammad Zaki',
 			'password' => '123456',
 			'roles'    => array(2),
-		));
+		);
 
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::users'), 
-			$response->foundation->headers->get('location'));
+		$this->be($this->user);
+		$this->call('orchestra::users@view', array(''), 'POST', $post);
 
 		$user = \Orchestra\Model\User::where_email('crynobone@gmail.com')->first();
 
+		$this->assertRedirectedTo(handles('orchestra::users'));
 		$this->assertGreaterThan(0, $user->id);
 		$this->assertEquals('crynobone@gmail.com', $user->email);
 		$this->assertEquals('Mior Muhammad Zaki', $user->fullname);
@@ -169,18 +145,17 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostCreateNewUserPageInvalidUserId()
 	{
-		$this->be($this->user);
-
-		$response = $this->call('orchestra::users@view', array(''), 'POST', array(
+		$post = array(
 			'id'       => '1',
 			'email'    => 'crynobone@gmail.com',
 			'fullname' => 'Mior Muhammad Zaki',
 			'password' => '123456',
 			'roles'    => array(2),
-		));
+		);
 
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(500, $response->foundation->getStatusCode());
+		$this->be($this->user);
+		$this->call('orchestra::users@view', array(''), 'POST', $post);
+		$this->assertResponseIs(500);
 	}
 
 	/**
@@ -192,30 +167,26 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostUserPageDatabaseError()
 	{
-		$this->be($this->user);
-
 		$events = \Event::$events;
+		$post   = array(
+			'id'       => '',
+			'email'    => 'crynobone@gmail.com',
+			'fullname' => 'Mior Muhammad Zaki',
+			'password' => '123456',
+			'roles'    => array(2),
+		);
 
 		\Event::listen('eloquent.saving: Orchestra\Model\User', function ($model)
 		{
 			throw new \Exception();
 		});
 
-		$response = $this->call('orchestra::users@view', array(''), 'POST', array(
-			'id'       => '',
-			'email'    => 'crynobone@gmail.com',
-			'fullname' => 'Mior Muhammad Zaki',
-			'password' => '123456',
-			'roles'    => array(2),
-		));
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::users'), 
-			$response->foundation->headers->get('location'));
+		$this->be($this->user);
+		$this->call('orchestra::users@view', array(''), 'POST', $post);
 
 		$user = \Orchestra\Model\User::where_email('crynobone@gmail.com')->first();
 
+		$this->assertRedirectedTo(handles('orchestra::users'));
 		$this->assertNull($user);
 
 		\Event::$events = $events;
@@ -229,30 +200,27 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostUpdateUserPage()
 	{
-		$this->be($this->user);
-
 		$user = \Orchestra\Model\User::create(array(
 			'email'    => 'crynobone@gmail.com',
 			'fullname' => 'Mior Muhammad Zaki',
 			'password' => '123456',
 		));
 		$user->roles()->sync(array(2));
-
-		$response = $this->call('orchestra::users@view', array($user->id), 'POST', array(
+		
+		$post = array(
 			'id'       => $user->id,
 			'email'    => 'crynobone@gmail.com',
 			'fullname' => 'crynobone',
 			'password' => '345678',
 			'roles'    => array(2),
-		));
+		);
 
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::users'), 
-			$response->foundation->headers->get('location'));
+		$this->be($this->user);
+		$this->call('orchestra::users@view', array($user->id), 'POST', $post);
 
 		$updated_user = \Orchestra\Model\User::find($user->id);
 
+		$this->assertRedirectedTo(handles('orchestra::users'));
 		$this->assertEquals('crynobone@gmail.com', $updated_user->email);
 		$this->assertEquals('crynobone', $updated_user->fullname);
 		$this->assertTrue(\Hash::check('345678', $updated_user->password));
@@ -268,8 +236,6 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostDeleteUserPage()
 	{
-		$this->be($this->user);
-
 		$user = \Orchestra\Model\User::create(array(
 			'email'    => 'crynobone@gmail.com',
 			'fullname' => 'Mior Muhammad Zaki',
@@ -281,15 +247,12 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 
 		$user_id = $user->id;
 		
-		$response = $this->call('orchestra::users@delete', array($user_id));
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::users'), 
-			$response->foundation->headers->get('location'));
+		$this->be($this->user);
+		$this->call('orchestra::users@delete', array($user_id));
 
 		$user = \Orchestra\Model\User::find($user_id);
 
+		$this->assertRedirectedTo(handles('orchestra::users'));
 		$this->assertNull($user);
 	}
 
@@ -301,8 +264,6 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostDeleteUserPageWithMultipleRoles()
 	{
-		$this->be($this->user);
-
 		$user = \Orchestra\Model\User::create(array(
 			'email'    => 'crynobone@gmail.com',
 			'fullname' => 'Mior Muhammad Zaki',
@@ -314,15 +275,12 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 
 		$user_id = $user->id;
 		
-		$response = $this->call('orchestra::users@delete', array($user_id));
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::users'), 
-			$response->foundation->headers->get('location'));
+		$this->be($this->user);
+		$this->call('orchestra::users@delete', array($user_id));
 
 		$user = \Orchestra\Model\User::find($user_id);
 
+		$this->assertRedirectedTo(handles('orchestra::users'));
 		$this->assertNull($user);
 	}
 
@@ -335,12 +293,8 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	public function testPostDeleteUserPageIdError()
 	{
 		$this->be($this->user);
-
-		
-		$response = $this->call('orchestra::users@delete', array(20000));
-
-		$this->assertInstanceOf('\Laravel\Response', $response);
-		$this->assertEquals(404, $response->foundation->getStatusCode());
+		$this->call('orchestra::users@delete', array(20000));
+		$this->assertResponseNotFound();
 	}
 
 	/**
@@ -351,8 +305,6 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testPostDeleteUserDatabaseError()
 	{
-		$this->be($this->user);
-
 		$user = \Orchestra\Model\User::create(array(
 			'email'    => 'crynobone@gmail.com',
 			'fullname' => 'Mior Muhammad Zaki',
@@ -370,12 +322,9 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 
 		$user_id = $user->id;
 		
-		$response = $this->call('orchestra::users@delete', array($user_id));
-
-		$this->assertInstanceOf('\Laravel\Redirect', $response);
-		$this->assertEquals(302, $response->foundation->getStatusCode());
-		$this->assertEquals(handles('orchestra::users'), 
-			$response->foundation->headers->get('location'));
+		$this->be($this->user);
+		$this->call('orchestra::users@delete', array($user_id));
+		$this->assertRedirectedTo(handles('orchestra::users'));
 
 		\Event::$events = $events;
 	}
