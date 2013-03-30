@@ -13,7 +13,10 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 			'default' => \IoC::resolve('\Orchestra\Facile\Template'),
 		);
 
-		\Orchestra\Facile::template('foo', '\Orchestra\Tests\ValidTemplateStub');
+		\Orchestra\Facile::template('foo', function ()
+		{
+			return new ValidFacileTemplateStub;
+		});
 	}
 
 	/**
@@ -93,7 +96,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testTemplateMethod()
 	{
-		$this->assertInstanceOf('\Orchestra\Tests\ValidTemplateStub', 
+		$this->assertInstanceOf('\Orchestra\Tests\ValidFacileTemplateStub', 
 			\Orchestra\Facile::$templates['foo']);
 	}
 
@@ -106,11 +109,14 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testTemplateMethodThrowsException()
 	{
-		\Orchestra\Facile::template('foobar', '\Orchestra\Tests\InvalidTemplateStub');
+		\Orchestra\Facile::template('foobar', function ()
+		{
+			return new InvalidFacileTemplateStub;
+		});
 	}
 }
 
-class ValidTemplateStub extends \Orchestra\Facile\Driver {
+class ValidFacileTemplateStub extends \Orchestra\Facile\Driver {
 
 	public function compose_html($data)
 	{
@@ -118,4 +124,4 @@ class ValidTemplateStub extends \Orchestra\Facile\Driver {
 	}
 }
 
-class InvalidTemplateStub {}
+class InvalidFacileTemplateStub {}
