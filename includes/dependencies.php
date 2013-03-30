@@ -235,7 +235,24 @@ if ( ! IoC::registered('orchestra.memory'))
 	});
 }
 
+/*
+|--------------------------------------------------------------------------
+| Orchestra User Meta Memory
+|--------------------------------------------------------------------------
+|
+| Manage user meta through Orchestra\Memory instance.
+|
+*/
+
 Orchestra\Support\Memory::extend('user', function()
 {
 	return new Orchestra\Repository\User;
 });
+
+/*
+|--------------------------------------------------------------------------
+| Register Orchestra\Facile Template
+|--------------------------------------------------------------------------
+*/
+
+Orchestra\Facile::template('default', 'Orchestra\Facile\Template');
