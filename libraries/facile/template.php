@@ -39,10 +39,11 @@ class Template extends Driver {
 			$compose['view'] = View::make($compose['view']);
 		}
 
-		$view = $compose['view'];
-		$data = (isset($compose['data']) ? $compose['data'] : null);
+		$view   = $compose['view'];
+		$data   = (isset($compose['data']) ? $compose['data'] : null);
+		$status = (isset($compose['status']) ? $compose['status'] : 200);
 
-		return $view->with($data);
+		return Response::make($view->with($data), $status);
 	}
 
 	/**
@@ -54,8 +55,9 @@ class Template extends Driver {
 	 */
 	public function compose_json($compose)
 	{
-		$json = isset($compose['data']) ? $compose['data'] : null;
+		$data   = isset($compose['data']) ? $compose['data'] : null;
+		$status = (isset($compose['status']) ? $compose['status'] : 200);
 
-		return Response::json($json);
+		return Response::json($data, $status);
 	}
 }

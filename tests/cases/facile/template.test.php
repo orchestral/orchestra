@@ -38,7 +38,7 @@ class TemplateTest extends \PHPUnit_Framework_TestCase {
 			),
 		));
 
-		$this->assertInstanceOf('\View', $stub);
+		$this->assertInstanceOf('\Response', $stub);
 	}
 
 	/**

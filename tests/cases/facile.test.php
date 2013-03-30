@@ -43,7 +43,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	{
 		$stub = \Orchestra\Facile::make('default', array('view' => 'error.404'), 'html')->render();
 
-		$this->assertInstanceOf('\View', $stub);
+		$this->assertInstanceOf('\Response', $stub);
 	}
 
 	/**
