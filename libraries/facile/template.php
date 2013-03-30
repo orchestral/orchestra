@@ -27,20 +27,20 @@ class Template extends Driver {
 	 * @param  array    $data
 	 * @return string
 	 */
-	public function compose_html($data)
+	public function compose_html($compose)
 	{
-		if ( ! isset($data['view']))
+		if ( ! isset($compose['view']))
 		{
 			throw new InvalidArgumentException("Missing [\$view].");
 		}
 
-		if ( ! ($data['view'] instanceof View))
+		if ( ! ($compose['view'] instanceof View))
 		{
-			$data['view'] = View::make($data['view']);
+			$compose['view'] = View::make($compose['view']);
 		}
 
-		$view = $data['view'];
-		unset($data['view']);
+		$view = $compose['view'];
+		$data = (isset($compose['data']) ? $compose['data'] : null);
 
 		return $view->with($data);
 	}
@@ -52,10 +52,10 @@ class Template extends Driver {
 	 * @param  array    $data
 	 * @return string
 	 */
-	public function compose_json($data)
+	public function compose_json($compose)
 	{
-		unset($data['view']);
+		$json = isset($compose['data']) ? $compose['data'] : null;
 
-		return Response::json($data);
+		return Response::json($json);
 	}
 }

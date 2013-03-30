@@ -33,7 +33,9 @@ class TemplateTest extends \PHPUnit_Framework_TestCase {
 	{
 		$stub = with(new \Orchestra\Facile\Template)->compose_html(array(
 			'view' => 'error.404',
-			'foo' => 'foobar is awesome',
+			'data' => array(
+				'foo' => 'foobar is awesome',
+			),
 		));
 
 		$this->assertInstanceOf('\View', $stub);
@@ -49,7 +51,9 @@ class TemplateTest extends \PHPUnit_Framework_TestCase {
 	public function testComposeHtmlMethodThrowsException()
 	{
 		$stub = with(new \Orchestra\Facile\Template)->compose_html(array(
-			'foo' => 'foobar is awesome',
+			'data' => array(
+				'foo' => 'foobar is awesome',
+			),
 		));
 	}
 
@@ -62,7 +66,9 @@ class TemplateTest extends \PHPUnit_Framework_TestCase {
 	public function testComposeJsonMethod()
 	{
 		$stub = with(new \Orchestra\Facile\Template)->compose_json(array(
-			'foo' => 'foobar is awesome',
+			'data' => array(
+				'foo' => 'foobar is awesome',
+			),
 		));
 
 		$this->assertInstanceOf('\Response', $stub);
