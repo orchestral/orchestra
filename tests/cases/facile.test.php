@@ -34,6 +34,19 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Facile::render() method.
+	 *
+	 * @test
+	 * @group facile
+	 */
+	public function testRenderMethod()
+	{
+		$stub = \Orchestra\Facile::make('default', array('view' => 'error.404'), 'html')->render();
+
+		$this->assertInstanceOf('\View', $stub);
+	}
+
+	/**
 	 * Test Orchestra\Facile::make() throws exception when using an invalid 
 	 * template.
 	 *

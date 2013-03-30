@@ -284,6 +284,25 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test Orchestra\Resources::response() method when $content 
+	 * is an instanceof Orchestra\Facile.
+	 *
+	 * @test
+	 * @group core
+	 * @group resources
+	 */
+	public function testResponseMethodWhenIsOrchestraFacile()
+	{
+		$content  = \Orchestra\Facile::make('default', array(
+			'view' => 'error.404',
+		), 'html');
+
+		$response = \Orchestra\Resources::response($content);
+		
+		$this->assertInstanceOf('\View', $response);
+	}
+
+	/**
+	 * Test Orchestra\Resources::response() method when $content 
 	 * is instanceof Laravel\Response.
 	 *
 	 * @test
@@ -305,6 +324,25 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(500, $response->foundation->getStatusCode());
+	}
+
+	/**
+	 * Test Orchestra\Resources::response() method when $content 
+	 * is instanceof Laravel\Response with Orchestra\Facile.
+	 *
+	 * @test
+	 * @group core
+	 * @group resources
+	 */
+	public function testResponseMethodWhenIsResponseWithOrchestraFacile()
+	{
+		$facile   = \Orchestra\Facile::make('default', array(
+			'view' => 'error.404',
+		), 'html');
+		$content  = \Response::make($facile, 200);
+		$response = \Orchestra\Resources::response($content);
+
+		$this->assertInstanceOf('\View', $response);
 	}
 
 	/**
