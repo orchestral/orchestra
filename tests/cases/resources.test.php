@@ -18,6 +18,10 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	{
 		set_path('app', \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'application'.DS);
 
+		\Orchestra\Facile::$templates = array(
+			'default' => \IoC::resolve('\Orchestra\Facile\Template'),
+		);
+
 		$this->stub = \Orchestra\Resources::make('stub', array(
 			'name' => 'ResourceStub',
 			'uses' => 'stub',
@@ -29,6 +33,7 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
+		\Orchestra\Facile::$templates = array();
 		set_path('app', path('base').'application'.DS);
 
 		unset($this->stub);
