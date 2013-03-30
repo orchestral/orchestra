@@ -24,7 +24,7 @@ class Facile {
 	 */
 	public static function make($name, $data = array(), $format = null) 
 	{
-		return with(new static($name, $data))->render($format);
+		return new static($name, $data, $format);
 	}
 
 	/**
@@ -56,12 +56,14 @@ class Facile {
 	 * @access protected	
 	 * @param  string   $name   Name of template
 	 * @param  array    $data
+	 * @param  string   $format
 	 * @return self
 	 */
-	protected function __construct($name, $data = array()) 
+	protected function __construct($name, $data = array(), $format = null) 
 	{
-		$this->name = $name;
-		$this->data = $data;
+		$this->name   = $name;
+		$this->data   = $data;
+		$this->format = $format;
 
 		if ( ! isset(static::$templates[$name]))
 		{
@@ -88,6 +90,13 @@ class Facile {
 	protected $template = null;
 
 	/**
+	 * View format.
+	 *
+	 * @var string
+	 */
+	protected $format = null;
+
+	/**
 	 * View data.
 	 *
 	 * @var array
@@ -95,14 +104,22 @@ class Facile {
 	protected $data = array();
 
 	/**
+	 * Render facile.
+	 */
+	public function __toString()
+	{
+		return $this->render();
+	}
+
+	/**
 	 * Render facile by format.
 	 *
-	 * @access public	
-	 * @param  string   $format
+	 * @access public
 	 * @return mixed
 	 */
-	public function render($format = null)
+	public function render()
 	{
+		$format   = $this->format;
 		$template = $this->template;
 
 		// Get expected response format.
