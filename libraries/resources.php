@@ -114,15 +114,15 @@ class Resources {
 				return $response;
 
 			case ($response instanceof Facile) :
-				return $response->render();
+				return $response;
 		
 			case ($response instanceof Response) :
-
 				$status_code = $response->foundation->getStatusCode();
+				$content     = $response->content;
 
-				if (isset($response->content) and $response->content instanceof Facile)
+				if ($content instanceof Facile and $content->format() !== 'html')
 				{
-					return $response->content->render();
+					return $response->content;
 				}
 				if ( ! $response->foundation->isSuccessful())
 				{

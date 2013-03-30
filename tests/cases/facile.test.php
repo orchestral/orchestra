@@ -7,9 +7,13 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
+		set_path('app', \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'application'.DS);
+
 		\Orchestra\Facile::$templates = array(
 			'default' => \IoC::resolve('\Orchestra\Facile\Template'),
 		);
+
+		\Orchestra\Facile::template('foo', '\Orchestra\Tests\ValidTemplateStub');
 	}
 
 	/**
@@ -17,6 +21,8 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
+		set_path('app', path('base').'application'.DS);
+
 		\Orchestra\Facile::$templates = array();
 	}
 
@@ -28,9 +34,26 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testMakeMethod()
 	{
-		$stub = \Orchestra\Facile::make('default', array('view' => 'error.404'), 'html');
+		$stub1 = \Orchestra\Facile::make('default', array('view' => 'home.foo'));
+		$this->assertInstanceOf('\Orchestra\Facile', $stub1);
 
-		$this->assertInstanceOf('\Orchestra\Facile', $stub);
+		ob_start();
+		echo $stub1;
+		$output1 = ob_get_contents();
+		ob_end_clean();
+
+		$this->assertEquals('foo', $output1);
+
+
+		$stub2 = \Orchestra\Facile::make('foo', array('view' => 'home.foo'));
+		$this->assertInstanceOf('\Orchestra\Facile', $stub2);
+
+		ob_start();
+		echo $stub2;
+		$output2 = ob_get_contents();
+		ob_end_clean();
+
+		$this->assertEquals('foo', $output2);
 	}
 
 	/**
@@ -41,9 +64,13 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testRenderMethod()
 	{
-		$stub = \Orchestra\Facile::make('default', array('view' => 'error.404'), 'html')->render();
+		$stub = \Orchestra\Facile::make('default', array(
+			'view' => 'error.404', 
+			'data' => array('foo' => 'foo is awesome'),
+		), 'json')->render();
 
 		$this->assertInstanceOf('\Response', $stub);
+		$this->assertEquals('{"foo":"foo is awesome"}', $stub->content);
 	}
 
 	/**
@@ -55,7 +82,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testMakeMethodThrowsExceptionUsingInvalidTemplate()
 	{
-		\Orchestra\Facile::make('foo', array('view' => 'error.404'), 'html');
+		\Orchestra\Facile::make('foobar', array('view' => 'error.404'), 'html');
 	}
 
 	/**
@@ -66,8 +93,6 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testTemplateMethod()
 	{
-		\Orchestra\Facile::template('foo', '\Orchestra\Tests\ValidTemplateStub');
-
 		$this->assertInstanceOf('\Orchestra\Tests\ValidTemplateStub', 
 			\Orchestra\Facile::$templates['foo']);
 	}
@@ -85,6 +110,12 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	}
 }
 
-class ValidTemplateStub extends \Orchestra\Facile\Driver {}
+class ValidTemplateStub extends \Orchestra\Facile\Driver {
+
+	public function compose_html($data)
+	{
+		return 'foo';
+	}
+}
 
 class InvalidTemplateStub {}

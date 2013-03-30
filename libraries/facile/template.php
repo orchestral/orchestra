@@ -2,7 +2,7 @@
 
 use InvalidArgumentException,
 	Response,
-	View;
+	Orchestra\View;
 
 class Template extends Driver {
 

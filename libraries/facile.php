@@ -15,6 +15,27 @@ class Facile {
 	/**
 	 * Create a new Facile instance.
 	 *
+	 * <code>
+	 * 		$users  = User::paginate(30);
+	 * 		$facile = Orchestra\Facile::make('default', array(
+	 * 			'view'   => 'home.index',
+	 * 			'data'   => array(
+	 * 				'eloquent' => $users,
+	 * 				'table'    => Orchestra\Presenter::user($users),
+	 * 			),
+	 * 			'status' => 200,
+	 * 		));
+	 *
+	 * 		// Alternatively
+	 * 		$facile = Orchestra\Facile::make('default')
+	 * 			->view('home.index')
+	 * 			->with(array(
+	 * 				'eloquent' => $users,
+	 * 				'table'    => Orchestra\Presenter::user($users),
+	 * 			))->status(200)
+	 * 			->format('html');
+	 * 	</code>
+	 *
 	 * @static
 	 * @access public			
 	 * @param  string   $name   Name of template
@@ -61,9 +82,9 @@ class Facile {
 	 */
 	protected function __construct($name, $data = array(), $format = null) 
 	{
-		$this->name   = $name;
-		$this->data   = $data;
-		$this->format = $format;
+		$schema     = array('view' => null, 'data' => array(), 'status' => 200);
+		$this->name = $name;
+		$this->data = array_merge($schema, $data);
 
 		if ( ! isset(static::$templates[$name]))
 		{
@@ -73,6 +94,7 @@ class Facile {
 		}
 
 		$this->template = static::$templates[$name];
+		$this->format($format);
 	}
 
 	/**
@@ -104,27 +126,50 @@ class Facile {
 	protected $data = array();
 
 	/**
-	 * Render facile.
+	 * Render facile by selected format.
+	 *
+	 * @access public
+	 * @return mixed
 	 */
 	public function __toString()
 	{
-		return $this->render();
+		$facile = $this->render();
+
+		if ( ! is_string($facile) and method_exists($facile, 'render'))
+		{
+			return $facile->render();
+		}
+		
+		return $facile;
 	}
 
 	/**
-	 * Render facile by format.
+	 * Get expected facile format.
+	 *
+	 * @access public
+	 * @param  string   $format
+	 * @return string
+	 */
+	public function format($format = null)
+	{
+		! is_null($format) and $this->format = $format;
+
+		if (is_null($this->format))
+		{
+			$this->format = $this->template->format();
+		}
+
+		return $this->format;
+	}
+
+	/**
+	 * Render facile by selected format.
 	 *
 	 * @access public
 	 * @return mixed
 	 */
 	public function render()
 	{
-		$format   = $this->format;
-		$template = $this->template;
-
-		// Get expected response format.
-		is_null($format) and $format = $template->format();
-
-		return $template->compose($format, $this->data);
+		return $this->template->compose($this->format(), $this->data);
 	}
 }
