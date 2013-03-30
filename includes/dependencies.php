@@ -255,4 +255,7 @@ Orchestra\Support\Memory::extend('user', function()
 |--------------------------------------------------------------------------
 */
 
-Orchestra\Facile::template('default', 'Orchestra\Facile\Template');
+Orchestra\Facile::template('default', function ()
+{
+	return new Orchestra\Facile\Template;
+});

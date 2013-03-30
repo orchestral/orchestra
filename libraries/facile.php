@@ -59,7 +59,7 @@ class Facile {
 	 */
 	public static function template($name, $template) 
 	{
-		$resolve = IoC::resolve($template);
+		$resolve = value($template);
 
 		if ( ! ($resolve instanceof Facile\Driver))
 		{
@@ -139,7 +139,7 @@ class Facile {
 		{
 			return $facile->render();
 		}
-		
+
 		return $facile;
 	}
 
@@ -152,7 +152,7 @@ class Facile {
 	 */
 	public function format($format = null)
 	{
-		! is_null($format) and $this->format = $format;
+		! empty($format) and $this->format = $format;
 
 		if (is_null($this->format))
 		{
