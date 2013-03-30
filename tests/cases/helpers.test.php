@@ -13,6 +13,7 @@ class HelpersTest extends \Orchestra\Testable\TestCase {
 		
 		parent::setUp();
 
+		set_path('app', \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'application'.DS);
 		set_path('public', \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS);
 	}
 
@@ -21,6 +22,7 @@ class HelpersTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function tearDown()
 	{
+		set_path('app', path('base').'application'.DS);
 		set_path('public', path('base').'public'.DS);
 
 		parent::tearDown();

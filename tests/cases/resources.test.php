@@ -343,7 +343,15 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	{
 		$facile   = \Orchestra\Facile::make('default', array(
 			'view' => 'error.404',
-		), 'html');
+			'data' => array('foo' => 'foo is awesome'),
+		));
+		$content  = \Response::make($facile, 200);
+		$response = \Orchestra\Resources::response($content);
+
+		$this->assertInstanceOf('\Laravel\Response', $response);
+
+		$facile->format('json');
+
 		$content  = \Response::make($facile, 200);
 		$response = \Orchestra\Resources::response($content);
 

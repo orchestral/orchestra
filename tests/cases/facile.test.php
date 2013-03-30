@@ -8,6 +8,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	public function setUp()
 	{
 		set_path('app', \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'application'.DS);
+		set_path('public', \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS);
 
 		\Orchestra\Facile::$templates = array(
 			'default' => \IoC::resolve('\Orchestra\Facile\Template'),
@@ -25,6 +26,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	public function tearDown()
 	{
 		set_path('app', path('base').'application'.DS);
+		set_path('public', path('base').'public'.DS);
 
 		\Orchestra\Facile::$templates = array();
 	}
