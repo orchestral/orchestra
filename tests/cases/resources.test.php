@@ -18,6 +18,9 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	{
 		set_path('app', \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'application'.DS);
 
+		\Config::set('application.index', '');
+		\Config::set('application.url', 'http://localhost/');
+
 		\Orchestra\Facile::$templates = array(
 			'default' => \IoC::resolve('\Orchestra\Facile\Template'),
 		);
@@ -33,6 +36,9 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
+		\Config::set('application.index', 'index.php');
+		\Config::set('application.url', '');
+
 		\Orchestra\Facile::$templates = array();
 		set_path('app', path('base').'application'.DS);
 
@@ -330,6 +336,26 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(500, $response->foundation->getStatusCode());
 	}
+
+	/**
+	 * Test Orchestra\Resources::response() method when $content 
+	 * is not Content-Type: text/html.
+	 *
+	 * @test
+	 * @group core
+	 * @group resources
+	 */
+	public function testResponseMethodWhenIsNotContentTypeTextHtml()
+	{
+		$response = \Orchestra\Resources::response(
+			\Response::json(array('foo' => 'foo is awesome'), 200)
+		);
+
+		$this->assertInstanceOf('\Laravel\Response', $response);
+		$this->assertEquals(200, $response->foundation->getStatusCode());
+		$this->assertEquals('{"foo":"foo is awesome"}', $response->content);
+	}
+
 
 	/**
 	 * Test Orchestra\Resources::response() method when $content 

@@ -117,12 +117,18 @@ class Resources {
 				return $response->render();
 		
 			case ($response instanceof Response) :
-				$status_code = $response->foundation->getStatusCode();
-				$content     = $response->content;
-
+				$status_code  = $response->foundation->getStatusCode();
+				$content      = $response->content;
+				$content_type = $response->foundation->headers->get('content-type');
+				$is_html      = starts_with($content_type, 'text/html');
+				
 				if ($content instanceof Facile and $content->format !== 'html')
 				{
 					return $response->content->render();
+				}
+				elseif ( ! is_null($content_type) and ! $is_html)
+				{
+					return $response;
 				}
 				elseif ( ! $response->foundation->isSuccessful())
 				{
