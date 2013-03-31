@@ -70,10 +70,7 @@ abstract class Driver {
 	{
 		$view = "{$status} error";
 
-		if (View::exists("error.{$status}"))
-		{
-			$view = View::make("error.{$status}");
-		}
+		if (View::exists("error.{$status}")) $view = View::make("error.{$status}");
 
 		return Response::make($view, $status);
 	}
