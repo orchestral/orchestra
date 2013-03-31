@@ -137,7 +137,7 @@ class Facile {
 	 */
 	public function view($view)
 	{
-		$data['view'] = $view;
+		$this->data['view'] = $view;
 
 		return $this;
 	}
@@ -151,7 +151,7 @@ class Facile {
 	 */
 	public function with($data)
 	{
-		$data['data'] = array_merge($data['data'], $data);
+		$this->data['data'] = array_merge($this->data['data'], $data);
 
 		return $this;
 	}
@@ -165,7 +165,7 @@ class Facile {
 	 */
 	public function status($status = 200)
 	{
-		$data['status'] = $status;
+		$this->data['status'] = $status;
 
 		return $this;
 	}
