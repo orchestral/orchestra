@@ -114,7 +114,7 @@ class Resources {
 				return $response;
 
 			case ($response instanceof Facile) :
-				return $response;
+				return $response->render();
 		
 			case ($response instanceof Response) :
 				$status_code = $response->foundation->getStatusCode();
@@ -122,9 +122,9 @@ class Resources {
 
 				if ($content instanceof Facile and $content->format !== 'html')
 				{
-					return $response->content;
+					return $response->content->render();
 				}
-				if ( ! $response->foundation->isSuccessful())
+				elseif ( ! $response->foundation->isSuccessful())
 				{
 					return Response::error($status_code);
 				}

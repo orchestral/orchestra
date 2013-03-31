@@ -303,7 +303,7 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 
 		$response = \Orchestra\Resources::response($content);
 		
-		$this->assertInstanceOf('\Orchestra\Facile', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 	}
 
 	/**
@@ -355,7 +355,7 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 		$content  = \Response::make($facile, 200);
 		$response = \Orchestra\Resources::response($content);
 
-		$this->assertInstanceOf('\Orchestra\Facile', $response);
+		$this->assertInstanceOf('\Laravel\Response', $response);
 	}
 
 	/**
