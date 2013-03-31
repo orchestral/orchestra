@@ -25,6 +25,7 @@
 
 **ONGOING DEVELOPMENT**
 
+ * Add `Orchestra\Facile` to dynamically response HTML (using `View`), JSON, XML or etc without defining multiple route.
  * Add `Orchestra\Fluent` alias from `Orchestra\Support\Fluent`.
  * Add `Orchestra\Decorator` alias from `Orchestra\Support\Decorator`.
  * Add `Orchestra\Site::localtime()` helper.
