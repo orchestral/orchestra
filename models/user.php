@@ -17,6 +17,13 @@ class User extends Eloquent {
 	const VERIFIED   = 1;
 
 	/**
+	 * The attributes that should be excluded from to_array.
+	 *
+	 * @var array
+	 */
+	public static $hidden = array('password');
+
+	/**
 	 * Has Many relationship to `user_meta` table.
 	 *
 	 * @access public

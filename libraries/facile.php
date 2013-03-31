@@ -146,11 +146,14 @@ class Facile {
 	 * Nest a data to facile.
 	 *
 	 * @access public
-	 * @param  array    $data
+	 * @param  mixed    $key
+	 * @param  mixed    $value
 	 * @return self
 	 */
-	public function with($data)
+	public function with($key, $value = null)
 	{
+		$data = is_array($key) ? $key : array($key => $value);
+		
 		$this->data['data'] = array_merge($this->data['data'], $data);
 
 		return $this;
