@@ -35,13 +35,13 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Driver::compose() method throws exception 
-	 * when given an invalid format.
+	 * Test Orchestra\Facile\Driver::compose() method return response with 
+	 * error 406 when given an invalid format.
 	 *
+	 * @test
 	 * @group facile
-	 * @expectedException \InvalidArgumentException
 	 */
-	public function testComposeMethodThrowsExceptionWhenGivenInvalidFormat()
+	public function testComposeMethodReturnResponseError406WhenGivenInvalidFormat()
 	{
 		$stub = new TemplateStub;
 		$data = array(
@@ -50,7 +50,9 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 			'status' => 200,
 		);
 
-		$stub->compose('foobar', $data);
+		$response = $stub->compose('foobar', $data);
+		$this->assertInstanceOf('\Laravel\Response', $response);
+		$this->assertEquals(406, $response->foundation->getStatusCode());
 	}
 
 	/**

@@ -1,8 +1,9 @@
 <?php namespace Orchestra\Facile;
 
-use InvalidArgumentException,
-	RuntimeException,
-	Input;
+use RuntimeException,
+	Input,
+	Response,
+	Orchestra\View;
 
 abstract class Driver {
 
@@ -41,7 +42,7 @@ abstract class Driver {
 	{
 		if ( ! in_array($format, $this->format))
 		{
-			throw new InvalidArgumentException("Format [{$format}] is not supported.");
+			return call_user_func(array($this, "compose_error"), null, null, 406);
 		}
 		elseif ( ! method_exists($this, "compose_{$format}"))
 		{
@@ -54,6 +55,24 @@ abstract class Driver {
 			$compose['data'], 
 			$compose['status']
 		);
+	}
+
+	/**
+	 * Compose an error template.
+	 *
+	 * @access public 	
+	 * @param  mixed    $view
+	 * @param  array    $data
+	 * @param  integer 	$status
+	 * @return Response  
+	 */
+	public function compose_error($view, $data = array(), $status = 404)
+	{
+		$view = "{$status} error";
+
+		if (View::exists("error.{$status}")) $view = View::make("error.{$status}");
+
+		return Response::make($view, $status);
 	}
 
 	/**
