@@ -37,7 +37,7 @@ abstract class Driver {
 	 * @access public
 	 * @return mixedd
 	 */
-	public function compose($format, $data = array())
+	public function compose($format, $compose = array())
 	{
 		if ( ! in_array($format, $this->format))
 		{
@@ -48,6 +48,43 @@ abstract class Driver {
 			throw new RuntimeException("Call to undefine method [compose_{$format}].");
 		}
 
-		return call_user_func(array($this, "compose_{$format}"), $data);
+		return call_user_func(
+			array($this, "compose_{$format}"), 
+			$compose['view'], 
+			$compose['data'], 
+			$compose['status']
+		);
+	}
+
+	/**
+	 * Transform given data
+	 *
+	 * @access public
+	 * @param  array    $data
+	 * @return array
+	 */
+	public function transform($item)
+	{
+		switch (true)
+		{
+			case (method_exists($item, 'to_array')) :
+				return $item->to_array();
+
+			case (method_exists($item, 'render')) :
+				return e($item->render());
+
+			case ($item instanceof \Laravel\Paginator) :
+				$results = $item->results;
+
+				is_array($results) and $results = array_map(array($this, 'transform'), $results);
+
+				return array(
+					'results' => $results,
+					'links'   => e($item->links()),
+				);
+
+			default :
+				return $item;
+		}
 	}
 }

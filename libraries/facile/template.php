@@ -24,24 +24,19 @@ class Template extends Driver {
 	 * Compose HTML
 	 *
 	 * @access public
+	 * @param  mixed    $view
 	 * @param  array    $data
+	 * @param  integer  $status
 	 * @return string
 	 */
-	public function compose_html($compose)
+	public function compose_html($view = null, $data = array(), $status = 200)
 	{
-		if ( ! isset($compose['view']))
+		if ( ! isset($view))
 		{
 			throw new InvalidArgumentException("Missing [\$view].");
 		}
 
-		if ( ! ($compose['view'] instanceof View))
-		{
-			$compose['view'] = View::make($compose['view']);
-		}
-
-		$view   = $compose['view'];
-		$data   = (isset($compose['data']) ? $compose['data'] : null);
-		$status = (isset($compose['status']) ? $compose['status'] : 200);
+		if ( ! ($view instanceof View)) $view = View::make($view);
 
 		return Response::make($view->with($data), $status);
 	}
@@ -50,50 +45,15 @@ class Template extends Driver {
 	 * Compose json
 	 *
 	 * @access public
+	 * @param  mixed    $view
 	 * @param  array    $data
+	 * @param  integer  $status
 	 * @return string
 	 */
-	public function compose_json($compose)
+	public function compose_json($view = null, $data = array(), $status = 200)
 	{
-		$data   = $this->transform(isset($compose['data']) ? $compose['data'] : array());
-		$status = (isset($compose['status']) ? $compose['status'] : 200);
+		$data = array_map(array($this, 'transform'), $data);
 
 		return Response::json($data, $status);
-	}
-
-	/**
-	 * Transform given data
-	 *
-	 * @access public
-	 * @param  array    $data
-	 * @return array
-	 */
-	public function transform($data)
-	{
-		$to_array = function($item) 
-		{ 
-			return (method_exists($item, 'to_array')) ? $item->to_array() : $item; 
-		};
-
-		foreach ($data as $key => $item)
-		{
-			// Nested data should be render.
-			if (method_exists($item, 'render')) $data[$key] = e($item->render());
-
-			if ($item instanceof \Laravel\Paginator)
-			{
-				$data[$key] = array(
-					'results' => array_map($to_array, $item->results),
-					'links'   => e($item->links()),
-				);
-			}
-
-			if (is_array($item))
-			{
-				$data[$key] = array_map($to_array, $item);
-			}
-		}
-
-		return $data;
 	}
 }
