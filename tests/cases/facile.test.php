@@ -71,7 +71,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	{
 		$stub = \Orchestra\Facile::make('default')
 			->view('error.404')
-			->data(array('foo' => 'foo is awesome'))
+			->with(array('foo' => 'foo is awesome'))
 			->status(404)
 			->format('json')
 			->render();
