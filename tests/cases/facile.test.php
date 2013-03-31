@@ -69,12 +69,15 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testRenderMethod()
 	{
-		$stub = \Orchestra\Facile::make('default', array(
-			'view' => 'error.404', 
-			'data' => array('foo' => 'foo is awesome'),
-		), 'json')->render();
+		$stub = \Orchestra\Facile::make('default')
+			->view('error.404')
+			->data(array('foo' => 'foo is awesome'))
+			->status(404)
+			->format('json')
+			->render();
 
 		$this->assertInstanceOf('\Response', $stub);
+		$this->assertEquals(404, $stub->foundation->getStatusCode());
 		$this->assertEquals('{"foo":"foo is awesome"}', $stub->content);
 	}
 

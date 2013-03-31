@@ -82,9 +82,8 @@ class Facile {
 	 */
 	protected function __construct($name, $data = array(), $format = null) 
 	{
-		$schema     = array('view' => null, 'data' => array(), 'status' => 200);
 		$this->name = $name;
-		$this->data = array_merge($schema, $data);
+		$this->data = array_merge($this->data, $data);
 
 		if ( ! isset(static::$templates[$name]))
 		{
@@ -123,7 +122,73 @@ class Facile {
 	 *
 	 * @var array
 	 */
-	protected $data = array();
+	protected $data = array(
+		'view' => null, 
+		'data' => array(), 
+		'status' => 200,
+	);
+
+	/**
+	 * Nest a view to facile.
+	 *
+	 * @access public
+	 * @param  string   $view
+	 * @return self
+	 */
+	public function view($view)
+	{
+		$data['view'] = $view;
+
+		return $this;
+	}
+
+	/**
+	 * Nest a data to facile.
+	 *
+	 * @access public
+	 * @param  array    $data
+	 * @return self
+	 */
+	public function with($data)
+	{
+		$data['data'] = array_merge($data['data'], $data);
+
+		return $this;
+	}
+
+	/**
+	 * Set http status to facile.
+	 *
+	 * @access public	
+	 * @param  integer  $status
+	 * @return self
+	 */
+	public function status($status = 200)
+	{
+		$data['status'] = $status;
+
+		return $this;
+	}
+	
+
+	/**
+	 * Get expected facile format.
+	 *
+	 * @access public
+	 * @param  string   $format
+	 * @return string
+	 */
+	public function format($format = null)
+	{
+		! empty($format) and $this->format = $format;
+
+		if (is_null($this->format))
+		{
+			$this->format = $this->template->format();
+		}
+
+		return $this;
+	}
 
 	/**
 	 * Render facile by selected format.
@@ -144,25 +209,6 @@ class Facile {
 	}
 
 	/**
-	 * Get expected facile format.
-	 *
-	 * @access public
-	 * @param  string   $format
-	 * @return string
-	 */
-	public function format($format = null)
-	{
-		! empty($format) and $this->format = $format;
-
-		if (is_null($this->format))
-		{
-			$this->format = $this->template->format();
-		}
-
-		return $this->format;
-	}
-
-	/**
 	 * Render facile by selected format.
 	 *
 	 * @access public
@@ -170,6 +216,8 @@ class Facile {
 	 */
 	public function render()
 	{
-		return $this->template->compose($this->format(), $this->data);
+		if (is_null($this->format)) $this->format();
+
+		return $this->template->compose($this->format, $this->data);
 	}
 }
