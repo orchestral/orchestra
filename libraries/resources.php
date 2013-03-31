@@ -120,7 +120,7 @@ class Resources {
 				$status_code = $response->foundation->getStatusCode();
 				$content     = $response->content;
 
-				if ($content instanceof Facile and $content->format() !== 'html')
+				if ($content instanceof Facile and $content->format !== 'html')
 				{
 					return $response->content;
 				}

@@ -82,6 +82,23 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Facile::__get() method with invalid arguments.
+	 *
+	 * @group facile
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testGetMethodWithInvalidArgument()
+	{
+		$stub = \Orchestra\Facile::make('default')
+			->view('error.404')
+			->with(array('foo' => 'foo is awesome'))
+			->status(404)
+			->format('json');
+
+		$data = $stub->data;
+	}
+
+	/**
 	 * Test Orchestra\Facile::make() throws exception when using an invalid 
 	 * template.
 	 *

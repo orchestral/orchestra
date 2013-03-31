@@ -209,6 +209,19 @@ class Facile {
 	}
 
 	/**
+	 * Magic method to __get.
+	 */
+	public function __get($key)
+	{
+		if ( ! in_array($key, array('name', 'template', 'format')))
+		{
+			throw new InvalidArgumentException("Invalid request to [{$key}].");
+		}
+
+		return $this->{$key};
+	}
+
+	/**
 	 * Render facile by selected format.
 	 *
 	 * @access public
