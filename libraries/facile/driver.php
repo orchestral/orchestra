@@ -102,6 +102,12 @@ abstract class Driver {
 					'links'   => e($item->links()),
 				);
 
+			case ($item instanceof \Laravel\Database\Eloquent\Model) :
+				return $item->to_array();
+			
+			case (is_array($item)) :
+				return array_map(array($this, 'transform'), $item);
+
 			default :
 				return $item;
 		}
