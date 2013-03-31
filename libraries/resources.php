@@ -99,25 +99,38 @@ class Resources {
 	 *
 	 * @static
 	 * @access public
-	 * @param  mixed    $content
+	 * @param  mixed    $response
 	 * @param  Closure  $default
 	 * @return Response
 	 */
-	public static function response($content, Closure $default = null)
+	public static function response($response, Closure $default = null)
 	{
 		switch (true)
 		{
-			case ( ! $content) :
+			case ( ! $response) :
 				return Response::error('404');
 			
-			case ($content instanceof Redirect) :
-				return $content;
+			case ($response instanceof Redirect) :
+				return $response;
+
+			case ($response instanceof Facile) :
+				return $response->render();
 		
-			case ($content instanceof Response) :
-
-				$status_code = $content->foundation->getStatusCode();
-
-				if ( ! $content->foundation->isSuccessful())
+			case ($response instanceof Response) :
+				$status_code  = $response->foundation->getStatusCode();
+				$content      = $response->content;
+				$content_type = $response->foundation->headers->get('content-type');
+				$is_html      = starts_with($content_type, 'text/html');
+				
+				if ($content instanceof Facile and $content->format !== 'html')
+				{
+					return $response->content->render();
+				}
+				elseif ( ! is_null($content_type) and ! $is_html)
+				{
+					return $response;
+				}
+				elseif ( ! $response->foundation->isSuccessful())
 				{
 					return Response::error($status_code);
 				}
@@ -129,10 +142,10 @@ class Resources {
 
 		if ($default instanceof Closure)
 		{
-			$content = call_user_func($default, $content);
+			$response = call_user_func($default, $response);
 		}
 
-		return $content;
+		return $response;
 	}
 
 	/**

@@ -18,6 +18,13 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	{
 		set_path('app', \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'application'.DS);
 
+		\Config::set('application.index', '');
+		\Config::set('application.url', 'http://localhost/');
+
+		\Orchestra\Facile::$templates = array(
+			'default' => \IoC::resolve('\Orchestra\Facile\Template'),
+		);
+
 		$this->stub = \Orchestra\Resources::make('stub', array(
 			'name' => 'ResourceStub',
 			'uses' => 'stub',
@@ -29,6 +36,10 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
+		\Config::set('application.index', 'index.php');
+		\Config::set('application.url', '');
+
+		\Orchestra\Facile::$templates = array();
 		set_path('app', path('base').'application'.DS);
 
 		unset($this->stub);
@@ -284,6 +295,25 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test Orchestra\Resources::response() method when $content 
+	 * is an instanceof Orchestra\Facile.
+	 *
+	 * @test
+	 * @group core
+	 * @group resources
+	 */
+	public function testResponseMethodWhenIsOrchestraFacile()
+	{
+		$content  = \Orchestra\Facile::make('default', array(
+			'view' => 'error.404',
+		), 'html');
+
+		$response = \Orchestra\Resources::response($content);
+		
+		$this->assertInstanceOf('\Laravel\Response', $response);
+	}
+
+	/**
+	 * Test Orchestra\Resources::response() method when $content 
 	 * is instanceof Laravel\Response.
 	 *
 	 * @test
@@ -305,6 +335,53 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertInstanceOf('\Laravel\Response', $response);
 		$this->assertEquals(500, $response->foundation->getStatusCode());
+	}
+
+	/**
+	 * Test Orchestra\Resources::response() method when $content 
+	 * is not Content-Type: text/html.
+	 *
+	 * @test
+	 * @group core
+	 * @group resources
+	 */
+	public function testResponseMethodWhenIsNotContentTypeTextHtml()
+	{
+		$response = \Orchestra\Resources::response(
+			\Response::json(array('foo' => 'foo is awesome'), 200)
+		);
+
+		$this->assertInstanceOf('\Laravel\Response', $response);
+		$this->assertEquals(200, $response->foundation->getStatusCode());
+		$this->assertEquals('{"foo":"foo is awesome"}', $response->content);
+	}
+
+
+	/**
+	 * Test Orchestra\Resources::response() method when $content 
+	 * is instanceof Laravel\Response with Orchestra\Facile.
+	 *
+	 * @test
+	 * @group core
+	 * @group resources
+	 */
+	public function testResponseMethodWhenIsResponseWithOrchestraFacile()
+	{
+		$facile   = \Orchestra\Facile::make('default', array(
+			'view' => 'error.404',
+			'data' => array('foo' => 'foo is awesome'),
+		));
+		$content  = \Response::make($facile, 200);
+		$response = \Orchestra\Resources::response($content);
+
+		$this->assertInstanceOf('\Laravel\Response', $response);
+
+		$facile->format('json');
+
+		$content  = \Response::make($facile, 200);
+		$response = \Orchestra\Resources::response($content);
+
+		$this->assertInstanceOf('\Laravel\Response', $response);
 	}
 
 	/**
