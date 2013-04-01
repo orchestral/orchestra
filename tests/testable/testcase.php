@@ -354,10 +354,9 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 *
 	 * @access public
 	 * @param  string   $uri
-	 * @param  array    $with
 	 * @return void
 	 */
-	public function assertRedirectedTo($uri, $with = array())
+	public function assertRedirectedTo($uri)
 	{
 		$response = $this->client->response;
 		$this->assertRedirected();
