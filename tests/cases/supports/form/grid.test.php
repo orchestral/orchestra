@@ -14,19 +14,28 @@ class GridTest extends \PHPUnit_Framework_TestCase {
 	{
 		$stub = new \Orchestra\Support\Form\Grid(array(
 			'submit_button' => 'Submit',
+			'attributes'    => array('id' => 'foo'),
 			'view'          => 'foo',
 		));
 
+		$stub->attributes = array('class' => 'foobar');
+
 		$refl          = new \ReflectionObject($stub);
+		$attributes   = $refl->getProperty('attributes');
 		$submit_button = $refl->getProperty('submit_button');
 		$view          = $refl->getProperty('view');
 
+		$attributes->setAccessible(true);
 		$submit_button->setAccessible(true);
 		$view->setAccessible(true);
 
 		$this->assertInstanceOf('\Orchestra\Support\Form\Grid', $stub);
 		$this->assertEquals('Submit', $submit_button->getValue($stub));
 		$this->assertEquals('foo', $view->getValue($stub));
+
+		$this->assertEquals('foo', $stub->view());
+		$this->assertEquals('foo', $stub->view);
+		$this->assertEquals(array('id' => 'foo', 'class' => 'foobar'), $attributes->getValue($stub));
 	}
 
 	/**
