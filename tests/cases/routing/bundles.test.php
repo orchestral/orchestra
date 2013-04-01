@@ -25,6 +25,9 @@ class BundleTest extends \Orchestra\Testable\TestCase {
 		$_SERVER['orchestra.publishing'] = array();
 
 		$this->user = \Orchestra\Model\User::find(1);
+
+		\Bundle::register('aws');
+		\Bundle::start('aws');
 	}
 
 	/**
