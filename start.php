@@ -12,25 +12,26 @@ $orchestra = Bundle::path('orchestra');
 */
 
 Autoloader::namespaces(array(
-	'Orchestra\Model'     => $orchestra.'models'.DS,
-	'Orchestra\Presenter' => $orchestra.'presenters'.DS,
-	'Orchestra\Support'   => $orchestra.'supports'.DS,
-	'Orchestra'           => $orchestra.'libraries'.DS,
+	'Orchestra\Model'     => $orchestra.'models/',
+	'Orchestra\Presenter' => $orchestra.'presenters/',
+	'Orchestra\Support'   => $orchestra.'supports/',
+	'Orchestra\Testable'  => $orchestra.'tests/testable/',
+	'Orchestra'           => $orchestra.'libraries/',
 ));
 
 Autoloader::map(array(
 	// Facade for Orchestra\Core
-	'Orchestra' => $orchestra.'orchestra'.EXT,
+	'Orchestra' => $orchestra.'orchestra.php',
 
 	// Exceptions
 	'Orchestra\Extension\UnresolvedException'
-		=> $orchestra.'libraries'.DS.'extension'.DS.'exceptions'.EXT,
+		=> $orchestra.'libraries/extension/exceptions.php',
 	'Orchestra\Extension\FilePermissionException'
-		=> $orchestra.'libraries'.DS.'extension'.DS.'exceptions'.EXT,
+		=> $orchestra.'libraries/extension/exceptions.php',
 	'Orchestra\Support\FTP\RuntimeException'
-		=> $orchestra.'supports'.DS.'ftp'.DS.'exceptions'.EXT,
+		=> $orchestra.'supports/ftp/exceptions.php',
 	'Orchestra\Support\FTP\ServerException'
-		=> $orchestra.'supports'.DS.'ftp'.DS.'exceptions'.EXT,
+		=> $orchestra.'supports/ftp/exceptions.php',
 ));
 
 /*
@@ -74,10 +75,10 @@ set_path('orchestra.extension', path('bundle'));
 |
 */
 
-include_once $orchestra.'helpers'.EXT;
-include_once $orchestra.'includes'.DS.'dependencies'.EXT;
-include_once $orchestra.'includes'.DS.'events'.EXT;
-include_once $orchestra.'includes'.DS.'macros'.EXT;
+include_once $orchestra.'helpers.php';
+include_once $orchestra.'includes/dependencies.php';
+include_once $orchestra.'includes/events.php';
+include_once $orchestra.'includes/macros.php';
 
 /*
 |--------------------------------------------------------------------------
