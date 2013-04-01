@@ -19,8 +19,12 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 		parent::setUp();
 
 		$base_path = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
+		
 		set_path('app', $base_path.'application'.DS);
+		set_path('public', $base_path.'public'.DS);
+		set_path('bundle', $base_path.'bundles'.DS);
 		set_path('orchestra.extension', $base_path.'bundles'.DS);
+		set_path('storage', $base_path.'storage'.DS);
 
 		$this->user = \Orchestra\Model\User::find(1);
 	}
@@ -35,7 +39,10 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 
 		$base_path = path('base');
 		set_path('app', $base_path.'application'.DS);
+		set_path('public', $base_path.'public'.DS);
+		set_path('bundle', $base_path.'bundles'.DS);
 		set_path('orchestra.extension', $base_path.'bundles'.DS);
+		set_path('storage', $base_path.'storage'.DS);
 
 		parent::tearDown();
 	}
