@@ -22,6 +22,7 @@ class Messages extends M {
 	 * </code>
 	 *
 	 * @static
+	 * @access public
 	 * @return void
 	 */
 	public static function make()
