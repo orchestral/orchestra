@@ -86,6 +86,8 @@ abstract class Driver {
 	{
 		switch (true)
 		{
+			case ($item instanceof \Laravel\Database\Eloquent\Model) :
+				// passthru
 			case (method_exists($item, 'to_array')) :
 				return $item->to_array();
 
@@ -101,10 +103,7 @@ abstract class Driver {
 					'results' => $results,
 					'links'   => e($item->links()),
 				);
-
-			case ($item instanceof \Laravel\Database\Eloquent\Model) :
-				return $item->to_array();
-			
+						
 			case (is_array($item)) :
 				return array_map(array($this, 'transform'), $item);
 

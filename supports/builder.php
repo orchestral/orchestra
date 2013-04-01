@@ -6,12 +6,12 @@ use \Closure,
 abstract class Builder {
 
 	/**
-	 * Create a new Decorator instance
+	 * Create a new Builder instance
 	 *
 	 * @static
 	 * @access  public
 	 * @param   Closure     $callback
-	 * @return  Decorator
+	 * @return  Builder
 	 */
 	public static function make(Closure $callback)
 	{
@@ -19,7 +19,7 @@ abstract class Builder {
 	}
 	
 	/**
-	 * Name of decorator.
+	 * Name of builder.
 	 *
 	 * @var string
 	 */
@@ -33,7 +33,7 @@ abstract class Builder {
 	protected $grid = null;
 
 	/**
-	 * Create a new Decorator instance.
+	 * Create a new Builder instance.
 	 * 			
 	 * @access public
 	 * @param  Closure      $callback

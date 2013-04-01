@@ -1,5 +1,7 @@
 <?php namespace Orchestra\Tests;
 
+\Bundle::start('orchestra');
+
 class FacileTest extends \PHPUnit_Framework_TestCase {
 
 	/**

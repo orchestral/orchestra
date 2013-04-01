@@ -1,5 +1,7 @@
 <?php namespace Orchestra\Tests\Facile;
 
+\Bundle::start('orchestra');
+
 class DriverTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
@@ -83,6 +85,28 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testTransformMethodWhenItemHasToArray()
 	{
+		$mock = $this->getMockBuilder('\ArrayCollection')
+					->disableOriginalConstructor()
+					->setMethods(array('to_array'))
+					->getMock();
+
+		$mock->expects($this->once())
+			->method('to_array')
+			->will($this->returnValue('foobar'));
+
+		$stub = new TemplateStub;
+		$this->assertEquals('foobar', $stub->transform($mock));
+	}
+
+	/**
+	 * Test Orchestra\Facile\Driver::transform() method when item is 
+	 * instance of Laravel\Database\Eloquent\Model.
+	 *
+	 * @test 
+	 * @group facile
+	 */
+	public function testTransformMethodWhenItemIsInstanceOfEloquent()
+	{
 		$mock = $this->getMockBuilder('\Laravel\Database\Eloquent\Model')
 					->disableOriginalConstructor()
 					->setMethods(array('to_array'))
@@ -94,6 +118,28 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 
 		$stub = new TemplateStub;
 		$this->assertEquals('foobar', $stub->transform($mock));
+	}
+
+	/**
+	 * Test Orchestra\Facile\Driver::transform() method when item is an 
+	 * array.
+	 *
+	 * @test 
+	 * @group facile
+	 */
+	public function testTransformMethodWhenItemIsArray()
+	{
+		$mock = $this->getMockBuilder('\ArrayCollection')
+					->disableOriginalConstructor()
+					->setMethods(array('to_array'))
+					->getMock();
+
+		$mock->expects($this->once())
+			->method('to_array')
+			->will($this->returnValue('foobar'));
+
+		$stub = new TemplateStub;
+		$this->assertEquals(array('foobar'), $stub->transform(array($mock)));
 	}
 
 	/**
