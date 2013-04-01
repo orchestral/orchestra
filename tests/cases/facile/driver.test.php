@@ -99,6 +99,41 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Facile\Driver::transform() method when item is 
+	 * instance of Laravel\Database\Eloquent\Model.
+	 *
+	 * @test 
+	 * @group facile
+	 */
+	public function testTransformMethodWhenItemIsInstanceOfEloquent()
+	{
+		$mock = $this->getMockBuilder('\Laravel\Database\Eloquent\Model')
+					->disableOriginalConstructor()
+					->setMethods(array('to_array'))
+					->getMock();
+
+		$mock->expects($this->once())
+			->method('to_array')
+			->will($this->returnValue('foobar'));
+
+		$stub = new TemplateStub;
+		$this->assertEquals('foobar', $stub->transform($mock));
+	}
+
+	/**
+	 * Test Orchestra\Facile\Driver::transform() method when item is an 
+	 * array.
+	 *
+	 * @test 
+	 * @group facile
+	 */
+	public function testTransformMethodWhenItemIsArray()
+	{
+		$stub = new TemplateStub;
+		$this->assertEquals('foobar', $stub->transform(array('foobar')));
+	}
+
+	/**
 	 * Test Orchestra\Facile\Driver::transform() method when item has 
 	 * render().
 	 *
