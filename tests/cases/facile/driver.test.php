@@ -1,5 +1,7 @@
 <?php namespace Orchestra\Tests\Facile;
 
+\Bundle::start('orchestra');
+
 class DriverTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
