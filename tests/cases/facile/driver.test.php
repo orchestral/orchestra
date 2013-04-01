@@ -85,7 +85,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testTransformMethodWhenItemHasToArray()
 	{
-		$mock = $this->getMockBuilder('\Laravel\Database\Eloquent\Model')
+		$mock = $this->getMockBuilder('\ArrayCollection')
 					->disableOriginalConstructor()
 					->setMethods(array('to_array'))
 					->getMock();
@@ -129,8 +129,17 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testTransformMethodWhenItemIsArray()
 	{
+		$mock = $this->getMockBuilder('\ArrayCollection')
+					->disableOriginalConstructor()
+					->setMethods(array('to_array'))
+					->getMock();
+
+		$mock->expects($this->once())
+			->method('to_array')
+			->will($this->returnValue('foobar'));
+
 		$stub = new TemplateStub;
-		$this->assertEquals('foobar', $stub->transform(array('foobar')));
+		$this->assertEquals(array('foobar'), $stub->transform(array($mock)));
 	}
 
 	/**
