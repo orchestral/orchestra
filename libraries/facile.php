@@ -39,7 +39,7 @@ class Facile {
 	 * 	</code>
 	 *
 	 * @static
-	 * @access public			
+	 * @access public
 	 * @param  string   $name   Name of template
 	 * @param  array    $data
 	 * @param  string   $format
@@ -125,8 +125,8 @@ class Facile {
 	 * @var array
 	 */
 	protected $data = array(
-		'view' => null, 
-		'data' => array(), 
+		'view'   => null, 
+		'data'   => array(), 
 		'status' => 200,
 	);
 
@@ -196,6 +196,19 @@ class Facile {
 	}
 
 	/**
+	 * Magic method to __get.
+	 */
+	public function __get($key)
+	{
+		if ( ! in_array($key, array('name', 'template', 'format')))
+		{
+			throw new InvalidArgumentException("Invalid request to [{$key}].");
+		}
+
+		return $this->{$key};
+	}
+
+	/**
 	 * Render facile by selected format.
 	 *
 	 * @access public
@@ -211,19 +224,6 @@ class Facile {
 		}
 
 		return $facile;
-	}
-
-	/**
-	 * Magic method to __get.
-	 */
-	public function __get($key)
-	{
-		if ( ! in_array($key, array('name', 'template', 'format')))
-		{
-			throw new InvalidArgumentException("Invalid request to [{$key}].");
-		}
-
-		return $this->{$key};
 	}
 
 	/**

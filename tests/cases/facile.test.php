@@ -64,6 +64,18 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Facile::make() throws exception when using an invalid 
+	 * template.
+	 *
+	 * @group facile
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testMakeMethodThrowsExceptionUsingInvalidTemplate()
+	{
+		\Orchestra\Facile::make('foobar', array('view' => 'error.404'), 'html');
+	}
+
+	/**
 	 * Test Orchestra\Facile::render() method.
 	 *
 	 * @test
@@ -98,18 +110,6 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 			->format('json');
 
 		$data = $stub->data;
-	}
-
-	/**
-	 * Test Orchestra\Facile::make() throws exception when using an invalid 
-	 * template.
-	 *
-	 * @group facile
-	 * @expectedException \InvalidArgumentException
-	 */
-	public function testMakeMethodThrowsExceptionUsingInvalidTemplate()
-	{
-		\Orchestra\Facile::make('foobar', array('view' => 'error.404'), 'html');
 	}
 
 	/**
