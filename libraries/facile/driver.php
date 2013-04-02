@@ -68,7 +68,7 @@ abstract class Driver {
 	 */
 	public function compose_error($view, $data = array(), $status = 404)
 	{
-		$view = "{$status} error";
+		$view = "{$status} Error";
 
 		if (View::exists("error.{$status}")) $view = View::make("error.{$status}");
 
