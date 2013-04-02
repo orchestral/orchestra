@@ -54,6 +54,7 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 		$this->call('orchestra::account@index', array());
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::account.index');
 	}
 
@@ -79,6 +80,7 @@ class AccountTest extends \Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 		$this->call('orchestra::account@password', array());
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::account.password');
 	}
 

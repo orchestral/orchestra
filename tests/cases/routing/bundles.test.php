@@ -25,6 +25,9 @@ class BundleTest extends \Orchestra\Testable\TestCase {
 		$_SERVER['orchestra.publishing'] = array();
 
 		$this->user = \Orchestra\Model\User::find(1);
+
+		\Bundle::register('aws');
+		\Bundle::start('aws');
 	}
 
 	/**
@@ -76,6 +79,11 @@ class BundleTest extends \Orchestra\Testable\TestCase {
 		$this->assertRedirectedTo(handles('orchestra'));
 
 		$this->assertEquals(array('aws'), $_SERVER['orchestra.publishing']);
+
+		\Event::override('orchestra.publishing: extension', function ($name)
+		{
+			return null;
+		});
 	}
 
 	/**
@@ -102,7 +110,6 @@ class BundleTest extends \Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 
-		$events = \Event::$events;
 		\Event::listen('orchestra.publishing: extension', function ($name)
 		{
 			throw new \Orchestra\Extension\FilePermissionException();
@@ -111,6 +118,9 @@ class BundleTest extends \Orchestra\Testable\TestCase {
 		$this->call('orchestra::bundles@update', array('aws'));
 		$this->assertRedirectedTo(handles('orchestra::publisher'));
 
-		\Event::$events = $events;
+		\Event::override('orchestra.publishing: extension', function ($name)
+		{
+			return null;
+		});
 	}
 }

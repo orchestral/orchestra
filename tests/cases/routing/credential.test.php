@@ -58,6 +58,7 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 	public function testGetLoginPage()
 	{
 		$this->call('orchestra::credential@login', array());
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::credential.login');
 	}
 
@@ -181,6 +182,7 @@ class CredentialTest extends \Orchestra\Testable\TestCase {
 		\Orchestra\Core::memory()->put('site.users.registration', true);
 
 		$this->call('orchestra::credential@register', array());
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::credential.register');
 	}
 

@@ -19,6 +19,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 		parent::setUp();
 
 		$base_path = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
+		
 		set_path('app', $base_path.'application'.DS);
 		set_path('orchestra.extension', $base_path.'bundles'.DS);
 
@@ -34,6 +35,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 		$this->be(null);
 
 		$base_path = path('base');
+
 		set_path('app', $base_path.'application'.DS);
 		set_path('orchestra.extension', $base_path.'bundles'.DS);
 
@@ -50,6 +52,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 		$this->call('orchestra::extensions@index');
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::extensions.index');
 	}
 
@@ -88,29 +91,6 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 		$this->be($this->user);
 		$this->call('orchestra::extensions@activate', array('a'));
 		$this->assertRedirectedTo(handles('orchestra::extensions'));
-	}
-
-	/**
-	 * Test activate extension failed with publisher error.
-	 *
-	 * @test
-	 * @group routing
-	 */
-	public function testActivateExtensionFailedPublisherError()
-	{
-		$this->restartApplication();
-
-		$events = \Event::$events;
-		\Event::listen('orchestra.publishing: extension', function ($name)
-		{
-			throw new \Orchestra\Extension\FilePermissionException();
-		});
-
-		$this->be($this->user);
-		$this->call('orchestra::extensions@activate', array('e'));
-		$this->assertRedirectedTo(handles('orchestra::publisher'));
-
-		\Event::$events = $events;
 	}
 
 	/**
@@ -192,6 +172,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 
 		$this->be($this->user);
 		$this->call('orchestra::extensions@configure', array('e'));
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::extensions.configure');
 
 		\Orchestra\Extension::deactivate('e');
@@ -230,9 +211,9 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testUpdateExtensionSuccessful()
 	{
-		\Orchestra\Extension::activate(DEFAULT_BUNDLE);
-
 		$this->restartApplication();
+
+		\Orchestra\Extension::activate(DEFAULT_BUNDLE);
 
 		$this->be($this->user);
 		$this->call('orchestra::extensions@update', array(DEFAULT_BUNDLE));
@@ -256,6 +237,33 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 		$this->assertResponseNotFound();
 	}
 
+	
+
+	/**
+	 * Test activate extension failed with publisher error.
+	 *
+	 * @test
+	 * @group routing
+	 */
+	public function testActivateExtensionFailedPublisherError()
+	{
+		$this->restartApplication();
+
+		\Event::listen('orchestra.publishing: extension', function ($name)
+		{
+			throw new \Orchestra\Extension\FilePermissionException;
+		});
+
+		$this->be($this->user);
+		$this->call('orchestra::extensions@activate', array('e'));
+		$this->assertRedirectedTo(handles('orchestra::publisher'));
+
+		\Event::override('orchestra.publishing: extension', function ($name)
+		{
+			return null;
+		});
+	}
+
 	/**
 	 * Test activate extension failed with publisher error.
 	 *
@@ -268,7 +276,6 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 
 		\Orchestra\Extension::activate('e');
 
-		$events = \Event::$events;
 		\Event::listen('orchestra.publishing: extension', function ($name)
 		{
 			throw new \Orchestra\Extension\FilePermissionException();
@@ -278,8 +285,12 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 		$this->call('orchestra::extensions@update', array('e'));
 		$this->assertRedirectedTo(handles('orchestra::publisher'));
 
-		\Event::$events = $events;
 		\Orchestra\Extension::deactivate('e');
+
+		\Event::override('orchestra.publishing: extension', function ($name)
+		{
+			return null;
+		});
 	}
 
 	/**

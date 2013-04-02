@@ -130,6 +130,7 @@ class PublisherTest extends \Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 		$this->call('orchestra::publisher@ftp');
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::publisher.ftp');
 	}
 

@@ -26,7 +26,7 @@
 			<directory suffix=".php">supports/</directory>
 			
 			<exclude>
-				<directory suffix=".php">libraries/testable</directory>
+				<directory suffix=".php">tests/testable</directory>
 				<file>libraries/extension/publisher/s3.php</file>
 			</exclude>
 		</whitelist>

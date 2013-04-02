@@ -189,18 +189,16 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 *
 	 * @access public
 	 * @param  string   $view
-	 * @param  integer  $status
 	 * @return void
 	 */
-	public function assertViewIs($view, $status = 200)
+	public function assertViewIs($view)
 	{
 		$response = $this->client->response;
-		$this->assertResponseIs($status);
 		$this->assertEquals($view, $response->content->view);
 	}
 
 	/**
-	 * Assert view has data.
+	 * Assert view has a given piece of bound data.
 	 *
 	 * @access public	
 	 * @param  string   $key
@@ -209,6 +207,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 */
 	public function assertViewHas($key, $value = null)
 	{
+		if (is_array($key)) return $this->assertViewHasAll($key);
+
 		$content = $this->client->response->content->data;
 
 		$this->assertTrue(isset($content[$key]));
@@ -216,6 +216,121 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		if ( ! is_null($value))
 		{
 			$this->assertEquals($content[$key], $value);
+		}
+	}
+
+	/**
+	 * Assert that the view has a given list of bound data.
+	 *
+	 * @param  array  $bindings
+	 * @return void
+	 */
+	public function assertViewHasAll(array $bindings)
+	{
+		foreach ($bindings as $key => $value)
+		{
+			if (is_int($key)) 
+			{
+				$this->assertViewHas($value);
+			}
+			else
+			{
+				$this->assertViewHas($key, $value);
+			}
+		}
+	}
+
+	/**
+	 * Assert that the session has a given list of values.
+	 *
+	 * @param  string|array  $key
+	 * @param  mixed  $value
+	 * @return void
+	 */
+	public function assertSessionHas($key, $value = null)
+	{
+		if (is_array($key)) return $this->assertSessionHasAll($key);
+
+		if (is_null($value))
+		{
+			$this->assertTrue(\Session::has($key));
+		}
+		else
+		{
+			$this->assertEquals($value, \Session::get($key));
+		}
+	}
+
+	/**
+	 * Assert that the session has a given list of values.
+	 *
+	 * @param  array  $bindings
+	 * @return void
+	 */
+	public function assertSessionHasAll(array $bindings)
+	{
+		foreach ($bindings as $key => $value)
+		{
+			if (is_int($key))
+			{
+				$this->assertSessionHas($value);
+			}
+			else
+			{
+				$this->assertSessionHas($key, $value);
+			}
+		}
+	}
+
+	/**
+	 * Assert that the session has errors bound.
+	 *
+	 * @return void
+	 */
+	public function assertSessionHasErrors()
+	{
+		return $this->assertSessionHas('errors');
+	}
+
+	/**
+	 * Assert that the session has messages bound.
+	 *
+	 * @return void
+	 */
+	public function assertMessagesHas()
+	{
+		if (is_array($key)) return $this->assertMessagesHasAll($key);
+
+		$messages = \Orchestra\Support\Messages::make();
+
+		if (is_null($value))
+		{
+			$this->assertTrue($messages->has($key));
+		}
+		else
+		{
+			$this->assertEquals($value, $messages->get($key));
+		}
+	}
+
+	/**
+	 * Assert that the messages has a given list of values.
+	 *
+	 * @param  array  $bindings
+	 * @return void
+	 */
+	public function assertMessagesHasAll(array $bindings)
+	{
+		foreach ($bindings as $key => $value)
+		{
+			if (is_int($key))
+			{
+				$this->assertMessagesHas($value);
+			}
+			else
+			{
+				$this->assertMessagesHas($key, $value);
+			}
 		}
 	}
 
@@ -236,13 +351,13 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 * Assert request is redirected to.
 	 *
 	 * @access public
-	 * @param  string   $redirect
+	 * @param  string   $uri
 	 * @return void
 	 */
-	public function assertRedirectedTo($redirect)
+	public function assertRedirectedTo($uri)
 	{
 		$response = $this->client->response;
 		$this->assertRedirected();
-		$this->assertEquals($redirect, $response->foundation->headers->get('location'));
+		$this->assertEquals($uri, $response->foundation->headers->get('location'));
 	}
 }

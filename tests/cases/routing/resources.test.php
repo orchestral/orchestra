@@ -71,6 +71,7 @@ class ResourcesTest extends \Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 		$this->call('orchestra::resources@index');
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::resources.index');
 	}
 
@@ -84,6 +85,7 @@ class ResourcesTest extends \Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 		$this->call('orchestra::resources@foobar');
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::resources.resources');
 	}
 }

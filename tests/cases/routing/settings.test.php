@@ -53,6 +53,7 @@ class SettingsTest extends \Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 		$this->call('orchestra::settings@index');
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::settings.index');
 	}
 

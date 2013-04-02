@@ -54,6 +54,7 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 		$this->call('orchestra::users@index');
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::users.index');
 	}
 
@@ -80,9 +81,11 @@ class UsersTest extends \Orchestra\Testable\TestCase {
 		$this->be($this->user);
 
 		$this->call('orchestra::users@view', array(1));
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::users.edit');
 
 		$this->call('orchestra::users@view', array(''));
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::users.edit');
 	}
 

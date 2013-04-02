@@ -59,6 +59,7 @@ class InstallerTest extends \Orchestra\Testable\TestCase {
 		\Config::set('auth', $dummyauth);
 
 		$this->call('orchestra::installer@index', array());
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::installer.index');
 		$this->assertFalse(\Orchestra\Installer::check_database());
 
@@ -82,9 +83,11 @@ class InstallerTest extends \Orchestra\Testable\TestCase {
 		$this->assertResponseNotFound();
 
 		$this->call('orchestra::installer@index', array());
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::installer.index');
 
 		$this->call('orchestra::installer@steps', array(1));
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::installer.step1');
 
 		$this->call('orchestra::installer@steps', array(2), 'POST', array(
@@ -101,6 +104,7 @@ class InstallerTest extends \Orchestra\Testable\TestCase {
 			'password'  => '123456',
 			'fullname'  => 'Test Administrator',
 		));
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::installer.step2');
 	}
 }
