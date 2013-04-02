@@ -19,9 +19,8 @@ class BundleTest extends \Orchestra\Testable\TestCase {
 		parent::setUp();
 
 		$base_path = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
-		
-		set_path('bundle', $base_path.'bundles'.DS);
-		set_path('storage', $base_path.'storage'.DS);
+		set_path('app', $base_path.'application'.DS);
+		set_path('orchestra.extension', $base_path.'bundles'.DS);
 
 		$_SERVER['orchestra.publishing'] = array();
 
@@ -42,9 +41,8 @@ class BundleTest extends \Orchestra\Testable\TestCase {
 		unset($_SERVER['orchestra.publishing']);
 
 		$base_path = path('base');
-		
-		set_path('bundle', $base_path.'bundles'.DS);
-		set_path('storage', $base_path.'storage'.DS);
+		set_path('app', $base_path.'application'.DS);
+		set_path('orchestra.extension', $base_path.'bundles'.DS);
 		
 		parent::tearDown();
 	}
