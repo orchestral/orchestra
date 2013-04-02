@@ -15,13 +15,13 @@ class TemplateTest extends \PHPUnit_Framework_TestCase {
 		$stub = new \Orchestra\Facile\Template;
 
 		$refl           = new \ReflectionObject($stub);
-		$format         = $refl->getProperty('format');
+		$formats        = $refl->getProperty('formats');
 		$default_format = $refl->getProperty('default_format');
 
-		$format->setAccessible(true);
+		$formats->setAccessible(true);
 		$default_format->setAccessible(true);
 
-		$this->assertEquals(array('html', 'json'), $format->getValue($stub));
+		$this->assertEquals(array('html', 'json'), $formats->getValue($stub));
 		$this->assertEquals('html', $default_format->getValue($stub));
 	}
 

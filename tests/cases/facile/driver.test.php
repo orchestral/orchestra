@@ -192,7 +192,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 
 class TemplateStub extends \Orchestra\Facile\Driver {
 	
-	protected $format = array('html', 'json', 'foo');
+	protected $formats = array('html', 'json', 'foo');
 
 	public function compose_foo($data)
 	{

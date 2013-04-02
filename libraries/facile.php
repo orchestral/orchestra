@@ -9,6 +9,8 @@ class Facile {
 
 	/**
 	 * Lists of templates
+	 *
+	 * @var array
 	 */
 	public static $templates = array();
 

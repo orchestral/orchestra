@@ -12,7 +12,7 @@ abstract class Driver {
 	 * 
 	 * @var array
 	 */
-	protected $format = array('html');
+	protected $formats = array('html');
 
 	/**
 	 * Default format
@@ -40,7 +40,7 @@ abstract class Driver {
 	 */
 	public function compose($format, $compose = array())
 	{
-		if ( ! in_array($format, $this->format))
+		if ( ! in_array($format, $this->formats))
 		{
 			return call_user_func(array($this, "compose_error"), null, null, 406);
 		}
@@ -68,7 +68,7 @@ abstract class Driver {
 	 */
 	public function compose_error($view, $data = array(), $status = 404)
 	{
-		$view = "{$status} error";
+		$view = "{$status} Error";
 
 		if (View::exists("error.{$status}")) $view = View::make("error.{$status}");
 
