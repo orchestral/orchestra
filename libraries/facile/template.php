@@ -11,7 +11,7 @@ class Template extends Driver {
 	 * 
 	 * @var array
 	 */
-	protected $format = array('html', 'json');
+	protected $formats = array('html', 'json');
 
 	/**
 	 * Default format
