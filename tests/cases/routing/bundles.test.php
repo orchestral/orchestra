@@ -19,10 +19,8 @@ class BundleTest extends \Orchestra\Testable\TestCase {
 		parent::setUp();
 
 		$base_path = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
-		set_path('app', $base_path.'application'.DS);
-		set_path('public', $base_path.'public'.DS);
+		
 		set_path('bundle', $base_path.'bundles'.DS);
-		set_path('orchestra.extension', $base_path.'bundles'.DS);
 		set_path('storage', $base_path.'storage'.DS);
 
 		$_SERVER['orchestra.publishing'] = array();
@@ -44,10 +42,8 @@ class BundleTest extends \Orchestra\Testable\TestCase {
 		unset($_SERVER['orchestra.publishing']);
 
 		$base_path = path('base');
-		set_path('app', $base_path.'application'.DS);
-		set_path('public', $base_path.'public'.DS);
+		
 		set_path('bundle', $base_path.'bundles'.DS);
-		set_path('orchestra.extension', $base_path.'bundles'.DS);
 		set_path('storage', $base_path.'storage'.DS);
 		
 		parent::tearDown();
@@ -85,6 +81,11 @@ class BundleTest extends \Orchestra\Testable\TestCase {
 		$this->assertRedirectedTo(handles('orchestra'));
 
 		$this->assertEquals(array('aws'), $_SERVER['orchestra.publishing']);
+
+		\Event::override('orchestra.publishing: extension', function ($name)
+		{
+			return null;
+		});
 	}
 
 	/**
@@ -111,7 +112,6 @@ class BundleTest extends \Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 
-		$events = \Event::$events;
 		\Event::listen('orchestra.publishing: extension', function ($name)
 		{
 			throw new \Orchestra\Extension\FilePermissionException();
@@ -120,6 +120,9 @@ class BundleTest extends \Orchestra\Testable\TestCase {
 		$this->call('orchestra::bundles@update', array('aws'));
 		$this->assertRedirectedTo(handles('orchestra::publisher'));
 
-		\Event::$events = $events;
+		\Event::override('orchestra.publishing: extension', function ($name)
+		{
+			return null;
+		});
 	}
 }
