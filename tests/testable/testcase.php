@@ -189,13 +189,11 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 *
 	 * @access public
 	 * @param  string   $view
-	 * @param  integer  $status
 	 * @return void
 	 */
-	public function assertViewIs($view, $status = 200)
+	public function assertViewIs($view)
 	{
 		$response = $this->client->response;
-		$this->assertResponseIs($status);
 		$this->assertEquals($view, $response->content->view);
 	}
 

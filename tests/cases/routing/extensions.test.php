@@ -52,6 +52,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 		$this->call('orchestra::extensions@index');
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::extensions.index');
 	}
 
@@ -171,6 +172,7 @@ class ExtensionsTest extends \Orchestra\Testable\TestCase {
 
 		$this->be($this->user);
 		$this->call('orchestra::extensions@configure', array('e'));
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::extensions.configure');
 
 		\Orchestra\Extension::deactivate('e');

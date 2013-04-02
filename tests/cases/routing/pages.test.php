@@ -62,14 +62,17 @@ class PagesTest extends \Orchestra\Testable\TestCase {
 	public function testRequestToPagesFoo()
 	{
 		$this->call('orchestra::pages@application.foo');
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::resources.pages');
 		$this->assertViewHas('content', 'foobar');
 
 		$this->call('orchestra::pages@foo');
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::resources.pages');
 		$this->assertViewHas('content', 'foobar');
 
 		$this->call('orchestra::pages@application', array('foo'));
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::resources.pages');
 		$this->assertViewHas('content', 'foobar');
 	}

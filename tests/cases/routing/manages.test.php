@@ -62,14 +62,17 @@ class ManagesTest extends \Orchestra\Testable\TestCase {
 	public function testRequestToManageFoo()
 	{
 		$this->call('orchestra::manages@application.foo');
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::resources.pages');
 		$this->assertViewHas('content', 'foobar');
 
 		$this->call('orchestra::manages@foo');
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::resources.pages');
 		$this->assertViewHas('content', 'foobar');
 
 		$this->call('orchestra::manages@application', array('foo'));
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::resources.pages');
 		$this->assertViewHas('content', 'foobar');
 	}

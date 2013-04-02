@@ -63,6 +63,7 @@ class ForgotTest extends \Orchestra\Testable\TestCase {
 	public function testGetForgotPage()
 	{
 		$this->call('orchestra::forgot@index');
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::forgot.index');
 	}
 

@@ -54,6 +54,7 @@ class DashboardTest extends \Orchestra\Testable\TestCase {
 	{
 		$this->be($this->user);
 		$this->call('orchestra::dashboard@index');
+		$this->assertResponseOk();
 		$this->assertViewIs('orchestra::dashboard.index');
 	}
 
