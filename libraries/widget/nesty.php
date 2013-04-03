@@ -211,7 +211,11 @@ class Nesty {
 		if (is_null($key)) return $array;
 
 		$keys  = explode('.', $key);
-		$array = $array[array_shift($keys)];
+		$first = array_shift($keys);
+
+		if ( ! isset($array[$first])) return null;
+
+		$array = $array[$first];
 
 		// To retrieve the array item using dot syntax, we'll iterate through
 		// each segment in the key and look for that value. If it exists,

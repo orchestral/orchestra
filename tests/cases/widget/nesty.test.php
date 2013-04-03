@@ -116,4 +116,20 @@ class NestyTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals($expected, $this->stub->get());
 	}
+
+	/**
+	 * Test adding an item to Orchestra\Widget\Nesty when decendant is not
+	 * presented.
+	 *
+	 * @test
+	 * @group core
+	 * @group widget
+	 */
+	public function testAddMethodWhenDecendantIsNotPresented()
+	{
+		$stub = new \Orchestra\Widget\Nesty(array());
+
+		$stub->add('foo', 'childof:home');
+		$this->assertEquals(array(), $stub->get());
+	}
 }
