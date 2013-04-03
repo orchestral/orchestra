@@ -257,5 +257,5 @@ Orchestra\Support\Memory::extend('user', function()
 
 Orchestra\Facile::template('default', function ()
 {
-	return new Orchestra\Facile\Template;
+	return new Orchestra\Facile\Template\Base;
 });

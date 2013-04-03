@@ -63,10 +63,10 @@ class Facile {
 	{
 		$resolve = value($template);
 
-		if ( ! ($resolve instanceof Facile\Driver))
+		if ( ! ($resolve instanceof Facile\Template\Driver))
 		{
 			throw new RuntimeException(
-				"Expected \$template to be instanceof Orchestra\Facile\Driver."
+				"Expected \$template to be instanceof Orchestra\Facile\Template\Driver."
 			);
 		}
 

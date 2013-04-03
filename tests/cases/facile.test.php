@@ -13,7 +13,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 		set_path('public', \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS);
 
 		\Orchestra\Facile::$templates = array(
-			'default' => \IoC::resolve('\Orchestra\Facile\Template'),
+			'default' => \IoC::resolve('\Orchestra\Facile\Template\Base'),
 		);
 
 		\Orchestra\Facile::template('foo', function ()
@@ -126,7 +126,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test Orchestra\Facile::template() method throws exception when 
-	 * template isn't an instance of Orchestra\Facile\Driver.
+	 * template isn't an instance of Orchestra\Facile\Template\Driver.
 	 *
 	 * @group facile
 	 * @expectedException \RuntimeException
@@ -140,7 +140,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	}
 }
 
-class ValidFacileTemplateStub extends \Orchestra\Facile\Driver {
+class ValidFacileTemplateStub extends \Orchestra\Facile\Template\Driver {
 
 	public function compose_html($data)
 	{

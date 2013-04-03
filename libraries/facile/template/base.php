@@ -1,10 +1,10 @@
-<?php namespace Orchestra\Facile;
+<?php namespace Orchestra\Facile\Template;
 
 use InvalidArgumentException,
 	Response,
 	Orchestra\View;
 
-class Template extends Driver {
+class Base extends Driver {
 
 	/**
 	 * List of supported format.
