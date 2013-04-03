@@ -40,7 +40,6 @@ class HelpersTest extends \Orchestra\Testable\TestCase {
 		$this->assertEquals('http://localhost/home', handles('home'));
 		$this->assertEquals('http://localhost/home', handles('application::home'));
 		$this->assertEquals("http://localhost/{$orchestra}/login", handles('orchestra::login'));
-
 	}
 
 	/**
@@ -65,13 +64,13 @@ class HelpersTest extends \Orchestra\Testable\TestCase {
 	{
 		$theme = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS.'themes'.DS;
 		$view1 = locate('path: /path/to/somewhere');
-		$view2 = locate('home.index');
-		$view3 = locate('home.dashboard');
+		$view2 = locate('helpers-test.index');
+		$view3 = locate('helpers-test.dashboard');
 		$view4 = locate('error.404');
 
 		$this->assertEquals('path: /path/to/somewhere', $view1);
-		$this->assertEquals("path: {$theme}default/home/index.blade.php", $view2);
-		$this->assertEquals("path: {$theme}default/home/dashboard.php", $view3);
+		$this->assertEquals("path: {$theme}default/helpers-test/index.blade.php", $view2);
+		$this->assertEquals("path: {$theme}default/helpers-test/dashboard.php", $view3);
 		$this->assertEquals('error.404', $view4);
 	}
 }

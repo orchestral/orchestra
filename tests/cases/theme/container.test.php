@@ -130,4 +130,27 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($expected, $this->stub->parse('foobar.index'));
 		$this->assertEquals($expected, $this->stub->path('foobar.index'));
 	}
+
+	/**
+	 * Test Orchestra\Theme\Container::flush() method
+	 *
+	 * @test
+	 * @group core
+	 */
+	public function testFlushMethod()
+	{
+		$this->stub->parse('foobar.index');
+
+		$refl  = new \ReflectionObject($this->stub);
+		$cache = $refl->getProperty('cache');
+		$cache->setAccessible(true);
+
+		$result = $cache->getValue($this->stub);
+
+		$this->assertEquals('foobar.index', $result['foobar.index']);
+
+		$this->stub->flush();
+
+		$this->assertEquals(array(), $cache->getValue($this->stub));
+	}
 }

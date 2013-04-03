@@ -35,7 +35,7 @@ class ExtensionTest extends \Orchestra\Testable\TestCase {
 		unset($_SERVER['extension.app.done']);
 
 		set_path('app', path('base').'application'.DS);
-		set_path('orchestra.extension', path('bundle'));
+		set_path('orchestra.extension', path('base').'bundles'.DS);
 
 		parent::tearDown();
 	}
