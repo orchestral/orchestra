@@ -22,7 +22,7 @@ class ResourcesTest extends \PHPUnit_Framework_TestCase {
 		\Config::set('application.url', 'http://localhost/');
 
 		\Orchestra\Facile::$templates = array(
-			'default' => \IoC::resolve('\Orchestra\Facile\Template'),
+			'default' => \IoC::resolve('\Orchestra\Facile\Template\Base'),
 		);
 
 		$this->stub = \Orchestra\Resources::make('stub', array(
