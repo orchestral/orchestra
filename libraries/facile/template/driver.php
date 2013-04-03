@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Facile;
+<?php namespace Orchestra\Facile\Template;
 
 use RuntimeException,
 	Input,

@@ -40,7 +40,6 @@ class HelpersTest extends \Orchestra\Testable\TestCase {
 		$this->assertEquals('http://localhost/home', handles('home'));
 		$this->assertEquals('http://localhost/home', handles('application::home'));
 		$this->assertEquals("http://localhost/{$orchestra}/login", handles('orchestra::login'));
-
 	}
 
 	/**
@@ -63,6 +62,12 @@ class HelpersTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testLocateReturnProperViewPath()
 	{
+		\Orchestra\View::$theme = 'fixtures';
+		\IoC::singleton('orchestra.theme: fixtures', function()
+		{
+			return \Orchestra\Theme::container('fixtures', 'default');
+		});
+
 		$theme = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS.'themes'.DS;
 		$view1 = locate('path: /path/to/somewhere');
 		$view2 = locate('home.index');

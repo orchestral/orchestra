@@ -9,11 +9,8 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		set_path('app', \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'application'.DS);
-		set_path('public', \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS);
-
 		\Orchestra\Facile::$templates = array(
-			'default' => \IoC::resolve('\Orchestra\Facile\Template'),
+			'default' => \IoC::resolve('\Orchestra\Facile\Template\Base'),
 		);
 
 		\Orchestra\Facile::template('foo', function ()
@@ -27,9 +24,6 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
-		set_path('app', path('base').'application'.DS);
-		set_path('public', path('base').'public'.DS);
-
 		\Orchestra\Facile::$templates = array();
 	}
 
@@ -41,63 +35,22 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testMakeMethod()
 	{
-		$stub1 = \Orchestra\Facile::make('default', array('view' => 'home.foo'));
-		$this->assertInstanceOf('\Orchestra\Facile', $stub1);
+		$stub = \Orchestra\Facile::make('default', array('view' => 'home.foo'));
 
-		ob_start();
-		echo $stub1;
-		$output1 = ob_get_contents();
-		ob_end_clean();
+		$refl   = new \ReflectionObject($stub);
+		$data   = $refl->getProperty('data');
 
-		$this->assertEquals('foo', $output1);
+		$data->setAccessible(true);
 
+		$result   = $data->getValue($stub);
+		$expected = array(
+			'view'   => 'home.foo',
+			'data'   => array(),
+			'status' => 200,
+		); 
 
-		$stub2 = \Orchestra\Facile::make('foo', array('view' => 'home.foo'));
-		$this->assertInstanceOf('\Orchestra\Facile', $stub2);
-
-		ob_start();
-		echo $stub2;
-		$output2 = ob_get_contents();
-		ob_end_clean();
-
-		$this->assertEquals('foo', $output2);
-	}
-
-	/**
-	 * Test Orchestra\Facile::render() method.
-	 *
-	 * @test
-	 * @group facile
-	 */
-	public function testRenderMethod()
-	{
-		$stub = \Orchestra\Facile::make('default')
-			->view('error.404')
-			->with(array('foo' => 'foo is awesome'))
-			->status(404)
-			->format('json')
-			->render();
-
-		$this->assertInstanceOf('\Response', $stub);
-		$this->assertEquals(404, $stub->foundation->getStatusCode());
-		$this->assertEquals('{"foo":"foo is awesome"}', $stub->content);
-	}
-
-	/**
-	 * Test Orchestra\Facile::__get() method with invalid arguments.
-	 *
-	 * @group facile
-	 * @expectedException \InvalidArgumentException
-	 */
-	public function testGetMethodWithInvalidArgument()
-	{
-		$stub = \Orchestra\Facile::make('default')
-			->view('error.404')
-			->with(array('foo' => 'foo is awesome'))
-			->status(404)
-			->format('json');
-
-		$data = $stub->data;
+		$this->assertInstanceOf('\Orchestra\Facile\Response', $stub);
+		$this->assertEquals($expected, $result);
 	}
 
 	/**
@@ -110,6 +63,58 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	public function testMakeMethodThrowsExceptionUsingInvalidTemplate()
 	{
 		\Orchestra\Facile::make('foobar', array('view' => 'error.404'), 'html');
+	}
+
+	/**
+	 * Test Orchestra\Facile::view() method.
+	 *
+	 * @test
+	 * @group facile
+	 */
+	public function testViewMethod()
+	{
+		$stub = \Orchestra\Facile::view('home.foo', array('foo' => 'foo is awesome'));
+
+		$refl   = new \ReflectionObject($stub);
+		$data   = $refl->getProperty('data');
+
+		$data->setAccessible(true);
+
+		$result   = $data->getValue($stub);
+		$expected = array(
+			'view'   => 'home.foo',
+			'data'   => array('foo' => 'foo is awesome'),
+			'status' => 200,
+		); 
+
+		$this->assertInstanceOf('\Orchestra\Facile\Response', $stub);
+		$this->assertEquals($expected, $result);
+	}
+
+	/**
+	 * Test Orchestra\Facile::with() method.
+	 *
+	 * @test
+	 * @group facile
+	 */
+	public function testWithMethod()
+	{
+		$stub = \Orchestra\Facile::with(array('foo' => 'foo is awesome'));
+
+		$refl   = new \ReflectionObject($stub);
+		$data   = $refl->getProperty('data');
+
+		$data->setAccessible(true);
+
+		$result   = $data->getValue($stub);
+		$expected = array(
+			'view'   => null,
+			'data'   => array('foo' => 'foo is awesome'),
+			'status' => 200,
+		); 
+
+		$this->assertInstanceOf('\Orchestra\Facile\Response', $stub);
+		$this->assertEquals($expected, $result);
 	}
 
 	/**
@@ -126,7 +131,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test Orchestra\Facile::template() method throws exception when 
-	 * template isn't an instance of Orchestra\Facile\Driver.
+	 * template isn't an instance of Orchestra\Facile\Template\Driver.
 	 *
 	 * @group facile
 	 * @expectedException \RuntimeException
@@ -140,7 +145,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase {
 	}
 }
 
-class ValidFacileTemplateStub extends \Orchestra\Facile\Driver {
+class ValidFacileTemplateStub extends \Orchestra\Facile\Template\Driver {
 
 	public function compose_html($data)
 	{

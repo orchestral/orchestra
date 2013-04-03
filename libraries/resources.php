@@ -113,7 +113,7 @@ class Resources {
 			case ($response instanceof Redirect) :
 				return $response;
 
-			case ($response instanceof Facile) :
+			case ($response instanceof Facile\Response) :
 				return $response->render();
 		
 			case ($response instanceof Response) :
@@ -122,7 +122,7 @@ class Resources {
 				$content_type = $response->foundation->headers->get('content-type');
 				$is_html      = starts_with($content_type, 'text/html');
 				
-				if ($content instanceof Facile and $content->format !== 'html')
+				if ($content instanceof Facile\Response and $content->format !== 'html')
 				{
 					return $response->content->render();
 				}

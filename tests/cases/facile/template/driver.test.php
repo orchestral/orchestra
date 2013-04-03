@@ -1,11 +1,11 @@
-<?php namespace Orchestra\Tests\Facile;
+<?php namespace Orchestra\Tests\Facile\Template;
 
 \Bundle::start('orchestra');
 
 class DriverTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
-	 * Test Orchestra\Facile\Driver::format() method.
+	 * Test Orchestra\Facile\Template\Driver::format() method.
 	 *
 	 * @test
 	 * @group facile
@@ -19,7 +19,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Driver::compose() method.
+	 * Test Orchestra\Facile\Template\Driver::compose() method.
 	 *
 	 * @test 
 	 * @group facile
@@ -37,7 +37,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Driver::compose() method return response with 
+	 * Test Orchestra\Facile\Template\Driver::compose() method return response with 
 	 * error 406 when given an invalid format.
 	 *
 	 * @test
@@ -58,7 +58,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Driver::compose() method throws exception 
+	 * Test Orchestra\Facile\Template\Driver::compose() method throws exception 
 	 * when given method isn't available.
 	 *
 	 * @group facile
@@ -77,7 +77,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Driver::transform() method when item has 
+	 * Test Orchestra\Facile\Template\Driver::transform() method when item has 
 	 * to_array().
 	 *
 	 * @test 
@@ -99,7 +99,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Driver::transform() method when item is 
+	 * Test Orchestra\Facile\Template\Driver::transform() method when item is 
 	 * instance of Laravel\Database\Eloquent\Model.
 	 *
 	 * @test 
@@ -121,7 +121,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Driver::transform() method when item is an 
+	 * Test Orchestra\Facile\Template\Driver::transform() method when item is an 
 	 * array.
 	 *
 	 * @test 
@@ -143,7 +143,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Driver::transform() method when item has 
+	 * Test Orchestra\Facile\Template\Driver::transform() method when item has 
 	 * render().
 	 *
 	 * @test 
@@ -165,7 +165,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Driver::transform() method when item is instance 
+	 * Test Orchestra\Facile\Template\Driver::transform() method when item is instance 
 	 * of Laravel\Paginator
 	 *
 	 * @test 
@@ -190,7 +190,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 }
 
-class TemplateStub extends \Orchestra\Facile\Driver {
+class TemplateStub extends \Orchestra\Facile\Template\Driver {
 	
 	protected $formats = array('html', 'json', 'foo');
 

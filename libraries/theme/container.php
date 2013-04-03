@@ -25,7 +25,7 @@ class Container {
 	 *
 	 * @var array
 	 */
-	protected $cache_path = array();
+	protected $cache = array();
 
 	/**
 	 * Filesystem path of Theme
@@ -149,16 +149,15 @@ class Container {
 	public function parse($file, $use_bundle = true)
 	{
 		$name = $file;
-
 		// Return the file if it's already using full path to avoid
 		// recursive request.
 		if (starts_with('path: ', $file)) return $file;
 
 		// Check theme aliases if we already have registered aliases
-		if (isset($this->aliases[$name])) return $this->aliases[$file];
+		if (isset($this->aliases[$name])) return $this->aliases[$name];
 
 		// Check from theme path cache.
-		if (isset($this->cache_path[$name])) return $this->cache_path[$file];
+		if (isset($this->cache[$name])) return $this->cache[$name];
 
 		if ( ! is_null($this->name))
 		{
@@ -201,6 +200,17 @@ class Container {
 			}
 		}
 
-		return $this->cache_path[$name] = $file;
+		return $this->cache[$name] = $file;
+	}
+
+	/**
+	 * Flush cache.
+	 *
+	 * @access public
+	 * @return boolean
+	 */
+	public function flush()
+	{
+		$this->cache = array();
 	}
 }
