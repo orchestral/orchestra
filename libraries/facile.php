@@ -22,8 +22,7 @@ class Facile {
 	 * 		$facile = Orchestra\Facile::make('default', array(
 	 * 			'view'   => 'home.index',
 	 * 			'data'   => array(
-	 * 				'eloquent' => $users,
-	 * 				'table'    => Orchestra\Presenter::user($users),
+	 * 				'users' => $users,
 	 * 			),
 	 * 			'status' => 200,
 	 * 		));
@@ -32,32 +31,84 @@ class Facile {
 	 * 		$facile = Orchestra\Facile::make('default')
 	 * 			->view('home.index')
 	 * 			->with(array(
-	 * 				'eloquent' => $users,
-	 * 				'table'    => Orchestra\Presenter::user($users),
-	 * 			))->status(200)
+	 * 				'users' => $users,
+	 * 			))
+	 * 			->status(200)
+	 * 			->template(new Orchestra\Facile\Template\Driver)
 	 * 			->format('html');
-	 * 	</code>
+	 * </code>
 	 *
 	 * @static
-	 * @access public
+	 * @access public			
 	 * @param  string   $name   Name of template
 	 * @param  array    $data
 	 * @param  string   $format
-	 * @return self
+	 * @return Orchestra\Facile\Response
 	 */
-	public static function make($name, $data = array(), $format = null) 
+	public static function make($name, $data = array(), $format = null)
 	{
-		return new static($name, $data, $format);
+		return new Facile\Response(static::get($name), $data, $format);
+	}
+
+	/**
+	 * Create a new Facile instance helper via view.
+	 *
+	 * <code>
+	 * 		$users  = User::paginate(30);
+	 * 		$facile = Orchestra\Facile::view('home.index', array(
+	 * 				'users' => $users,
+	 * 			))
+	 * 			->status(200)
+	 * 			->template(new Orchestra\Facile\Template\Driver)
+	 * 			->format('html');
+	 * </code>
+	 *
+	 * @static
+	 * @access public
+	 * @return Orchestra\Facile\Response
+	 */
+	public static function view($view, $data = array())
+	{
+		return with(new Facile\Response(static::get('default')))
+			->view($view)
+			->with($data);
+	}
+
+	/**
+	 * Create a new Facile instance helper via with.
+	 *
+	 * <code>
+	 * 		$users  = User::paginate(30);
+	 * 		$facile = Orchestra\Facile::with(array(
+	 * 				'users' => $users,
+	 * 			))
+	 * 			->view('home.index')
+	 * 			->status(200)
+	 * 			->template(new Orchestra\Facile\Template\Driver)
+	 * 			->format('html');
+	 * </code>
+	 *
+	 * @static
+	 * @access public
+	 * @param  mixed    $data
+	 * @return Orchestra\Facile\Response
+	 */
+	public static function with($data)
+	{
+		$response = new Facile\Response(static::get('default'));
+
+		return call_user_func_array(array($response, 'with'), func_get_args());
 	}
 
 	/**
 	 * Register a template.
 	 *
-	 * @static
-	 * @access public
-	 * @param  string           $name
-	 * @param  Facile\Template  $template
+	 * @access public							
+	 * @param  string                           $name
+	 * @param  Orchestra\Facile\Template\Driver $callback
 	 * @return void
+	 * @throws RuntimeException     If $callback not instanceof 
+	 *                              Orchestra\Facile\Template\Driver
 	 */
 	public static function template($name, $template) 
 	{
@@ -74,19 +125,16 @@ class Facile {
 	}
 
 	/**
-	 * Create a new Facile instance.
+	 * Get the template.
 	 *
-	 * @access protected	
-	 * @param  string   $name   Name of template
-	 * @param  array    $data
-	 * @param  string   $format
-	 * @return self
+	 * @static
+	 * @access public
+	 * @param  string   $name
+	 * @return Orchestra\Facile\Template\Driver
+	 * @throws InvalidArgumentException     If template is not defined.
 	 */
-	protected function __construct($name, $data = array(), $format = null) 
+	public static function get($name)
 	{
-		$this->name = $name;
-		$this->data = array_merge($this->data, $data);
-
 		if ( ! isset(static::$templates[$name]))
 		{
 			throw new InvalidArgumentException(
@@ -94,148 +142,6 @@ class Facile {
 			);
 		}
 
-		$this->template = static::$templates[$name];
-		$this->format($format);
-	}
-
-	/**
-	 * Name of template.
-	 *
-	 * @var string
-	 */
-	protected $name = null;
-
-	/**
-	 * View template.
-	 *
-	 * @var Facile\Template
-	 */
-	protected $template = null;
-
-	/**
-	 * View format.
-	 *
-	 * @var string
-	 */
-	protected $format = null;
-
-	/**
-	 * View data.
-	 *
-	 * @var array
-	 */
-	protected $data = array(
-		'view'   => null, 
-		'data'   => array(), 
-		'status' => 200,
-	);
-
-	/**
-	 * Nest a view to facile.
-	 *
-	 * @access public
-	 * @param  string   $view
-	 * @return self
-	 */
-	public function view($view)
-	{
-		$this->data['view'] = $view;
-
-		return $this;
-	}
-
-	/**
-	 * Nest a data to facile.
-	 *
-	 * @access public
-	 * @param  mixed    $key
-	 * @param  mixed    $value
-	 * @return self
-	 */
-	public function with($key, $value = null)
-	{
-		$data = is_array($key) ? $key : array($key => $value);
-		
-		$this->data['data'] = array_merge($this->data['data'], $data);
-
-		return $this;
-	}
-
-	/**
-	 * Set http status to facile.
-	 *
-	 * @access public	
-	 * @param  integer  $status
-	 * @return self
-	 */
-	public function status($status = 200)
-	{
-		$this->data['status'] = $status;
-
-		return $this;
-	}
-	
-
-	/**
-	 * Get expected facile format.
-	 *
-	 * @access public
-	 * @param  string   $format
-	 * @return string
-	 */
-	public function format($format = null)
-	{
-		! empty($format) and $this->format = $format;
-
-		if (is_null($this->format))
-		{
-			$this->format = $this->template->format();
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Magic method to __get.
-	 */
-	public function __get($key)
-	{
-		if ( ! in_array($key, array('name', 'template', 'format')))
-		{
-			throw new InvalidArgumentException("Invalid request to [{$key}].");
-		}
-
-		return $this->{$key};
-	}
-
-	/**
-	 * Render facile by selected format.
-	 *
-	 * @access public
-	 * @return mixed
-	 */
-	public function __toString()
-	{
-		$facile = $this->render();
-
-		if ( ! is_string($facile) and method_exists($facile, 'render'))
-		{
-			return $facile->render();
-		}
-
-		return $facile;
-	}
-
-	/**
-	 * Render facile by selected format.
-	 *
-	 * @access public
-	 * @return mixed
-	 */
-	public function render()
-	{
-		if (is_null($this->format)) $this->format();
-
-		return $this->template->compose($this->format, $this->data);
+		return static::$templates[$name];
 	}
 }
