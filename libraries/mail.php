@@ -80,6 +80,7 @@ class Mail {
 	{
 		$this->view   = View::make($view, $data);
 		$this->mailer = IoC::resolve('orchestra.mailer');
+		$memory       = Core::memory();
 
 		if ( ! static::$pretending)
 		{
@@ -88,6 +89,18 @@ class Mail {
 		}
 
 		call_user_func($callback, $this->mailer);
+
+		// Get from email information, in event where from email is not 
+		// set, we need to include system default from e-mail address.
+		$from = $this->mailer->swift()->getFrom();
+
+		if (( ! static::$pretending) and empty($from))
+		{
+			$this->mailer->from(
+				$memory->get('email.from'), 
+				$memory->get('site.name', 'Orchestra')
+			);
+		}
 	}
 
 	/**
@@ -102,5 +115,16 @@ class Mail {
 		if (static::$pretending) return true;
 
 		return $this->mailer->was_sent($emails);
+	}
+
+	/**
+	 * Return Messages instance.
+	 *
+	 * @access public
+	 * @return Swiftmailer\Drivers\Driver
+	 */
+	public function mailer()
+	{
+		return $this->mailer;
 	}
 }

@@ -34,6 +34,7 @@
  * Add `Orchestra\Mail::pretend()` helper during development process.
  * Multiple improvements to `Orchestra\Messages`.
  * Multiple improvements to templating system.
+ * Changes how **from** e-mail address is being added to `Orchestra\Mail`, solve issue when you might want to use different e-mail address.
  * Rename `orchestra.backend: bottom` asset container as `orchestra.backend: footer`.
  * Replace `Orchestra\Support\HTML::compile_attributes()` to `Orchestra\Support\HTML::decorate()`.
  * Remove requirement to run `$mailer->send()` when using `Orchestra\Mail::send()`.
