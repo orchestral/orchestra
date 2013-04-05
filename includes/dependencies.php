@@ -190,7 +190,7 @@ if ( ! IoC::registered('task: orchestra.upgrader'))
 
 if ( ! IoC::registered('orchestra.mailer'))
 {
-	IoC::register('orchestra.mailer', function($from = true)
+	IoC::register('orchestra.mailer', function()
 	{
 		// Ensure Messages bundle is registered
 		if ( ! Bundle::exists('messages')) Bundle::register('messages');
@@ -203,16 +203,10 @@ if ( ! IoC::registered('orchestra.mailer'))
 		$config     = $memory->get('email');
 		$driver     = $config['default'];
 		$transports = $config['transports'];
-		$email      = $config['from'];
 
 		Config::set('messages::config.transports', $transports);
 
 		$mailer = Message::instance($driver);
-
-		if ($from === true)
-		{
-			$mailer->from($email, $memory->get('site.name', 'Orchestra'));
-		}
 
 		return $mailer;
 	});

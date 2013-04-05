@@ -9,7 +9,7 @@ By default Orchestra Platform would use Messages bundle, if you find a need to r
 
 	class AwesomeMailer extends \Swiftmailer\Drivers\Driver {}
 
-	IoC::register('orchestra.mailer', function ($from = true)
+	IoC::register('orchestra.mailer', function ()
 	{
 		return new AwesomeMailer(array());
 	});
