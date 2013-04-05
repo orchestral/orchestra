@@ -40,4 +40,9 @@ class Mailer {
 	{
 		return $this->was_sent;
 	}
+
+	public function swift()
+	{
+		return new Mailer\Swift;
+	}
 }

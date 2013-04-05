@@ -116,4 +116,15 @@ class Mail {
 
 		return $this->mailer->was_sent($emails);
 	}
+
+	/**
+	 * Return Messages instance.
+	 *
+	 * @access public
+	 * @return Swiftmailer\Drivers\Driver
+	 */
+	public function mailer()
+	{
+		return $this->mailer;
+	}
 }
