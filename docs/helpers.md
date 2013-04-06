@@ -2,10 +2,11 @@
 
 Orchestra Platform includes a set of helpers function to help solves some of the frequent problem while developing on Laravel.
 
-## Table of Contents
-- [handles()](#handles)
-- [locate()](#locate)
-- [memorize()](#memorize)
+## Table of Content
+
+* [handles()](#handles)
+* [locate()](#locate)
+* [memorize()](#memorize)
 
 <a name="handles"></a>
 ## handles()
@@ -23,8 +24,7 @@ Return theme path location of a requested view, this would allow `Orchestra\Them
 
 	@layout(locate('layout.main'))
 
-Above code would check for `public/themes/{theme-name}/layout/main.blade.php` before fallback to 
-`application/views/layout/main.blade.php`.
+Above code would check for `public/themes/{theme-name}/layout/main.blade.php` before fallback to `application/views/layout/main.blade.php`.
 
 <a name="memorize"></a>
 ## memorize()

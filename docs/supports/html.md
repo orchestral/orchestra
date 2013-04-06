@@ -1,6 +1,6 @@
 # HTML Helper Class
 
-## Table of Contents
+## Table of Content
 
 * [Create HTML Tag](#create)
 * [Raw HTML entities](#raw)

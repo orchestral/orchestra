@@ -1,4 +1,4 @@
-# Troubleshoot Orchestra Platform
+# Troubleshoot
 
 ## Using safe mode
 

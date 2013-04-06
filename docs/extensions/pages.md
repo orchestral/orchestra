@@ -1,9 +1,10 @@
 # Pages for Extension
 
 ## Table of Content
-- [Introduction](#introduction)
-- [Add a Page for Administrators](#manage)
-- [Add a Page for Users](#page)
+
+* [Introduction](#introduction)
+* [Add a Page for Administrators](#manage)
+* [Add a Page for Users](#page)
 
 <a name="introduction"></a>
 ## Introduction

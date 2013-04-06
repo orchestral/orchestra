@@ -1,21 +1,21 @@
-# Orchestra Platform Change Log
+# Change Log
 
-## Contents
+## Table of Content
 
 * [Version 1.2](#v1.2)
- - [v1.2.0](#v1.2.0)
+	- [v1.2.0](#v1.2.0)
 * [Version 1.1](#v1.1)
- - [v1.1.3](#v1.1.3)
- - [v1.1.2](#v1.1.2)
- - [v1.1.1](#v1.1.1)
- - [v1.1.0](#v1.1.0)
+	- [v1.1.3](#v1.1.3)
+	- [v1.1.2](#v1.1.2)
+	- [v1.1.1](#v1.1.1)
+	- [v1.1.0](#v1.1.0)
 * [Version 1.0](#v1.0)
- - [v1.0.5](#v1.0.5)
- - [v1.0.4](#v1.0.4)
- - [v1.0.3](#v1.0.3)
- - [v1.0.2](#v1.0.2)
- - [v1.0.1](#v1.0.1)
- - [v1.0.0](#v1.0.0)
+	- [v1.0.5](#v1.0.5)
+	- [v1.0.4](#v1.0.4)
+	- [v1.0.3](#v1.0.3)
+	- [v1.0.2](#v1.0.2)
+	- [v1.0.1](#v1.0.1)
+	- [v1.0.0](#v1.0.0)
 
 <a name="v1.2"></a>
 ## Version 1.2
@@ -63,8 +63,8 @@
 * Remove un-used `Orchestra\Response` alias.
 * Remove Hybrid Bundle dependencies and move all requirement to `Orchestra\Support`.
 * Update Assets:
-  - Twitter Bootstrap v2.3.0.
-  - Zurb Foundation v3.2.5.
+	- Twitter Bootstrap v2.3.0.
+	- Zurb Foundation v3.2.5.
 
 <a name="v1.0"></a>
 ## Version 1.0
@@ -83,8 +83,8 @@
 * Refactor Resources, Manage and Pages response.
 * Add `Orchestra\Theme::to_asset()` for relative URL path.
 * Update vendor assets:
-  - Backbone.js v0.9.10
-  - Underscore.js v1.4.3
+	- Backbone.js v0.9.10
+	- Underscore.js v1.4.3
 * `Orchestra_Resources_Controller` to return more information to the view.
 
 <a name="v1.0.3"></a>
@@ -100,9 +100,9 @@
 
 * Fixed a bug where User can't be created on Postgres.
 * Improved Travis-CI by testing on multiple database configuration:
-  - MySQL
-  - Postgres
-  - SQLite
+	- MySQL
+	- Postgres
+	- SQLite
 * Add code coverage report on Travis-CI.
 
 <a name="v1.0.1"></a>

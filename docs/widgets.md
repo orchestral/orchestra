@@ -1,4 +1,4 @@
-# Widgets in Orchestra
+# Widgets
 
 Widget allow you to manage widgetize actions in Orchestra Platform. By default Orchestra Platform provides the following widgets:
 

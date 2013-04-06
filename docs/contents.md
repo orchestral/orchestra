@@ -1,4 +1,5 @@
 ### General
+
 * [Overviews](/bundocs/orchestra/home)
 * [Change Logs](/bundocs/orchestra/changes)
 * [License](/bundocs/orchestra/license)
@@ -15,6 +16,7 @@
 * [Troubleshooting](/bundocs/orchestra/troubleshoot)
 
 ### Extension
+
 * [Overviews](/bundocs/orchestra/extensions)
 	- [Convert a Bundle](/bundocs/orchestra/extensions#convert-to-extension)
 	- [Enabling an Extension](/bundocs/orchestra/extensions#enable-extension)
@@ -31,6 +33,7 @@
 	- [Returning Response](/bundocs/orchestra/extensions/resources#returning-response)
 
 ### Themes
+
 * [Overviews](/bundocs/orchestra/themes)
 	- [Introduction](/bundocs/orchestra/themes#introduction)
 	- [Enable Theme](/bundocs/orchestra/themes#enable-theme)
@@ -41,24 +44,34 @@
 		- [Assets](/bundocs/orchestra/themes#assets)
 
 ### Widget
+
 * [Overviews](/bundocs/orchestra/widgets)
 
 ### Events
+
 * [Overviews](/bundocs/orchestra/events)
 * [General](/bundocs/orchestra/events/general)
 * [Installation](/bundocs/orchestra/events/install)
 * [Credential](/bundocs/orchestra/events/credential)
 
 ### Injection of Container
+
 * [Overviews](/bundocs/orchestra/ioc)
 	- [Mailer](/bundocs/orchestra/ioc#mailer)
 	- [Memory](/bundocs/orchestra/ioc#memory)
 	- [Themes](/bundocs/orchestra/ioc#themes)
 
 ### Toolkit
+
 * [Overviews](/bundocs/orchestra/toolkit)
+	- [Version Command](/bundocs/orchestra/toolkit#version)
+	- [Installer Command](/bundocs/orchestra/toolkit#installer)
+	- [Initiate a New Extension Command](/bundocs/orchestra/toolkit#init)
+		- [Create the definition file](/bundocs/orchestra/toolkit#definition)
+		- [Create the start file](/bundocs/orchestra/toolkit#start)
 
 ### Support
+
 * [Auth](/bundocs/orchestra/supports/auth)
 * [HTML](/bundocs/orchestra/supports/html)
 * [Memory](/bundocs/orchestra/supports/memory)
