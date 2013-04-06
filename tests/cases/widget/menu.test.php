@@ -45,7 +45,7 @@ class MenuTest extends \PHPUnit_Framework_TestCase {
 		$type->setAccessible(true);
 		$config->setAccessible(true);
 
-		$this->assertEquals(array('defaults' => array('title' => '', 'link' => '#')), 
+		$this->assertEquals(array('defaults' => array('title' => '', 'link' => '#', 'attributes' => array())), 
 			$config->getValue($this->stub));
 		$this->assertEquals('menu', $type->getValue($this->stub));
 	}
@@ -61,16 +61,18 @@ class MenuTest extends \PHPUnit_Framework_TestCase {
 	{
 		$expected = array(
 			'foo' => new \Orchestra\Support\Fluent(array(
-				'title'   => 'hello world',
-				'link'    => '#',
-				'id'      => 'foo',
-				'childs'  => array(),
+				'title'      => 'hello world',
+				'link'       => '#',
+				'attributes' => array(),
+				'id'         => 'foo',
+				'childs'     => array(),
 			)),
 			'foobar' => new \Orchestra\Support\Fluent(array(
-				'title'   => 'hello world 2',
-				'link'    => '#',
-				'id'      => 'foobar',
-				'childs'  => array(),
+				'title'      => 'hello world 2',
+				'link'       => '#',
+				'attributes' => array(),
+				'id'         => 'foobar',
+				'childs'     => array(),
 			)),
 		);
 
