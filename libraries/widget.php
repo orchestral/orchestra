@@ -28,7 +28,7 @@ class Widget {
 	 * @static
 	 * @access public
 	 * @param  string   $driver  a string identifying the widget
-	 * @param  arrat    $config  a configuration array
+	 * @param  array    $config  a configuration array
 	 * @return Widget\Driver
 	 */
 	public static function make($driver, $config = array())
@@ -72,6 +72,8 @@ class Widget {
 	/**
 	 * Register a third-party widget driver.
 	 *
+	 * @static
+	 * @access public
 	 * @param  string   $driver
 	 * @param  Closure  $resolver
 	 * @return void
