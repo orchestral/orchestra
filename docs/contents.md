@@ -64,11 +64,11 @@
 ### Toolkit
 
 * [Overviews](/bundocs/orchestra/toolkit)
-	- [Version Command](#version)
-	- [Installer Command](#installer)
-	- [Initiate a New Extension Command](#init)
-		- [Create the definition file](#definition)
-		- [Create the start file](#start)
+	- [Version Command](/bundocs/orchestra/toolkit#version)
+	- [Installer Command](/bundocs/orchestra/toolkit#installer)
+	- [Initiate a New Extension Command](/bundocs/orchestra/toolkit#init)
+		- [Create the definition file](/bundocs/orchestra/toolkit#definition)
+		- [Create the start file](/bundocs/orchestra/toolkit#start)
 
 ### Support
 
