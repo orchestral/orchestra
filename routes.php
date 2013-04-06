@@ -30,7 +30,7 @@ Route::any('(:bundle)/installer/?(:any)?/?(:num)?', function ($action = 'index',
 */
 
 Route::any('(:bundle)', array(
-	'before' => 'orchestra::installed|orchestra::auth',
+	'before' => array('orchestra::installed', 'orchestra::auth'),
 	function ()
 	{
 		// Display the dashboard
@@ -91,7 +91,7 @@ Route::filter('orchestra::not-auth', function ()
 {
 	Session::flash('orchestra.redirect', Input::get('redirect'));
 
-	// Redirect the user to login page if user is not logged in.
+	// Redirect the user to dashboard page if user is logged in.
 	if ( ! Auth::guest()) return Redirect::to(handles('orchestra'));
 });
 
