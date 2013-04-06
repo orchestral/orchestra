@@ -24,6 +24,7 @@ class Nesty {
 	 * Construct a new instance
 	 *
 	 * @access public
+	 * @param  array    $config
 	 * @return void
 	 */
 	public function __construct($config)
