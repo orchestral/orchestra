@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Widget;
 
-use \Closure, 
-	\Exception;
+use Closure, 
+	Exception;
 
 class Placeholder extends Driver {
 

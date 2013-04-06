@@ -5,23 +5,22 @@ use \Closure;
 class Menu extends Driver {
 
 	/**
-	 * Type
+	 * Type of Widget.
 	 *
-	 * @access  protected
-	 * @var     string
+	 * @var string
 	 */
 	protected $type = 'menu';
 
 	/**
-	 * Configuration
-	 *
-	 * @access  protected
-	 * @var     array
+	 * Widget Configuration.
+	 * 
+	 * @var array
 	 */
 	protected $config = array(
 		'defaults' => array(
-			'title'   => '',
-			'link'    => '#',
+			'title'      => '',
+			'link'       => '#',
+			'attributes' => array(),
 		),
 	);
 

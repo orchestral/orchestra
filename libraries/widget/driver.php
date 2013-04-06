@@ -1,40 +1,36 @@
 <?php namespace Orchestra\Widget;
 
-use \Config,
-	\InvalidArgumentException,
+use Config,
+	InvalidArgumentException,
 	Orchestra\Support\Fluent;
 
 abstract class Driver {
 
 	/**
-	 * Nesty instance
+	 * Nesty instance.
 	 *
-	 * @access  protected
-	 * @var     Widget\Nesty
+	 * @var Orchestra\Widget\Nesty
 	 */
 	protected $nesty = null;
 
 	/**
-	 * Name of this instance
+	 * Name of this instance.
 	 *
-	 * @access  protected
-	 * @var     string
+	 * @var string
 	 */
 	protected $name = null;
 
 	/**
-	 * Configuration
+	 * Widget Configuration.
 	 *
-	 * @access  protected
-	 * @var     array
+	 * @var array
 	 */
 	protected $config = array();
 
 	/**
-	 * Type
+	 * Type of Widget.
 	 *
-	 * @access  protected
-	 * @var     string
+	 * @var string
 	 */
 	protected $type = null;
 
@@ -48,10 +44,13 @@ abstract class Driver {
 	 */
 	public function __construct($name, $config = array())
 	{
-		$_config      = Config::get('orchestra::widget.'.$this->type, $this->config);
-		$this->name   = $name;
-		$this->config = array_merge($config, $_config);
-		$this->nesty  = new Nesty($this->config);
+		$this->config = array_merge(
+			$config, 
+			Config::get("orchestra::widget.{$this->type}", $this->config)
+		);
+
+		$this->name  = $name;
+		$this->nesty = new Nesty($this->config);
 	}
 
 	/**
