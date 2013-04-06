@@ -16,7 +16,7 @@ Create `application/orchestra/installer.php` with just a command.
 
 `--bundle` option is not available for this command since Orchestra Platform would only allow application to have the option.
 
-## Initiate A New Extension Command
+## Initiate a New Extension Command
 
 This command would create `application/orchestra.json` and `application/orchestra.php` file.
 
