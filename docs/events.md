@@ -28,7 +28,7 @@ Listed below are all the possible events that can be used with Orchestra Platfor
 	- orchestra.pages: {name}.{action}
 	- orchestra.manages: {name}.action}
 - Manage User Events
-	- `orchestra.list: users
+	- orchestra.list: users
 	- orchestra.form: users
 	- orchestra.validate: users
 	- orchestra.creating: users

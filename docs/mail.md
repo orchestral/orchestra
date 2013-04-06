@@ -24,5 +24,6 @@ Other than using `View` to make the body of an e-mail, you can also use IoC Cont
 
 	$mail->body('Your awesome content.')
 		->subject('Your Awesome Subject.')
+		->from(memorize('email.from'), memorize('site.name'))
 		->to('test@example.com')
 		->send();
