@@ -2,10 +2,10 @@
 
 ## Table of Content
 
-- [Introduction](#introduction)
-- [Add a Resource](#register)
-- [Add Child Resources](#register-child)
-- [Returning Response](#returning-response)
+* [Introduction](#introduction)
+* [Add a Resource](#register)
+* [Add Child Resources](#register-child)
+* [Returning Response](#returning-response)
 
 <a name="introduction"></a>
 ## Introduction

@@ -1,12 +1,14 @@
-# Theme with Orchestra Platform
+# Theme
 
-## Table of Contents
-- [Introduction](#introduction)
-- [Enable Theme](#enable-theme)
-- [Default Theme](#default-theme)
+## Table of Content
+
+* [Introduction](#introduction)
+* [Enable Theme](#enable-theme)
+* [Default Theme](#default-theme)
 	- [Theme Manager](#manage-theme)
-- [Anatomy of A Theme](#anatomy)
-	- [Asset Folder](#assets)
+* [Anatomy of A Theme](#anatomy)
+	- [Theme Definition File](#definition) 
+	- [Assets](#assets)
 
 <a name="introduction"></a>
 ## Introduction

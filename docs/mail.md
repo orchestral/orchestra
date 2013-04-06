@@ -1,4 +1,4 @@
-# Orchestra Platform Mail
+# Mail
 
 By now, everyone would be loving Laravel 4 Mail class. Why wait when you can have it today with Orchestra Platform.
 

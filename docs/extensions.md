@@ -1,11 +1,12 @@
 # Extensions
 
 ## Table of Content
-- [Introduction](#introduction)
-- [Convert a Bundle](#convert-to-extension)
-- [Enabling an Extension](#enable-extension)
-- [Extension Start File](#start-file)
-- [Configuring an Extension](#configure-extension)
+
+* [Introduction](#introduction)
+* [Convert a Bundle](#convert-to-extension)
+* [Enabling an Extension](#enable-extension)
+* [Extension Start File](#start-file)
+* [Configuring an Extension](#configure-extension)
 	- [Disable configuration](#disable-configure-extension)
 	- [Dependencies Management](#dependency-extension)
 
@@ -14,8 +15,8 @@
 
 Extension may contain widget or resources (components) to be added for Orchestra Platform. By principle Extension in Orchestra Platform is a bundle except that Orchestra will manage setup process:
 
-- Migration for bundle
-- Publish asset for bundle
+* Migration for bundle
+* Publish asset for bundle
 
 <a name="convert-to-extension"></a>
 ## Convert a Bundle
@@ -44,8 +45,8 @@ administrator and go to **Extensions** on the top navigation.
 
 Few things to consider:
 
-- Only activated extensions will be run on runtime.
-- Orchestra will start bundle which is activated as extensions.
+* Only activated extensions will be run on runtime.
+* Orchestra will start bundle which is activated as extensions.
 
 <a name="start-file"></a>
 ## Extension Start File
@@ -58,9 +59,9 @@ What inside the file depends on how extension would interact with Orchestra Plat
 
 Some examples:
 
-- [OneAuth Start File](https://github.com/codenitive/laravel-oneauth/blob/master/orchestra.php)
-- [Cello CMS Start File](https://github.com/orchestral/cello/blob/master/orchestra.php)
-- [Robotix Start File](https://github.com/orchestral/robotix/blob/master/orchestra.php)
+* [OneAuth Start File](https://github.com/codenitive/laravel-oneauth/blob/master/orchestra.php)
+* [Cello CMS Start File](https://github.com/orchestral/cello/blob/master/orchestra.php)
+* [Robotix Start File](https://github.com/orchestral/robotix/blob/master/orchestra.php)
 
 <a name="configure-extension"></a>
 ## Configuring an Extension

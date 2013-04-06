@@ -30,9 +30,9 @@ Now navigate to your Orchestra handles URL in a web browser, you should see an i
 
 Please ensure that your configuration is correct, Orchestra will utilize configuration from `application/config` folder to make the process stream-less with your other application (or bundles).
 
-- Create a `User` model, which extends `Orchestra\Model\User` model.
-- Update `application/config/database.php` and ensure your database connection is properly set up.
-- Update `application/config/auth.php`.
+* Create a `User` model, which extends `Orchestra\Model\User` model.
+* Update `application/config/database.php` and ensure your database connection is properly set up.
+* Update `application/config/auth.php`.
 	- Orchestra Platform only supports Eloquent auth driver at the moment.
 	- Select your `User` model, or change it to `Orchestra\Model\User`.
 
