@@ -20,13 +20,6 @@ class Fieldset {
 	protected $name = null;
 
 	/**
-	 * Configurations
-	 *
-	 * @var  array
-	 */
-	protected $config = array();
-
-	/**
 	 * Fieldset HTML attributes
 	 *
 	 * @var array
@@ -62,9 +55,6 @@ class Fieldset {
 		}
 		
 		if ( ! empty($name)) $this->legend($name);
-
-		// cached configuration option
-		$this->config = Config::get('orchestra::support.form.fieldset');
 
 		call_user_func($callback, $this);
 	}
@@ -126,8 +116,7 @@ class Fieldset {
 	{
 		if ($name instanceof Lang) $name = $name->get();
 		
-		$label   = $name;
-		$config  = $this->config;
+		$label = $name;
 
 		switch (true)
 		{
@@ -160,12 +149,13 @@ class Fieldset {
 		// run closure
 		if (is_callable($callback)) call_user_func($callback, $control);
 
-		$field = function ($row, $control, $templates = array()) use ($type, $config) 
+		$field = function ($row, $control, $templates = array()) use ($type) 
 		{
 			// prep control type information
 			$type    = ($type === 'input:password' ? 'password' : $type);
 			$methods = explode(':', $type);
 
+			$config    = Config::get('orchestra::support.form.fieldset', array());
 			$templates = array_merge(
 				Config::get('orchestra::support.form.templates', array()), 
 				$templates
