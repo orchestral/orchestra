@@ -100,15 +100,25 @@ class Container {
 		{
 			foreach ($this->config->autoload as $file)
 			{
-				include_once $this->path.DS.$this->name.DS.ltrim($file, DS);
+				include_once $this->theme_path().ltrim($file, DS);
 			}
 		}
 	}
 
 	/**
+	 * Get theme path.
+	 *
+	 * @access public
+	 * @return string
+	 */
+	public function theme_path()
+	{
+		return $this->path.DS.$this->name.DS;
+	}
+
+	/**
 	 * Path helper for Theme
 	 *
-	 * @static
 	 * @access public
 	 * @param  string   $file
 	 * @return string
@@ -121,7 +131,6 @@ class Container {
 	/**
 	 * URL helper for Theme
 	 *
-	 * @static
 	 * @access public
 	 * @param  string   $url
 	 * @return string
@@ -134,7 +143,6 @@ class Container {
 	/**
 	 * Relative URL helper for Theme
 	 *
-	 * @static
 	 * @access public
 	 * @param  string   $url
 	 * @return string
@@ -155,7 +163,6 @@ class Container {
 	 *     ));
 	 * </code>
 	 *
-	 * @static
 	 * @access public
 	 * @param  array    $aliases
 	 * @return void
@@ -174,7 +181,6 @@ class Container {
 	/**
 	 * Parse normal View to use Theme
 	 *
-	 * @static
 	 * @access public
 	 * @param  string   $file
 	 * @return string
