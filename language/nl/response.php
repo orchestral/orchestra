@@ -3,22 +3,22 @@
 return array(
 	'account' => array(
 		'password' => array(
-			'invalid' => 'Current password does not match our record, please try again',
-			'update'  => 'Your password has been updated',
+			'invalid' => 'Het huidge wachtwoord is niet hetzelfde als in de database, probeer het alstublieft nog een keer.',
+			'update'  => 'Uw wachtwoord is veranderd',
 		),
 		'profile' => array(
-			'update' => 'Your profile has been updated',
+			'update' => 'Uw profiel is bijgewerkt.',
 		),
 
 	),
 
 	'credential' => array(
-		'invalid-combination' => 'Invalid user and password combination',
-		'logged-in'           => 'You has been logged in',
-		'logged-out'          => 'You have been logged out',
-		'unauthorized'        => 'You are not authorized to access this action',
+		'invalid-combination' => 'Incorrecte combinatie van wachtwoord en gebruikersnaam',
+		'logged-in'           => 'U bent ingelogd',
+		'logged-out'          => 'U bent uitgelogd',
+		'unauthorized'        => 'U bent niet geautoriseerd om deze actie uit te voeren.',
 		'register'            => array(
-			'email-fail'    => 'Unable to send User Registration Confirmation E-mail',
+			'email-fail'    => 'We konden niet de e-mail sturen waarin staat dat de registratie successvol was',
 			'email-send'    => 'User Registration Confirmation E-mail has been sent, please check your inbox',
 			'existing-user' => 'This e-mail address is already associated with another user',
 		),

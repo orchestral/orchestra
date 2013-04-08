@@ -1,55 +1,55 @@
 <?php
 
 return array(
-	'hide-password' => 'Database password is hidden for security.',
+	'hide-password' => 'Database wachtwoord is voor veiligheidsredenen verborgen.',
 	'verify'        => 'Please ensure following configuration is correct based on your :filename.',
-	'solution'      => 'Solution',
+	'solution'      => 'Oplossing',
 
 	'status'     => array(
-		'still' => 'Still Workable',
-		'work'  => 'Workable',
-		'not'   => 'Not Workable',
+		'still' => 'Werkt nog steeds',
+		'work'  => 'Werkt',
+		'not'   => 'Werkt niet',
 	),
 	'connection' => array(
-		'status'  => 'Connection Status',
-		'success' => 'Successful',
-		'fail'    => 'Failed',
+		'status'  => 'Connectie Status',
+		'success' => 'Success',
+		'fail'    => 'Mislukt',
 	),
 	
 	'auth'     => array(
-		'title'       => 'Authentication Setting',
+		'title'       => 'Authenticatie Instellingen',
 		'driver'      => 'Driver',
 		'model'       => 'Model',
 		'requirement' => array(
-			'driver'     => 'Orchestra only work with Eloquent Driver for Auth',
-			'instanceof' => 'Model name should be an instance of :class',
+			'driver'     => 'Orchestra Werkt Alleen met Eloquent Driver voor Auth',
+			'instanceof' => 'Model naam moet een instance van :class zijn',
 		),
 	),
 	'database' => array(
-		'title'    => 'Database Setting',
+		'title'    => 'Database Instellingen',
 		'host'     => 'Host',
-		'name'     => 'Database Name',
-		'password' => 'Password',
-		'username' => 'Username',
+		'name'     => 'Database Naam',
+		'password' => 'Wachtwoord',
+		'username' => 'Gebruikersnaam',
 		'type'     => 'Database Type',
 	),
 	'system'   => array(
-		'title'       => 'System Requirement',
-		'description' => 'Please ensure the following requirement is profilled before installing Orchestra Platform.',
-		'requirement' => 'Requirement',
+		'title'       => 'Systeem vereisten',
+		'description' => 'Wees er alstublieft zeker van dat de vereisten vervuld zijn voordat u Orchestra Platform installeert.',
+		'requirement' => 'Vereiste',
 		'status'      => 'Status',
 
 		'storage_writable' => array(
-			'name' => "Writable to :path",
-			'solution' => "Change the directory permission to 0777, however it might cause a security issue if this folder is accessible from the web.",
+			'name' 		=> "Kan schrijven naar :path",
+			'solution'	=> "Change the directory permission to 0777, however it might cause a security issue if this folder is accessible from the web.",
 		),
 		'bundle_writable' => array(
-			'name' => "Writable to :path",
-			'solution' => "Change the directory permission to 0777, however it might cause a security issue if this folder is accessible from the web.",
+			'name'		=> "Kan schrijven naar :path",
+			'solution'	=> "Verander de folder permissies naar 0777, maar dit kan een veiligheids probleem zijn als deze folder van het internet aan te roepen is.",
 		),
 		'asset_writable' => array(
-			'name'     => "Writable to :path",
-			'solution' => "Change the directory permission to 0777. Once installation is completed, please revert the permission to 0755.",
+			'name'     => "Kan schrijven naar :path",
+			'solution' => "Verander de folder permissies naar 0777. Wanneer de installatie klaar is, kunt u de permissies naar 0755 zetten, dit is aanbeloven.",
 		),
 	),
 );
