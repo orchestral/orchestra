@@ -26,7 +26,7 @@ class ThemeTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Theme::start() is register propery IoC.
 	 *
 	 * @test
-	 * @group core
+	 * @group theme
 	 */
 	public function testStartThemeRegisterProperIoC()
 	{
@@ -38,7 +38,7 @@ class ThemeTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Theme::__construct()
 	 *
 	 * @test
-	 * @group core
+	 * @group theme
 	 */
 	public function testConstructThemeContainer()
 	{
@@ -57,7 +57,7 @@ class ThemeTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Theme::container()
 	 *
 	 * @test
-	 * @group core
+	 * @group theme
 	 */
 	public function testThemeContainer()
 	{
@@ -70,7 +70,7 @@ class ThemeTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Theme::resolve()
 	 *
 	 * @test
-	 * @group core
+	 * @group theme
 	 */
 	public function testThemeResolver()
 	{
@@ -90,7 +90,7 @@ class ThemeTest extends \Orchestra\Testable\TestCase {
 	 * Test Orchestra\Theme::__callStatic() passthru methods.
 	 *
 	 * @test
-	 * @group core
+	 * @group theme
 	 */
 	public function testCallStaticPassthruMethods()
 	{
