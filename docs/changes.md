@@ -32,6 +32,7 @@
  * Add `Orchestra\Theme::start()` to replace `Orchestra\Core::appearance()`.
  * Add `Input::file()` support for `Orchestra\Form`.
  * Add `Orchestra\Mail::pretend()` helper during development process.
+ * Theme should be able to have autoloadable `.php` file in-case theme need to define presentation logic without introducing any hack.
  * Multiple improvements to `Orchestra\Messages`.
  * Multiple improvements to templating system.
  * Changes how **from** e-mail address is being added to `Orchestra\Mail`, solve issue when you might want to use different e-mail address.
