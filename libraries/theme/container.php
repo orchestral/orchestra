@@ -81,6 +81,25 @@ class Container {
 	}
 
 	/**
+	 * Start the theme by autoloading all the relevant files.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function start()
+	{
+		if ( ! $this->config instanceof Definition) return null;
+
+		if (isset($this->config->autoload) and is_array($this->config->autoload))
+		{
+			foreach ($this->config->autoload as $file)
+			{
+				include_once $this->path.DS.$this->name.DS.ltrim($file, DS);
+			}
+		}
+	}
+
+	/**
 	 * Path helper for Theme
 	 *
 	 * @static

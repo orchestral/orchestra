@@ -14,8 +14,7 @@ class DefinitionTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		$this->base_path = \Bundle::path('orchestra').'tests'.DS.'stubs'.DS.'theme'.DS;
-		$_SERVER['theme.start'] = null;
+		$this->base_path = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS.'public'.DS.'themes'.DS;
 	}
 
 	/**
@@ -24,7 +23,6 @@ class DefinitionTest extends \PHPUnit_Framework_TestCase {
 	public function tearDown()
 	{
 		unset($this->base_path);
-		unset($_SERVER['theme.start']);
 	}
 
 	/**
@@ -48,10 +46,11 @@ class DefinitionTest extends \PHPUnit_Framework_TestCase {
 		);
 
 		$this->assertInstanceOf('\Orchestra\Theme\Definition', $stub);
-		$this->assertTrue($_SERVER['theme.start']);
 		$this->assertEquals(array('start.php'), $stub->autoload);
 		$this->assertTrue(is_null($stub->description));
 		$this->assertEquals($expected, $item->getValue($stub));
+		$this->assertTrue(isset($stub->autoload));
+		$this->assertFalse(isset($stub->foo));
 	}
 
 	/**
