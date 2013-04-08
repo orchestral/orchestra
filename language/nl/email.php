@@ -6,6 +6,6 @@ return array(
 	),
 	'forgot'     => array(
 		'request' => "[:site] Reset Je Wachtwoord",
-		'reset' => "[:site] Jouw Nieuwe Wachtwoord",
+		'reset'   => "[:site] Jouw Nieuwe Wachtwoord",
 	),
 );

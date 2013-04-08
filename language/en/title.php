@@ -2,7 +2,7 @@
 
 return array(
 	'account' => array(
-		'profile' => 'Edit Profile',
+		'profile'  => 'Edit Profile',
 		'password' => 'Edit Password',
 	),
 

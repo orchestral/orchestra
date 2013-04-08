@@ -2,7 +2,7 @@
 
 return array(
 	'account' => array(
-		'profile' => 'Pas Profiel Aan',
+		'profile'  => 'Pas Profiel Aan',
 		'password' => 'Pas wachtwoord aan',
 	),
 

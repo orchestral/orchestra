@@ -2,7 +2,7 @@
 
 return array(
 	'account' => array(
-		'profile' => 'Редактировать профиль',
+		'profile'  => 'Редактировать профиль',
 		'password' => 'Изменить пароль',
 	),
 

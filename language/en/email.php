@@ -6,6 +6,6 @@ return array(
 	),
 	'forgot'     => array(
 		'request' => "[:site] Reset Your Password",
-		'reset' => "[:site] Your New Password",
+		'reset'   => "[:site] Your New Password",
 	),
 );
