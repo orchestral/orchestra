@@ -225,11 +225,11 @@ class Container {
 			// view path and return the first one we find for the given view.
 			if (file_exists($path = $directory.$view.BLADE_EXT))
 			{
-				$file = 'path: '.$path;
+				$file = "path: {$path}";
 			}
 			elseif (file_exists($path = $directory.$view.EXT))
 			{
-				$file = 'path: '.$path;
+				$file = "path: {$path}";
 			}
 		}
 
