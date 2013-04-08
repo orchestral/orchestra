@@ -26,6 +26,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
 		\URL::$base = null;
 		\Config::set('application.index', '');
 		\Config::set('application.url', 'http://localhost/');
+		$_SERVER['theme.start'] = null;
 
 		$this->base_path = \Bundle::path('orchestra').'tests'.DS.'fixtures'.DS;
 		set_path('public', $this->base_path.'public'.DS);
@@ -40,6 +41,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
 	{
 		unset($this->stub);
 		unset($this->base_path);
+		unset($_SERVER['theme.start']);
 
 		\Config::set('application.index', 'index.php');
 		\Config::set('application.url', '');
@@ -71,7 +73,21 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Theme\Container::to() return proper URL.
+	 * Test Orchestra\Theme\Container::start() method.
+	 *
+	 * @test
+	 * @group theme
+	 */
+	public function testStartMethod()
+	{
+		$stub = new \Orchestra\Theme\Container('valid');
+		$stub->start();
+
+		$this->assertTrue($_SERVER['theme.start']);
+	}
+
+	/**
+	 * Test Orchestra\Theme\Container::to() method return proper URL.
 	 *
 	 * @test
 	 * @group theme

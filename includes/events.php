@@ -24,6 +24,11 @@ Event::listen('orchestra.done: backend', function ()
 	Orchestra\Messages::shutdown();
 });
 
+Event::listen('orchestra.started: view', function ()
+{
+	Orchestra\Theme::resolve()->start();
+});
+
 /*
 |--------------------------------------------------------------------------
 | Event listen to sync roles
