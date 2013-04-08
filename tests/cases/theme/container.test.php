@@ -87,6 +87,19 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Theme\Container::theme_path() method.
+	 *
+	 * @test
+	 * @group theme
+	 */
+	public function testThemePathMethod()
+	{
+		$expected = path('public').'themes'.DS.'default'.DS;
+
+		$this->assertEquals($expected, $this->stub->theme_path());
+	}
+
+	/**
 	 * Test Orchestra\Theme\Container::to() method return proper URL.
 	 *
 	 * @test
