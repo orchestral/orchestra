@@ -45,7 +45,7 @@ class Widget {
 			{
 				$resolver = static::$registrar[$type];
 
-				return static::$instances[$name] = $resolver($type, $config);
+				return static::$instances[$driver] = $resolver($type, $config);
 			}
 
 			switch ($type)
