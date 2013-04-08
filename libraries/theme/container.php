@@ -73,6 +73,7 @@ class Container {
 			$this->relative_url = str_replace(URL::base(), '/', $this->url);
 		}
 
+		// Check if the theme folder actually exist.
 		if (is_dir($theme = $this->path.DS.$name))
 		{
 			$this->config = new Definition($theme); 
@@ -88,8 +89,13 @@ class Container {
 	 */
 	public function start()
 	{
+		// There might be situation where Orchestra Platform was unable 
+		// to get theme information, we should only assume there a valid
+		// theme when config is actually an instance of 
+		// Orchestra\Theme\Definiton
 		if ( ! $this->config instanceof Definition) return null;
 
+		// Loop and include all file which was mark as autoloaded.
 		if (isset($this->config->autoload) and is_array($this->config->autoload))
 		{
 			foreach ($this->config->autoload as $file)
