@@ -44,13 +44,14 @@ abstract class Driver {
 	 */
 	public function __construct($name, $config = array())
 	{
-		$this->config = array_merge(
-			$config, 
-			Config::get("orchestra::widget.{$this->type}", $this->config)
+		$configuration = array_merge(
+			Config::get("orchestra::widget.{$this->type}", array()), 
+			$this->config
 		);
 
-		$this->name  = $name;
-		$this->nesty = new Nesty($this->config);
+		$this->config = array_merge($config, $configuration);		
+		$this->name   = $name;
+		$this->nesty  = new Nesty($this->config);
 	}
 
 	/**
