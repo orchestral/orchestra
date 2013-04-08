@@ -10,7 +10,7 @@ class StrTest extends \Orchestra\Testable\TestCase {
 	 */
 	public function testStreamGetContentsMethod()
 	{
-		$base_path = \Bundle::path('orchestra').'tests'.DS.'cases'.DS.'supports'.DS.'stub'.DS;
+		$base_path = \Bundle::path('orchestra').'tests'.DS.'stubs'.DS.'supports'.DS;
 		$expected = 'a:2:{s:4:"name";s:9:"Orchestra";s:5:"theme";a:2:{s:7:"backend";s:7:"default";s:8:"frontend";s:7:"default";}}';
 		$stream   = fopen($base_path.'driver1.stub.php', 'r');
 		$output   = \Orchestra\Support\Str::stream_get_contents($stream);

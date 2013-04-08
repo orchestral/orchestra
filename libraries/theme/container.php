@@ -13,6 +13,13 @@ class Container {
 	protected $name = null;
 
 	/**
+	 * Configuration instance.
+	 *
+	 * @var Orchestra\Theme\Definition
+	 */
+	protected $config = null;
+
+	/**
 	 * Themes aliases, allowing similar view to be mapped without having to
 	 * duplicate the physical file.
 	 *
@@ -66,9 +73,10 @@ class Container {
 			$this->relative_url = str_replace(URL::base(), '/', $this->url);
 		}
 
-		if (is_dir($this->path.DS.$name))
+		if (is_dir($theme = $this->path.DS.$name))
 		{
-			$this->name = $name;
+			$this->config = new Definition($theme); 
+			$this->name   = $name;
 		}
 	}
 
@@ -190,11 +198,11 @@ class Container {
 			// Views may have either the default PHP file extension or the
 			// "Blade" extension, so we will need to check for both in the
 			// view path and return the first one we find for the given view.
-			if (file_exists($path = $directory.$view.EXT))
+			if (file_exists($path = $directory.$view.BLADE_EXT))
 			{
 				$file = 'path: '.$path;
 			}
-			elseif (file_exists($path = $directory.$view.BLADE_EXT))
+			elseif (file_exists($path = $directory.$view.EXT))
 			{
 				$file = 'path: '.$path;
 			}

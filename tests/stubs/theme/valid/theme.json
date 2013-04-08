@@ -1,0 +1,6 @@
+{
+	"name": "Foo",
+	"autoload": [
+		"start.php"
+	]
+}
