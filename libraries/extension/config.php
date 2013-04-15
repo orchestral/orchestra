@@ -26,6 +26,6 @@ class Config {
 			$config[$current] = C::get($default);
 		}
 
-		$config = $memory->put("extension_{$name}", $config);
+		$memory->put("extension_{$name}", $config);
 	}
 }
