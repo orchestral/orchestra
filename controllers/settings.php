@@ -92,7 +92,7 @@ class Orchestra_Settings_Controller extends Orchestra\Controller {
 		{
 			case 'smtp' :
 				$input['email_from']          = $input['email_smtp_username'];
-				$rules['email_smtp_username'] = array('required', 'email');
+				$rules['email_smtp_username'] = array('required');
 				$rules['email_smtp_host']     = array('required');
 				break;
 
