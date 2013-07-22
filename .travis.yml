@@ -13,7 +13,7 @@ notifications:
   irc: "irc.freenode.net#orchestra-platform"
 
 before_install:
-  - git clone git://github.com/laravel/laravel.git ../laravel && cd ../laravel
+  - git clone -b 3.0 git://github.com/laravel/laravel.git ../laravel && cd ../laravel
   - mv ../orchestra bundles/orchestra
   - echo "<?php return array('orchestra' => array('auto' => true, 'handles' => 'orchestra'));" > application/bundles.php
   - php artisan bundle:install Messages
