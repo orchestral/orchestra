@@ -6,6 +6,10 @@ Orchestra Platform is what Bonfire is for CodeIgniter.
 
 [![Build Status](https://secure.travis-ci.org/orchestral/orchestra.png?branch=master)](http://travis-ci.org/orchestral/orchestra)
 
+## Using with Laravel 4
+
+This repository is an only used for Laravel 3. Please refer to [Orchestra Platform 2](https://github.com/orchestral/platform) to use it with Laravel 4.
+
 ## Installation
 
 Orchestra Platform is best installed in a clean Laravel environment, due to the facts it require to create `users` table and administrator account during installation.
